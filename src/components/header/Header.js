@@ -18,7 +18,7 @@ const Header = () => {
     const handleSearch = useCallback(() => {
         console.log(`search:${search}`);
         link(`/search?q=${search}`);
-    }, [search]);
+    }, [search, link]);
     return (
         <div className={styles.header}>
             <section>
