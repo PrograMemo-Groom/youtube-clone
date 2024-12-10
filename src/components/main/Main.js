@@ -67,9 +67,16 @@ const Main = () => {
         <div className={styles.container}>
             <div className={styles.categoryWrapper}>
                 {isPrevVisible && (
-                    <button onClick={scrollLeft} className={styles.prevButton}>
-                        이전
+                    <div className={styles.buttonWrapper}>
+                    <button
+                        onClick={scrollLeft}
+                        className={styles.prevButton}
+                        aria-label="이전"
+                    >
+                        &lt;
                     </button>
+                    <span className={styles.buttonText}>이전</span>
+                </div>
                 )}
             <div className={styles.categoryBar}
                  ref={categoryBarRef}
@@ -81,12 +88,20 @@ const Main = () => {
                 ))}
             </div>
                 {isNextVisible && (
-                    <button onClick={scrollRight} className={styles.nextButton}>
-                        다음
-                    </button>
+        <div className={styles.buttonWrapper}>
+        <button
+            onClick={scrollRight}
+            className={styles.nextButton}
+            aria-label="다음"
+        >
+            &gt;
+        </button>
+    <span className={styles.buttonText}>다음</span>
+</div>
                 )}
-            </div>
+
         </div>
+</div>
     );
 };
 
