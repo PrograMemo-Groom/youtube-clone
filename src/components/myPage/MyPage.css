@@ -3,7 +3,6 @@
     height: 100vh;
     margin: 0 auto;
     display: flex;
-    background-color: aquamarine;
 }
 
 .user-page-info-container {
@@ -11,7 +10,6 @@
     height: 8rem;
     display: flex;
     margin: 2rem auto;
-    background-color: beige;
     padding: 2rem;
 }
 
@@ -24,14 +22,12 @@
 .user-name-and-id-container {
     width: 20rem;
     height: 3.5rem;
-    background-color: blueviolet;
 }
 
 .user-name-container {
     display: flex;
     height: 3.5rem;
     flex-direction: column;
-    background-color: aqua;
     gap: 0.5rem;
 }
 
@@ -45,10 +41,18 @@
     font-weight: 450;
 }
 
-.changes-id {
+.Google-id-change-container {
+    display: flex;
+}
+
+.changes-id-container,
+.Google-id-container {
     display: flex;
     align-items: center;
     gap: 0.2rem;
+}
+
+.changes-id-container {
     margin-top: 2rem;
 }
 
