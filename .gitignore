@@ -6,6 +6,7 @@
 !package-lock.json
 
 # dependencies
+.env
 .idea
 /node_modules
 /.pnp
