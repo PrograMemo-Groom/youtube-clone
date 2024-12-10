@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import styles from './Header.module.css';
 import useNavigation from "../../hooks/useNavigation";
 
 const Header = () => {
     const { link } = useNavigation();
+    const [search, setSearch] = useState('');
+
+    const handleOnChange = (value) => {
+        setSearch(value);
+    }
+
+    const handleOnkeyUp = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    }
+    const handleSearch = useCallback(() => {
+        console.log(`search:${search}`);
+        link(`/search?q=${search}`);
+    }, [search]);
     return (
         <div className={styles.header}>
             <section>
@@ -17,13 +32,19 @@ const Header = () => {
             </section>
             <section className={styles.section2}>
                 <div className={styles.inputWrapper}>
-                    <input className={styles.searchBox} type="search" placeholder="검색"/>
+                    <input className={styles.searchBox}
+                           type="search"
+                           placeholder="검색"
+                           value={search}
+                           onChange={(e) => handleOnChange(e.target.value)}
+                           onKeyUp={handleOnkeyUp}
+                    />
                     <img className={styles.searchIco} src={`${process.env.PUBLIC_URL}/assets/white/search.svg`}
                          alt="검색"/>
                     <img className={styles.keyboardIco} src="//www.gstatic.com/inputtools/images/tia.png"
                          name="search_query"
                          property="youtube" alt="keyboard"/>
-                    <button className={styles.searchButton} onClick={() => link("/search")}>
+                    <button className={styles.searchButton} onClick={() => handleSearch()}>
                         <img className={styles.icoImg} src={`${process.env.PUBLIC_URL}/assets/white/search.svg`}
                              alt="검색"/>
                     </button>
