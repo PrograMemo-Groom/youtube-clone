@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './Header.module.css';
+import useNavigation from "../../hooks/useNavigation";
 
 const Header = () => {
+    const { link } = useNavigation();
     return (
         <div className={styles.header}>
             <section>
@@ -9,7 +11,7 @@ const Header = () => {
                     <img src={`${process.env.PUBLIC_URL}/assets/white/burger.svg`}
                          alt="menu"/>
                 </div>
-                <div className={styles.logo}>
+                <div className={styles.logo} onClick={() => link("/")}>
                     <img src={`${process.env.PUBLIC_URL}/assets/white/youtubeLogo.svg`} alt="youtube-logo"/>
                 </div>
             </section>
