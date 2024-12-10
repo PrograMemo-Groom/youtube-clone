@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import styles from "./Search.module.css";
+import {useLocation} from "react-router-dom";
 
+const tag = '[SearchPage]';
 const Search = () => {
+    const [search, setSearch] = useState('');
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+    }
+    let query = useQuery();
+    const searchTerm = query.get("q");
+
+    useEffect(() => {
+        setSearch(searchTerm);
+        console.log(tag, searchTerm);
+    }, []);
+
     return (
-        <div>
-            SearchPage
+        <div className={styles.container}>
+            {search && search}
         </div>
     );
 };
