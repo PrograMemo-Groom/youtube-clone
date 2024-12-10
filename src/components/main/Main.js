@@ -30,6 +30,7 @@ const Main = () => {
         });
     };
 
+    //좌우 스크롤 버튼 상태 업데이트
     const handleScroll = () => {
         const { scrollLeft, scrollWidth, clientWidth } = categoryBarRef.current;
         setPrevVisible(scrollLeft > 0);
@@ -51,7 +52,7 @@ const Main = () => {
         }
 
         // 인기 있는 video를 가져오는 부분
-        setVideo(fetchPopularVideos());
+        //setVideo(fetchPopularVideos());
 
         // resize 이벤트 리스너 추가
         window.addEventListener('resize', updateButtonVisibility);
