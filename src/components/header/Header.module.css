@@ -4,9 +4,167 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: fixed;
-    /*background-color: red;*/
     border-bottom: #a2a2a2 1px solid;
     box-sizing: content-box;
+    z-index: 10;
+}
+.header > section {
+    display: inherit;
+    flex-direction: inherit;
+}
+.header > section > div {
+    display: inherit;
+    flex-direction: inherit;
+}
+.section1 {
+    margin: 0 20px;
+    gap: 20px;
+}
+.section2 {
+    max-width: 1200px;
+    width: calc(50% - 20px);
+    margin: 0 20px;
+    gap: 10px;
+}
+.section3 {
+    margin: 0 20px;
+    padding-right: 10px;
+    align-items: center;
+    gap: 20px;
+}
+.section3 > .icoImg {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+.section3 > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+}
+.section3 > .icoImg:hover {
+    background-color: #ededed;
+}
+.section3 > div > img {
+    width: 25px;
+    height: 25px;
+}
+.burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.burger:hover {
+    background-color: #ededed;
+}
+.burger > img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    cursor: pointer;
+}
+.logo > img {
+    height: 25px;
+}
+.inputWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.inputWrapper > button {
+    width: 40px;
+    background-color: #f8f8f8;
+    border-radius: 0 30px 30px 0;
+    border: 1px solid #eeeeee;
+    padding-right: 50px;
+    align-items: center;
+    cursor: pointer;
+}
+.inputWrapper > button:hover {
+    background-color: #ededed;
+}
+.inputWrapper > button > img {
+    width: 25px;
+    height: 25px;
+    padding-left: 10px;
+}
+.searchBox {
+    width: 100%;
+    border-radius: 30px 0 0 30px;
+    padding-left: 20px;
+    outline: none;
+    border: 1px solid #eeeeee;
+    border-right: none;
+    font-size: 16px;
+}
+.searchBox:focus {
+    /*border: none;*/
+    outline: none;
+    padding-left: 50px;
+}
+.searchIco {
+    position: absolute;
+    left: 10px;
+    top: 20%;
+    display: none;
+}
+.keyboardIco {
+    position: absolute;
+    right: 65px;
+    top: 35%;
+    cursor: pointer;
+}
+.searchBox:focus + .searchIco {
+    display: block;
+}
+
+.mic {
+    /*background-color: black;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+.mic:hover {
+    background-color: #ededed;
+}
+.mic > img {
+    width: 25px;
+    height: 25px;
+}
+
+.myPageIco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #a68278;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    color: white;
 }
