@@ -14,7 +14,10 @@ export default function MyPage() {
                         <a href="#" className="user-channel-move">@o0_o0_o0 &#183; 채널 보기</a>
                     </section>
                     <section className="changes-id">
-
+                        <img className="chang-id-icon"
+                             src="/assets/mypage/profile-icon.svg"
+                             alt="user-pforile-icon"/>
+                        <p className="changes-id-text">계정 전환</p>
                     </section>
                 </div>
             </div>

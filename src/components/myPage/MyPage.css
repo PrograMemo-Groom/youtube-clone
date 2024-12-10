@@ -44,3 +44,18 @@
     color: #a2a2a2;
     font-weight: 450;
 }
+
+.changes-id {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-top: 2rem;
+}
+
+.chang-id-icon {
+    width: 1.5rem;
+}
+
+.changes-id-text {
+    font-size: 1.2rem;
+}
