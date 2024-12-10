@@ -29,3 +29,21 @@ export const fetchPopularVideos = async () => {
         console.log(tag, "PopularVideos can't get response data", e);
     }
 }
+
+export const fetchSearchVideos = async (keyword) => {
+    try {
+        const {data: response} = await instance.get(requests.fetchSearchVideos, {
+            params: {
+                part: "snippet",
+                q: keyword,
+                regionCode: "KR",
+                maxResults: 10,
+                type: "video"
+            }
+        });
+        console.log(tag, "fetchSearchVideos response", response);
+        return response;
+    } catch (e) {
+        console.log(tag, "SearchVideos can't get response data", e);
+    }
+}
