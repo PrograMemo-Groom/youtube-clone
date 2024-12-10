@@ -5,6 +5,7 @@ import styles from "./App.module.css";
 import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/Sidebar";
 import SearchPage from "./components/search/Search";
+import Detail from "./components/detail/Detail";
 
 const LayOut = () => {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<LayOut />}>
           <Route index element={<MainPage />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path="detail" element={ <Detail/> } />
         </Route>
       </Routes>
     </div>
