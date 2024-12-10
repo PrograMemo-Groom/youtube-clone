@@ -3,4 +3,7 @@
 }
 .container {
   /*text-align: center;*/
+    box-sizing: content-box;
+    object-fit: contain;
+    padding-top: 60px;
 }
