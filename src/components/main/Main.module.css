@@ -5,9 +5,10 @@
 
 .categoryBar {
     display: flex;
-    overflow-x: hidden;
+    overflow-x: auto;
     padding: 10px 20px;
     border-bottom: 1px solid #ddd;
+    scroll-behavior: smooth;
 }
 
 .categoryButton {
@@ -24,4 +25,46 @@
 
 .categoryButton:hover {
     background-color: #e4e4e4;
+}
+
+.categoryWrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.categoryBar::-webkit-scrollbar {
+    display: none;
+}
+
+.prevButton, .nextButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.prevButton {
+    left: 10px;
+}
+
+.nextButton {
+    right: 10px;
+}
+
+.prevButton:hover, .nextButton:hover {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
