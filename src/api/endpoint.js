@@ -1,6 +1,6 @@
 const requests = {
     fetchPopularVideos: `/videos`,
-    fetchSearchVideos: (keyword) => `/search/${keyword}`,
+    fetchSearchVideos: `/search`,
     fetchCategoryVideos: (id) => `/videoCategories/${id}`
 }
 
