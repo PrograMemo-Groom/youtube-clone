@@ -1,10 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "./Search.module.css";
 import {useLocation} from "react-router-dom";
+import {fetchSearchVideos} from "../../service/VideoService";
 
 const tag = '[SearchPage]';
 const Search = () => {
-    const [search, setSearch] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    const [nextToken, setNextToken] = useState("");
     const useQuery = () => {
         return new URLSearchParams(useLocation().search);
     }
@@ -12,13 +14,21 @@ const Search = () => {
     const searchTerm = query.get("q");
 
     useEffect(() => {
-        setSearch(searchTerm);
-        console.log(tag, searchTerm);
-    }, []);
+        if (searchTerm.trim().length > 0) {
+            setSearchResult(fetchSearchVideos(searchTerm).items);
+            console.log("여기");
+            setNextToken(searchResult.pageToken);
+        }
+    }, [fetchSearchVideos]);
 
     return (
-        <div className={styles.container}>
-            {search && search}
+        <div>
+            <div>{nextToken}</div>
+
+            <p>{nextToken && nextToken}</p>
+            {searchResult?.map((item) => {
+                <p>{item.title}</p>
+            })}
         </div>
     );
 };

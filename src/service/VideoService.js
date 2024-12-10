@@ -41,8 +41,26 @@ export const fetchSearchVideos = async (keyword) => {
                 type: "video"
             }
         });
-        console.log(tag, "fetchSearchVideos response", response);
-        return response;
+        console.log("response",response);
+        // 떨어지는 data 가공
+        const items = response.items.map((item) => ({
+            videoId: item.id.videoId,
+            channelId: item.snippet.channelId,
+            channelTitle: item.snippet.channelTitle,
+            description: item.snippet?.description,
+            publishTime: item.snippet.publishTime,
+            defaultThumbnail: item.snippet.thumbnails.default,
+            highThumbnail: item.snippet.thumbnails.high,
+            mediumThumbnail: item.snippet.thumbnails.medium,
+            title: item.snippet.title,
+        }))
+        // console.log("items", items);
+        const result = {
+            pageToken: response?.nextPageToken,
+            items: items
+        }
+        console.log(tag, "fetchSearchVideos response", result);
+        return result;
     } catch (e) {
         console.log(tag, "SearchVideos can't get response data", e);
     }
