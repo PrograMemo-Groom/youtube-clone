@@ -4,6 +4,7 @@ import MainPage from "./components/main/Main";
 import styles from "./App.module.css";
 import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/Sidebar";
+import MyPage from "./components/myPage/MyPage";
 
 const LayOut = () => {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<LayOut />}>
           <Route index element={<MainPage />} />
           {/*<Route path="search" element={<SearchPage />} />*/}
+            <Route path="/myPage" element={<MyPage />} />
         </Route>
       </Routes>
     </div>
