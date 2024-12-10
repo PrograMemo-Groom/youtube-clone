@@ -4,8 +4,8 @@ import styles from './Header.module.css';
 const Header = () => {
     return (
         <div className={styles.header}>
-            <section className={styles.section1}>
-                <div className={styles.burger}>
+            <section>
+                <div className={styles.icoContainer}>
                     <img src={`${process.env.PUBLIC_URL}/assets/white/burger.svg`}
                          alt="menu"/>
                 </div>
@@ -21,21 +21,21 @@ const Header = () => {
                     <img className={styles.keyboardIco} src="//www.gstatic.com/inputtools/images/tia.png"
                          name="search_query"
                          property="youtube" alt="keyboard"/>
-                    <button>
-                        <img src={`${process.env.PUBLIC_URL}/assets/white/search.svg`}
+                    <button className={styles.searchButton}>
+                        <img className={styles.icoImg} src={`${process.env.PUBLIC_URL}/assets/white/search.svg`}
                              alt="검색"/>
                     </button>
                 </div>
-                <div className={styles.mic}>
-                <img src={`${process.env.PUBLIC_URL}/assets/white/mic.svg`} alt="마이크"/>
+                <div className={styles.icoContainer}>
+                    <img src={`${process.env.PUBLIC_URL}/assets/white/mic.svg`} alt="마이크"/>
                 </div>
             </section>
             <section className={styles.section3}>
-                <div className={styles.icoImg}>
-                    <img src={`${process.env.PUBLIC_URL}/assets/white/makeVideo.svg`} alt="비디오추가"/>
+                <div className={styles.icoContainer}>
+                    <img className={styles.icoImg} src={`${process.env.PUBLIC_URL}/assets/white/makeVideo.svg`} alt="비디오추가"/>
                 </div>
-                <div className={styles.icoImg}>
-                    <img src={`${process.env.PUBLIC_URL}/assets/white/notice.svg`} alt="알림"/>
+                <div className={styles.icoContainer}>
+                    <img className={styles.icoImg} src={`${process.env.PUBLIC_URL}/assets/white/notice.svg`} alt="알림"/>
                 </div>
                 <div className={styles.myPageIco}>
                     <span>My</span>
