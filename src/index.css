@@ -1,3 +1,15 @@
+:root {
+  --dark--theme-background-color: rgb(15, 15, 15);
+  --dark--theme-text-color: white;
+  --dark--theme-menu-item-background-color: rgb(38, 38, 38);
+  --dark--theme-menu-item-text-color: white;
+
+  --light--theme-background-color: white;
+  --light--theme-text-color: black;
+  --light--theme-menu-item-background-color: rgb(242, 242, 242);
+  --light--theme-menu-item-text-color: black;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
