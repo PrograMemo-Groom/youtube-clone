@@ -1,0 +1,61 @@
+.contents-container {
+    width: 72%;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    background-color: aquamarine;
+}
+
+.user-page-info-container {
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    margin: 2rem auto;
+    background-color: beige;
+    padding: 2rem;
+}
+
+.user-profile-img {
+    width: 8rem;
+    border-radius: 5rem;
+    margin-right: 2rem;
+}
+
+.user-name-and-id-container {
+    width: 20rem;
+    height: 3.5rem;
+    background-color: blueviolet;
+}
+
+.user-name-container {
+    display: flex;
+    height: 3.5rem;
+    flex-direction: column;
+    background-color: aqua;
+    gap: 0.5rem;
+}
+
+.user-name {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.user-channel-move {
+    color: #a2a2a2;
+    font-weight: 450;
+}
+
+.changes-id {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-top: 2rem;
+}
+
+.chang-id-icon {
+    width: 1.5rem;
+}
+
+.changes-id-text {
+    font-size: 1.2rem;
+}
