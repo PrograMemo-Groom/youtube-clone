@@ -15,11 +15,19 @@ function CreatorReserveTap() {
   const [video, setVideo] = useState([{
     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
     channelName: "by. 채널명",
-    viewerCount: 11600000,
+    viewerCount: 1600000,
     uploadDate: "4년전",
     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
     timestamp: "1:13:41",
   }]);
+
+  function formatViewerCount(count) {
+    if (count < 10000) {
+        return `${count}회`; // 1만 미만은 그대로 표시
+    }
+    const formattedCount = (count / 10000).toFixed(); // 1만 단위로 나누고 소수점 1자리까지 표시
+    return `${formattedCount}만회`;
+}
 
   return (
     <section className='creator-reserve-container'>
@@ -45,7 +53,7 @@ function CreatorReserveTap() {
               <div className='video-title'>{video.title}</div>
               <div className='channel-name'>{video.channelName}</div>
               <div className='video-info'>
-                <span className='viewer-count'>{video.viewerCount}</span>
+                <span className='viewer-count'>{formatViewerCount(video.viewerCount)}</span>
                 <span className='upload-date'> {video.uploadDate}</span>
               </div>
 
