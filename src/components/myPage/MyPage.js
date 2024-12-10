@@ -13,7 +13,7 @@ export default function MyPage() {
                         <p className="user-name">공공</p>
                         <a href="https://www.naver.com/" className="user-channel-move">@o0_o0_o0 &#183; 채널 보기</a>
                     </section>
-                    <div>
+                    <div className="changes-container">
                         <section className="changes-id-container">
                             <img className="chang-id-icon"
                                  src="/assets/mypage/profile-icon.svg"
@@ -30,6 +30,12 @@ export default function MyPage() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="view-record-container">
+                <section className="view-record-text-btn">
+                    <p>기록</p>
+                    <button>모두 보기</button>
+                </section>
             </div>
         </div>
     )
