@@ -23,7 +23,7 @@ const Header = () => {
                     <img className={styles.keyboardIco} src="//www.gstatic.com/inputtools/images/tia.png"
                          name="search_query"
                          property="youtube" alt="keyboard"/>
-                    <button className={styles.searchButton}>
+                    <button className={styles.searchButton} onClick={() => link("/search")}>
                         <img className={styles.icoImg} src={`${process.env.PUBLIC_URL}/assets/white/search.svg`}
                              alt="검색"/>
                     </button>

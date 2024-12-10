@@ -4,6 +4,7 @@ import MainPage from "./components/main/Main";
 import styles from "./App.module.css";
 import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/Sidebar";
+import SearchPage from "./components/search/Search";
 
 const LayOut = () => {
   return (
@@ -25,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LayOut />}>
           <Route index element={<MainPage />} />
-          {/*<Route path="search" element={<SearchPage />} />*/}
+          <Route path="search" element={<SearchPage />} />
         </Route>
       </Routes>
     </div>
