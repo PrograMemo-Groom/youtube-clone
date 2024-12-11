@@ -159,7 +159,7 @@
 /* 데스크탑 (1200px ~) */
 @media screen and (min-width: 1710px) {
     .user-profile-img {
-        width: 9rem;
+        width: 8rem;
     }
 
     .user-name {
