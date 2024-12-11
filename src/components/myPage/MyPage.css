@@ -2,16 +2,13 @@
     width: 72%;
     height: 100vh;
     margin: 0 auto;
-    display: flex;
-    background-color: aquamarine;
 }
 
 .user-page-info-container {
     width: 100%;
     height: 8rem;
     display: flex;
-    margin: 2rem auto;
-    background-color: beige;
+    margin: 1rem auto 0 auto;
     padding: 2rem;
 }
 
@@ -24,14 +21,12 @@
 .user-name-and-id-container {
     width: 20rem;
     height: 3.5rem;
-    background-color: blueviolet;
 }
 
 .user-name-container {
     display: flex;
     height: 3.5rem;
     flex-direction: column;
-    background-color: aqua;
     gap: 0.5rem;
 }
 
@@ -43,19 +38,97 @@
 .user-channel-move {
     color: #a2a2a2;
     font-weight: 450;
+    text-decoration: none;
 }
 
-.changes-id {
+.Google-id-change-container {
+    display: flex;
+}
+
+.changes-container {
+    width: 100%;
+}
+
+.changes-id-container,
+.Google-id-container {
     display: flex;
     align-items: center;
     gap: 0.2rem;
-    margin-top: 2rem;
+    margin-bottom: 0.2rem;
+}
+
+.changes-id-container {
+    margin-top: 1rem;
 }
 
 .chang-id-icon {
-    width: 1.5rem;
+    width: 1.3rem;
 }
 
 .changes-id-text {
+    font-size: 1rem;
+}
+
+.view-record-container {
+    width: 100%;
+    height: 2.5rem;
+    margin-left: 1.8rem;
+}
+
+.view-record-text-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.view-record-text-btn > button {
+    width: 6.2rem;
+    height: 2.5rem;
+    border: #a2a2a2 0.1rem solid;
+    border-radius: 3rem;
+    background-color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-right: 1.5rem;
+}
+
+.view-record-contents-container {
+    display: flex;
+    width: 100%;
+    height: 15rem;
+    margin-top: 1rem;
+}
+
+.video-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.video-item {
+    align-items: flex-start;
+    width: calc(100% / 5 - 1rem);
+}
+
+.video-thumbnail-container {
+    width: 210px;
+    height: 114px;
+    flex-shrink: 0; /* 썸네일 크기 고정 */
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+.video-info-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    line-height: 1.5;
 }
