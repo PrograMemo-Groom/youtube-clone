@@ -155,8 +155,6 @@
     margin-top: 1rem;
 }
 
-/* 반응형 */
-/* 데스크탑 (1200px ~) */
 @media screen and (min-width: 1710px) {
     .user-profile-img {
         width: 8rem;
@@ -165,9 +163,12 @@
     .user-name {
         font-size: 2.2rem;
     }
+
+    .video-item {
+        width: calc(100% / 6 - 1rem);
+    }
 }
 
-/* 태블릿 (768px ~ 1200px) */
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .user-page-info-container {
         flex-direction: column;
@@ -188,9 +189,29 @@
     .user-name {
         font-size: 1.8rem;
     }
+
+    .view-record-container {
+        margin-left: 1rem;
+    }
+
+    .view-record-text-btn > button {
+        margin-right: 3rem;
+    }
+
+    .video-item {
+        width: calc(100% / 3 - 1rem);
+    }
+
+    .video-thumbnail-container {
+        width: 180px;
+        height: 102px;
+    }
+
+    .video-info-container {
+        font-size: 0.9rem;
+    }
 }
 
-/* 모바일 (480px ~ 768px) */
 @media screen and (max-width: 768px) and (min-width: 480px) {
     .user-profile-img {
         width: 6rem;
@@ -207,9 +228,25 @@
     .changes-id-text {
         font-size: 0.9rem;
     }
+
+    .view-record-container {
+        margin-left: 0.5rem;
+    }
+
+    .view-record-text-btn {
+        font-size: 1rem;
+    }
+
+    .video-item {
+        width: calc(100% / 2 - 1rem);
+    }
+
+    .video-thumbnail-container {
+        width: 150px;
+        height: 85px;
+    }
 }
 
-/* 작은 모바일 (480px 이하) */
 @media screen and (max-width: 480px) {
     .user-page-info-container {
         flex-direction: column;
@@ -234,63 +271,7 @@
     .changes-id-text {
         font-size: 0.8rem;
     }
-}
 
-/* 비디오 콘텐츠 */
-/* 데스크탑 (1200px 이상) */
-@media screen and (min-width: 1200px) {
-    .video-item {
-        width: calc(100% / 6 - 1rem);
-    }
-
-}
-
-/* 태블릿 (768px ~ 1200px) */
-@media screen and (max-width: 1200px) and (min-width: 768px) {
-    .view-record-container {
-        margin-left: 1rem;
-    }
-
-    .view-record-text-btn > button {
-        margin-right: 3rem;
-    }
-
-    .video-item {
-        width: calc(100% / 3 - 1rem);
-    }
-
-    .video-thumbnail-container {
-        width: 180px;
-        height: 102px;
-    }
-
-    .video-info-container {
-        font-size: 0.9rem;
-    }
-}
-
-/* 모바일 (480px ~ 768px) */
-@media screen and (max-width: 768px) and (min-width: 480px) {
-    .view-record-container {
-        margin-left: 0.5rem;
-    }
-
-    .view-record-text-btn {
-        font-size: 1rem;
-    }
-
-    .video-item {
-        width: calc(100% / 2 - 1rem);
-    }
-
-    .video-thumbnail-container {
-        width: 150px;
-        height: 85px;
-    }
-}
-
-/* 작은 모바일 (480px 이하) */
-@media screen and (max-width: 480px) {
     .view-record-container {
         margin-left: 0;
     }
