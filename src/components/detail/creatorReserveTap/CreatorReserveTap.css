@@ -26,6 +26,7 @@
 .left-arrow, .right-arrow{
     font-weight: bold;
     width: 20px;
+    cursor: pointer;
 }
 .left-arrow.dark, .right-arrow.dark{
     color: var(--dark--theme-text-color);
