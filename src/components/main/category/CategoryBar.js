@@ -26,35 +26,30 @@ const scrollRight = () => {
     });
 };
 
-//좌우 스크롤 버튼 상태 업데이트
 const handleScroll = () => {
     const {scrollLeft, scrollWidth, clientWidth} = categoryBarRef.current;
     setPrevVisible(scrollLeft > 0);
     setNextVisible(scrollLeft + clientWidth < scrollWidth - 1);
 };
 
-
 const updateButtonVisibility = () => {
     const {scrollWidth, clientWidth} = categoryBarRef.current;
 
     // 화면 크기 변화에 따른 버튼 상태 업데이트
-    setNextVisible(scrollWidth > clientWidth); // 스크롤 가능 여부 확인
-    setPrevVisible(false); // 화면 크기 조정 시 초기화
+    setNextVisible(scrollWidth > clientWidth);
+    setPrevVisible(false);
 };
 
 useEffect(() => {
     if (categoryBarRef.current) {
-        updateButtonVisibility(); // 초기 로드 시 버튼 상태 확인
+        updateButtonVisibility();
     }
 
-    // 인기 있는 video를 가져오는 부분
-    //setVideo(fetchPopularVideos());
 
-    // resize 이벤트 리스너 추가
     window.addEventListener('resize', updateButtonVisibility);
 
     return () => {
-        // 컴포넌트 언마운트 시 이벤트 리스너 제거
+
         window.removeEventListener('resize', updateButtonVisibility);
     };
 }, []);
