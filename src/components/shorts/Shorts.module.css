@@ -1,7 +1,12 @@
+:root{
+    --border-color:#E5E5E5;
+}
+
 .Shorts_Container{
     height: 100vh;
     display: flex;
     flex-direction: column;
+    padding: 8px;
 }
 
 .section_Container{
