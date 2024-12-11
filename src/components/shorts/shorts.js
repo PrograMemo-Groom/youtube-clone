@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './Shorts.module.css';
 
 function Shorts() {
   return (
