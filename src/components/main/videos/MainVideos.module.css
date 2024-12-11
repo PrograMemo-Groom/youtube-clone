@@ -1,0 +1,81 @@
+.videoGrid {
+    display: grid;
+    column-gap: 16px;
+    row-gap: 40px;
+    padding: 10px 20px;
+    margin-left: 10px;
+}
+
+@media (max-width: 700px) {
+    .videoGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+    .videoGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1101px) and (max-width: 1420px) {
+    .videoGrid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (min-width: 1421px) {
+    .videoGrid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.thumbnailRow {
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.thumbnail {
+    width: 100%;
+    border-radius: 5%;
+}
+
+.videoTime {
+    position: absolute;
+    bottom: 8px;
+    right: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px;
+    background-color: rgba(0, 0, 0, 0.65); /* 검정색, 투명도 65% */
+    border-radius: 10%;
+    color: white;
+}
+
+.videoInfoGrid {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+}
+
+.profilePicture {
+    width: 36px;
+    border-radius: 50%;
+}
+
+.videoAuthor {
+    margin-bottom: 4px;
+}
+
+.videoTitle {
+    margin-top: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.videoAuthor,
+.videoStats {
+    font-size: 12px;
+    color: #858585;
+}
