@@ -154,3 +154,163 @@
 .video-channel {
     margin-top: 1rem;
 }
+
+/* 반응형 */
+/* 데스크탑 (1200px ~) */
+@media screen and (min-width: 1710px) {
+    .user-profile-img {
+        width: 9rem;
+    }
+
+    .user-name {
+        font-size: 2.2rem;
+    }
+}
+
+/* 태블릿 (768px ~ 1200px) */
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+    .user-page-info-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: auto;
+    }
+
+    .user-profile-img {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .user-name-and-id-container {
+        width: auto;
+    }
+
+    .user-name {
+        font-size: 1.8rem;
+    }
+}
+
+/* 모바일 (480px ~ 768px) */
+@media screen and (max-width: 768px) and (min-width: 480px) {
+    .user-profile-img {
+        width: 6rem;
+    }
+
+    .user-name {
+        font-size: 1.5rem;
+    }
+
+    .chang-id-icon {
+        width: 1rem;
+    }
+
+    .changes-id-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* 작은 모바일 (480px 이하) */
+@media screen and (max-width: 480px) {
+    .user-page-info-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .user-profile-img {
+        width: 5rem;
+    }
+
+    .user-name {
+        font-size: 1.2rem;
+    }
+
+    .changes-id-container,
+    .Google-id-container {
+        gap: 0.1rem;
+    }
+
+    .changes-id-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* 비디오 콘텐츠 */
+/* 데스크탑 (1200px 이상) */
+@media screen and (min-width: 1200px) {
+    .video-item {
+        width: calc(100% / 6 - 1rem);
+    }
+
+}
+
+/* 태블릿 (768px ~ 1200px) */
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+    .view-record-container {
+        margin-left: 1rem;
+    }
+
+    .view-record-text-btn > button {
+        margin-right: 3rem;
+    }
+
+    .video-item {
+        width: calc(100% / 3 - 1rem);
+    }
+
+    .video-thumbnail-container {
+        width: 180px;
+        height: 102px;
+    }
+
+    .video-info-container {
+        font-size: 0.9rem;
+    }
+}
+
+/* 모바일 (480px ~ 768px) */
+@media screen and (max-width: 768px) and (min-width: 480px) {
+    .view-record-container {
+        margin-left: 0.5rem;
+    }
+
+    .view-record-text-btn {
+        font-size: 1rem;
+    }
+
+    .video-item {
+        width: calc(100% / 2 - 1rem);
+    }
+
+    .video-thumbnail-container {
+        width: 150px;
+        height: 85px;
+    }
+}
+
+/* 작은 모바일 (480px 이하) */
+@media screen and (max-width: 480px) {
+    .view-record-container {
+        margin-left: 0;
+    }
+
+    .view-record-text-btn {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .video-item {
+        width: 100%;
+    }
+
+    .video-thumbnail-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .video-info-container {
+        font-size: 0.8rem;
+    }
+}
