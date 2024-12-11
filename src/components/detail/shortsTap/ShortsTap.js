@@ -3,6 +3,11 @@ import formatViewerCount from "../../../utils/formatViewerCount";
 import "./ShortsTap.css";
 
 function ShortsTap() {
+  const dark = "dark";
+  const light = "light";
+  // true는 Light Mode, false는 Dark Mode
+  const [theme, setTheme] = useState(true);
+  
   const [shorts, setShorts] = useState([
     {
       id: 1,
