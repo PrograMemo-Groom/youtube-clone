@@ -62,9 +62,7 @@ function CreatorReserveTap() {
               <div className='channel-name'>{video.channelName}</div>
               <div className='video-info'>
                 <span className='viewer-count'>
-                  {formatViewerCount(video.viewerCount)}
-                </span>
-                <span className='upload-date'> {video.uploadDate}</span>
+                  {formatViewerCount(video.viewerCount)}•{video.uploadDate}</span>
               </div>
 
               <img
