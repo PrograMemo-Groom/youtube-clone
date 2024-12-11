@@ -6,8 +6,10 @@ import Panel from './Panel.js';
 function Shorts() {
   return (
     <main className={styles.Shorts_Container}>
-      <Video />
-      <Panel />
+      <section className={styles.section_Container}>
+        <Video />
+        <Panel />
+      </section>
     </main>
   )
 }

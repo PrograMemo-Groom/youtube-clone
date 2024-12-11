@@ -1,4 +1,11 @@
 .Shorts_Container{
-    background-color: aquamarine;
-    
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.section_Container{
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
