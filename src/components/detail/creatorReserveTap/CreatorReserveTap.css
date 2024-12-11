@@ -17,26 +17,26 @@
     background-color: var(--light--theme-background-color);
 }
 
-.menu-section {
+.creator-reserve-container .menu-section {
     display: flex;
     align-items: center;
     justify-content: space-between;  
     height: 48px;
     padding: 5px;
 }
-.left-arrow, .right-arrow{
+.creator-reserve-container .left-arrow, .creator-reserve-container .right-arrow {
     font-weight: bold;
     width: 20px;
     cursor: pointer;
 }
-.left-arrow.dark, .right-arrow.dark{
+.creator-reserve-container .left-arrow.dark, .creator-reserve-container .right-arrow.dark{
     color: var(--dark--theme-text-color);
 }
-.left-arrow.light, .right-arrow.light{
+.creator-reserve-container .left-arrow.light, .creator-reserve-container .right-arrow.light{
     color: var(--light--theme-text-color);
 }
 
-.menu-list {
+.creator-reserve-container .menu-list {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -46,11 +46,11 @@
     overflow-x: auto;
     scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
 }
-.menu-list::-webkit-scrollbar {
+.creator-reserve-container .menu-list::-webkit-scrollbar {
     display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
 }
 
-.menu-item {
+.creator-reserve-container .menu-item {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,25 +65,25 @@
     flex-shrink: 0;
     cursor: pointer;
 }
-.menu-item.dark {
+.creator-reserve-container .menu-item.dark {
     color: var(--dark--theme-text-color);
     background-color: var(--dark--theme-menu-item-background-color);
 }
-.menu-item.dark.clicked {
+.creator-reserve-container .menu-item.dark.clicked {
     color: var(--light--theme-text-color);
     background-color: var(--light--theme-menu-item-background-color);
 }
-.menu-item.light {
+.creator-reserve-container .menu-item.light {
     color: var(--light--theme-text-color);
     background-color: var(--light--theme-menu-item-background-color);
 }
-.menu-item.light.clicked {
+.creator-reserve-container .menu-item.light.clicked {
     color: var(--dark--theme-text-color);
     background-color: var(--dark--theme-menu-item-background-color);
 }
 
 
-.video-section {
+.creator-reserve-container .video-section {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -91,14 +91,14 @@
     height: 100px;
 }
 
-.video-box {
+.creator-reserve-container .video-box {
     position: relative;
     width: 168px;
     height: 94px;
     justify-content: space-between;
 }
 
-.video {
+.creator-reserve-container .video {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -106,7 +106,7 @@
     cursor: pointer;
 }
 
-.video-details {
+.creator-reserve-container .video-details {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -115,25 +115,25 @@
     height:100%;
 }
 
-.video-title{
+.creator-reserve-container .video-title{
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
 }
-.video-title.dark{
+.creator-reserve-container .video-title.dark{
     color: var(--dark--theme-text-color);
 }
-.video-title.light{
+.creator-reserve-container .video-title.light{
     color: var(--light--theme-text-color);
 }
 
-.channel-name, .video-info {
+.creator-reserve-container .channel-name, .video-info {
     font-size: 12px;
     color: gray;
     font-weight: bold;
 }
 
-.more-btn {
+.creator-reserve-container .more-btn {
     position: absolute;
     top: 0;
     right: 0;
@@ -141,7 +141,7 @@
     height: 24px;
 }
 
-.time-stamp {
+.creator-reserve-container .time-stamp {
     font-size: 12px;
     position: absolute;
     bottom: 2px;
