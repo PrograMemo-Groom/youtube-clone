@@ -68,9 +68,17 @@
     color: var(--dark--theme-text-color);
     background-color: var(--dark--theme-menu-item-background-color);
 }
+.menu-item.dark.clicked {
+    color: var(--light--theme-text-color);
+    background-color: var(--light--theme-menu-item-background-color);
+}
 .menu-item.light {
     color: var(--light--theme-text-color);
     background-color: var(--light--theme-menu-item-background-color);
+}
+.menu-item.light.clicked {
+    color: var(--dark--theme-text-color);
+    background-color: var(--dark--theme-menu-item-background-color);
 }
 
 

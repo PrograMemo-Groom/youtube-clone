@@ -6,9 +6,10 @@ function CreatorReserveTap() {
   const light = "light";
 
   const categoryBarRef = useRef(null);
+  // const menuitem_ref = useRef(null);
 
   // true는 Light Mode, false는 Dark Mode
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = useState(false);
   const [menuList, setMenuList] = useState([
     { id: 1, text: "모두" },
     { id: 2, text: "시리즈" },
@@ -19,6 +20,9 @@ function CreatorReserveTap() {
     { id: 7, text: "blue rain 제공" },
     { id: 8, text: "관련 콘텐츠" },
   ]);
+
+  const [menu, setMenu] = useState("");
+
   const [video, setVideo] = useState([
     {
       title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
@@ -40,12 +44,27 @@ function CreatorReserveTap() {
 
   const handleScroll = (direction) => {
     const scrollContainer = categoryBarRef.current;
-    const scrollAmount = scrollContainer.clientWidth; 
+    const scrollAmount = scrollContainer.clientWidth;
     if (direction === "left") {
       scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
     } else if (direction === "right") {
       scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
+  };
+
+  const handleMenuClick = (e) => {
+    const clickedElement = e.target;
+    setMenu(clickedElement.innerText);
+    console.log(clickedElement); 
+
+     // 모든 메뉴를 순회하면서 Clicked 클래스를 제거
+     const menuItems = document.querySelectorAll(".menu-item");
+     menuItems.forEach((menuItem) => {
+       menuItem.classList.remove("clicked");
+     });
+
+    //Clicked 클래스를 추가
+    clickedElement.classList.add("clicked");
   };
 
   return (
@@ -59,14 +78,22 @@ function CreatorReserveTap() {
         </span>
         <div className='menu-list' ref={categoryBarRef}>
           {menuList.map((menu) => (
-            <div className={`menu-item ${theme ? light : dark}`} key={menu.id}>
+            <div
+              className={`menu-item ${theme ? light : dark}`}
+              key={menu.id}
+              // ref={menuitem_ref}
+              onClick={handleMenuClick}
+            >
               {menu.text}
             </div>
           ))}
         </div>
-        <span 
+        <span
           onClick={() => handleScroll("right")}
-          className={`right-arrow ${theme ? light : dark}`}>{">"}</span>
+          className={`right-arrow ${theme ? light : dark}`}
+        >
+          {">"}
+        </span>
       </div>
       {video && video.length > 0 ? (
         video.map((video, index) => (
