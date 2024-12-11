@@ -9,14 +9,14 @@ function CreatorReserveTap() {
   const [theme, setTheme] = useState(true);
   
   const [menuList, setMenuList] = useState([
-    { id: Date.now(), text: "모두" },
-    { id: Date.now(), text: "시리즈" },
-    { id: Date.now(), text: "blue rain 제공" },
-    { id: Date.now(), text: "관련 콘텐츠" },
-    { id: Date.now(), text: "blue rain 제공" },
-    { id: Date.now(), text: "관련 콘텐츠" },
-    { id: Date.now(), text: "blue rain 제공" },
-    { id: Date.now(), text: "관련 콘텐츠" },
+    {id : 1, text: "모두" },
+    {id : 2, text: "시리즈" },
+    {id : 3, text: "blue rain 제공" },
+    {id : 4, text: "관련 콘텐츠" },
+    {id : 5, text: "blue rain 제공" },
+    {id : 6, text: "관련 콘텐츠" },
+    {id : 7, text: "blue rain 제공" },
+    {id : 8, text: "관련 콘텐츠" },
   ]);
   const [video, setVideo] = useState([
     {
@@ -51,8 +51,8 @@ function CreatorReserveTap() {
         <span className={`right-arrow ${theme? light : dark}`}>{">"}</span>
       </div>
       {video && video.length > 0 ? (
-        video.map((video) => (
-          <div className='video-section' key={video.id}>
+        video.map((video, index) => (
+          <div className='video-section' key={index}>
             <div className='video-box'>
               <img src={video.videoSrc} alt='썸네일' className='video'></img>
               <span className='time-stamp'>{video.timestamp}</span>
