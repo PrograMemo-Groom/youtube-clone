@@ -1,4 +1,5 @@
 .creator-reserve-container{
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 10px;
