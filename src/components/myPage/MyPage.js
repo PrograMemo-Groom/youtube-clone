@@ -111,46 +111,46 @@ export default function MyPage() {
                             <section className="video-item" key={`${i}-${video.videoId}`}>
                                 {/*<div className="video-thumbnail-container">*/}
                                 {/*    <section className="video-item" key={video.videoId}>*/}
-                                        <div className="video-thumbnail-container">
-                                            <img
-                                                className="video-thumbnail"
-                                                src={video.thumbnail}
-                                                alt={video.title}
-                                            />
-                                        </div>
-                                        <div className="video-info-container">
-                                            <h3 className="video-title">{video.title}</h3>
-                                            <p className="video-channel">{video.channel}</p>
-                                            <p className="video-meta">
-                                                {video.view} · {video.uploadedAt}
-                                            </p>
-                                        </div>
-                                    </section>
-                                    ))}
+                                <div className="video-thumbnail-container">
+                                    <img
+                                        className="video-thumbnail"
+                                        src={video.thumbnail}
+                                        alt={video.title}
+                                    />
+                                </div>
+                                <div className="video-info-container">
+                                    <h3 className="video-title">{video.title}</h3>
+                                    <p className="video-channel">{video.channel}</p>
+                                    <p className="video-meta">
+                                        {video.view} · {video.uploadedAt}
+                                    </p>
+                                </div>
                             </section>
-
-                        {/*<section className="video-list">*/}
-                        {/*    {videoData.map((video) => (*/}
-                        {/*        <section className="video-item" key={video.videoId}>*/}
-                        {/*            <img*/}
-                        {/*                className="video-thumbnail"*/}
-                        {/*                // src={thumbnailUrl(video.videoId)}*/}
-                        {/*                src={video.thumbnail}*/}
-                        {/*                alt={video.title}*/}
-                        {/*            />*/}
-                        {/*            <div className="video-info">*/}
-                        {/*                <h3 className="video-title">{video.title}</h3>*/}
-                        {/*                <p className="video-channel">{video.channel}</p>*/}
-                        {/*                <p className="video-meta">*/}
-                        {/*                    {video.view} · {video.uploadedAt}*/}
-                        {/*                </p>*/}
-                        {/*            </div>*/}
-                        {/*        </section>*/}
-                        {/*    ))}*/}
-                        {/*</section>*/}
+                        ))}
                     </section>
+
+                    {/*<section className="video-list">*/}
+                    {/*    {videoData.map((video) => (*/}
+                    {/*        <section className="video-item" key={video.videoId}>*/}
+                    {/*            <img*/}
+                    {/*                className="video-thumbnail"*/}
+                    {/*                // src={thumbnailUrl(video.videoId)}*/}
+                    {/*                src={video.thumbnail}*/}
+                    {/*                alt={video.title}*/}
+                    {/*            />*/}
+                    {/*            <div className="video-info">*/}
+                    {/*                <h3 className="video-title">{video.title}</h3>*/}
+                    {/*                <p className="video-channel">{video.channel}</p>*/}
+                    {/*                <p className="video-meta">*/}
+                    {/*                    {video.view} · {video.uploadedAt}*/}
+                    {/*                </p>*/}
+                    {/*            </div>*/}
+                    {/*        </section>*/}
+                    {/*    ))}*/}
+                    {/*</section>*/}
+                </section>
 
             </div>
         </div>
-)
+    )
 }
