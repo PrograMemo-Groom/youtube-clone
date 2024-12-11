@@ -1,0 +1,13 @@
+.mainVideo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 472px);
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    left: 70px;
+    top: 61px;
+    border: 1px solid red;
+}
