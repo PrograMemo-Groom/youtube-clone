@@ -24,10 +24,20 @@
     font-weight: 500;
     transition: color 0.3s ease;
     margin-top: 8px;
+    border-radius: 10px;
+}
+
+.sidebar_Item:hover {
+    transform: scale(1.1);
 }
 
 .sidebar_icon {
     width: 25px;
     height: 25px;
     margin-bottom: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar_Item:hover .sidebar_icon {
+    transform: scale(1.2);
 }
