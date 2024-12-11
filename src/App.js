@@ -8,7 +8,7 @@ import MyPage from "./components/myPage/MyPage";
 import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
 import SubscribeDemo from "./components/Subscribe-demo";
-import Shorts from "./components/shorts/Shorts";
+// import Shorts from "./components/shorts/Shorts";
 
 const LayOut = () => {
     return (
