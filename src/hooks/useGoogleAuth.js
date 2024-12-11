@@ -1,8 +1,8 @@
-import { useGoogleLogin } from "@react-oauth/google";
+import {useGoogleLogin} from "@react-oauth/google";
 import {API_OAUTH_URL} from "../config/config";
 
-const oauth = () => {
-    const googleLogin = useGoogleLogin({
+const useGoogleAuth = () => {
+    const login = useGoogleLogin({
         onSuccess: (response) => {
             console.log("Client Login Access Token:", response);
             return response.access_token;
@@ -12,8 +12,7 @@ const oauth = () => {
         },
         scope: API_OAUTH_URL,
     });
-
-    return googleLogin;
+    return login;
 };
 
-export default oauth;
+export default useGoogleAuth;
