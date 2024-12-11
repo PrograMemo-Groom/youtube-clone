@@ -64,6 +64,27 @@ export default function MyPage() {
                     <p>기록</p>
                     <button>모두 보기</button>
                 </section>
+                <section className="view-record-contents-container">
+                    <section className="video-list">
+                        {videoData.map((video) => (
+                            <section className="video-item" key={video.videoId}>
+                                <img
+                                    className="video-thumbnail"
+                                    src={thumbnailUrl(video.videoId)}
+                                    alt={video.title}
+                                />
+                                <div className="video-info">
+                                    <h3 className="video-title">{video.title}</h3>
+                                    <p className="video-channel">{video.channel}</p>
+                                    <p className="video-meta">
+                                        {video.view} · {video.uploadedAt}
+                                    </p>
+                                </div>
+                            </section>
+                        ))}
+                    </section>
+                </section>
+
             </div>
         </div>
     )
