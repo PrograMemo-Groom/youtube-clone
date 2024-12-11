@@ -8,6 +8,7 @@ import MyPage from "./components/myPage/MyPage";
 import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
 import SubscribeDemo from "./components/Subscribe-demo";
+import Shorts from "./components/shorts/Shorts";
 
 const LayOut = () => {
     return (
@@ -32,7 +33,9 @@ function App() {
                     <Route path="myPage" element={<MyPage />}/>
                     <Route path="search" element={<SearchPage/>}/>
                     <Route path="detail" element={<Detail/>}/>
-                    <Route path="subscribeDemo" element={<SubscribeDemo/>}/>
+                    <Route path="subscribe" element={<SubscribeDemo/>}/>
+                    {/*<Route path="subscribe" element={<SubscribeDemo/>}/>*/}
+                    {/*<Route path="shorts" element={<Shorts />}/>*/}
                 </Route>
             </Routes>
         </div>
