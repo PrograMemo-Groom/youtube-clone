@@ -28,6 +28,7 @@
 }
 
 .shorts-list {
+  position: relative;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -65,4 +66,22 @@
   margin-top: 10px;
   font-size: 14px;
   color: gray;
+}
+
+.shortsTap-container .left-arrow, .shortsTap-container .right-arrow {
+  cursor: pointer;
+  color: black;
+  font-size: 50px;
+  font-weight: bold;
+  top: 40%;
+  position: absolute;
+  z-index: 1;
+}
+
+.shortsTap-container .left-arrow {
+  left: 0;
+}
+
+.shortsTap-container .right-arrow {
+  right: 0;
 }

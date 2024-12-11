@@ -24,15 +24,15 @@
     height: 48px;
     padding: 5px;
 }
-.left-arrow, .right-arrow{
+.creator-reserve-container .left-arrow, .creator-reserve-container .right-arrow {
     font-weight: bold;
     width: 20px;
     cursor: pointer;
 }
-.left-arrow.dark, .right-arrow.dark{
+.creator-reserve-container .left-arrow.dark, .creator-reserve-container .right-arrow.dark{
     color: var(--dark--theme-text-color);
 }
-.left-arrow.light, .right-arrow.light{
+.creator-reserve-container .left-arrow.light, .creator-reserve-container .right-arrow.light{
     color: var(--light--theme-text-color);
 }
 
