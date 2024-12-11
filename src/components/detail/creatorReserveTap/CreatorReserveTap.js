@@ -5,11 +5,13 @@ function CreatorReserveTap() {
   const dark = "dark";
   const light = "light";
 
+  // 스크롤 이벤트를 위한 Ref
   const categoryBarRef = useRef(null);
-  // const menuitem_ref = useRef(null);
 
   // true는 Light Mode, false는 Dark Mode
-  const [theme, setTheme] = useState(false);
+  const [theme, setTheme] = useState(true);
+
+  // 메뉴 리스트
   const [menuList, setMenuList] = useState([
     { id: 1, text: "모두" },
     { id: 2, text: "시리즈" },
@@ -21,8 +23,10 @@ function CreatorReserveTap() {
     { id: 8, text: "관련 콘텐츠" },
   ]);
 
+  // 현재 선택된 메뉴
   const [menu, setMenu] = useState("");
 
+  // 비디오 리스트
   const [video, setVideo] = useState([
     {
       title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
@@ -33,7 +37,8 @@ function CreatorReserveTap() {
       timestamp: "1:13:41",
     },
   ]);
-
+  
+  // 숫자로 들어온 조회수 데이터를 1만 단위로 표시 함수
   function formatViewerCount(count) {
     if (count < 10000) {
       return `${count}회`; // 1만 미만은 그대로 표시
@@ -41,7 +46,8 @@ function CreatorReserveTap() {
     const formattedCount = (count / 10000).toFixed(); // 1만 단위로 나누고 소수점 1자리까지 표시
     return `${formattedCount}만회`;
   }
-
+  
+  // 스크롤 이벤트
   const handleScroll = (direction) => {
     const scrollContainer = categoryBarRef.current;
     const scrollAmount = scrollContainer.clientWidth;
@@ -52,6 +58,7 @@ function CreatorReserveTap() {
     }
   };
 
+  // 메뉴 클릭 이벤트
   const handleMenuClick = (e) => {
     const clickedElement = e.target;
     setMenu(clickedElement.innerText);
