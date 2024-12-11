@@ -7,7 +7,7 @@ const categories = [
     '최근에 업로드된 동영상', '감상한 동영상', '새로운 맞춤 동영상'
 ];
 
-const CategoryBar = ({ onCategoryClick }) => {
+const CategoryBar = () => {
 const categoryBarRef = useRef(null);
 const [isPrevVisible, setPrevVisible] = useState(false);
 const [isNextVisible, setNextVisible] = useState(false);
