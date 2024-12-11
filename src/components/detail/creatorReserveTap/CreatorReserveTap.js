@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./CreatorReserveTap.css";
 
 function CreatorReserveTap() {
   const dark = "dark";
   const light = "light";
 
+  const categoryBarRef = useRef(null);
+
   // true는 Light Mode, false는 Dark Mode
   const [theme, setTheme] = useState(true);
-  
   const [menuList, setMenuList] = useState([
-    { id: Date.now(), text: "모두" },
-    { id: Date.now(), text: "시리즈" },
-    { id: Date.now(), text: "blue rain 제공" },
-    { id: Date.now(), text: "관련 콘텐츠" },
-    { id: Date.now(), text: "blue rain 제공" },
-    { id: Date.now(), text: "관련 콘텐츠" },
-    { id: Date.now(), text: "blue rain 제공" },
-    { id: Date.now(), text: "관련 콘텐츠" },
+    { id: 1, text: "모두" },
+    { id: 2, text: "시리즈" },
+    { id: 3, text: "blue rain 제공" },
+    { id: 4, text: "관련 콘텐츠" },
+    { id: 5, text: "blue rain 제공" },
+    { id: 6, text: "관련 콘텐츠" },
+    { id: 7, text: "blue rain 제공" },
+    { id: 8, text: "관련 콘텐츠" },
   ]);
   const [video, setVideo] = useState([
     {
@@ -37,34 +38,52 @@ function CreatorReserveTap() {
     return `${formattedCount}만회`;
   }
 
+  const handleScroll = (direction) => {
+    const scrollContainer = categoryBarRef.current;
+    const scrollAmount = scrollContainer.clientWidth; 
+    if (direction === "left") {
+      scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    } else if (direction === "right") {
+      scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className={`creator-reserve-container ${theme? light : dark}`}>
+    <section className={`creator-reserve-container ${theme ? light : dark}`}>
       <div className='menu-section'>
-        <span className={`left-arrow ${theme? light : dark}`}>{"<"}</span>
-        <div className='menu-list'>
+        <span
+          onClick={() => handleScroll("left")}
+          className={`left-arrow ${theme ? light : dark}`}
+        >
+          {"<"}
+        </span>
+        <div className='menu-list' ref={categoryBarRef}>
           {menuList.map((menu) => (
-            <div className={`menu-item ${theme? light : dark}`} key={menu.id}>
+            <div className={`menu-item ${theme ? light : dark}`} key={menu.id}>
               {menu.text}
             </div>
           ))}
         </div>
-        <span className={`right-arrow ${theme? light : dark}`}>{">"}</span>
+        <span 
+          onClick={() => handleScroll("right")}
+          className={`right-arrow ${theme ? light : dark}`}>{">"}</span>
       </div>
       {video && video.length > 0 ? (
-        video.map((video) => (
-          <div className='video-section' key={video.id}>
+        video.map((video, index) => (
+          <div className='video-section' key={index}>
             <div className='video-box'>
               <img src={video.videoSrc} alt='썸네일' className='video'></img>
               <span className='time-stamp'>{video.timestamp}</span>
             </div>
             <div className='video-details'>
-              <div className={`video-title ${theme? light : dark}`}>{video.title}</div>
+              <div className={`video-title ${theme ? light : dark}`}>
+                {video.title}
+              </div>
               <div className='channel-name'>{video.channelName}</div>
               <div className='video-info'>
                 <span className='viewer-count'>
-                  {formatViewerCount(video.viewerCount)}
+                  {formatViewerCount(video.viewerCount)}•{video.uploadDate}
                 </span>
-                <span className='upload-date'> {video.uploadDate}</span>
               </div>
 
               <img

@@ -7,8 +7,9 @@
     display: flex;
     overflow-x: auto;
     padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
+    margin-left: 10px;
     scroll-behavior: smooth;
+    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
 }
 
 .categoryButton {
@@ -38,33 +39,56 @@
     display: none;
 }
 
-.prevButton, .nextButton {
+.buttonWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #ffffff;
+    z-index: 10;
+}
+
+.prevButton {
+    position: absolute;
+}
+
+.nextButton {
+    position: absolute;
+}
+
+.prevButton,
+.nextButton {
     border: none;
     border-radius: 50%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    font-size: 18px;
+    color: #000000;
+    background-color: rgba(255, 255, 255, 255);
 }
 
-.prevButton {
-    left: 10px;
-}
-
-.nextButton {
-    right: 10px;
-}
-
-.prevButton:hover, .nextButton:hover {
+.prevButton:hover,
+.nextButton:hover {
     background-color: #f0f0f0;
-    border-radius: 50%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buttonWrapper:hover .buttonText {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    align-content: center;
+    border-radius: 10%;
+    margin-top: 100px;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #222222;
+    opacity: 70%;
+    transition: opacity 0.3s ease;
 }

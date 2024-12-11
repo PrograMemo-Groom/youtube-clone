@@ -4,6 +4,7 @@ import MainPage from "./components/main/Main";
 import styles from "./App.module.css";
 import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/Sidebar";
+import MyPage from "./components/myPage/MyPage";
 import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
 import SubscribeDemo from "./components/Subscribe-demo";
@@ -28,6 +29,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<LayOut/>}>
                     <Route index element={<MainPage/>}/>
+                    <Route path="myPage" element={<MyPage />}/>
                     <Route path="search" element={<SearchPage/>}/>
                     <Route path="detail" element={<Detail/>}/>
                     <Route path="subscribeDemo" element={<SubscribeDemo/>}/>
