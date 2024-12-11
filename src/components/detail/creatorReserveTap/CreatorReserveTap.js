@@ -1,14 +1,18 @@
 import React, { useRef, useState } from "react";
+import formatViewerCount from "../../../utils/formatViewerCount.js";
 import "./CreatorReserveTap.css";
 
 function CreatorReserveTap() {
   const dark = "dark";
   const light = "light";
 
+  // 스크롤 이벤트를 위한 Ref
   const categoryBarRef = useRef(null);
 
   // true는 Light Mode, false는 Dark Mode
   const [theme, setTheme] = useState(true);
+
+  // 메뉴 리스트
   const [menuList, setMenuList] = useState([
     { id: 1, text: "모두" },
     { id: 2, text: "시리즈" },
@@ -19,6 +23,11 @@ function CreatorReserveTap() {
     { id: 7, text: "blue rain 제공" },
     { id: 8, text: "관련 콘텐츠" },
   ]);
+
+  // 현재 선택된 메뉴
+  const [menu, setMenu] = useState("");
+
+  // 비디오 리스트
   const [video, setVideo] = useState([
     {
       title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
@@ -29,23 +38,32 @@ function CreatorReserveTap() {
       timestamp: "1:13:41",
     },
   ]);
-
-  function formatViewerCount(count) {
-    if (count < 10000) {
-      return `${count}회`; // 1만 미만은 그대로 표시
-    }
-    const formattedCount = (count / 10000).toFixed(); // 1만 단위로 나누고 소수점 1자리까지 표시
-    return `${formattedCount}만회`;
-  }
-
+  
+  // 스크롤 이벤트
   const handleScroll = (direction) => {
     const scrollContainer = categoryBarRef.current;
-    const scrollAmount = scrollContainer.clientWidth; 
+    const scrollAmount = scrollContainer.clientWidth;
     if (direction === "left") {
       scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
     } else if (direction === "right") {
       scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
+  };
+
+  // 메뉴 클릭 이벤트
+  const handleMenuClick = (e) => {
+    const clickedElement = e.target;
+    setMenu(clickedElement.innerText);
+    console.log(clickedElement); 
+
+     // 모든 메뉴를 순회하면서 Clicked 클래스를 제거
+     const menuItems = document.querySelectorAll(".menu-item");
+     menuItems.forEach((menuItem) => {
+       menuItem.classList.remove("clicked");
+     });
+
+    //Clicked 클래스를 추가
+    clickedElement.classList.add("clicked");
   };
 
   return (
@@ -59,14 +77,22 @@ function CreatorReserveTap() {
         </span>
         <div className='menu-list' ref={categoryBarRef}>
           {menuList.map((menu) => (
-            <div className={`menu-item ${theme ? light : dark}`} key={menu.id}>
+            <div
+              className={`menu-item ${theme ? light : dark}`}
+              key={menu.id}
+              // ref={menuitem_ref}
+              onClick={handleMenuClick}
+            >
               {menu.text}
             </div>
           ))}
         </div>
-        <span 
+        <span
           onClick={() => handleScroll("right")}
-          className={`right-arrow ${theme ? light : dark}`}>{">"}</span>
+          className={`right-arrow ${theme ? light : dark}`}
+        >
+          {">"}
+        </span>
       </div>
       {video && video.length > 0 ? (
         video.map((video, index) => (
