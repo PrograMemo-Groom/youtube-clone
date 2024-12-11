@@ -1,10 +1,8 @@
 const requests = {
     fetchPopularVideos: `/videos`,
-    fetchSearchVideos: (keyword) => `/search/${keyword}`,
+    fetchSearchVideos: `/search`,
     fetchCategoryVideos: (id) => `/videoCategories/${id}`,
-
-    //구독api
-    fetchSubscriptions: `/subscriptions`, 
+    fetchSubscriptions: `/subscriptions`,
     fetchChannelDetails: `/channels`,
     fetchChannelVideos: (channelId) => `/search?channelId=${channelId}&order=date`,
 }

@@ -6,7 +6,38 @@
     position: fixed;
     width: 70px;
     height: calc(100vh - 60px);
-    border-right: #a2a2a2 1px solid;
     padding-top: 60px;
     box-sizing: content-box;
+    margin-left: 5px;
+    margin-top: 12px;
+}
+
+.sidebar_Item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 10px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    margin-top: 8px;
+    border-radius: 10px;
+}
+
+.sidebar_Item:hover {
+    transform: scale(1.1);
+}
+
+.sidebar_icon {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar_Item:hover .sidebar_icon {
+    transform: scale(1.2);
 }
