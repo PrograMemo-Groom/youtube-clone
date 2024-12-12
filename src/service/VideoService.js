@@ -112,6 +112,33 @@ const formatViewCount = (viewCount) => {
     return `${viewCount}회`;
 };
 
+// 동영상 게시 일자 표현 : 현재 - 게시일
+const formatPublishedDate = (publishedDate) => {
+    const now = new Date();
+    const published = new Date(publishedDate);
+    const Seconds = Math.floor((now - published) / 1000);
+
+    const Minute = 60;
+    const Hour = 60 * Minute;
+    const Day = 24 * Hour;
+    const Month = 30 * Day;
+    const Year = 12 * Month;
+
+    if (Seconds < Day) {
+        const hours = Math.floor(Seconds / Hour);
+        return `${hours}시간 전`;
+    } else if (Seconds < Month) {
+        const days = Math.floor(Seconds / Day);
+        return `${days}일 전`;
+    } else if (Seconds < Year) {
+        const months = Math.floor(Seconds / Month);
+        return `${months}개월 전`;
+    } else {
+        const years = Math.floor(Seconds / Year);
+        return `${years}년 전`;
+    }
+};
+
 
 //메인 동영상 가져오기
 export const getMainVideos = async () => {
@@ -136,7 +163,7 @@ export const getMainVideos = async () => {
                     thumbnail: item.snippet.thumbnails.high.url,
                     time: formatDuration(item.contentDetails.duration),
                     profile: channelThumbnail,
-                    stats: `조회수 ${formatViewCount(item.statistics.viewCount)} · ${new Date(item.snippet.publishedAt).toLocaleDateString()}`,
+                    stats: `조회수 ${formatViewCount(item.statistics.viewCount)} · ${formatPublishedDate(item.snippet.publishedAt)}`,
                 };
             })
         );
