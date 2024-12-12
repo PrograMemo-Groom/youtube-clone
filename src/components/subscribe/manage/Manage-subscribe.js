@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Manage-subscribe.module.css';
-import {fetchSubscriptions} from "./service";
+import {fetchSubscriptions} from "../../../service/SubscribeService";
 
 
 const ManageSubscribe = () => {
@@ -29,20 +29,17 @@ const ManageSubscribe = () => {
                 {/* {subscriptions.length > 0 ? (
                     subscriptions.map((channel) => (
                         <div key={channel.id} className={styles.channelCard}> */}
+                {channelData.map((channel, index) => (
                         <div className={styles.channelCard}>
-                            {/* <img
+                            <img
                                 src={channel.profileImage}
                                 alt={`${channel.title} Profile`}
                                 className={styles.channelImage}
-                            /> */}
-                            <img alt='채널프로필 이미지 ~'/>
-                            <div className={styles.channelDiscription}>
-                                {/* <h3>{channel.title}</h3>
+                            />
+                            <div className={styles.channelDescription}>
+                                <h3>{channel.title}</h3>
                                 <p>@{channel.id}·구독자 {channel.subscriberCount}명</p>
-                                <p>{channel.description}</p> */}
-                                <h3>영상 제목</h3>
-                                <p>@ididididid·구독자 90만명</p>
-                                <p>영상 설명입니다아아아아</p>
+                                <p>{channel.description}</p>
                             </div>
                             {/* 구독알림설정 드롭다운박스 : api가져와서 변경 만이 필요,,*/}
                             <div class={styles.buttonDiv}>
@@ -54,6 +51,7 @@ const ManageSubscribe = () => {
                                 </select>
                             </div>
                         </div>
+                ))}
                     {/* ))
                 ) : (
                     <p>구독한 채널이 없습니다</p>
@@ -64,3 +62,25 @@ const ManageSubscribe = () => {
 };
 
 export default ManageSubscribe;
+
+
+const channelData = [{
+    title: "MochaMilk",
+    id: "MochaMilk",
+    subscriberCount: "167만",
+    profileImage: "https://yt3.googleusercontent.com/ytc/AIdro_mOjBZTu180Gt9tDIvv5TjwC_TJE0Gj39r0XrhkbdDaVR8=s176-c-k-c0x00ffffff-no-rj-mo",
+    description: "모카와 우유의 일상을 함께 봐주셔서 감사합니다 :) • 모카 생년월일: 2011.10.22 견종: 폼피츠 성별: 남 • 우유 생년월일: 2016.11.07 견종: 사모예드 성별: 여 _________________________________________________________ Thank you for watching MochaMilk's daily vlog :) • Mocha Birth: 2011.10.22",
+    } , {
+    title: "MochaMilk",
+    id: "MochaMilk",
+    subscriberCount: "167만",
+    profileImage: "https://yt3.googleusercontent.com/ytc/AIdro_mOjBZTu180Gt9tDIvv5TjwC_TJE0Gj39r0XrhkbdDaVR8=s176-c-k-c0x00ffffff-no-rj-mo",
+    description: "모카와 우유의 일상을 함께 봐주셔서 감사합니다 :) • 모카 생년월일: 2011.10.22 견종: 폼피츠 성별: 남 • 우유 생년월일: 2016.11.07 견종: 사모예드 성별: 여 _________________________________________________________ Thank you for watching MochaMilk's daily vlog :) • Mocha Birth: 2011.10.22",
+    } , {
+    title: "MochaMilk",
+    id: "MochaMilk",
+    subscriberCount: "167만",
+    profileImage: "https://yt3.googleusercontent.com/ytc/AIdro_mOjBZTu180Gt9tDIvv5TjwC_TJE0Gj39r0XrhkbdDaVR8=s176-c-k-c0x00ffffff-no-rj-mo",
+    description: "모카와 우유의 일상을 함께 봐주셔서 감사합니다 :) • 모카 생년월일: 2011.10.22 견종: 폼피츠 성별: 남 • 우유 생년월일: 2016.11.07 견종: 사모예드 성별: 여 _________________________________________________________ Thank you for watching MochaMilk's daily vlog :) • Mocha Birth: 2011.10.22",
+    }
+]

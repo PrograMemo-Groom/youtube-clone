@@ -1,0 +1,100 @@
+.container{
+    display: flex;
+    flex-direction: column;
+
+    width: 928px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.header {
+
+}
+
+.header h1 {
+    height: 50px;
+    padding: 25px 0px 4px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.sortDropdown {
+    height: 32px;
+    width: 89px;
+    padding-left: 12px;
+
+    background-color: rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 12px;
+    color: #0F0F0F;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/********************************* main 시작 */
+.main {
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+}
+
+.channelCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 136px;
+
+    margin-bottom: 30px;
+}
+
+.channelImage {
+    width: 136px;
+    height: 136px;
+    border-color: #000000;
+    border-radius: 50%;
+}
+
+.channelDescription {
+    flex: 1;
+    padding-left: 25px;
+    padding-right: 17px;
+}
+
+.channelDescription h3 {
+    font-size: 18px;
+    color: #0F0F0F;
+    font-weight: 600;
+    padding-bottom: 5px;
+}
+
+.channelDescription p {
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+
+    font-size: 12px;
+    color: #606060;
+    padding-top: 10px;
+    font-weight: 500;
+}
+
+.buttonDiv {
+    width: 120;
+    display: flex;
+    align-items: center;
+    padding-bottom: 8px;
+}
+
+.alarmDropdown {
+    width: 117px;
+    height: 36px;
+
+    background-color: rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 12px;
+    color: #0F0F0F;
+    font-size: 14px;
+    font-weight: 600;
+}

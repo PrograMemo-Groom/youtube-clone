@@ -1,61 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Grid-subscribe.module.css';
+import ListedSubscribe from '../list/Listed-subscribe';
+import ManageSubscribe from '../manage/Manage-subscribe';
 
 
 const GridSubscribe = () => {
+
+    const [view, setView] = useState("grid");
+
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
-                <h3>최신순</h3>
-                <div className={styles.pageChangeButtons}>
-                    <button className={styles.manageButton}>관리</button>
-                    <button className={styles.gridButton}>
-                        <img alt='격자형'/>
-                        
-                    </button>
-                    <button className={styles.listButton}>
-                        <img alt='리스트형'/>
-                    </button>
-                </div>
-            </header>
-            <main className={styles.main}>
-                <section className={styles.videoSection}>
-                    {videoData.map((video, index) => (
-                        <article key={index} className={styles.videoClip}>
-                            <div className={styles.videoThumbnail}>
-                                <img 
-                                    src={video.thumbnail} 
-                                    alt={video.title} 
-                                    className={styles.thumbnail} 
-                                />
-                                <p>{video.duration}</p>
-                            </div>
-                            <div className={styles.videoDescriptions}>
-                                <img 
-                                    src={video.channelAvatar}
-                                    alt='채널프로필사진'
-                                />
-                                <div className={styles.videoDescriptions_lines}>
-                                    <h4>{video.title}</h4>
-                                    <p>{video.channel}</p>
-                                    <p>{video.view} • {video.uploadedAt}</p>
-                                </div>
-                                <div className={styles.videoDescriptions_button}>
-                                    <button>
-                                        <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
-                                    </button>
-                                </div>
-                            </div>
-                        </article>
-                    ))}
-                </section>
-                <section className={styles.shortsSection}>
 
-                </section>
-                <section className={styles.videoSection}>
+            {/* manage로 뷰 바뀌는 부분(헤더까지 바뀜) */}
+            {view === "manage" && <ManageSubscribe />}
+            {view === "list" && <ListedSubscribe />}
+            {view === "grid" && (
+                <>
+                <header className={styles.header}>
+                    <h3>최신순</h3>
+                    <div className={styles.pageChangeButtons}>
+                        <button
+                            className={styles.manageButton}
+                            onClick={() => setView("manage")}
+                        >
+                            관리
+                        </button>
+                        <button
+                            className={styles.gridButton}
+                            onClick={() => setView("grid")}
+                        >
+                            <img alt='격자형'/>
+                        </button>
+                        <button
+                            className={styles.listButton}
+                            onClick={() => setView("list")}
+                        >
+                            <img alt='리스트형'/>
+                        </button>
+                    </div>
+                </header>
 
-                </section>
-            </main>
+                <main className={styles.main}>
+                    <section className={styles.videoSection}>
+                        {videoData.map((video, index) => (
+                            <article key={index} className={styles.videoClip}>
+                                <div className={styles.videoThumbnail}>
+                                    <img 
+                                        src={video.thumbnail} 
+                                        alt={video.title} 
+                                        className={styles.thumbnail} 
+                                    />
+                                    <p>{video.duration}</p>
+                                </div>
+                                <div className={styles.videoDescriptions}>
+                                    <img 
+                                        src={video.channelAvatar}
+                                        alt='채널프로필사진'
+                                    />
+                                    <div className={styles.videoDescriptions_lines}>
+                                        <h4>{video.title}</h4>
+                                        <p>{video.channel}</p>
+                                        <p>{video.view} • {video.uploadedAt}</p>
+                                    </div>
+                                    <div className={styles.videoDescriptions_button}>
+                                        <button>
+                                            <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+                    </section>
+                    <section className={styles.shortsSection}>
+
+                    </section>
+                    <section className={styles.videoSection}>
+
+                    </section>
+                </main>
+                </>
+            )}
         </div>
     );
 };
