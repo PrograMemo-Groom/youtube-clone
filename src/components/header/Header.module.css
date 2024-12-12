@@ -57,6 +57,28 @@
     object-fit: cover;
     cursor: pointer;
 }
+.login {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: 1px solid #659ede;
+    cursor: pointer;
+}
+.login:hover {
+    background-color: #def1ff;
+}
+.login > img{
+    width: 24px;
+    height: 24px;
+}
+.login > span {
+    color: #659ede;
+    white-space: nowrap;
+}
 .logo {
     align-items: center;
     margin-left: 4px;
