@@ -1,0 +1,65 @@
+name: Notify Assigned User
+
+on:
+  issues:
+    types:
+      - assigned # 이슈가 특정 사용자에게 할당될 때 실행
+  issue_comment:
+    types:
+      - created # 할당된 이슈에 댓글이 달릴 때 실행
+
+jobs:
+  notify_user:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Event Type and Assigned User
+        env:
+          DISCORD_WEBHOOK_JKH: ${{ secrets.DISCORD_WEBHOOK_JKH }}
+          DISCORD_WEBHOOK_KSJ: ${{ secrets.DISCORD_WEBHOOK_KSJ }}
+          DISCORD_WEBHOOK_KYR: ${{ secrets.DISCORD_WEBHOOK_KYR }}
+          DISCORD_WEBHOOK_LBM: ${{ secrets.DISCORD_WEBHOOK_LBM }}
+          DISCORD_WEBHOOK_SIM: ${{ secrets.DISCORD_WEBHOOK_SIM }}
+        run: |
+          # Determine the event type (issues or issue_comment)
+          EVENT_TYPE="${{ github.event_name }}"
+          ASSIGNEE=""
+
+          if [ "$EVENT_TYPE" = "issues" ]; then
+            # Handle assigned event
+            ASSIGNEE="${{ github.event.issue.assignee.login }}"
+            MESSAGE="You have been assigned to an issue: https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}"
+          elif [ "$EVENT_TYPE" = "issue_comment" ]; then
+            # Handle issue_comment event
+            ASSIGNEE="${{ github.event.issue.assignee.login }}"
+            COMMENTER="${{ github.event.comment.user.login }}"
+            if [ "$ASSIGNEE" != "" ]; then
+              MESSAGE="Your assigned issue received a new comment from $COMMENTER: https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}#issuecomment-${{ github.event.comment.id }}"
+            else
+              echo "No assignee found for this issue."
+              exit 0
+            fi
+          else
+            echo "Unsupported event type: $EVENT_TYPE"
+            exit 1
+          fi
+
+          # Match the assignee to their webhook
+          if [ "$ASSIGNEE" = "jdaily00" ]; then
+            WEBHOOK_URL=$DISCORD_WEBHOOK_JKH
+          elif [ "$ASSIGNEE" = "S2ej1n" ]; then
+            WEBHOOK_URL=$DISCORD_WEBHOOK_KSJ
+          elif [ "$ASSIGNEE" = "yoorym-kim" ]; then
+            WEBHOOK_URL=$DISCORD_WEBHOOK_KYR
+          elif [ "$ASSIGNEE" = "happygirlll" ]; then
+            WEBHOOK_URL=$DISCORD_WEBHOOK_LBM
+          elif [ "$ASSIGNEE" = "Saaad9" ]; then
+            WEBHOOK_URL=$DISCORD_WEBHOOK_SIM
+          else
+            echo "No webhook configured for this assignee."
+            exit 0
+          fi
+
+          # Send the notification via Discord Webhook
+          curl -X POST -H "Content-Type: application/json" \
+            -d "{\"content\": \"$MESSAGE\"}" \
+            $WEBHOOK_URL
