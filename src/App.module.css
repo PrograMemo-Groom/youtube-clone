@@ -5,8 +5,9 @@
   /*text-align: center;*/
     display: flex;
     flex-direction: column;
-    box-sizing: content-box;
+    box-sizing: border-box;
     object-fit: contain;
     padding-top: 60px;
-    padding-left: 70px;
+    padding-left: 80px;
+    width: calc(100% - 80px);
 }

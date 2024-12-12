@@ -5,11 +5,13 @@
     justify-content: flex-start;
     position: fixed;
     width: 80px;
-    height: calc(100vh - 60px);
-    box-sizing: content-box;
+    height: 100vh;;
+    box-sizing: border-box;
     z-index: 1000;
     background-color: white;
     margin-top: 60px;
+    top: 0;
+    left: 0;
 }
 
 .sidebar_icons{
