@@ -1,13 +1,26 @@
 .mainVideo-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: calc(100% - 472px);
-    height: 100%;
-    background-color: white;
-    position: absolute;
-    left: 70px;
-    top: 61px;
-    border: 1px solid red;
+  display: flex;
+  height: 100%;
+  background-color: white;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  top: 0;
+  overflow: hidden;
+  padding-bottom: calc(9 / 16 * 100%);
+  border-radius: 10px;
+}
+
+iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
