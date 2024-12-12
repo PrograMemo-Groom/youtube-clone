@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './Video.module.css';
 
-const Video = () => {
+const Video = ({onPanelToggle}) => {
+
   return (
     <main className={styles.videoComponents}>
       {/* 컨테이너 하나 */}
@@ -25,7 +26,38 @@ const Video = () => {
           </div>
         </div>
         <aside className={styles.bntContainer}>
-          여기는 각종 버튼들
+          <div>
+            <button>
+              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            </button>
+            <span>12만</span>
+          </div>
+          <div>
+            <button>
+              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            </button>
+            <span>싫어요</span>
+          </div>
+          <div>
+            <button>
+              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            </button>
+            <span>781</span>
+          </div>
+          <div>
+            <button>
+              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            </button>
+            <span>공유</span>
+          </div>
+          <div>
+            <button className={styles.shareBnt} onClick={onPanelToggle}>
+              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            </button>
+          </div>
+          <div className={styles.musicImg}>
+            <img src={`${process.env.PUBLIC_URL}/unnamed.jpg`}/>
+          </div>
         </aside>
       </div>
     </main>

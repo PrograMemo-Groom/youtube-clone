@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Panel.module.css';
 
-const Panel = () => {
+const Panel = ({onPanelToggle}) => {
   return (
     <div className={styles.panelContainer}>
         <div className={styles.contentsContainer}>
@@ -10,6 +10,7 @@ const Panel = () => {
             <button className={styles.closeBnt}>
               <img 
                 src={`${process.env.PUBLIC_URL}/closeicon.png`}
+                onClick={onPanelToggle}
                 alt="close"
               />
             </button>

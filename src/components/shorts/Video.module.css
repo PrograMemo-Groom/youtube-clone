@@ -81,7 +81,43 @@
 }
 /* 버튼 컨테이너 */
 .bntContainer{
-    width: 48px;
-    padding: 12px;
-    background-color: lightblue;
+    width: 50px;
+    padding: 12px 12px 0px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.bntContainer div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bntContainer button{
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--hashtag-section-color);
+}
+.bntContainer button:hover{
+    cursor: pointer;
+    background-color: var(--border-color);
+}
+
+.bntContainer div button img{
+    width: 20px;
+}
+
+.bntContainer div span{
+    font-size: 14px;
+    padding: 6px;
+    margin-bottom: 10px;
+}
+
+.musicImg img{
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    margin-top: 20px;
 }
