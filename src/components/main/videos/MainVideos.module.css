@@ -31,14 +31,21 @@
 }
 
 .thumbnailRow {
-    margin-bottom: 8px;
     position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .thumbnail {
     width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
 }
 
 .videoTime {
@@ -61,10 +68,12 @@
 .profilePicture {
     width: 36px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .videoAuthor {
     margin-bottom: 4px;
+    cursor: pointer;
 }
 
 .videoTitle {
@@ -73,10 +82,12 @@
     font-weight: 500;
     line-height: 20px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .videoAuthor,
 .videoStats {
     font-size: 14px;
     color: #858585;
+    cursor: pointer;
 }
