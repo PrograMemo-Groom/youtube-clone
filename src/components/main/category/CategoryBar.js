@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const categories = [
     { name: "전체", path: "/main" },
@@ -21,6 +21,7 @@ const categories = [
 ];
 
 const CategoryBar = () => {
+    const location = useLocation(); // 현재 경로 가져오기
     const categoryBarRef = useRef(null);
     const [isPrevVisible, setPrevVisible] = useState(false);
     const [isNextVisible, setNextVisible] = useState(false);
@@ -84,11 +85,19 @@ const CategoryBar = () => {
                      ref={categoryBarRef}
                      onScroll={handleScroll}
                 >
-                    {categories.map((category, index) => (
-                        <Link key={index} to={category.path} className={styles.categoryButton}>
+                    {categories.map((category, index) => {
+                        const isActive = location.pathname === category.path; // 활성화된 경로 확인
+                        return (
+                        <Link
+                            key={index} to={category.path}
+                            className={`${styles.categoryButton} ${
+                            isActive ? styles.activeCategoryButton : ""
+                        }`}
+                        >
                             {category.name}
                         </Link>
-                    ))}
+                    );
+                })}
                 </div>
                 {isNextVisible && (
                     <div className={`${styles.buttonWrapper}`} style={{ right: '10px' }}>

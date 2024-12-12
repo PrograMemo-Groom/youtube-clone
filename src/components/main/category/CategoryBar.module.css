@@ -29,6 +29,17 @@
     background-color: #e4e4e4;
 }
 
+.activeCategoryButton {
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.activeCategoryButton:hover{
+    background-color: #000000;
+    color: #ffffff;
+}
+
 .categoryWrapper {
     display: flex;
     align-items: center;
