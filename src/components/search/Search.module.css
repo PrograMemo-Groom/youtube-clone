@@ -1,3 +1,142 @@
+:root {
+    --video-description-font-color: #595959;
+}
 .container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.categoryWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 1250px;
+    padding: 0 20px;
+    margin-left: 10px;
+}
+.categories {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 20px;
+    scroll-behavior: smooth;
+    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+}
+.categories > button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: #F2F2F2;
+    color: #000000;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.videos {
+    display: block;
+    padding: 0 20px;
+    margin-left: 10px;
+    width: 1250px;
+}
+.videoLists {
+    display: flex;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    align-items: stretch;
+    max-width: 1250px;
+    max-height: 280px;
+    margin-bottom: 10px;
+}
+.videoLists > div {
+    width: 100%;
+    position: relative;
+}
+.videoFrame {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    max-width: 500px;
+    max-height: 280px;
+    min-width: 326px;
+}
+.videoFrame > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 326px;
+    border: 0; /* 테두리 제거 */
+    border-radius: 10px;
+}
+.videoFrame > iframe:hover {
+    border-radius: 0;
+}
+.videoFrame > span {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3px;
+    font-size: 14px;
+    border-radius: 5px;
+    color: white;
+}
+/* video descriptions */
+.videoDescriptions {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 10px;
+    flex-direction: column;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    align-items: flex-start;
+    max-height: 280px;
+    max-width: 750px;
+    min-width: 326px;
+}
+.videoDescriptions > h2 {
+    text-overflow: ellipsis;
+    font-size: 20px;
+}
+.channelInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+.channelInfo > img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.channelInfo > span {
+    color: var(--video-description-font-color);
+    font-size: 13px;
+}
+.videoDescript {
+    margin: 10px 0;
+    font-size: 14px;
+    color: var(--video-description-font-color);
+}
+.videoChannelInfo {
+    display: flex;
+    flex-direction: row;
+    color: var(--video-description-font-color);
+}
 
+@media (min-width: 1351px) {
+    .container {
+        justify-content: center;
+        align-items: center;
+    }
 }

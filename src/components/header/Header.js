@@ -1,10 +1,19 @@
 import React, {useCallback, useState} from 'react';
 import styles from './Header.module.css';
 import useNavigation from "../../hooks/useNavigation";
+import useGoogleAuth from "../../hooks/useGoogleAuth";
 
 const Header = () => {
     const { link } = useNavigation();
     const [search, setSearch] = useState('');
+    const [auth, setAuth] = useState(() => localStorage.getItem('GOOGLE_TOKEN'));
+    const googleLogin = useGoogleAuth();
+
+    // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
+    const handleLogin = async () => {
+        console.log(`handleLogin: Starting Google Login...`);
+        await googleLogin();
+    }
 
     const handleOnChange = (value) => {
         setSearch(value);
@@ -60,9 +69,16 @@ const Header = () => {
                 <div className={styles.icoContainer}>
                     <img className={styles.icoImg} src={`${process.env.PUBLIC_URL}/assets/white/header/notice.svg`} alt="알림"/>
                 </div>
-                <div className={styles.myPageIco}>
-                    <span>My</span>
-                </div>
+                {auth ?
+                    <div className={styles.myPageIco}>
+                        <span>My</span>
+                    </div>
+                    :
+                    <button className={styles.login} onClick={() => handleLogin()}>
+                        <img src={`${process.env.PUBLIC_URL}/assets/white/header/login.svg`} alt="login"/>
+                        <span >로그인</span>
+                    </button>
+                }
             </section>
         </div>
     );
