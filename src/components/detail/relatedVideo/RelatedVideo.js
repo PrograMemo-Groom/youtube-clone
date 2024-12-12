@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./RelatedVideo.css";
 import formatViewerCount from "../../../utils/formatViewerCount";
+// import {getStyle, getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
+// import { ThemeContext } from "../../context/context.js";
 
 function RelatedVideo() {
+  // const { isDark } = useContext(ThemeContext);
+  // const setTheme = getStyle(isDark);
 
-  const dark = "dark";
-  const light = "light";
-  // true는 Light Mode, false는 Dark Mode
-  const [theme, setTheme] = useState(true);
+
   const [video, setVideo] = useState([
     {
       title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
@@ -93,7 +94,7 @@ function RelatedVideo() {
   ]);
 
   return (
-    <section className={`relatedVideo-container ${theme ? light : dark}`}>
+    <section className={`relatedVideo-container`}>
       {video && video.length > 0 ? (
         video.map((video, index) => (
           <div className='video-section' key={index}>
@@ -102,7 +103,7 @@ function RelatedVideo() {
               <span className='time-stamp'>{video.timestamp}</span>
             </div>
             <div className='video-details'>
-              <div className={`video-title ${theme ? light : dark}`}>
+              <div className={`video-title`}>
                 {video.title}
               </div>
               <div className='channel-name'>{video.channelName}</div>
@@ -118,8 +119,6 @@ function RelatedVideo() {
                 alt='영상 더보기'
               />
             </div>
-            {/* 테마 변경 테스트 */}
-            {/* <button onClick={() => setTheme(!theme)}>딸깍</button> */}
           </div>
         ))
       ) : (

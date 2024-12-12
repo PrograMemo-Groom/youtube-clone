@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import formatViewerCount from "../../../utils/formatViewerCount";
 import "./ShortsTap.css";
+import { ThemeContext } from "../../context/context";
+import { getStyle } from "../themes/useThemeStyles";
 
 function ShortsTap() {
-  const dark = "dark";
-  const light = "light";
-  // true는 Light Mode, false는 Dark Mode
-  const [theme, setTheme] = useState(true);
+  // const { isDark } = useContext(ThemeContext);
+  // const setTheme = getStyle(isDark);
   
   const [shorts, setShorts] = useState([
     {

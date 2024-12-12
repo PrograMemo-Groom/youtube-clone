@@ -9,7 +9,7 @@
     min-width: 470px;
     /* border: solid 1px red; */
 
-    padding: 10px;
+    padding: 0 0;
     width: calc(100% - 402px);
 }
 
