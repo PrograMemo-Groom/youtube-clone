@@ -44,15 +44,15 @@ jobs:
           fi
 
           # Match the assignee to their webhook
-          if [ "$ASSIGNEE" = "jkh" ]; then
+          if [ "$ASSIGNEE" = "jdaily00" ]; then
             WEBHOOK_URL=$DISCORD_WEBHOOK_JKH
-          elif [ "$ASSIGNEE" = "ksj" ]; then
+          elif [ "$ASSIGNEE" = "S2ej1n" ]; then
             WEBHOOK_URL=$DISCORD_WEBHOOK_KSJ
-          elif [ "$ASSIGNEE" = "kyr" ]; then
+          elif [ "$ASSIGNEE" = "yoorym-kim" ]; then
             WEBHOOK_URL=$DISCORD_WEBHOOK_KYR
-          elif [ "$ASSIGNEE" = "lbm" ]; then
+          elif [ "$ASSIGNEE" = "happygirlll" ]; then
             WEBHOOK_URL=$DISCORD_WEBHOOK_LBM
-          elif [ "$ASSIGNEE" = "sim" ]; then
+          elif [ "$ASSIGNEE" = "Saaad9" ]; then
             WEBHOOK_URL=$DISCORD_WEBHOOK_SIM
           else
             echo "No webhook configured for this assignee."
