@@ -13,7 +13,7 @@ function Shorts() {
     <main className={styles.shortsContainer}>
       <section className={styles.sectionContainer}>
         <Video onPanelToggle={handlePanelToggle}/>
-        {isPanelOpen ? <Panel /> : null}
+        {isPanelOpen ? <Panel onPanelToggle={handlePanelToggle} /> : null}
       </section>
     </main>
   )
