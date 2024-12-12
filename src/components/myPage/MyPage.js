@@ -113,7 +113,7 @@ export default function MyPage() {
                                 </section>
                             </section>
                         </div>
-                        <div className="playlist-container">
+                        <div className="playlist-container playlist-container-margin">
                             <section className="playlist-text-btn">
                                 <section className="playlist-sort-text">
                                     <p className="playlist-text">재생목록</p>
@@ -147,7 +147,7 @@ export default function MyPage() {
                                 </section>
                             </section>
                         </div>
-                        <div className="Videos-to-watch-container">
+                        <div className="Videos-to-watch-container Videos-to-watch-container-height">
                             <section className="Videos-to-watch-text-btn">
                                 <section className="Videos-to-watch-later">
                                     <p>나중에 볼 동영상</p>
