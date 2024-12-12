@@ -60,7 +60,7 @@
 
 .title {
   font-size: 16px;
-  color: black;
+  /* color: black; */
 }
 .viewer-count {
   margin-top: 10px;
@@ -70,7 +70,7 @@
 
 .shortsTap-container .left-arrow, .shortsTap-container .right-arrow {
   cursor: pointer;
-  color: black;
+  /* color: black; */
   font-size: 50px;
   font-weight: bold;
   top: 40%;
