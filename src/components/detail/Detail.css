@@ -1,0 +1,22 @@
+.detail-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    /* border: solid 1px red; */
+
+    padding: 10px;
+    width: calc(100% - 402px);
+}
+
+.side-section {
+    display: flex;
+    flex-direction: column;
+    width: 402px;
+    margin-left: auto;
+    /* border: solid 1px blue; */
+    padding: 10px;
+}

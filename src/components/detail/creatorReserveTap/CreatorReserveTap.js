@@ -5,12 +5,12 @@ import "./CreatorReserveTap.css";
 function CreatorReserveTap() {
   const dark = "dark";
   const light = "light";
+  // true는 Light Mode, false는 Dark Mode
+  const [theme, setTheme] = useState(true);
 
   // 스크롤 이벤트를 위한 Ref
   const categoryBarRef = useRef(null);
 
-  // true는 Light Mode, false는 Dark Mode
-  const [theme, setTheme] = useState(true);
 
   // 메뉴 리스트
   const [menuList, setMenuList] = useState([

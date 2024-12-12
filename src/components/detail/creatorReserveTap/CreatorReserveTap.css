@@ -1,11 +1,11 @@
-.creator-reserve-container{
+.creator-reserve-container {
     position: relative;
     display: flex;
     flex-direction: column;
     padding: 10px;
     gap: 10px;
-    width: 402px;
-    margin: 0 0 0 auto;
+    /* width: 402px; */
+    /* margin: 0 0 0 auto; */
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
 }
