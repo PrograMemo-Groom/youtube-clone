@@ -26,7 +26,7 @@ function App() {
     return (
         <div className={styles.app}>
             <Routes>
-                <Route path="/" element={<LayOut />}>
+                <Route path="/*" element={<LayOut />}>
                     <Route index element={<MainPage />} />
                     <Route path="search" element={<SearchPage />} />
                     <Route path="myPage" element={<MyPage />} />
