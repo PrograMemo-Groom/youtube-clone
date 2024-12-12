@@ -3,7 +3,7 @@ import styles from "./CategoryBar.module.css";
 import { Link, useLocation } from "react-router-dom";
 
 const categories = [
-    { name: "전체", path: "/main" },
+    { name: "전체", path: "/" },
     { name: "음악", path: "/main/music" },
     { name: "라이브", path: "/main/live" },
     { name: "믹스", path: "/main/mix" },
@@ -89,7 +89,8 @@ const CategoryBar = () => {
                         const isActive = location.pathname === category.path; // 활성화된 경로 확인
                         return (
                         <Link
-                            key={index} to={category.path}
+                            key={index}
+                            to={category.path}
                             className={`${styles.categoryButton} ${
                             isActive ? styles.activeCategoryButton : ""
                         }`}
