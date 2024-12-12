@@ -38,6 +38,7 @@ const Sidebar = () => {
     }
     return (
         <div className={styles.container}>
+            <div className={styles.sidebar_icons}>
             <div
                 className={styles.sidebar_Item}
                 onClick={() => handleGoto('/','home')}
@@ -46,7 +47,7 @@ const Sidebar = () => {
                     ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home_select.svg`} alt="홈" className={styles.sidebar_icon}/>
                     : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home.svg`} alt="홈" className={styles.sidebar_icon}/>
                 }
-                <span>홈</span>
+                <span className={styles.text_home}>홈</span>
             </div>
             <div
                 className={styles.sidebar_Item}
@@ -56,7 +57,7 @@ const Sidebar = () => {
                     ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts_select.svg`} alt="Shorts" className={styles.sidebar_icon} />
                     : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts.svg`} alt="Shorts" className={styles.sidebar_icon} />
                 }
-                <span>Shorts</span>
+                <span className={styles.text_shorts}>Shorts</span>
             </div>
             <div
                 className={styles.sidebar_Item}
@@ -65,7 +66,8 @@ const Sidebar = () => {
                 {selected.subscribe
                     ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe_select.svg`} alt="구독" className={styles.sidebar_icon} />
                     : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe.svg`} alt="구독" className={styles.sidebar_icon} />
-                }<span>구독</span>
+                }
+                <span className={styles.text_subscribe}>구독</span>
             </div>
             <div
                 className={styles.sidebar_Item}
@@ -74,8 +76,10 @@ const Sidebar = () => {
                 {selected.myPage
                     ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/mypage_select.svg`} alt="내 페이지" className={styles.sidebar_icon} />
                     : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/mypage.svg`} alt="내 페이지" className={styles.sidebar_icon} />
-                }<span>내 페이지</span>
+                }
+                <span className={styles.text_mypage}>내 페이지</span>
             </div>
+        </div>
         </div>
     );
 };
