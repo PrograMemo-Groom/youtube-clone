@@ -4,7 +4,7 @@
 }
 
 .contentsContainer{
-    width: 77%;
+    width: 75%;
     min-width: 250px;
     height: 694px;
 
@@ -59,6 +59,11 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+/* 전체 박스 */
+.contentsBox{
+    padding: 0 16px;
+}
+
 /* 좋아요수 / 조회수 / 정보 */
 .contentsFactoid {
     display: flex;
@@ -73,6 +78,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 4px;
 }
 
 .contentsFactoid div p{
@@ -85,4 +91,12 @@
     font-size: 12px;
     font-weight: 600;
     color: var(--contents-factoid-color);
+}
+
+/* 해시태그 부분 */
+.tagSection{
+    padding: 14px;
+    font-size: 14px;
+    background-color: var(--hashtag-section-color);
+    border-radius: 12px;
 }

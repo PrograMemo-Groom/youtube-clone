@@ -3,9 +3,16 @@ import styles from './Video.module.css';
 
 const Video = () => {
   return (
-    <div className={styles.vidioContainer}>
-      안녕 난 비디오야
-    </div>
+    <main className={styles.videoComponents}>
+      <div className={styles.videoContainer}>
+        <div className={styles.videoBox}>
+          
+        </div>
+        <aside className={styles.bntContainer}>
+          여기는 각종 버튼들
+        </aside>
+      </div>
+    </main>
   )
 }
 

@@ -1,4 +1,25 @@
-.vidioContainer{
+.videoComponents{
     flex-basis: 50%;
-    background-color:lightblue;
+}
+
+.videoContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+}
+
+/* 쇼츠 동영상부분. 크기 고정 */
+.videoBox{
+    width: 389px;
+    min-width: 389px;
+    height: 691px;
+    background-color: rgb(173, 173, 173);
+    border-radius: 12px;
+}
+
+.bntContainer{
+    width: 48px;
+    padding: 12px;
+    background-color: lightblue;
 }
