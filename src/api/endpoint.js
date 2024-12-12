@@ -3,6 +3,7 @@ const requests = {
     fetchSearchVideos: `/search`,
     fetchCategoryVideos: (id) => `/videoCategories/${id}`,
     getMainVideos: `/videos`,
+    fetchChannelDetails: `/channels`,
 }
 
 export default requests;

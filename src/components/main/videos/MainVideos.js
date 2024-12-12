@@ -20,7 +20,7 @@ const MainVideos = () => {
                     <div className={styles.thumbnailRow}>
                         <img
                             className={styles.thumbnail}
-                            alt="thumbnail"
+                            alt={video.title}
                             src={video.thumbnail}
                         />
                         <div className={styles.videoTime}>{video.time}</div>

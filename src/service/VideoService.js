@@ -66,6 +66,25 @@ export const fetchSearchVideos = async (keyword) => {
     }
 }
 
+// 채널 프로필 이미지 요청 함수
+const getChannelThumbnail = async (channelId) => {
+    try {
+        const response = await instance.get(requests.fetchChannelDetails, {
+            params: {
+                part: "snippet",
+                id: channelId,
+            },
+        });
+
+        // 채널 프로필 썸네일 반환
+        return response.data.items[0]?.snippet?.thumbnails?.default?.url || "";
+    } catch (error) {
+        console.error("채널 이미지 오류 발생:", error.message);
+        return ""; // 오류 발생 시 기본 빈 문자열 반환
+    }
+};
+
+
 // ISO 8601 형식의 duration을 사람이 읽을 수 있는 시간으로 변환
 const formatDuration = (duration) => {
     const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
@@ -91,15 +110,7 @@ export const getMainVideos = async () => {
         // 동영상 데이터 가공
         const videos = await Promise.all(
             response.data.items.map(async (item) => {
-                const channelResponse = await instance.get(requests.getMainVideos,{
-                    params: {
-                        part: "snippet",
-                        id: item.snippet.channelId,
-                    },
-                });
-
-                const channelThumbnail =
-                    channelResponse.data.items[0]?.snippet?.thumbnails?.default?.url || "";
+                const channelThumbnail = await getChannelThumbnail(item.snippet.channelId);
 
                 return {
                     videoId: item.id,
