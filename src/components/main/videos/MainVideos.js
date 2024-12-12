@@ -1,74 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MainVideos.module.css";
+import {getMainVideos} from "../../../service/VideoService";
 
 const MainVideos = () => {
-    const videos = [
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
-        {
-            thumbnail: `${process.env.PUBLIC_URL}/thumbnail-10.png`,
-            time: "1:01:03",
-            profile: `${process.env.PUBLIC_URL}/avatar-1.png`,
-            title: "Playlist 주인장이 매일 아침마다 듣는 노래모음",
-            author: "기분 재생목록",
-            stats: "조회수 48만회 · 4주 전",
-        },
+    const [videos, setVideos] = useState([]); // 비디오 데이터 상태
 
-    ];
+    useEffect(() => {
+        const fetchVideos = async () => {
+            const videoData = await getMainVideos();
+            const formattedVideos = videoData.map((video) => ({
+                thumbnail: video.snippet.thumbnails.high.url,
+                time: "N/A",
+                profile: "",
+                title: video.snippet.title,
+                author: video.snippet.channelTitle,
+                stats: `조회수 ${video.statistics.viewCount}회 · ${new Date(video.snippet.publishedAt).toLocaleDateString()}`, // 조회수 및 업로드 날짜
+            }));
+            setVideos(formattedVideos);
+        };
+
+        fetchVideos();
+    }, []);
 
     return (
         <div className={styles.videoGrid}>
