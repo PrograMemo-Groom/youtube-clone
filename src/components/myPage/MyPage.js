@@ -110,8 +110,6 @@ export default function MyPage() {
                     </section>
                 </section>
             </div>
-
-            {/* 재생목록 */}
             <div className="playlist-container">
                 <section className="playlist-text-btn">
                     <section className="playlist-sort-text">
@@ -146,7 +144,6 @@ export default function MyPage() {
                     </section>
                 </section>
             </div>
-
         </div>
     )
 }
