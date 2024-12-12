@@ -3,21 +3,21 @@ import styles from "./CategoryBar.module.css";
 import { Link } from "react-router-dom";
 
 const categories = [
-    { name: '전체', path: '/' },
-    { name: '음악', path: '/music' },
-    { name: '라이브', path: '/live' },
-    { name: '믹스', path: '/mix' },
-    { name: '뉴스', path: '/news' },
-    { name: '게임', path: '/game' },
-    { name: '애니메이션', path: '/animation' },
-    { name: '스케치 코미디', path: '/comic' },
-    { name: '관광', path: '/tour' },
-    { name: '랩', path: '/rap' },
-    { name: '뷰티팁', path: '/beauty' },
-    { name: '요리', path: '/cook' },
-    { name: '최근에 업로드된 동영상', path: '/recently' },
-    { name: '감상한 동영상', path: '/appreciate' },
-    { name: '새로운 맞춤 동영상', path: '/custom'},
+    { name: "전체", path: "/main" },
+    { name: "음악", path: "/main/music" },
+    { name: "라이브", path: "/main/live" },
+    { name: "믹스", path: "/main/mix" },
+    { name: "뉴스", path: "/main/news" },
+    { name: "게임", path: "/main/game" },
+    { name: "애니메이션", path: "/main/animation" },
+    { name: "스케치 코미디", path: "/main/comic" },
+    { name: "관광", path: "/main/tour" },
+    { name: "랩", path: "/main/rap" },
+    { name: "뷰티팁", path: "/main/beauty" },
+    { name: "요리", path: "/main/cook" },
+    { name: "최근에 업로드된 동영상", path: "/main/recently" },
+    { name: "감상한 동영상", path: "/main/appreciate" },
+    { name: "새로운 맞춤 동영상", path: "/main/custom" },
 ];
 
 const CategoryBar = () => {
