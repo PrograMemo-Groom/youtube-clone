@@ -13,10 +13,10 @@ import Shorts from "./components/shorts/Shorts";
 const LayOut = () => {
     return (
         <>
-            <Header/>
-            <SideBar/>
+            <Header />
+            <SideBar />
             <div className={styles.container}>
-                <Outlet/> {/* 현재 라우터에 따라 변경 되는 내용 */}
+                <Outlet /> {/* 현재 라우터에 따라 변경 되는 내용 */}
             </div>
             {/*<Footer />*/}
         </>
@@ -30,6 +30,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<LayOut/>}>
                     <Route index element={<MainPage/>}/>
+                    <Route path="main/*" element={<MainPage />} />
                     <Route path="myPage" element={<MyPage />}/>
                     <Route path="search" element={<SearchPage/>}/>
                     <Route path="detail" element={<Detail/>}/>

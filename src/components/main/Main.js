@@ -1,109 +1,44 @@
-import React, {useRef, useEffect, useState} from 'react';
-import styles from './Main.module.css';
-import {fetchPopularVideos} from "../../service/VideoService";
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
+import CategoryBar from "./category/CategoryBar";
+import MainVideos from "./videos/MainVideos"
+import Animation from "./category/pages/Animation";
+import Appreciate from "./category/pages/Appreciate";
+import Beauty from "./category/pages/Beauty";
+import Comic from "./category/pages/Comic";
+import Cook from "./category/pages/Cook";
+import Custom from "./category/pages/Custom";
+import Game from "./category/pages/Game";
+import Live from "./category/pages/Live";
+import Mix from "./category/pages/Mix";
+import Music from "./category/pages/Music";
+import News from "./category/pages/News";
+import Rap from "./category/pages/Rap";
+import Recently from "./category/pages/Recently";
+import Tour from "./category/pages/Tour";
 
-// const tag = '[Main]';
 const Main = () => {
-    const [video, setVideo] = useState(null);
-
-    const categories = [
-        '전체', '음악', '라이브', '믹스', '뉴스', '게임',
-        '스케치 코미디', '관광', '랩', '요리',
-        '최근에 업로드된 동영상', '감상한 동영상', '새로운 맞춤 동영상'
-    ];
-
-    const categoryBarRef = useRef(null);
-    const [isPrevVisible, setPrevVisible] = useState(false);
-    const [isNextVisible, setNextVisible] = useState(false);
-
-    const scrollLeft = () => {
-        categoryBarRef.current.scrollBy({
-            left: -200,
-            behavior: 'smooth',
-        });
-    };
-
-    const scrollRight = () => {
-        categoryBarRef.current.scrollBy({
-            left: 200,
-            behavior: 'smooth',
-        });
-    };
-
-    //좌우 스크롤 버튼 상태 업데이트
-    const handleScroll = () => {
-        const {scrollLeft, scrollWidth, clientWidth} = categoryBarRef.current;
-        setPrevVisible(scrollLeft > 0);
-        setNextVisible(scrollLeft + clientWidth < scrollWidth - 1);
-    };
-
-
-    const updateButtonVisibility = () => {
-        const {scrollWidth, clientWidth} = categoryBarRef.current;
-
-        // 화면 크기 변화에 따른 버튼 상태 업데이트
-        setNextVisible(scrollWidth > clientWidth); // 스크롤 가능 여부 확인
-        setPrevVisible(false); // 화면 크기 조정 시 초기화
-    };
-
-    useEffect(() => {
-        if (categoryBarRef.current) {
-            updateButtonVisibility(); // 초기 로드 시 버튼 상태 확인
-        }
-
-        // 인기 있는 video를 가져오는 부분
-        //setVideo(fetchPopularVideos());
-
-        // resize 이벤트 리스너 추가
-        window.addEventListener('resize', updateButtonVisibility);
-
-        return () => {
-            // 컴포넌트 언마운트 시 이벤트 리스너 제거
-            window.removeEventListener('resize', updateButtonVisibility);
-        };
-    }, []);
-
     return (
-        <div className={styles.container}>
-            <div className={styles.categoryWrapper}>
-                {isPrevVisible && (
-                    <div className={`${styles.buttonWrapper}`} style={{ left: '10px' }}>
-                        <button
-                            onClick={scrollLeft}
-                            className={styles.prevButton}
-                            aria-label="이전"
-                        >
-                            &lt;
-                        </button>
-                        <span className={styles.buttonText}>이전</span>
-                    </div>
-                )}
-                <div className={styles.categoryBar}
-                     ref={categoryBarRef}
-                     onScroll={handleScroll}
-                >
-                    {categories.map((category, index) => (
-                        <button key={index} className={styles.categoryButton}>
-                            {category}
-                        </button>
-                    ))}
-                </div>
-                {isNextVisible && (
-                    <div className={`${styles.buttonWrapper}`} style={{ right: '10px' }}>
-                        <button
-                            onClick={scrollRight}
-                            className={styles.nextButton}
-                            aria-label="다음"
-                        >
-                            &gt;
-                        </button>
-                        <span className={styles.buttonText}>다음</span>
-                    </div>
-                )}
-
-            </div>
+        <div>
+            <CategoryBar/>
+            <Routes>
+                <Route index element={<MainVideos />} />
+                <Route path="animation" element={<Animation />} />
+                <Route path="appreciate" element={<Appreciate />} />
+                <Route path="beauty" element={<Beauty />} />
+                <Route path="comic" element={<Comic />} />
+                <Route path="cook" element={<Cook />} />
+                <Route path="custom" element={<Custom />} />
+                <Route path="game" element={<Game />} />
+                <Route path="live" element={<Live />} />
+                <Route path="mix" element={<Mix />} />
+                <Route path="music" element={<Music />} />
+                <Route path="news" element={<News />} />
+                <Route path="rap" element={<Rap />} />
+                <Route path="recently" element={<Recently />} />
+                <Route path="tour" element={<Tour />} />
+            </Routes>
         </div>
     );
 };
-
 export default Main;
