@@ -5,6 +5,9 @@
 !package.json
 !package-lock.json
 
+# font
+/public/assets/fonts/*.ttf
+
 # dependencies
 .env
 .idea
