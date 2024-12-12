@@ -65,3 +65,21 @@ export const fetchSearchVideos = async (keyword) => {
         console.log(tag, "SearchVideos can't get response data", e);
     }
 }
+
+//메인 동영상 가져오기
+export const getMainVideos = async () => {
+    try {
+        const response = await instance.get(requests.getMainVideos, {
+            params: {
+                part: "snippet,statistics", // 필요한 데이터: 제목, 썸네일, 채널명, 조회수 등
+                chart: "mostPopular",
+                regionCode: "KR",
+                maxResults: 16,
+            },
+        });
+        return response.data.items;
+    } catch (error) {
+        console.error("Error fetching main videos:", error);
+        return [];
+    }
+};
