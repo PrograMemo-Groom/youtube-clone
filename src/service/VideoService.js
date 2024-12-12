@@ -152,7 +152,7 @@ export const getMainVideos = async () => {
             },
         });
         // 동영상 데이터 가공
-        const videos = await Promise.all(
+        return Promise.all(
             response.data.items.map(async (item) => {
                 const channelThumbnail = await getChannelThumbnail(item.snippet.channelId);
 
@@ -167,8 +167,6 @@ export const getMainVideos = async () => {
                 };
             })
         );
-
-        return videos;
     } catch (error) {
         console.error("Error fetching main videos:", error.message);
         return [];
