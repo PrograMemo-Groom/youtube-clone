@@ -33,6 +33,7 @@ iframe {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .details-header{
@@ -49,6 +50,7 @@ iframe {
   justify-content: space-between;
   padding: 20px;
   font-size: 1.4em;
+  flex-wrap: wrap;
 }
 
 .creator-tab {
@@ -82,6 +84,7 @@ iframe {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .actions button {

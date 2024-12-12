@@ -6,6 +6,7 @@
 .main-section {
     display: flex;
     flex-direction: column;
+    min-width: 470px;
     /* border: solid 1px red; */
 
     padding: 10px;
