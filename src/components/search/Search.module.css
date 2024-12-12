@@ -105,6 +105,7 @@
 .videoDescriptions > h2 {
     text-overflow: ellipsis;
     font-size: 20px;
+    cursor: pointer;
 }
 .channelInfo {
     display: flex;
@@ -112,26 +113,31 @@
     align-items: center;
     gap: 10px;
     margin: 10px 0;
+    cursor: pointer;
 }
 .channelInfo > img {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
 }
 .channelInfo > span {
     color: var(--video-description-font-color);
     font-size: 13px;
+    cursor: pointer;
 }
 .videoDescript {
     margin: 10px 0;
     font-size: 14px;
     color: var(--video-description-font-color);
+    cursor: pointer;
 }
 .videoChannelInfo {
     display: flex;
     flex-direction: row;
     color: var(--video-description-font-color);
+    cursor: pointer;
 }
 
 @media (min-width: 1351px) {

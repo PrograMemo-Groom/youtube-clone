@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styles from "./Search.module.css";
 import {useLocation} from "react-router-dom";
 import {fetchSearchVideos} from "../../service/VideoService";
+import useNavigation from "../../hooks/useNavigation";
 
 // const videoData = {
 //     "pageToken": "CAMQAA",
@@ -80,6 +81,7 @@ import {fetchSearchVideos} from "../../service/VideoService";
 
 const tag = '[SearchPage]';
 const Search = () => {
+    const { link } = useNavigation();
     const [searchResult, setSearchResult] = useState([]);
     const [nextToken, setNextToken] = useState("");
     const useQuery = () => {
@@ -100,6 +102,10 @@ const Search = () => {
         fetchData();
     }, [searchTerm]);
     // console.log("dummy data",searchResult);
+
+    const handleShowVideo = useCallback((videoId) => {
+        link(`/detail?q=${videoId}`)
+    }, [link]);
 
     return (
         <div className={styles.container}>
@@ -122,7 +128,7 @@ const Search = () => {
                     // console.log(today)
                     return (
                         <div className={styles.videoLists} key={video.videoId}>
-                            <div className={styles.videoFrame}>
+                            <div className={styles.videoFrame} onClick={() => handleShowVideo(video.videoId)}>
                                 <iframe
                                     src={`https://www.youtube-nocookie.com/embed/${video.videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${video.videoId}`}
                                     title={video.title}
@@ -131,7 +137,7 @@ const Search = () => {
                                 />
                                 <span>1:10:13</span>
                             </div>
-                            <div className={styles.videoDescriptions}>
+                            <div className={styles.videoDescriptions} onClick={() => handleShowVideo(video.videoId)}>
                                 <h2>{video.title}</h2>
                                 <p>퍼스널 Personal•조회수 1.7만회</p>
                                 <div className={styles.videoChannelInfo}>
