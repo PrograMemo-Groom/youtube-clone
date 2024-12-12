@@ -15,10 +15,24 @@ const Panel = () => {
             </button>
           </header>
           <section className={styles.contentsSection}>
-            <p>한국과 전혀 다른 트와이스 미국 인기 반응</p>
+            <p>HEY BOY IMMA GETCHA 😘💗 #TWICE #트와이스 #STRATEGY </p>
           </section>
           <section className={styles.contentsFactoid}>
-            ddd
+            <div>
+              <p>10만</p>
+              <span>좋아요 수</span>
+            </div>
+            <div>
+              <p>1,713,185</p>
+              <span>조회 수</span>
+            </div>
+            <div>
+              <p>12월 6일</p>
+              <span>2024년</span>
+            </div>
+          </section>
+          <section className={styles.tagSection}>
+            해시태그부분
           </section>
         </div>
     </div>

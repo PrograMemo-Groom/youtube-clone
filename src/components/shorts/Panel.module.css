@@ -54,11 +54,35 @@
 }
 
 .contentsSection p{
-    padding: 15px 0px;
+    padding: 17px 0px;
     font-size: 14px;
     border-bottom: 1px solid var(--border-color);
 }
 
+/* 좋아요수 / 조회수 / 정보 */
 .contentsFactoid {
-    padding: 4px 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 16px 16px;
+}
+
+.contentsFactoid div{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contentsFactoid div p{
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
+.contentsFactoid div span{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--contents-factoid-color);
 }
