@@ -4,18 +4,21 @@
 .container {
     display: flex;
     justify-content: center;
-    /*align-items: center;*/
-    /*background-color: red;*/
     flex-direction: column;
 }
 .categoryWrapper {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 1250px;
+    padding: 0 20px;
+    margin-left: 10px;
 }
 .categories {
     display: flex;
     overflow-x: auto;
     padding: 10px 20px;
-    margin-left: 10px;
     scroll-behavior: smooth;
     background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
 }
@@ -31,8 +34,10 @@
     white-space: nowrap;
 }
 .videos {
+    display: block;
     padding: 0 20px;
     margin-left: 10px;
+    width: 1250px;
 }
 .videoLists {
     display: flex;
@@ -127,4 +132,11 @@
     display: flex;
     flex-direction: row;
     color: var(--video-description-font-color);
+}
+
+@media (min-width: 1351px) {
+    .container {
+        justify-content: center;
+        align-items: center;
+    }
 }
