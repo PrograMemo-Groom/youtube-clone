@@ -66,20 +66,56 @@ export const fetchSearchVideos = async (keyword) => {
     }
 }
 
+// ISO 8601 형식의 duration을 사람이 읽을 수 있는 시간으로 변환
+const formatDuration = (duration) => {
+    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = (match[1] || "").replace("H", "");
+    const minutes = (match[2] || "").replace("M", "");
+    const seconds = (match[3] || "").replace("S", "");
+
+    return `${hours ? `${hours}:` : ""}${minutes ? minutes.padStart(2, "0") : "00"}:${seconds.padStart(2, "0")}`;
+};
+
+
 //메인 동영상 가져오기
 export const getMainVideos = async () => {
     try {
         const response = await instance.get(requests.getMainVideos, {
             params: {
-                part: "snippet,statistics", // 필요한 데이터: 제목, 썸네일, 채널명, 조회수 등
+                part: "snippet,contentDetails,statistics",
                 chart: "mostPopular",
                 regionCode: "KR",
-                maxResults: 16,
+                maxResults: 32,
             },
         });
-        return response.data.items;
+        // 동영상 데이터 가공
+        const videos = await Promise.all(
+            response.data.items.map(async (item) => {
+                const channelResponse = await instance.get(requests.getMainVideos,{
+                    params: {
+                        part: "snippet",
+                        id: item.snippet.channelId,
+                    },
+                });
+
+                const channelThumbnail =
+                    channelResponse.data.items[0]?.snippet?.thumbnails?.default?.url || "";
+
+                return {
+                    videoId: item.id,
+                    title: item.snippet.title,
+                    author: item.snippet.channelTitle,
+                    thumbnail: item.snippet.thumbnails.high.url,
+                    time: formatDuration(item.contentDetails.duration),
+                    profile: channelThumbnail,
+                    stats: `조회수 ${item.statistics.viewCount}회 · ${new Date(item.snippet.publishedAt).toLocaleDateString()}`,
+                };
+            })
+        );
+
+        return videos;
     } catch (error) {
-        console.error("Error fetching main videos:", error);
+        console.error("Error fetching main videos:", error.message);
         return [];
     }
 };

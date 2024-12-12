@@ -8,17 +8,8 @@ const MainVideos = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             const videoData = await getMainVideos();
-            const formattedVideos = videoData.map((video) => ({
-                thumbnail: video.snippet.thumbnails.high.url,
-                time: "N/A",
-                profile: "",
-                title: video.snippet.title,
-                author: video.snippet.channelTitle,
-                stats: `조회수 ${video.statistics.viewCount}회 · ${new Date(video.snippet.publishedAt).toLocaleDateString()}`, // 조회수 및 업로드 날짜
-            }));
-            setVideos(formattedVideos);
+            setVideos(videoData);
         };
-
         fetchVideos();
     }, []);
 
@@ -38,7 +29,7 @@ const MainVideos = () => {
                         <div className={styles.channelPicture}>
                             <img
                                 className={styles.profilePicture}
-                                alt="avatar"
+                                alt="channel profile"
                                 src={video.profile}
                             />
                         </div>
