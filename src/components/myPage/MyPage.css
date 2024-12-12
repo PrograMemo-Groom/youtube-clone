@@ -1,14 +1,3 @@
-@font-face {
-    font-family: "custom-font";
-    src: url("public/assets/fonts/KoPubWorld Dotum Medium.ttf") format("truetype");
-}
-
-body {
-    font-family: "custom-font", sans-serif;
-    color: #000000;
-    box-sizing: border-box;
-}
-
 .contents-container {
     width: 85%;
     height: 100vh;
