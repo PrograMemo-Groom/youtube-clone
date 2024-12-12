@@ -95,6 +95,23 @@ const formatDuration = (duration) => {
     return `${hours ? `${hours}:` : ""}${minutes ? minutes.padStart(2, "0") : "00"}:${seconds.padStart(2, "0")}`;
 };
 
+// 동영상 시간 표현 방식
+const formatViewCount = (viewCount) => {
+    if (viewCount >= 100000000) {
+        return `${Math.floor(viewCount / 100000000)}억회`;
+    } else if (viewCount >= 1000000) {
+        return `${Math.floor(viewCount / 10000)}만회`;
+    } else if (viewCount >= 10000) {
+        // 1만 단위 이상 (1만부터는 천회 대신 만회로 변경)
+        return `${Math.floor(viewCount / 10000)}만회`;
+    } else if (viewCount >= 1000) {
+        // 1천 단위 이상 (1만 미만은 천회로 표시)
+        return `${Math.floor(viewCount / 1000)}천회`;
+    }
+    // 1천 미만 그대로 반환
+    return `${viewCount}회`;
+};
+
 
 //메인 동영상 가져오기
 export const getMainVideos = async () => {
@@ -119,7 +136,7 @@ export const getMainVideos = async () => {
                     thumbnail: item.snippet.thumbnails.high.url,
                     time: formatDuration(item.contentDetails.duration),
                     profile: channelThumbnail,
-                    stats: `조회수 ${item.statistics.viewCount}회 · ${new Date(item.snippet.publishedAt).toLocaleDateString()}`,
+                    stats: `조회수 ${formatViewCount(item.statistics.viewCount)} · ${new Date(item.snippet.publishedAt).toLocaleDateString()}`,
                 };
             })
         );
