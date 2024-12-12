@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Grid-subscribe.module.css';
-import ListedSubscribe from './Listed-subscribe';
-import ManageSubscribe from './Manage-subscribe';
+import ListedSubscribe from '../list/Listed-subscribe';
+import ManageSubscribe from '../manage/Manage-subscribe';
 
 
 const GridSubscribe = () => {

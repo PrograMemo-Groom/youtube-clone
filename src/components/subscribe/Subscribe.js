@@ -1,5 +1,5 @@
 import React from 'react';
-import GridSubscribe from './Grid-subscribe'
+import GridSubscribe from './grid/Grid-subscribe'
 
 const Subscribe = () => {
     return (
