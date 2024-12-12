@@ -85,7 +85,7 @@ export default function MyPage() {
             <div className="view-record-container">
                 <section className="view-record-text-btn">
                     <p>기록</p>
-                    <button>모두 보기</button>
+                    <button className="all-video-view">모두 보기</button>
                 </section>
                 <section className="view-record-contents-container">
                     <section className="video-list">
@@ -106,9 +106,42 @@ export default function MyPage() {
                                 </div>
                             </section>
                         ))}
+                        <button className="next-video-btn"> > </button>
                     </section>
                 </section>
             </div>
+
+            {/* 재생목록 */}
+            {/*<div className="playlist-container">*/}
+            {/*    <section className="playlist-text-btn">*/}
+            {/*        <p>재생목록</p>*/}
+            {/*        <button>가나다순&#9660;</button>*/}
+            {/*        <button>+</button>*/}
+            {/*        <button>모두 보기</button>*/}
+            {/*    </section>*/}
+            {/*    <section className="playlist-contents-container">*/}
+            {/*        <section className="playlist-list">*/}
+            {/*            {videoData.map((video, i) => (*/}
+            {/*                <section className="playlist-video-item"*/}
+            {/*                         key={`${i}-${video.videoId}`}>*/}
+            {/*                    <div className="playlist-video-thumbnail-container">*/}
+            {/*                        <img className="playlist-video-thumbnail"*/}
+            {/*                             src={video.thumbnail}*/}
+            {/*                             alt={video.title}/>*/}
+            {/*                    </div>*/}
+            {/*                    <div className="playlist-video-info-container">*/}
+            {/*                        <h3 className="playlist-video-title">{video.title}</h3>*/}
+            {/*                        <p className="playlist-video-channel">{video.channel}</p>*/}
+            {/*                        <p className="playlist-video-meta">*/}
+            {/*                            {video.view} · {video.uploadedAt}*/}
+            {/*                        </p>*/}
+            {/*                    </div>*/}
+            {/*                </section>*/}
+            {/*            ))}*/}
+            {/*        </section>*/}
+            {/*    </section>*/}
+            {/*</div>*/}
+
         </div>
     )
 }

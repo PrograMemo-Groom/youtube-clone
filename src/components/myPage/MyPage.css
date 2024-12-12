@@ -84,7 +84,7 @@
     font-weight: 500;
 }
 
-.view-record-text-btn > button {
+.all-video-view {
     width: 6.2rem;
     height: 2.5rem;
     border: #a2a2a2 0.1rem solid;
@@ -93,6 +93,17 @@
     font-size: 1.1rem;
     font-weight: 400;
     margin-right: 5rem;
+}
+
+.next-video-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: #ffffff 0.1rem solid;
+    border-radius: 3rem;
+    background-color: #ffffff;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    box-shadow: 0.2rem 0.25rem 0.1rem;
 }
 
 .view-record-contents-container {
