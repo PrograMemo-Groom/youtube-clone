@@ -119,7 +119,7 @@ function RelatedVideo() {
               />
             </div>
             {/* 테마 변경 테스트 */}
-            <button onClick={() => setTheme(!theme)}>딸깍</button>
+            {/* <button onClick={() => setTheme(!theme)}>딸깍</button> */}
           </div>
         ))
       ) : (
