@@ -7,36 +7,35 @@ import SideBar from "./components/sidebar/Sidebar";
 import MyPage from "./components/myPage/MyPage";
 import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
-import Music from "./components/main/category/pages/Music";
 
 const LayOut = () => {
-  return (
-      <>
-        <Header />
-        <SideBar />
-        <div className={styles.container}>
-          <Outlet /> {/* 현재 라우터에 따라 변경 되는 내용 */}
-        </div>
-        {/*<Footer />*/}
-      </>
-  )
+    return (
+        <>
+            <Header />
+            <SideBar />
+            <div className={styles.container}>
+                <Outlet /> {/* 현재 라우터에 따라 변경 되는 내용 */}
+            </div>
+            {/*<Footer />*/}
+        </>
+    )
 }
 
 function App() {
-  console.log('App is running!');
-  return (
-    <div className={styles.app}>
-      <Routes>
-        <Route path="/" element={<LayOut />}>
-          <Route index element={<MainPage />} />
-          <Route path="search" element={<SearchPage />} />
-          <Route path="myPage" element={<MyPage />} />
-          <Route path="detail" element={<Detail />} />
-          <Route path="music" element={<Music/>}/>
-        </Route>
-      </Routes>
-    </div>
-  );
+    console.log('App is running!');
+    return (
+        <div className={styles.app}>
+            <Routes>
+                <Route path="/" element={<LayOut />}>
+                    <Route index element={<MainPage />} />
+                    <Route path="search" element={<SearchPage />} />
+                    <Route path="myPage" element={<MyPage />} />
+                    <Route path="detail" element={<Detail />} />
+                    <Route path="main/*" element={<MainPage />} />
+                </Route>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
