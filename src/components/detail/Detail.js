@@ -7,11 +7,11 @@ import "./Detail.css";
 
 function Detail() {
   return (
-    <div className="detail-container">
-      <div className="main-section">
+    <div className='detail-container'>
+      <div className='main-section'>
         <MainVideo />
       </div>
-      <div className="side-section">
+      <div className='side-section'>
         <CreatorReserveTap />
         <ShortsTap />
         <RelatedVideo />
