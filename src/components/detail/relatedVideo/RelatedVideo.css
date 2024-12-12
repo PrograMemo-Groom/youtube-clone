@@ -10,13 +10,6 @@
     box-sizing: border-box;
 }
 
-.relatedVideo-container.dark{
-    background-color: var(--dark--theme-background-color);
-}
-.relatedVideo-container.light {
-    background-color: var(--light--theme-background-color);
-}
-
 .relatedVideo-container .video-section {
     position: relative;
     display: flex;
@@ -53,12 +46,6 @@
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
-}
-.relatedVideo-container .video-title.dark{
-    color: var(--dark--theme-text-color);
-}
-.relatedVideo-container .video-title.light{
-    color: var(--light--theme-text-color);
 }
 
 .relatedVideo-container .channel-name, .relatedVideo-container .video-info {

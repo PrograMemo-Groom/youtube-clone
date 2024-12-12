@@ -1,16 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import formatViewerCount from "../../../utils/formatViewerCount.js";
 import "./CreatorReserveTap.css";
+import { ThemeContext } from "../../context/context.js";
+import {getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
 
 function CreatorReserveTap() {
-  const dark = "dark";
-  const light = "light";
-  // true는 Light Mode, false는 Dark Mode
-  const [theme, setTheme] = useState(true);
+  const { isDark } = useContext(ThemeContext);
+  // const setTheme = getStyle(isDark);
+  const setMenuTheme = getMenuItemStyle(isDark);
 
   // 스크롤 이벤트를 위한 Ref
   const categoryBarRef = useRef(null);
-
 
   // 메뉴 리스트
   const [menuList, setMenuList] = useState([
@@ -38,7 +38,7 @@ function CreatorReserveTap() {
       timestamp: "1:13:41",
     },
   ]);
-  
+
   // 스크롤 이벤트
   const handleScroll = (direction) => {
     const scrollContainer = categoryBarRef.current;
@@ -54,31 +54,29 @@ function CreatorReserveTap() {
   const handleMenuClick = (e) => {
     const clickedElement = e.target;
     setMenu(clickedElement.innerText);
-    console.log(clickedElement); 
+    console.log(clickedElement);
 
-     // 모든 메뉴를 순회하면서 Clicked 클래스를 제거
-     const menuItems = document.querySelectorAll(".menu-item");
-     menuItems.forEach((menuItem) => {
-       menuItem.classList.remove("clicked");
-     });
+    // 모든 메뉴를 순회하면서 Clicked 클래스를 제거
+    const menuItems = document.querySelectorAll(".menu-item");
+    menuItems.forEach((menuItem) => {
+      menuItem.classList.remove("clicked");
+    });
 
     //Clicked 클래스를 추가
     clickedElement.classList.add("clicked");
   };
 
   return (
-    <section className={`creator-reserve-container ${theme ? light : dark}`}>
+    <section className={`creator-reserve-container`}>
       <div className='menu-section'>
-        <span
-          onClick={() => handleScroll("left")}
-          className={`left-arrow ${theme ? light : dark}`}
-        >
+        <span onClick={() => handleScroll("left")} className={`left-arrow`}>
           {"<"}
         </span>
         <div className='menu-list' ref={categoryBarRef}>
           {menuList.map((menu) => (
             <div
-              className={`menu-item ${theme ? light : dark}`}
+              style={setMenuTheme}
+              className={`menu-item`}
               key={menu.id}
               // ref={menuitem_ref}
               onClick={handleMenuClick}
@@ -87,10 +85,7 @@ function CreatorReserveTap() {
             </div>
           ))}
         </div>
-        <span
-          onClick={() => handleScroll("right")}
-          className={`right-arrow ${theme ? light : dark}`}
-        >
+        <span onClick={() => handleScroll("right")} className={`right-arrow`}>
           {">"}
         </span>
       </div>
@@ -102,9 +97,7 @@ function CreatorReserveTap() {
               <span className='time-stamp'>{video.timestamp}</span>
             </div>
             <div className='video-details'>
-              <div className={`video-title ${theme ? light : dark}`}>
-                {video.title}
-              </div>
+              <div className={`video-title`}>{video.title}</div>
               <div className='channel-name'>{video.channelName}</div>
               <div className='video-info'>
                 <span className='viewer-count'>

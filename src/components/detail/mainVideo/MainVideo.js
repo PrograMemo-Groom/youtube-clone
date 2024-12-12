@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import formatViewerCount from "../../../utils/formatViewerCount";
 import formatTimeDifference from "../../../utils/formatTimeDifference";
+import { ThemeContext } from "../../context/context.js";
+import {getStyle, getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
 import "./MainVideo.css";
 
 function MainVideo() {
+  const { isDark } = useContext(ThemeContext);
+  const setMenuTheme = getMenuItemStyle(isDark);
+  const setTheme = getStyle(isDark);
+
   const [content, setContent] = useState({
     videoSrc:
       "https://www.youtube.com/embed/rZ3tsvTqeZ0?si=-SH64CToqfeVyIfP&modestbranding=1&rel=0",
@@ -65,21 +71,21 @@ function MainVideo() {
                 구독자 {formatViewerCount(content.channelSubscribers)}명
               </span>
             </div>
-            <button className='subscribe-btn'>구독</button>
+            <button style={setMenuTheme} className='subscribe-btn'>구독</button>
           </div>
 
           <div className='actions'>
             <div>
-              <button className='like-btn'>👍좋아요 {formatViewerCount(content.likes)}</button>
-              <button className='hate-btn'>👎 {formatViewerCount(content.hate)} </button>
+              <button style={setMenuTheme} className='like-btn'>👍좋아요 {formatViewerCount(content.likes)}</button>
+              <button style={setMenuTheme} className='hate-btn'>👎 {formatViewerCount(content.hate)} </button>
             </div>
-            <button className='share-btn'>⤴️ 공유</button>
-            <button className='saveOfline-btn'>⬇️ 오프라인 저장</button>
-            <button className='Thanks-btn'> Thanks</button>
-            <button className='more-btn'>···</button>
+            <button style={setMenuTheme} className='share-btn'>⤴️ 공유</button>
+            <button style={setMenuTheme} className='saveOfline-btn'>⬇️ 오프라인 저장</button>
+            <button style={setMenuTheme} className='Thanks-btn'> Thanks</button>
+            <button style={setMenuTheme} className='more-btn'>···</button>
           </div>
         </div>
-        <div className='details-contents'>
+        <div style={setMenuTheme} className='details-contents'>
           <p>조회수 {formatViewerCount(content.views)}회 {formatTimeDifference(content.uploadDate)}</p>
           <span>
             {content.text}
@@ -108,7 +114,7 @@ function MainVideo() {
         </div>
         <div className='input-container'>
           <img src='assets/mypage/user-profile.png' alt='사용자 이미지' />
-          <input type='text' placeholder='댓글 추가...'></input>
+          <input style={setTheme} type='text' placeholder='댓글 추가...'></input>
         </div>
 
         <div className='comment-list'>

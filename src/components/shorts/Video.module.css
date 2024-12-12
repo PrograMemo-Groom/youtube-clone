@@ -1,4 +1,87 @@
-.vidioContainer{
+.videoComponents{
     flex-basis: 50%;
-    background-color:lightblue;
+}
+
+.videoContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+}
+
+/* 쇼츠 동영상부분. 크기 고정 */
+.videoBox{
+    width: 389px;
+    min-width: 389px;
+    height: 691px;
+    background-color: rgb(173, 173, 173);
+    border-radius: 12px;
+    position: relative;
+}
+
+/* 모든 정보 담을 컨테이너 */
+.infoContainer {
+    position: absolute;
+    padding: 16px;
+    bottom: 0;
+}
+
+/* 프로필 */
+.profileBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 14px;
+}
+
+.profileBox img{
+    width: 32px;
+    border-radius: 50%;
+}
+.profileBox p{
+    padding: 0 8px;
+    color: white;
+    font-weight: 700;
+}
+
+.subscribeBnt{
+    width: 46px;
+    height: 33px;
+    border: none;
+    border-radius: 16px;
+    background-color: white;
+    font-weight: 500;
+}
+
+.subscribeBnt:hover{
+    background-color: var(--border-color);
+    cursor: pointer;
+}
+
+.explanBox{
+    color: white;
+    padding: 8px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3em;
+}
+.musicBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 0 0;
+    font-size: 14px;
+    color: white;
+    font-weight: 600;
+}
+
+.musicBox img{
+    width: 14px;
+    padding: 2px 6px 2px 2px;
+}
+/* 버튼 컨테이너 */
+.bntContainer{
+    width: 48px;
+    padding: 12px;
+    background-color: lightblue;
 }
