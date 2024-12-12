@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Manage-subscribe.module.css';
-import {fetchSubscriptions} from "./service";
+import {fetchSubscriptions} from "../../../service/SubscribeService";
 
 
 const ManageSubscribe = () => {

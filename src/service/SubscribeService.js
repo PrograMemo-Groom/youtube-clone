@@ -1,5 +1,5 @@
-import instance from '../../api/api';
-import requests from '../../api/endpoint';
+import instance from '../api/api';
+import requests from '../api/endpoint';
 
 const tag = '[Service]';
 export const fetchSubscriptions = async () => {
