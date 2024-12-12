@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
 
 const categories = [
-    '전체', '음악', '라이브', '믹스', '뉴스', '게임',
-    '스케치 코미디', '관광', '랩', '요리',
+    '전체', '음악', '라이브', '믹스', '뉴스', '게임', '애니메이션',
+    '스케치 코미디', '관광', '랩', '뷰티팁', '요리',
     '최근에 업로드된 동영상', '감상한 동영상', '새로운 맞춤 동영상'
 ];
 
