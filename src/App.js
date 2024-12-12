@@ -7,6 +7,7 @@ import SideBar from "./components/sidebar/Sidebar";
 import MyPage from "./components/myPage/MyPage";
 import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
+import Music from "./components/main/category/pages/Music";
 
 const LayOut = () => {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="search" element={<SearchPage />} />
           <Route path="myPage" element={<MyPage />} />
           <Route path="detail" element={<Detail />} />
+          <Route path="music" element={<Music/>}/>
         </Route>
       </Routes>
     </div>
