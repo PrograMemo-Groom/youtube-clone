@@ -28,13 +28,13 @@ const Sidebar = () => {
 
     const handleGoto = (url, item) => {
         navigate(url);
-        setSelected(prev => ({
+        setSelected({
             home: false,
             shorts: false,
             subscribe: false,
             myPage: false,
             [item]: true
-        }));
+        });
     }
     return (
         <div className={styles.container}>
