@@ -22,15 +22,13 @@ jobs:
         run: |
           # Determine the event type (issues or issue_comment)
           EVENT_TYPE="${{ github.event_name }}"
-          ASSIGNEES=""
+          ASSIGNEES=$(echo '${{ toJson(github.event.issue.assignees) }}' | jq -r '.[].login')
 
           if [ "$EVENT_TYPE" = "issues" ]; then
             # Handle assigned event
-            ASSIGNEES=$(echo '${{ toJson(github.event.issue.assignees) }}' | jq -r '.[].login')
             MESSAGE="이슈에 님 할당됨 보슈: https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}"
           elif [ "$EVENT_TYPE" = "issue_comment" ]; then
             # Handle issue_comment event
-            ASSIGNEES=$(echo '${{ toJson(github.event.issue.assignees) }}' | jq -r '.[].login')
             COMMENTER="${{ github.event.comment.user.login }}"
             MESSAGE="님 이슈에 댓글 달림 ㅇㅇ $COMMENTER: https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}#issuecomment-${{ github.event.comment.id }}"
           else
@@ -38,19 +36,19 @@ jobs:
             exit 1
           fi
 
+          # Create an associative array for Webhook mapping
+          declare -A WEBHOOKS
+          WEBHOOKS["jdaily00"]=$DISCORD_WEBHOOK_JKH
+          WEBHOOKS["S2ej1n"]=$DISCORD_WEBHOOK_KSJ
+          WEBHOOKS["yoorym-kim"]=$DISCORD_WEBHOOK_KYR
+          WEBHOOKS["happygirlll"]=$DISCORD_WEBHOOK_LBM
+          WEBHOOKS["Saaad9"]=$DISCORD_WEBHOOK_SIM
+
           # Loop through all assignees
           for ASSIGNEE in $ASSIGNEES; do
-            if [ "$ASSIGNEE" = "jdaily00" ]; then
-              WEBHOOK_URL=$DISCORD_WEBHOOK_JKH
-            elif [ "$ASSIGNEE" = "S2ej1n" ]; then
-              WEBHOOK_URL=$DISCORD_WEBHOOK_KSJ
-            elif [ "$ASSIGNEE" = "yoorym-kim" ]; then
-              WEBHOOK_URL=$DISCORD_WEBHOOK_KYR
-            elif [ "$ASSIGNEE" = "happygirlll" ]; then
-              WEBHOOK_URL=$DISCORD_WEBHOOK_LBM
-            elif [ "$ASSIGNEE" = "Saaad9" ]; then
-              WEBHOOK_URL=$DISCORD_WEBHOOK_SIM
-            else
+            WEBHOOK_URL=${WEBHOOKS[$ASSIGNEE]}
+
+            if [ -z "$WEBHOOK_URL" ]; then
               echo "No webhook configured for this assignee: $ASSIGNEE"
               continue
             fi
