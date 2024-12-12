@@ -22,15 +22,15 @@ jobs:
         run: |
           # Determine the event type (issues or issue_comment)
           EVENT_TYPE="${{ github.event_name }}"
-          ASSIGNEES=()
+          ASSIGNEES=""
 
           if [ "$EVENT_TYPE" = "issues" ]; then
             # Handle assigned event
-            ASSIGNEES=$(echo "${{ github.event.issue.assignees }}" | jq -r '.[].login')
+            ASSIGNEES=$(echo '${{ toJson(github.event.issue.assignees) }}' | jq -r '.[].login')
             MESSAGE="이슈에 님 할당됨 보슈: https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}"
           elif [ "$EVENT_TYPE" = "issue_comment" ]; then
             # Handle issue_comment event
-            ASSIGNEES=$(echo "${{ github.event.issue.assignees }}" | jq -r '.[].login')
+            ASSIGNEES=$(echo '${{ toJson(github.event.issue.assignees) }}' | jq -r '.[].login')
             COMMENTER="${{ github.event.comment.user.login }}"
             MESSAGE="님 이슈에 댓글 달림 ㅇㅇ $COMMENTER: https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}#issuecomment-${{ github.event.comment.id }}"
           else
