@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './Video.module.css';
 
-const Video = () => {
+const Video = ({onPanelToggle}) => {
+
   return (
     <main className={styles.videoComponents}>
       {/* 컨테이너 하나 */}
@@ -50,7 +51,7 @@ const Video = () => {
             <span>공유</span>
           </div>
           <div>
-            <button>
+            <button className={styles.shareBnt} onClick={onPanelToggle}>
               <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
             </button>
           </div>

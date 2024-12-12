@@ -94,10 +94,14 @@
     align-items: center;
 }
 .bntContainer button{
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     border: none;
     border-radius: 50%;
+    background-color: var(--hashtag-section-color);
+}
+.bntContainer button:hover{
+    cursor: pointer;
     background-color: var(--border-color);
 }
 
