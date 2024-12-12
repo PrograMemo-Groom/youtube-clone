@@ -167,20 +167,44 @@
 }
 
 @media screen and (min-width: 1710px) {
+    .contents-container {
+        width: 78%;
+        height: 100vh;
+        margin: 0 auto;
+    }
+
     .user-profile-img {
-        width: 8rem;
+        width: 8em;
     }
 
     .user-name {
         font-size: 2.2rem;
     }
 
+    .video-list {
+        display: flex;
+        width: 88rem;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
     .video-item {
-        width: calc(100% / 6 - 1rem);
+        width: calc(100% / 7 - 1rem);
+    }
+
+    .next-video-btn {
+        margin-top: 2rem;
+        margin-left: 1rem;
+        box-shadow: 0.2rem 0.25rem 0.1rem;
+    }
+
+    .all-video-view {
+        font-weight: 400;
+        margin-right: 8rem;
     }
 }
 
-@media screen and (max-width: 1200px) and (min-width: 768px) {
+@media screen and (max-width: 1700px) and (min-width: 768px) {
     .user-page-info-container {
         flex-direction: column;
         align-items: center;
