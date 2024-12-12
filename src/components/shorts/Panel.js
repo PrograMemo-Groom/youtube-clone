@@ -3,7 +3,7 @@ import styles from './Panel.module.css';
 
 const Panel = () => {
   return (
-    <div className={styles.Panel_Container}>
+    <div className={styles.panelContainer}>
         <div className={styles.contents_container}>
           <header className={styles.contents_header}>
             <p>설명</p>

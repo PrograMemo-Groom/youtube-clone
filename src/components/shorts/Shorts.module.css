@@ -2,14 +2,14 @@
     --border-color:#E5E5E5;
 }
 
-.Shorts_Container{
+.shortsContainer{
     height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 8px;
 }
 
-.section_Container{
+.sectionContainer{
     flex: 1;
     display: flex;
     justify-content: center;
