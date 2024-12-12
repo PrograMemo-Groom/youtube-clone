@@ -1,9 +1,9 @@
-.panel_Container{
+.panelContainer{
     flex-basis: 50%;
     /* background-color:lightcoral */
 }
 
-.contents_container{
+.contentsContainer{
     width: 77%;
     min-width: 250px;
     height: 694px;
@@ -16,7 +16,7 @@
     border-radius: 12px;
 }
 
-.contents_header {
+.contentsHeader {
     height: 44px;
     display: flex;
     justify-content: space-between;
@@ -26,21 +26,27 @@
     border-radius: 12px 12px 0 0;
 }
 
-.contents_header p {
+.contentsHeader p {
     font-size: 20px;
     font-weight: 900;
 }
 
-.contents_section{
+.closeBnt {
+    border-radius: 50%;
+    border: none;
+    background-color: var(--border-color);
+}
+
+.contentsSection{
     padding: 4px 16px;
 }
 
-.contents_section p{
+.contentsSection p{
     padding: 15px 0px;
     font-size: 14px;
     border-bottom: 1px solid var(--border-color);
 }
 
-.contents_factoid {
+.contentsFactoid {
     padding: 4px 16px;
 }
