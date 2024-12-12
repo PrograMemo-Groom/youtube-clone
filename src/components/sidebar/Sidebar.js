@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from "./Sidebar.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [selected, setSelected] = React.useState({
             home: false,
@@ -12,6 +13,18 @@ const Sidebar = () => {
             myPage: false,
         }
     );
+
+    useEffect(() => {
+        // URL에 따라 선택 상태를 업데이트
+        const currentPath = location.pathname;
+        const newSelected = {
+            home: currentPath === '/',
+            shorts: currentPath === '/shorts',
+            subscribe: currentPath === '/subscribe',
+            myPage: currentPath === '/myPage',
+        };
+        setSelected(newSelected);
+    }, [location]);
 
     const handleGoto = (url, item) => {
         navigate(url);
