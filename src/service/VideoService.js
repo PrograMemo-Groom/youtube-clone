@@ -65,6 +65,25 @@ export const fetchSearchVideos = async (keyword) => {
         console.log(tag, "SearchVideos can't get response data", e);
     }
 }
+export const fetchSubscriptions = async (token) => {
+    try{
+        const {data: {items : response}} = await instance.get(requests.fetchSubscriptions, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                part: "snippet",
+                mine:true,
+                regionCode: "KR",
+                maxResults: 10,
+            }
+        });
+        console.log(tag, "fetchPopularVideos response",response);
+        return response;
+    } catch (e) {
+        console.log(tag, "PopularVideos can't get response data", e);
+    }
+}
 
 // 채널 프로필 이미지 요청 함수
 const getChannelThumbnail = async (channelId) => {
