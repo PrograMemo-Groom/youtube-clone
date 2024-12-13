@@ -10,6 +10,7 @@ import "./MainVideo.css";
 import { getChannelThumbnail } from "../../../utils/formatProfileImage.js";
 import { getChannelSubscriberCount } from "../../../utils/getChannelSubscriberCount.js";
 import { fetchVideoComments } from "../../../utils/fetchVideoComments.js";
+import {fetchShortsVideos} from "../../../utils/fetchShortsVideos.js";
 
 function MainVideo({ video }) {
   const { isDark } = useContext(ThemeContext);
