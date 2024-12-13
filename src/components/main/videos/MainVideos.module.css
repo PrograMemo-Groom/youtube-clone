@@ -81,9 +81,14 @@
     word-wrap: break-word;
     margin-right: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 10px;
-
+    overflow: hidden;
+    text-overflow: ellipsis; /* 생략 부호 추가 */
+    display: -webkit-box; /* 플렉스 박스 사용 */
+    -webkit-line-clamp: 2; /* 최대 2줄까지만 표시 */
+    -webkit-box-orient: vertical; /* 박스 방향 설정 */
+    line-height: 1.5; /* 줄 간격을 늘림 */
 }
 
 .videoAuthor,
@@ -104,4 +109,5 @@
     height: 30px;
     flex-shrink: 0;
     margin-left: 8px;
+    cursor: pointer;
 }
