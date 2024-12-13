@@ -15,14 +15,7 @@ export const fetchSearchList = async (keyword) => {
                 results.map(async (item) => {
                     const {video} = await getVideoDetails(item.videoId);
                     const channel = await getChannelData(item.channel.channelId);
-                    return {
-                        ...item,
-                        ...video,
-                        channel: {
-                            ...video.channel,
-                            ...channel
-                        }
-                    }
+                    return { ...item, ...video, channel: { ...video.channel, ...channel } }
                 })
             )
         }
