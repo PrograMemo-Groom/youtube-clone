@@ -52,7 +52,14 @@ const MainVideos = ({ fetchFunction }) => {
                             />
                         </div>
                         <div className={styles.videoInfo}>
-                            <p className={styles.videoTitle}>{video.title}</p>
+                            <div className={styles.titleRow}>
+                                <p className={styles.videoTitle}>{video.title}</p>
+                                <img
+                                    src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
+                                    alt="more"
+                                    className={styles.more}
+                                />
+                            </div>
                             <p className={styles.videoAuthor}>{video.author}</p>
                             <p className={styles.videoStats}>{video.stats}</p>
                         </div>

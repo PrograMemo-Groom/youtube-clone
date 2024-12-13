@@ -77,12 +77,13 @@
 }
 
 .videoTitle {
-    margin-top: 0;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
-    margin-bottom: 10px;
+    flex: 1;
+    word-wrap: break-word;
+    margin-right: 8px;
     cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+
 }
 
 .videoAuthor,
@@ -90,4 +91,17 @@
     font-size: 14px;
     color: #858585;
     cursor: pointer;
+}
+
+.titleRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.more {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    margin-left: 8px;
 }
