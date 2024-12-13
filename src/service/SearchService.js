@@ -34,35 +34,26 @@ export const fetchSearchList = async (keyword) => {
 }
 
 export const getChannelData = async (channelId) => {
+    // console.log(`${tag} Channel 정보 가져오기`);
     try {
         const {data: {items: response}} = await instance.get(requests.fetchChannelDetails, {
-            params:{
-                part: "snippet", id: channelId, regionCode: "KR", maxResults: 1
-            }
-        })
+            params:{ part: "snippet", id: channelId, regionCode: "KR", maxResults: 1 }})
         const {snippet : {title, customUrl, thumbnails}} = response[0];
-
-        const channel = {
+        return {
             title,
             customUrl: `https://youtube.com/${customUrl}`,
             channelImg: thumbnails.default.url
         }
-
-        return channel;
-
+        // console.log(`${tag} Channel 정보 가져왔음!`,channelResult);
     } catch (e) {
-        console.log(tag, "getChannelData can't get response data", e);
+        console.trace(tag, "getChannelData can't get response data", e);
     }
 }
-
-/* 검색창에서 검색 시 videoId list get() */
 export const fetchSearchVideos = async (keyword) => {
+    // console.log(`${tag} 검색된 비디오[] 가져오기`);
     try {
         const {data: response} = await instance.get(requests.fetchSearchVideos, {
-            params: {
-                part: "snippet", q: keyword, regionCode: "KR", type: "video", maxResults: 3
-            }
-        });
+            params: { part: "snippet", q: keyword, regionCode: "KR", type: "video", maxResults: 3 }});
         const results = response.items.map((item) => ({
             videoId: item.id.videoId,
             channel: {
@@ -73,8 +64,9 @@ export const fetchSearchVideos = async (keyword) => {
             pageToken: response?.nextPageToken,
             results
         }
+        // console.log(`${tag} 검색된 비디오[] 가져왔음`,videoListResult);
     } catch (e) {
-        console.log(tag, "SearchVideos can't get response data", e);
+        console.trace(tag, "fetchSearchVideos can't get response data", e);
     }
 }
 
@@ -90,7 +82,7 @@ export const fetchGetVideoDetails = async (videoId) => {
             statistics: { viewCount, likeCount, favoriteCount, commentCount },
             contentDetails: { duration }
         } = response[0];
-        const results = {
+        return {
             video: {
                 title,
                 description,
@@ -110,7 +102,6 @@ export const fetchGetVideoDetails = async (videoId) => {
                 }
             }
         }
-        return results;
     } catch (e) {
         console.log(tag, "fetchGetVideoDetails can't get response data", e);
     }
