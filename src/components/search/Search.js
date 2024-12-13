@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styles from "./Search.module.css";
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {fetchSearchList} from "../../service/SearchService";
 import useNavigation from "../../hooks/useNavigation";
 
@@ -18,10 +18,10 @@ const Search = () => {
     useEffect(() => {
         const fetchData = async () => {
             if (searchTerm.trim().length > 0) {
-                const response = await fetchSearchList(searchTerm);
-                console.log(tag, "fetchData:", response);
-                setSearchResult(response.items || []);
-                setNextToken(response.pageToken || "");
+                const {items, pageToken} = await fetchSearchList(searchTerm);
+                console.log(tag, "fetchData:", items, pageToken);
+                setSearchResult(items || []);
+                setNextToken(pageToken || "");
             }
         }
         fetchData();
@@ -57,15 +57,17 @@ const Search = () => {
                                     sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-storage-access-by-user-activation"
                                     // loading="lazy"
                                 />
-                                <span>1:10:13</span>
+                                <span>{video.videoTime}</span>
                             </div>
                             <div className={styles.videoDescriptions} onClick={() => handleShowVideo(video.videoId)}>
                                 <h2>{video.title}</h2>
-                                <p>퍼스널 Personal•조회수 1.7만회</p>
+                                <p>{video.statistics.viewCount}•{video.videoCreated}</p>
                                 <div className={styles.videoChannelInfo}>
                                     <div className={styles.channelInfo}>
-                                        <img src={video.defaultThumbnail.url} alt="img" />
-                                        <span>{video.channelTitle}</span>
+                                        <Link to={video.channel.customUrl} target="_blank">
+                                            <img src={video.channel.channelImg} alt="img" />
+                                            <span>{video.channelTitle}</span>
+                                        </Link>
                                     </div>
                                 </div>
                                 <p className={styles.videoDescript}>{video.description}</p>
