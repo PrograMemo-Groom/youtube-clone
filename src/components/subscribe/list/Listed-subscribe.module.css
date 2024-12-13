@@ -43,8 +43,11 @@
     flex-direction: column;
 
     width: 862px;
+    padding-right: 300px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    padding-bottom: 50px;
+
+    border-bottom: 0.4px solid #afafaf;
 }
 
 .videoClip_header {
@@ -174,10 +177,13 @@
 /********************************* shorts 섹션 !!  */
 
 .shortsSection {
-    width: 862px;
+    width: 1162px;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    border-bottom: 0.4px solid #afafaf;
+    padding-bottom: 40px;
 }
 
 .shortsHeader {
@@ -227,7 +233,7 @@
 }
 
 .shortsThumbnail {
-    width: 210px;
+    width: 180px;
     border-radius: 3%;
 
 }
