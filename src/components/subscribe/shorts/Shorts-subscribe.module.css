@@ -1,3 +1,75 @@
-.container{
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
+.header {
+    height: 68px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header h3 {
+    font-size: 20px;
+    color: #0F0F0F;
+    font-weight: 700;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+}
+
+/****************** 쇼츠 하나  */
+
+.shortsContainer {
+    width: 220px;
+}
+
+.shorts {
+    position: relative;
+    width: 100%;
+    max-width: 220px; /* 최대 너비 제한 */
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+}
+
+/* 하단 그라데이션 */
+.shorts::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+}
+
+.shorts img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.shorts p {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+
+    z-index: 4;
 }
