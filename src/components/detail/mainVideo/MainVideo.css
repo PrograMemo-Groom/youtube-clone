@@ -63,7 +63,8 @@ iframe {
 
 .creator-tab>img {
   border-radius: 50%;
-  /* border: 1px solid black; */
+  width: 40px;
+  height: 40px;
 }
 
 .creator-tab button {
@@ -107,6 +108,11 @@ iframe {
 .details-contents > p:first-of-type {
   font-weight: bold;
   padding-bottom: 10px;
+}
+
+.more-text-btn {
+  cursor: pointer;
+  font-weight: bold;
 }
 
 /* --------------여기까지 영상 설명  ------------------ */

@@ -15,7 +15,18 @@ function MainVideo({ video }) {
   const setMenuTheme = getMenuItemStyle(isDark);
   const setTheme = getStyle(isDark);
 
-  const [content, setContent] = useState({});
+  const [content, setContent] = useState({
+    videoSrc: "",
+    title: "",
+    channel: "",
+    channelSubscribers: "",
+    channelImgUrl: "",
+    text: "",
+    views: 0,
+    uploadDate: "",
+    like: 0,
+    hate: 0,
+  });
   const [comments, setComments] = useState([
     {
       id: Date.now(),
@@ -30,6 +41,8 @@ function MainVideo({ video }) {
     },
   ]);
 
+  const [showFullText, setShowFullText] = useState(false);
+
   useEffect(() => {
     const { snippet, statistics } = video;
 
@@ -40,7 +53,9 @@ function MainVideo({ video }) {
       // 비동기적으로 채널 썸네일 가져오기
       const channelImgUrl = await getChannelThumbnail(snippet.channelId);
       // 비동기적으로 구독자수 가져오기
-      const channelSubscribers = await getChannelSubscriberCount(snippet.channelId);
+      const channelSubscribers = await getChannelSubscriberCount(
+        snippet.channelId
+      );
 
       // content 업데이트
       const videoDetail = {
@@ -49,7 +64,7 @@ function MainVideo({ video }) {
         channel: snippet.channelTitle,
         channelSubscribers: channelSubscribers || "N/A",
         channelImgUrl, // 비동기적으로 가져온 썸네일 사용
-        text: snippet.description,
+        text: snippet.description || "", // 텍스트가 없을 경우 빈 문자열로 설정
         views: statistics.viewCount,
         uploadDate: snippet.publishedAt,
         comments: statistics.commentCount,
@@ -64,7 +79,24 @@ function MainVideo({ video }) {
     fetchChannelInfo(); // 썸네일을 비동기적으로 가져온 후, 업데이트
   }, [video]); // video 변경 시 업데이트
 
-  console.log("video", video);
+  const handleToggleText = () => {
+    setShowFullText((prevState) => !prevState);
+  };
+
+  // 텍스트를 단락 단위로 나누고, 첫 5단락만 표시
+  const getTextWithLimitedLines = (text) => {
+    if (!text) {
+      return "";
+    }
+
+    const paragraphs = text.split("\n"); // 단락을 나누기
+    if (paragraphs.length > 5) {
+      const visibleText = paragraphs.slice(0, 5).join("\n"); // 첫 5단락만 표시
+      return `${visibleText}\n...`;
+    }
+    return text;
+  };
+
   return (
     <section className='mainVideo-container'>
       <figure className='video-container'>
@@ -126,7 +158,16 @@ function MainVideo({ video }) {
             조회수 {formatViewerCount(content.views)}회{" "}
             {formatTimeDifference(content.uploadDate)}
           </p>
-          <span>{content.text}</span>
+          <span>
+            {showFullText
+              ? content.text
+              : getTextWithLimitedLines(content.text)}
+          </span>
+          {content.text.split("\n").length > 5 && (
+            <span className='more-text-btn' onClick={handleToggleText}>
+              {showFullText ? "...간략히" : "...더보기"}
+            </span>
+          )}
         </div>
       </figure>
 
