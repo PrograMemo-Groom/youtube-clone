@@ -4,9 +4,10 @@
 }
 
 .contentsContainer{
-    width: 75%;
+    /* width: 75%; */
+    width: 480px;
     min-width: 250px;
-    height: 694px;
+    height: 87vh;
 
     display: flex;
     flex-direction: column;

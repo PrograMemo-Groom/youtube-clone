@@ -11,14 +11,12 @@
 
 /* 쇼츠 동영상부분. 크기 고정 */
 .videoBox{
-    width: calc(100vw * 0.48); 
-    min-width: 389px; 
-    height: calc((100vw * 0.48) * (691 / 389));
-    min-height: 691px;
-
+    width: 49vh;
+    height: 87vh;
     background-color: rgb(173, 173, 173);
     border-radius: 12px;
     position: relative;
+    transition: "all 0.3s ease"
 }
 
 /* 모든 정보 담을 컨테이너 */
