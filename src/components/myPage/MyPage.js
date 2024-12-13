@@ -53,58 +53,7 @@ const videoData = [{
     },
 ]
 
-// const fetchPlaylistsVideos = async () => {
-//     try {
-//         const res = await instance.get('playlistItems', {
-//             params: {
-//                 part: 'snippet',
-//                 playlistId: 'PLEJrijY-Z4cBcAoOfujrtSauwxc9XE89A',
-//                 maxResults: 48,
-//             },
-//         });
-//         console.log(res.data.items);
-//         setVideoList(res.data.items);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
-
-// export const fetchPlaylistsVideos = async () => {
-//     const token = process.env.REACT_APP_TOKEN_URL;
-//     console.log("Token used for request:", token);
-//     try{
-//         const {data: {items : response}} = await instance.get(requests.fetchPlaylistsVideos, {
-//             headers: {
-//                 Authorization: `Bearer ${token}`
-//             },
-//             params: {
-//                 part: "snippet",
-//                 mine:true,
-//                 regionCode: "KR",
-//                 maxResults: 48,
-//             }
-//         });
-//         console.log("fetchPlaylistsVideos response",response);
-//         return response;
-//     } catch (e) {
-//         console.log("fetchPlaylistsVideos can't get response data", e);
-//     }
-// }
-
 export default function MyPage() {
-//     const tag = '[MyPage]';
-//     const [videoList, setVideoList] = useState([]);
-//     const token = "process.env.REACT_APP_TOKEN_URL";
-//
-//     useEffect(() => {
-//         const loadVideos = async () => {
-//             const response = await fetchPlaylistsVideos(token);
-//             setVideoList(response);
-//         };
-//
-//         loadVideos();
-//     }, [token]);
-
     return (
         <div className="container">
             <div className="relative-layout-container">
@@ -153,8 +102,21 @@ export default function MyPage() {
                                                 <img className="video-thumbnail"
                                                      src={video.thumbnail}
                                                      alt={video.title}/>
-                                                <div className="progress-bar-container">
-                                                    <div className="progress-bar"></div>
+                                                <div className="progress-container">
+                                                    <section className="view-icons-container">
+                                                        <img className="video-view-later-icon"
+                                                             src="/assets/mypage/video-later-view-icon.svg"
+                                                             alt="video-later-view-icon"/>
+                                                        <img className="video-view-later-icon"
+                                                             src="/assets/mypage/playlist-icon.svg"
+                                                             alt="video-later-view-icon"/>
+                                                    </section>
+                                                    <section className="progress-time-container">
+                                                        <p className="progress-time">2:29:28</p>
+                                                    </section>
+                                                    <section className="progress-bar-container">
+                                                        <div className="progress-bar"></div>
+                                                    </section>
                                                 </div>
                                             </div>
                                             <div className="video-info-container">
