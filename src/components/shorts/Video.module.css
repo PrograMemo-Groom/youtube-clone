@@ -11,9 +11,11 @@
 
 /* 쇼츠 동영상부분. 크기 고정 */
 .videoBox{
-    width: 389px;
-    min-width: 389px;
-    height: 691px;
+    width: calc(100vw * 0.48); 
+    min-width: 389px; 
+    height: calc((100vw * 0.48) * (691 / 389));
+    min-height: 691px;
+
     background-color: rgb(173, 173, 173);
     border-radius: 12px;
     position: relative;
