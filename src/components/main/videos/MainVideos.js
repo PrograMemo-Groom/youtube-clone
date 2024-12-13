@@ -1,7 +1,6 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import styles from "./MainVideos.module.css";
 import { getMainVideos } from "../../../service/MainService";
-import { useNavigate } from "react-router-dom";
 import useNavigation from "../../../hooks/useNavigation";
 
 const MainVideos = ({ fetchFunction }) => {
