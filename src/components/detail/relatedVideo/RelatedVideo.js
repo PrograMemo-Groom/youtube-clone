@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import "./RelatedVideo.css";
 import formatViewerCount from "../../../utils/formatViewerCount";
 // import {getStyle, getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
-// import { ThemeContext } from "../../context/context.js";
+import { ThemeContext } from "../../context/context.js";
 
 function RelatedVideo() {
-  // const { isDark } = useContext(ThemeContext);
+  const { isDark } = useContext(ThemeContext);
   // const setTheme = getStyle(isDark);
 
 
@@ -113,11 +113,19 @@ function RelatedVideo() {
                 </span>
               </div>
 
-              <img
+              {isDark ? (
+                <img
                 className='more-btn'
                 src='assets/icon/more_btn.svg'
                 alt='영상 더보기'
               />
+              ) : (
+                <img
+                className='more-btn'
+                src='assets/icon/more_btn_black.svg'
+                alt='영상 더보기'
+              />
+              )}
             </div>
           </div>
         ))
