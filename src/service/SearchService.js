@@ -8,25 +8,23 @@ const tag = '[SearchService]';
 
 export const fetchSearchList = async (keyword) => {
     try {
-
-        const getVideo = await fetchSearchVideos(keyword);
-        const videoResult = await Promise.all(
-            getVideo.results.map(async (item) => {
-                const videoDetails = await fetchGetVideoDetails(item.videoId);
-                const channel = await getChannelData(item.channel.channelId);
-                return {
-                    ...item,
-                    ...videoDetails.video,
-                    channel: {
-                        ...videoDetails.video.channel,
-                        ...channel
-                    }
-                }
-            })
-        );
+        const {nextPageToken, results} = await getSearchVideoList(keyword);
         return {
-            pageToken: getVideo.pageToken,
-            items: videoResult
+            pageToken: nextPageToken,
+            items: await Promise.all(
+                results.map(async (item) => {
+                    const {video} = await getVideoDetails(item.videoId);
+                    const channel = await getChannelData(item.channel.channelId);
+                    return {
+                        ...item,
+                        ...video,
+                        channel: {
+                            ...video.channel,
+                            ...channel
+                        }
+                    }
+                })
+            )
         }
     } catch (e) {
         console.trace(`${tag} - `,e.message);
@@ -36,9 +34,9 @@ export const fetchSearchList = async (keyword) => {
 export const getChannelData = async (channelId) => {
     // console.log(`${tag} Channel 정보 가져오기`);
     try {
-        const {data: {items: response}} = await instance.get(requests.fetchChannelDetails, {
+        const {data: {items: [response]}} = await instance.get(requests.fetchGetChannel, {
             params:{ part: "snippet", id: channelId, regionCode: "KR", maxResults: 1 }})
-        const {snippet : {title, customUrl, thumbnails}} = response[0];
+        const {snippet : {title, customUrl, thumbnails}} = response;
         return {
             title,
             customUrl: `https://youtube.com/${customUrl}`,
@@ -49,20 +47,17 @@ export const getChannelData = async (channelId) => {
         console.trace(tag, "getChannelData can't get response data", e);
     }
 }
-export const fetchSearchVideos = async (keyword) => {
+export const getSearchVideoList = async (keyword) => {
     // console.log(`${tag} 검색된 비디오[] 가져오기`);
     try {
-        const {data: response} = await instance.get(requests.fetchSearchVideos, {
+        const {data: items, nextPageToken} = await instance.get(requests.fetchGetSearch, {
             params: { part: "snippet", q: keyword, regionCode: "KR", type: "video", maxResults: 3 }});
-        const results = response.items.map((item) => ({
-            videoId: item.id.videoId,
-            channel: {
-                channelId: item.snippet.channelId
-            }
-        }))
+
         return {
-            pageToken: response?.nextPageToken,
-            results
+            nextPageToken,
+            results: items.map(({ id:{videoId}, snippet:{channelId} }) => ({
+                videoId, channel: { channelId }
+            }))
         }
         // console.log(`${tag} 검색된 비디오[] 가져왔음`,videoListResult);
     } catch (e) {
@@ -70,9 +65,10 @@ export const fetchSearchVideos = async (keyword) => {
     }
 }
 
-export const fetchGetVideoDetails = async (videoId) => {
+export const getVideoDetails = async (videoId) => {
+    // console.log(`${tag} 비디오(id)에 대한 정보 가져오기`);
     try{
-        const {data: {items:response}} = await instance.get(requests.getMainVideos, {
+        const {data: {items:[response]}} = await instance.get(requests.fetchGetVideo, {
             params: {
                 part: "snippet,statistics,contentDetails", id: videoId, regionCode: "KR", maxResults: 1
             }
@@ -81,7 +77,7 @@ export const fetchGetVideoDetails = async (videoId) => {
             snippet: {title, description, channelTitle, thumbnails, publishedAt, channelId },
             statistics: { viewCount, likeCount, favoriteCount, commentCount },
             contentDetails: { duration }
-        } = response[0];
+        } = response;
         return {
             video: {
                 title,
@@ -102,8 +98,9 @@ export const fetchGetVideoDetails = async (videoId) => {
                 }
             }
         }
+        // console.log(`${tag} 비디오(id)에 대한 정보 가져왔음`,detailResult);
     } catch (e) {
-        console.log(tag, "fetchGetVideoDetails can't get response data", e);
+        console.log(tag, "getVideoDetails can't get response data", e);
     }
 }
 
