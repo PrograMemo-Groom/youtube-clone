@@ -33,26 +33,26 @@ const Video = ({onPanelToggle}) => {
             <span>12만</span>
           </div>
           <div>
-            <button>
-              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            <button className={styles.donlikeBnt}>
+              <img src={`${process.env.PUBLIC_URL}/thumbsdown.png`}/>
             </button>
             <span>싫어요</span>
           </div>
           <div>
-            <button>
-              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            <button className={styles.commentBnt}>
+              <img src={`${process.env.PUBLIC_URL}/comment.png`}/>
             </button>
             <span>781</span>
           </div>
           <div>
-            <button>
-              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            <button className={styles.shareBnt}>
+              <img src={`${process.env.PUBLIC_URL}/forward.png`}/>
             </button>
             <span>공유</span>
           </div>
           <div>
-            <button className={styles.shareBnt} onClick={onPanelToggle}>
-              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+            <button className={styles.ellipsisBnt} onClick={onPanelToggle}>
+              <img src={`${process.env.PUBLIC_URL}/ellipsis.png`}/>
             </button>
           </div>
           <div className={styles.musicImg}>

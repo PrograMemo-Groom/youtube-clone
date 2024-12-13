@@ -117,6 +117,14 @@
     margin-bottom: 10px;
 }
 
+/* 싫어요 버튼 */
+.donlikeBnt img{
+    margin-bottom: -4px;
+}
+/* 댓글버튼 */
+.commentBnt img{
+    margin-bottom: -4px;
+}
 .musicImg img{
     width: 44px;
     height: 44px;
