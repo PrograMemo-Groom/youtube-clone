@@ -45,7 +45,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
-
+    cursor: pointer;
 }
 
 .videoPlayer {
@@ -58,6 +58,7 @@
     border-radius: 12px;
     object-fit: cover;
     z-index: 1;
+    cursor: pointer;
 }
 
 .videoTime {

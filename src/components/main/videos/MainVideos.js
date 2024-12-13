@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import styles from "./MainVideos.module.css";
 import { getMainVideos } from "../../../service/MainService";
+import { useNavigate } from "react-router-dom";
+import useNavigation from "../../../hooks/useNavigation";
 
 const MainVideos = ({ fetchFunction }) => {
     const [videos, setVideos] = useState([]);// 비디오 데이터를 저장할 상태
     const [loading, setLoading] = useState(true); //로딩 상태
     const [error, setError] = useState(null); //에러 상태
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
+
+    const { link } = useNavigation();
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -23,6 +27,10 @@ const MainVideos = ({ fetchFunction }) => {
 
         fetchVideos();
     }, [fetchFunction]);
+
+    const handleShowVideo = (videoId) => {
+        link(`/detail?q=${videoId}`);
+    };
 
     if (loading) {
         return <div className={styles.loading}>로딩 중...</div>;
@@ -69,7 +77,12 @@ const MainVideos = ({ fetchFunction }) => {
                         </div>
                         <div className={styles.videoInfo}>
                             <div className={styles.titleRow}>
-                                <p className={styles.videoTitle}>{video.title}</p>
+                                <p
+                                    className={styles.videoTitle}
+                                    onClick={() => handleShowVideo(video.videoId)}
+                                >
+                                    {video.title}
+                                </p>
                                 <img
                                     src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
                                     alt="more"
@@ -85,5 +98,6 @@ const MainVideos = ({ fetchFunction }) => {
         </div>
     );
 };
+
 
 export default MainVideos;
