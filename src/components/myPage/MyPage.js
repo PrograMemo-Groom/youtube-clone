@@ -1,4 +1,7 @@
 import "./MyPage.css";
+import instance from "../../api/api";
+import requests from "../../api/endpoint";
+import React, {useState, useEffect} from "react";
 
 const videoData = [{
     thumbnail: "https://i.ytimg.com/vi/Gg_J9Eonl4Q/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&amp;rs=AOn4CLAag4fMJqf99yAtvLDQNbu2ZJ94Lw",
@@ -99,11 +102,38 @@ export default function MyPage() {
                                                 <img className="video-thumbnail"
                                                      src={video.thumbnail}
                                                      alt={video.title}/>
+                                                <div className="progress-container">
+                                                    <section className="view-icons-container">
+                                                        <div className="icon-wrapper">
+                                                            <img
+                                                                className="video-view-later-icon"
+                                                                src="/assets/mypage/video-later-view-icon.svg"
+                                                                alt="video-later-view-icon"
+                                                            />
+                                                            <p className="video-later-view-text">나중에 볼 동영상</p>
+                                                        </div>
+                                                        {/*<div className="icon-wrapper">*/}
+                                                        {/*    <img*/}
+                                                        {/*        className="add-playlist-icon"*/}
+                                                        {/*        src="/assets/mypage/playlist-icon.svg"*/}
+                                                        {/*        alt="add-playlist-icon"*/}
+                                                        {/*    />*/}
+                                                        {/*    <p className="add-playlist-text">현재 재생목록에 추가</p>*/}
+                                                        {/*</div>*/}
+                                                    </section>
+                                                    <section className="progress-time-container">
+                                                        <p className="progress-time">2:29:28</p>
+                                                    </section>
+                                                    <section className="progress-bar-container">
+                                                        <div className="progress-bar"></div>
+                                                    </section>
+                                                </div>
                                             </div>
                                             <div className="video-info-container">
                                                 <h3 className="video-title">{video.title}</h3>
-                                                <p className="video-channel">{video.channel}</p>
+                                                <p className="video-channel">{video.channelTitle}</p>
                                                 <p className="video-meta">
+                                                    {/*{video.publishedAt}*/}
                                                     {video.view} · {video.uploadedAt}
                                                 </p>
                                             </div>
