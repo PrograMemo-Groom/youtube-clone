@@ -139,6 +139,7 @@ const MainVideos = ({ fetchFunction }) => {
                                                     />
                                                     공유
                                                 </li>
+                                                <hr className={styles.menuDivider}/>
                                                 <li>
                                                     <img
                                                         src={`${process.env.PUBLIC_URL}/assets/videoMore/wrong.svg`}
