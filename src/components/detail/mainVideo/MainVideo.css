@@ -34,6 +34,7 @@ iframe {
   flex-direction: column;
   margin-top: 20px;
   flex-wrap: wrap;
+  white-space: pre-line; 
 }
 
 .details-header{
@@ -62,7 +63,8 @@ iframe {
 
 .creator-tab>img {
   border-radius: 50%;
-  /* border: 1px solid black; */
+  width: 40px;
+  height: 40px;
 }
 
 .creator-tab button {
@@ -108,6 +110,11 @@ iframe {
   padding-bottom: 10px;
 }
 
+.more-text-btn {
+  cursor: pointer;
+  font-weight: bold;
+}
+
 /* --------------여기까지 영상 설명  ------------------ */
 
 .comment-container {
@@ -115,7 +122,6 @@ iframe {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  
 }
 
 .comment-header {
@@ -152,6 +158,7 @@ iframe {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  font-size: 1.4em;
 }
 
 .comment {
@@ -185,7 +192,9 @@ iframe {
 .comment-text {
   margin-top: 10px;
   font-size: 1.2em;
+  line-height: 1.5; /* 줄 간격 설정 */
 }
+
 
 .comment-actions {
   display: flex;

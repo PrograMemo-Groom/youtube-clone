@@ -105,11 +105,19 @@ function CreatorReserveTap() {
                 </span>
               </div>
 
-              <img
+              {isDark ? (
+                <img
                 className='more-btn'
                 src='assets/icon/more_btn.svg'
                 alt='영상 더보기'
               />
+              ) : (
+                <img
+                className='more-btn'
+                src='assets/icon/more_btn_black.svg'
+                alt='영상 더보기'
+              />
+              )}
             </div>
             {/* 테마 변경 테스트 */}
             {/* <button onClick={() => setTheme(!theme)}>딸깍</button> */}
