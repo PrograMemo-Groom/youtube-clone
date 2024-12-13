@@ -42,13 +42,13 @@ const ListedSubscribe = () => {
                                                         className={styles.gridButton}
                                                         onClick={() => setView("grid")}
                                                     >
-                                                        <img alt='격자형'/>
+                                                        <img alt='격자형' src={`${process.env.PUBLIC_URL}/grid_btn.svg`}/>
                                                     </button>
                                                     <button
                                                         className={styles.listButton}
                                                         onClick={() => setView("list")}
                                                     >
-                                                        <img alt='리스트형'/>
+                                                        <img alt='리스트형' src={`${process.env.PUBLIC_URL}/list_btn.svg`}/>
                                                     </button>
                                                 </div>
                                             )}
@@ -76,7 +76,7 @@ const ListedSubscribe = () => {
                                     {index === 0 && <section className={styles.shortsSection}>
                                         <header className={styles.shortsHeader}>
                                             <div className={styles.shortsLogo}>
-                                                <img alt='로고'/>
+                                                <img alt="로고" src={`${process.env.PUBLIC_URL}/Youtube_shorts_icon.svg`} />
                                                 <h4>Shorts</h4>
                                             </div>
                                             <button
