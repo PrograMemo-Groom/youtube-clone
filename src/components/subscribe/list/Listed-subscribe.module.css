@@ -1,3 +1,83 @@
 .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main {
+
+}
+
+.videoSection {
+
+}
+
+
+/************************** 일반 비디오클립 하나  */
+.videoClip {
+    display: flex;
+    flex-direction: column;
+
+    width: 862px;
+}
+
+.videoClip_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header_channel {
+    display: flex;
+}
+
+
+/***************** 비디오클립 메인  */
+
+.videoClip_main {
+    display: flex;
+}
+
+
+
+/* 썸네일 */
+.videoThumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 10px;
+    border-radius: 5%;
+    overflow: hidden;
+}
+
+.videoThumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.videoThumbnail p  {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #FFFFFF;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* 비디오 설명들 */
+.videoDescriptions_lines {
+    display: flex;
+    flex-direction: column;
+}
+
+.videoDescriptions_button {
 
 }
