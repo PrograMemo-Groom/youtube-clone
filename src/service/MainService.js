@@ -13,7 +13,7 @@ export const getMainVideos = async () => {
                 part: "snippet,contentDetails,statistics",
                 chart: "mostPopular",
                 regionCode: "KR",
-                maxResults: 4,
+                maxResults: 8,
             },
         });
 
