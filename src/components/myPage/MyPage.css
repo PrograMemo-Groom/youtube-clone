@@ -240,6 +240,24 @@
     color: #a2a2a2;
 }
 
+.progress-bar-container {
+    position: absolute;
+    top: 21.9rem;
+    /*left: 0;*/
+    width: 15.5%;
+    height: 0.25rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 0.2rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: red;
+    width: 40%;
+    transition: width 0.3s ease;
+}
+
 @media screen and (max-width: 1536px) and (min-width: 1279px) {
     .user-profile-img {
         height: 3.5rem;
@@ -289,6 +307,7 @@
     }
 
     .video-thumbnail-container {
+        position: relative;
         width: 210px;
         height: 118px;
     }
