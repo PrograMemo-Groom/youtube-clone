@@ -13,14 +13,14 @@ function Detail() {
   const setTheme = getStyle(isDark);
   const setMenuTheme = getMenuItemStyle(isDark);
 
-  const darkMode = () => {
-    setIsDark(!isDark);
-  };
+  // const darkMode = () => {
+  //   setIsDark(!isDark);
+  // };
   return (
     <ThemeContext.Provider value={{ isDark, setIsDark }}>
-      <button className='button' onClick={darkMode} style={{ height: "20px" }}>
+      {/* <button className='button' onClick={darkMode} style={{ height: "20px" }}>
   dark mode
-</button>
+</button> */}
 
 
 

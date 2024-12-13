@@ -1,30 +1,46 @@
 .detail-container {
     display: flex;
     flex-direction: row;
+    margin: 0 auto;
+    justify-content: center;
 }
 
 .main-section {
     display: flex;
     flex-direction: column;
+    width: 1280px;
     min-width: 470px;
     /* border: solid 1px red; */
-
     padding: 0 0;
-    width: calc(100% - 402px);
+    /* width: calc(100% - 402px); */
 }
 
 .side-section {
     display: flex;
     flex-direction: column;
-    width: 402px;
+    max-width: 402px; /* 최대값 제한 */
+    width: 25%;
     margin-left: auto;
     /* border: solid 1px blue; */
     /* padding: 10px; */
 }
 @media (max-width: 1015px) {
+    .detail-container{
+        margin: 0 0;
+    }
+    
     .side-section {
         display: none;
     }
+    .main-section {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1770px) {
+    /* .detail-container{
+        margin: 0 0;
+    } */
     .main-section {
         width: 100%;
     }
