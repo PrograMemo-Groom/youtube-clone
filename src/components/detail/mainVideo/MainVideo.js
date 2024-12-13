@@ -10,6 +10,7 @@ import "./MainVideo.css";
 import { getChannelThumbnail } from "../../../utils/formatProfileImage.js";
 import { getChannelSubscriberCount } from "../../../utils/getChannelSubscriberCount.js";
 import { fetchVideoComments } from "../../../utils/fetchVideoComments.js";
+import {fetchShortsVideos} from "../../../utils/fetchShortsVideos.js";
 
 function MainVideo({ video }) {
   const { isDark } = useContext(ThemeContext);
@@ -87,7 +88,7 @@ function MainVideo({ video }) {
         userImg: comment.profileImage || "assets/mypage/default-profile.png",  
         userName: comment.author || "Anonymous",
         date: comment.date || new Date().toISOString(),  
-        isEdited: false,  
+        isEdited: comment.isEdited || false,  
         text: comment.text || "",
         like: comment.likes || 0, 
         hate: comment.hate || 0,  
@@ -126,7 +127,7 @@ function MainVideo({ video }) {
         <iframe
           width='560'
           height='315'
-          src={`https://www.youtube.com/embed/uHJDposrTMw`}
+          src={content.videoSrc}
           title='YouTube video player'
           frameBorder='0'
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
@@ -235,7 +236,8 @@ function MainVideo({ video }) {
                     {" "}
                     {formatTimeDifference(comment.date)}
                   </span>
-                  <span className='isEdited'> {"(수정됨)"} </span>
+                  {comment.isEdited && <span className='isEdited'> {"(수정됨)"} </span>}
+                  
                 </span>
                 <p className='comment-text'>{comment.text}</p>
                 <div className='comment-actions'>
