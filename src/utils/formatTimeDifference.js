@@ -1,5 +1,3 @@
-import React from 'react'
-
 function formatTimeDifference(dateString) {
     const inputDate = new Date(dateString);
     const currentDate = new Date();

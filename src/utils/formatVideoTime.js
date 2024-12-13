@@ -5,5 +5,5 @@ function formatVideoTime(duration){
     const seconds = (match[3] || "").replace("S", "");
 
     return `${hours ? `${hours}:` : ""}${minutes ? minutes.padStart(2, "0") : "00"}:${seconds.padStart(2, "0")}`;
-};
+}
 export default formatVideoTime

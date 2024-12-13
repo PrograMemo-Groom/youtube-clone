@@ -12,6 +12,6 @@ function formatViewCount(viewCount){
     }
     // 1천 미만 그대로 반환
     return `${viewCount}회`;
-};
+}
 
 export default formatViewCount
