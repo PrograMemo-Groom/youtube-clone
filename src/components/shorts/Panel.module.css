@@ -3,13 +3,12 @@
 }
 
 .slideIn{
-    animation: slideIn 0.5s ease-out;
+    animation: slideIn 0.4s ease-out;
 }
 
 .slideOut {
-    animation: slideOut 0.5s ease-out;
+    animation: slideOut 0.4s ease-out;
 }
-
 
 .contentsContainer{
     /* width: 75%; */
