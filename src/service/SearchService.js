@@ -10,9 +10,9 @@ const truncate = (str, n) => {
     return str?.length > n ? str.slice(0, n - 1) +"..." : str;
 }
 
-export const fetchSearchList = async (keyword) => {
+export const fetchSearchList = async (keyword, token) => {
     try {
-        const {nextPageToken, results} = await getSearchVideoList(keyword);
+        const {nextPageToken, results} = await getSearchVideoList(keyword, token);
         return {
             pageToken: nextPageToken,
             items: await Promise.all(
@@ -44,12 +44,11 @@ export const getChannelData = async (channelId) => {
         console.trace(tag, "getChannelData can't get response data", e);
     }
 }
-export const getSearchVideoList = async (keyword) => {
+export const getSearchVideoList = async (keyword, pageToken="") => {
     // console.log(`${tag} 검색된 비디오[] 가져오기`);
     try {
         const {data: {items, nextPageToken}} = await instance.get(requests.fetchGetSearch, {
-            params: { part: "snippet", q: keyword, regionCode: "KR", type: "video", maxResults: 1 }});
-
+            params: { part: "snippet", q: keyword, pageToken, regionCode: "KR", type: "video", maxResults: 1 }});
         return {
             nextPageToken,
             results: items.map(({ id:{videoId}, snippet:{channelId} }) => ({
