@@ -2,7 +2,6 @@ import "./MyPage.css";
 import instance from "../../api/api";
 import requests from "../../api/endpoint";
 import React, {useState, useEffect} from "react";
-// import { authTokenAPI } from "../../api/authApi";
 import axios from "axios";
 
 const videoData = [{
@@ -57,6 +56,7 @@ const videoData = [{
 
 const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
+    // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
     // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email profile`;
     console.log("Generated OAuth URL:", authUrl); // 확인용 로그
     window.location.href = authUrl; // Google OAuth 로그인 리디렉션
@@ -75,7 +75,7 @@ const authTokenAPI = async (authCode) => {
         console.log("Request Params:", params.toString()); // 요청 데이터 출력
 
         const response = await axios.post("https://oauth2.googleapis.com/token", params, {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
         });
 
         console.log("Access Token:", response.data.access_token);
@@ -152,27 +152,111 @@ const fetchYouTubePlaylists = async () => {
     }
 };
 
+const fetchUserChannel = async (accessToken) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet, contentDetails",
+                mine: true,
+                maxResults: 10,
+            },
+        });
+
+        // 채널 정보 추출
+        const channel = response.data.items[0];
+
+        console.log("Playlists Data:", response.data.items);
+        return response.data.items; // 재생목록 반환
+
+        // console.log("Channel Data:", channel);
+        // return channel.snippet.title; // 채널 이름 반환
+    } catch (error) {
+        console.error("Error fetching user channel:", error.response?.data || error.message);
+    }
+};
+
+const fetchUserPlaylists = async (accessToken) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet,contentDetails",
+                mine: true,
+                maxResults: 25, // 가져올 재생목록의 최대 개수
+            },
+        });
+
+        // 재생목록 데이터 추출
+        console.log("Playlists Data:", response.data.items);
+        return response.data.items; // 재생목록 반환
+    } catch (error) {
+        console.error("Error fetching user playlists:", error.response?.data || error.message);
+    }
+};
 
 export default function MyPage() {
     console.log("여기까지 왔나? 3:", "MyPage()");
 
     const [playlists, setPlaylists] = React.useState([]);
+    const [channelName, setChannelName] = useState("");
+
+    // 인증 코드 추출 및 토큰 발급
+    // React.useEffect(() => {
+    //     extractAuthCode(); // 인증 코드 추출 및 토큰 발급
+    // }, []);
 
     // 인증 코드 추출 및 토큰 발급
     React.useEffect(() => {
-        extractAuthCode(); // 인증 코드 추출 및 토큰 발급
-    }, []);
+        const extractAuthCode = async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get("code");
 
-    // 유튜브 API에서 재생목록 가져오기
-    React.useEffect(() => {
-        const fetchData = async () => {
-            const playlists = await fetchYouTubePlaylists();
-            if (playlists) {
-                setPlaylists(playlists); // 재생목록 데이터를 상태에 저장
+            if (!code) {
+                console.error("Authorization Code not found in the URL.");
+                return;
+            }
+
+            // 토큰 발급 요청
+            const tokenData = await authTokenAPI(code);
+            if (tokenData) {
+                localStorage.setItem("ACCESS_TOKEN", tokenData.access_token);
+                localStorage.setItem("REFRESH_TOKEN", tokenData.refresh_token);
+                console.log("Tokens stored successfully.");
             }
         };
 
-        fetchData(); // 페이지 로드 시 데이터 가져오기
+        extractAuthCode(); // 인증 코드 추출 및 토큰 요청
+    }, []);
+
+    // 유튜브 API 데이터 가져오기
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const accessToken = localStorage.getItem("ACCESS_TOKEN");
+
+            if (!accessToken) {
+                console.error("Access token not found. Please log in again.");
+                return;
+            }
+
+            // 채널 이름 가져오기
+            const channel = await fetchUserChannel(accessToken);
+            if (channel) {
+                setChannelName(channel);
+            }
+
+            // 재생목록 가져오기
+            const playlists = await fetchUserPlaylists(accessToken);
+            if (playlists) {
+                setPlaylists(playlists);
+            }
+        };
+
+        fetchData(); // 데이터 요청
     }, []);
 
     return (
@@ -280,22 +364,23 @@ export default function MyPage() {
                                 <section className="playlist-list">
                                     {playlists.map((playlist, i) => (
                                         <section className="playlist-video-item"
-                                                 key={`${i}-${playlists.videoId}`}>
+                                                 key={`${i}-${playlist.id}`}>
                                             <div className="playlist-video-thumbnail-container">
                                                 <img className="playlist-video-thumbnail"
-                                                     src={playlist.snippet.title}
-                                                     alt={playlist.snippet.description}/>
+                                                     src={playlist.snippet.thumbnails.medium.url}
+                                                     alt={playlist.snippet.title}/>
                                             </div>
                                             <div className="playlist-video-info-container">
-                                                <h3 className="playlist-video-title">{playlist.title}</h3>
-                                                <p className="playlist-video-channel">{playlist.channel} &#183; 재생목록</p>
+                                                <h3 className="playlist-video-title">{playlist.snippet.title}</h3>
+                                                <p className="playlist-video-channel">{playlist.snippet.channelTitle} &#183; 재생목록</p>
                                                 <p className="playlist-video-meta">
-                                                    모든 재생목록 보기
+                                                    {/*모든 재생목록 보기*/}
+                                                    {playlist.contentDetails.itemCount} 개의 동영상
                                                 </p>
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="playlist-next-video-btn"> ></button>
+                                    <button className="playlist-next-video-btn"> &gt; </button>
                                 </section>
                             </section>
                         </div>
