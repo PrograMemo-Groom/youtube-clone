@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './Video.module.css';
 
 const Video = ({onPanelToggle}) => {
+  // 구독 버튼
+  const [isSubscribe, setIsSubscribe] = useState(false);
+
+  const handleSubscribeBnt = () => {
+    setIsSubscribe(!isSubscribe);
+  }
 
   return (
     <main className={styles.videoComponents}>
@@ -14,7 +20,11 @@ const Video = ({onPanelToggle}) => {
             <div className={styles.profileBox}>
               <img src={`${process.env.PUBLIC_URL}/channels4_profile.jpg`}/>
               <p>@viviz.official</p>
-              <button className={styles.subscribeBnt} >구독</button>
+              <button 
+                className={isSubscribe ? styles.subscribedBtn : styles.subscribeBnt}
+                onClick={handleSubscribeBnt}>
+                {isSubscribe ? "구독중" : "구독"}
+              </button>
             </div>
             <div className={styles.explanBox}>
               <p>챌린지의 지배자, 챌린지의 마스터 with #캐스퍼 #Kasper #VIVIZ #비비지 #EUNHA #은하 #SINB #신비 #UMJI #엄지 #Shhhchallenge #쉿챌린지</p>

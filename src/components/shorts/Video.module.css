@@ -46,17 +46,34 @@
     font-weight: 700;
 }
 
+/* 구독 버튼 */
 .subscribeBnt{
     width: 46px;
     height: 33px;
     border: none;
     border-radius: 16px;
     background-color: white;
+    font-size: 12px;
     font-weight: 500;
 }
 
 .subscribeBnt:hover{
     background-color: var(--border-color);
+    cursor: pointer;
+}
+/* 구독 완료 버튼 */
+.subscribedBtn {
+    width: 55px;
+    height: 33px;
+    border: none;
+    font-size: 12px;
+    border-radius: 16px;
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+    font-weight: 600;
+}
+.subscribedBtn:hover {
+    background-color: rgba(255,255,255,0.4);
     cursor: pointer;
 }
 
