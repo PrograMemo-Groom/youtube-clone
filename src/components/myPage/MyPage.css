@@ -368,6 +368,7 @@
     .playlist-video-item:nth-child(n + 6) {
         display: none;
     }
+
 }
 
 @media screen and (max-width: 768px) and (min-width: 480px) {
@@ -442,14 +443,5 @@
 
     .changes-id-text {
         font-size: 0.6rem;
-    }
-}
-
-@media screen and (max-width: 830px) {
-    body {
-        transform: scale(0.5);
-        transform-origin: top left;
-        width: 830px;
-        overflow: hidden;
     }
 }
