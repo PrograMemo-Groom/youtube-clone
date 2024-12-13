@@ -7,6 +7,29 @@ import ShortsSubscribe from '../shorts/Shorts-subscribe';
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
     const [itemsPerRow, setItemsPerRow] = useState(4); // 기본값: 4개
+    const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 750) {
+                setShortsVisibleCount(2);
+            } else if (window.innerWidth < 1010) {
+                setShortsVisibleCount(3);
+            } else if (window.innerWidth < 1230) {
+                setShortsVisibleCount(4);
+            } else if (window.innerWidth < 1440) {
+                setShortsVisibleCount(5);
+            } else {
+                setShortsVisibleCount(6);
+            }
+        };
+
+        // 초기 화면 크기 확인
+        handleResize();
+        // 리스너 추가
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         const updateItemsPerRow = () => {
@@ -54,13 +77,13 @@ const GridSubscribe = () => {
                                 className={styles.gridButton}
                                 onClick={() => setView("grid")}
                             >
-                                <img alt="격자형" />
+                                <img alt="격자형" src={`${process.env.PUBLIC_URL}/grid_btn.svg`}/>
                             </button>
                             <button
                                 className={styles.listButton}
                                 onClick={() => setView("list")}
                             >
-                                <img alt="리스트형" />
+                                <img alt="리스트형" src={`${process.env.PUBLIC_URL}/list_btn.svg`}/>
                             </button>
                         </div>
                     </header>
@@ -93,7 +116,7 @@ const GridSubscribe = () => {
                                         <section className={styles.shortsSection}>
                                             <header className={styles.shortsHeader}>
                                                 <div className={styles.shortsLogo}>
-                                                    <img alt="로고" />
+                                                    <img alt="로고" src={`${process.env.PUBLIC_URL}/Youtube_shorts_icon.svg`} />
                                                     <h4>Shorts</h4>
                                                 </div>
                                                 <button
@@ -103,7 +126,7 @@ const GridSubscribe = () => {
                                                 </button>
                                             </header>
                                             <div className={styles.shortsMain}>
-                                                {shortsData.map((shorts, shortsIndex) => (
+                                                {shortsData.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
                                                     <article key={shortsIndex} className={styles.shortsClip}>
                                                         <img
                                                             className={styles.shortsThumbnail}

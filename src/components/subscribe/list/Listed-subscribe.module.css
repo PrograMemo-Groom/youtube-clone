@@ -1,18 +1,63 @@
-.container{
-
-}
-
 .main {
     flex-direction: column;
     align-items: center;
 }
 
 .videoSection {
-    width: 1284px;
+    width: 100%;     
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+@media (max-width: 700px) {
+
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+
+}
+
+@media (min-width: 1101px) and (max-width: 1420px) {
+
+}
+
+@media (min-width: 1421px) {
+
+}
+
+
+/************************** 페이지 전환 버튼들  */
+
+.pageChangeButtons {
+    margin-right: 25px;
+
+    display: flex;
+    align-items: center;
+}
+
+.pageChangeButtons button {
+    border: transparent;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+
+    padding-left: 3px;
+}
+
+.manageButton {
+    color: blue;
+    font-size: 15px;
+}
+
+.gridButton img {
+    width: 24px;
+}
+
+.listButton img {
+    width: 24px;
+}
+
 
 
 /************************** 일반 비디오클립 하나  */
@@ -20,15 +65,19 @@
     display: flex;
     flex-direction: column;
 
-    width: 862px;
+    width: 90%;
     margin-top: 30px;
-    margin-bottom: 30px;
+    padding-bottom: 50px;
+
+    border-bottom: 0.4px solid #afafaf;
 }
 
 .videoClip_header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    height: 54px;
 }
 
 .header_channel {
@@ -42,17 +91,20 @@
 
 .header_channel h4 {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 700;
     color: #0F0F0F;
+
+    padding-left: 10px;
+    padding-top: 3px;
 }
 
 /***************** 비디오클립 메인  */
 
 .videoClip_main {
     display: flex;
+    padding-right: calc(300px - (1508px - 100vw)); /* 화면 줄어드는 만큼! 그대로 줄게 !!!*/
+    transition: padding-right 0.01s ease;
 }
-
-
 
 /* 썸네일 */
 .videoThumbnail {
@@ -90,16 +142,23 @@
 .videoDescriptions_lines {
     display: flex;
     flex-direction: column;
+    padding-left: 15px;
+    padding-top: 7px;
 }
 
 .videoTitle {
     display: flex;
     justify-content: space-between;
+
+    margin-bottom: 5px;
 }
 
 .videoTitle h5 {
     font-size: 18px;
+    font-weight: 500;
     color: #0F0F0F;
+
+    padding-bottom: 10px;
 }
 
 .videoTitle button {
@@ -107,6 +166,7 @@
     height: 40px;
     background-color: transparent;
     border: none;
+    padding-bottom: 30px;
 }
 
 .videoTitle button img{
@@ -124,6 +184,12 @@
     font-size: 12px;
     padding: 8px 0px 0px;
     margin: 0px 0px 8px;
+
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; 
 }
 
 
@@ -133,10 +199,13 @@
 /********************************* shorts 섹션 !!  */
 
 .shortsSection {
-    width: 862px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    border-bottom: 0.4px solid #afafaf;
+    padding-bottom: 40px;
 }
 
 .shortsHeader {
@@ -152,7 +221,8 @@
 }
 
 .shortsLogo img{
-    
+    width: 18px;
+    padding-right: 8px;
 }
 
 .shortsLogo h4{
@@ -160,8 +230,17 @@
     font-weight: 700;
 }
 
+.shortsHeader button {
+    color: blue;
+    border: transparent;
+    background-color: transparent;
+    padding-right: 35px;
+}
+
+
 .shortsMain {
     display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -170,12 +249,17 @@
 
 
 .shortsClip {
+    width: 196px;
     display: flex;
     flex-direction: column;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 .shortsThumbnail {
-    width: 210px;
+    width: 100%;
+    border-radius: 3%;
+
 }
 
 
@@ -189,6 +273,22 @@
     flex-direction: column;
 }
 
+.shortsDetail div h5 {
+    font-size: 16px;
+    color: #060606;
+    font-weight: 500;
+
+    padding-top: 10px;
+}
+
+.shortsDetail div p {
+    font-size: 12px;
+    color: #606060;
+
+    padding-top: 8px;
+}
+
+
 .shortsDetail button {
     width: 40px;
     height: 40px;
@@ -199,4 +299,6 @@
 .shortsDetail button img {
     width: 24px;
     height: 24px;
+
+    padding-left: 5px;
 }

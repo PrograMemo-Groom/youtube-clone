@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Listed-subscribe.module.css';
 import GridSubscribe from '../grid/Grid-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
@@ -7,6 +7,29 @@ import ShortsSubscribe from '../shorts/Shorts-subscribe';
 const ListedSubscribe = () => {
 
     const [view, setView] = useState("list");
+    const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 750) {
+                setShortsVisibleCount(2);
+            } else if (window.innerWidth < 1010) {
+                setShortsVisibleCount(3);
+            } else if (window.innerWidth < 1230) {
+                setShortsVisibleCount(4);
+            } else if (window.innerWidth < 1440) {
+                setShortsVisibleCount(5);
+            } else {
+                setShortsVisibleCount(6);
+            }
+        };
+
+        // 초기 화면 크기 확인
+        handleResize();
+        // 리스너 추가
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -42,13 +65,13 @@ const ListedSubscribe = () => {
                                                         className={styles.gridButton}
                                                         onClick={() => setView("grid")}
                                                     >
-                                                        <img alt='격자형'/>
+                                                        <img alt='격자형' src={`${process.env.PUBLIC_URL}/grid_btn.svg`}/>
                                                     </button>
                                                     <button
                                                         className={styles.listButton}
                                                         onClick={() => setView("list")}
                                                     >
-                                                        <img alt='리스트형'/>
+                                                        <img alt='리스트형' src={`${process.env.PUBLIC_URL}/list_btn.svg`}/>
                                                     </button>
                                                 </div>
                                             )}
@@ -76,7 +99,7 @@ const ListedSubscribe = () => {
                                     {index === 0 && <section className={styles.shortsSection}>
                                         <header className={styles.shortsHeader}>
                                             <div className={styles.shortsLogo}>
-                                                <img alt='로고'/>
+                                                <img alt="로고" src={`${process.env.PUBLIC_URL}/Youtube_shorts_icon.svg`} />
                                                 <h4>Shorts</h4>
                                             </div>
                                             <button
@@ -86,7 +109,7 @@ const ListedSubscribe = () => {
                                             </button>
                                         </header>
                                         <div className={styles.shortsMain}>
-                                            {shortsData.map((shorts, index) => (
+                                            {shortsData.slice(0, shortsVisibleCount).map((shorts, index) => (
                                                 <article key={index} className={styles.shortsClip}>
                                                     <img
                                                         className={styles.shortsThumbnail}
