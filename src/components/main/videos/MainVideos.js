@@ -74,11 +74,13 @@ const MainVideos = ({ fetchFunction }) => {
                                 src={video.profile}
                             />
                         </div>
-                        <div className={styles.videoInfo}>
+                        <div
+                            className={styles.videoInfo}
+                             onClick={() => handleShowVideo(video.videoId)}
+                        >
                             <div className={styles.titleRow}>
                                 <p
                                     className={styles.videoTitle}
-                                    onClick={() => handleShowVideo(video.videoId)}
                                 >
                                     {video.title}
                                 </p>
