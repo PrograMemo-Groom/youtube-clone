@@ -16,38 +16,6 @@ const ListedSubscribe = () => {
             {view === "list" && (
                 <>
                     <main>
-                        {/* <section className={styles.videoSection}>
-                            <article className={styles.videoClip}>
-                                <header className={styles.videoClip_header}>
-                                    <div className={styles.header_channel}>
-                                        <img alt='채널 프로필 사진'/>
-                                        <h4>채널 이름</h4>
-                                    </div>
-                                    첫번째꺼는 여기에 페이지 이동 버튼도 넣어야함
-                                </header>
-                                <div className={styles.videoClip_main}>
-                                    <div className={styles.videoThumbnail}>
-                                        <img alt='비디오 썸네일'/>
-                                        <p>32:11</p>
-                                    </div>
-                                    <div className={styles.videoDescriptions_lines}>
-                                        <h5>동영상 제목</h5>
-                                        <p>채널명, 조회수, 5분전</p>
-                                        <p>동영상 설명</p>
-                                    </div>
-                                    <div className={styles.videoDescriptions_button}>
-                                        <button>
-                                            <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
-                                        </button>
-                                    </div>
-                                </div>
-                            </article>
-                        </section> */}
-
-                        <section className={styles.shortsSection}>
-                            숏츠
-                        </section>
-
                         <section className={styles.videoSection}>
                             {video2Data.map((video, index) => (
                                 <article key={index} className={styles.videoClip}>
@@ -59,26 +27,28 @@ const ListedSubscribe = () => {
                                             />
                                             <h4>{video.channel}</h4>
                                         </div>
-                                        <div className={styles.pageChangeButtons}>
-                                            <button
-                                                className={styles.manageButton}
-                                                onClick={() => setView("manage")}
-                                            >
-                                                관리
-                                            </button>
-                                            <button
-                                                className={styles.gridButton}
-                                                onClick={() => setView("grid")}
-                                            >
-                                                <img alt='격자형'/>
-                                            </button>
-                                            <button
-                                                className={styles.listButton}
-                                                onClick={() => setView("list")}
-                                            >
-                                                <img alt='리스트형'/>
-                                            </button>
-                                        </div>
+                                        {index === 0 && (
+                                            <div className={styles.pageChangeButtons}>
+                                                <button
+                                                    className={styles.manageButton}
+                                                    onClick={() => setView("manage")}
+                                                >
+                                                    관리
+                                                </button>
+                                                <button
+                                                    className={styles.gridButton}
+                                                    onClick={() => setView("grid")}
+                                                >
+                                                    <img alt='격자형'/>
+                                                </button>
+                                                <button
+                                                    className={styles.listButton}
+                                                    onClick={() => setView("list")}
+                                                >
+                                                    <img alt='리스트형'/>
+                                                </button>
+                                            </div>
+                                        )}
                                     </header>
                                     <div className={styles.videoClip_main}>
                                         <div className={styles.videoThumbnail}>
@@ -102,6 +72,11 @@ const ListedSubscribe = () => {
                                 </article>
                             ))}
                         </section>
+
+                        <section className={styles.shortsSection}>
+                            숏츠
+                        </section>
+                        
                     </main>
                 </>
             )}
