@@ -88,7 +88,7 @@ function MainVideo({ video }) {
         userImg: comment.profileImage || "assets/mypage/default-profile.png",  
         userName: comment.author || "Anonymous",
         date: comment.date || new Date().toISOString(),  
-        isEdited: false,  
+        isEdited: comment.isEdited || false,  
         text: comment.text || "",
         like: comment.likes || 0, 
         hate: comment.hate || 0,  
@@ -236,7 +236,8 @@ function MainVideo({ video }) {
                     {" "}
                     {formatTimeDifference(comment.date)}
                   </span>
-                  <span className='isEdited'> {"(수정됨)"} </span>
+                  {comment.isEdited && <span className='isEdited'> {"(수정됨)"} </span>}
+                  
                 </span>
                 <p className='comment-text'>{comment.text}</p>
                 <div className='comment-actions'>
