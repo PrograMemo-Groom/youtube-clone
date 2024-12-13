@@ -1,5 +1,8 @@
 import instance from "../api/api";
 import requests from "../api/endpoint";
+import formatVideoTime from "../utils/formatVideoTime";
+import formatViewPeople from "../utils/formatViewPeople";
+import formatTimeDifference from "../utils/formatTimeDifference";
 
 const tag = '[SearchService]';
 
@@ -7,20 +10,48 @@ export const fetchSearchList = async (keyword) => {
     try {
 
         const getVideo = await fetchSearchVideos(keyword);
-        // console.log(`${tag} - fetchSearchList`, getVideo);
         const videoResult = await Promise.all(
             getVideo.results.map(async (item) => {
                 const videoDetails = await fetchGetVideoDetails(item.videoId);
-                return { ...item, ...videoDetails.video };
+                const channel = await getChannelData(item.channel.channelId);
+                return {
+                    ...item,
+                    ...videoDetails.video,
+                    channel: {
+                        ...videoDetails.video.channel,
+                        ...channel
+                    }
+                }
             })
         );
-        console.log(`${tag} - result`, videoResult);
         return {
             pageToken: getVideo.pageToken,
             items: videoResult
         }
     } catch (e) {
         console.trace(`${tag} - `,e.message);
+    }
+}
+
+export const getChannelData = async (channelId) => {
+    try {
+        const {data: {items: response}} = await instance.get(requests.fetchChannelDetails, {
+            params:{
+                part: "snippet", id: channelId, regionCode: "KR", maxResults: 1
+            }
+        })
+        const {snippet : {title, customUrl, thumbnails}} = response[0];
+
+        const channel = {
+            title,
+            customUrl: `https://youtube.com/${customUrl}`,
+            channelImg: thumbnails.default.url
+        }
+
+        return channel;
+
+    } catch (e) {
+        console.log(tag, "getChannelData can't get response data", e);
     }
 }
 
@@ -34,6 +65,9 @@ export const fetchSearchVideos = async (keyword) => {
         });
         const results = response.items.map((item) => ({
             videoId: item.id.videoId,
+            channel: {
+                channelId: item.snippet.channelId
+            }
         }))
         return {
             pageToken: response?.nextPageToken,
@@ -46,27 +80,33 @@ export const fetchSearchVideos = async (keyword) => {
 
 export const fetchGetVideoDetails = async (videoId) => {
     try{
-        const {data: {items : response}} = await instance.get(requests.getMainVideos, {
+        const {data: {items:response}} = await instance.get(requests.getMainVideos, {
             params: {
-                part: "snippet,statistics", id: videoId, regionCode: "KR", maxResults: 1
+                part: "snippet,statistics,contentDetails", id: videoId, regionCode: "KR", maxResults: 1
             }
         });
+        const {
+            snippet: {title, description, channelTitle, thumbnails, publishedAt, channelId },
+            statistics: { viewCount, likeCount, favoriteCount, commentCount },
+            contentDetails: { duration }
+        } = response[0];
         const results = {
             video: {
-                title: response[0].snippet.title,
-                description: response[0].snippet.description,
-                channelTitle: response[0].snippet.channelTitle,
-                thumbnails: response[0].snippet.thumbnails.default.url,
-                publishedAt: response[0].snippet.publishedAt,
+                title,
+                description,
+                channelTitle,
+                thumbnailImg: thumbnails.default.url,
+                videoCreated: formatTimeDifference(publishedAt),
+                videoTime: formatVideoTime(duration),
                 statistics: {
-                    viewCount: response[0].statistics.viewCount,
-                    likeCount: response[0].statistics.likeCount,
-                    favoriteCount: response[0].statistics.favoriteCount,
-                    commentCount: response[0].statistics.commentCount,
+                    viewCount: formatViewPeople(viewCount),
+                    likeCount: formatViewPeople(likeCount),
+                    favoriteCount,
+                    commentCount,
                 },
                 channel: {
-                    channelId: response[0].snippet.channelId,
-                    channelTitle: response[0].snippet.channelTitle,
+                    channelId,
+                    channelTitle,
                 }
             }
         }
