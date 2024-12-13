@@ -6,6 +6,10 @@ import formatTimeDifference from "../utils/formatTimeDifference";
 
 const tag = '[SearchService]';
 
+const truncate = (str, n) => {
+    return str?.length > n ? str.slice(0, n - 1) +"..." : str;
+}
+
 export const fetchSearchList = async (keyword) => {
     try {
         const {nextPageToken, results} = await getSearchVideoList(keyword);
@@ -44,7 +48,7 @@ export const getSearchVideoList = async (keyword) => {
     // console.log(`${tag} 검색된 비디오[] 가져오기`);
     try {
         const {data: {items, nextPageToken}} = await instance.get(requests.fetchGetSearch, {
-            params: { part: "snippet", q: keyword, regionCode: "KR", type: "video", maxResults: 3 }});
+            params: { part: "snippet", q: keyword, regionCode: "KR", type: "video", maxResults: 1 }});
 
         return {
             nextPageToken,
@@ -74,7 +78,7 @@ export const getVideoDetails = async (videoId) => {
         return {
             video: {
                 title,
-                description,
+                description: truncate(description,100),
                 channelTitle,
                 thumbnailImg: thumbnails.default.url,
                 videoCreated: formatTimeDifference(publishedAt),
