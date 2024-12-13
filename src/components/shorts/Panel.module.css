@@ -1,6 +1,6 @@
 .panelContainer{
     flex-basis: 50%;
-    /* background-color:lightcoral */
+    animation: slideIn 0.5s ease-out;
 }
 
 .contentsContainer{
@@ -186,3 +186,26 @@
     outline: none;
     border-bottom: 2px solid #0F0F0F;
 }
+
+
+@keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0; 
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1; 
+    }
+  }
+
+@keyframes slideOut {
+    from {
+      transform: translateX(0); /* 시작: 제자리 */
+      opacity: 1; /* 투명도 1 */
+    }
+    to {
+      transform: translateX(100%); /* 끝: 화면 밖(오른쪽) */
+      opacity: 0; /* 투명도 0 */
+    }
+  }
