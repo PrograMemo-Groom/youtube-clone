@@ -1,15 +1,17 @@
 .container{
-    display: flex;
+
+}
+
+.main {
     flex-direction: column;
     align-items: center;
 }
 
-.main {
-
-}
-
 .videoSection {
-
+    width: 1284px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -19,6 +21,8 @@
     flex-direction: column;
 
     width: 862px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .videoClip_header {
@@ -31,6 +35,16 @@
     display: flex;
 }
 
+.header_channel img {
+    width: 32px;
+    border-radius: 50%;
+}
+
+.header_channel h4 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #0F0F0F;
+}
 
 /***************** 비디오클립 메인  */
 
@@ -78,6 +92,37 @@
     flex-direction: column;
 }
 
-.videoDescriptions_button {
-
+.videoTitle {
+    display: flex;
+    justify-content: space-between;
 }
+
+.videoTitle h5 {
+    font-size: 18px;
+    color: #0F0F0F;
+}
+
+.videoTitle button {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+}
+
+.videoTitle button img{
+    width: 24px;
+    height: 24px;
+}
+
+.videoInfo {
+    font-size: #060606;
+    font-size: 12px;
+}
+
+.videoDes {
+    font-size: #060606;
+    font-size: 12px;
+    padding: 8px 0px 0px;
+    margin: 0px 0px 8px;
+}
+
