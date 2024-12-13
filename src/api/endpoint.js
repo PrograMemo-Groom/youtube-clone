@@ -1,4 +1,10 @@
 const requests = {
+
+    // common
+    fetchGetVideo: `/videos`,
+    fetchGetChannel: `/channels`,
+    fetchGetSearch: `/search`,
+
     // main page
     getMainVideos: `/videos`,
     fetchCategoryVideos: (id) => `/videoCategories/${id}`,
@@ -6,9 +12,6 @@ const requests = {
   
     // demo
     fetchPopularVideos: `/videos`,
-  
-    // search
-    fetchSearchVideos: `/search`, 
   
     // subscriptions
     fetchSubscriptions: `/subscriptions`,
