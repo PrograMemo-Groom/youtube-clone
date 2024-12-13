@@ -249,6 +249,7 @@
 
 
 .shortsClip {
+    width: 196px;
     display: flex;
     flex-direction: column;
     padding-left: 3px;
@@ -256,7 +257,7 @@
 }
 
 .shortsThumbnail {
-    width: 196px;
+    width: 100%;
     border-radius: 3%;
 
 }

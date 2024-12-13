@@ -234,6 +234,7 @@
 
 .shortsMain {
     display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -242,6 +243,7 @@
 
 
 .shortsClip {
+    width: 210px;
     display: flex;
     flex-direction: column;
     padding-left: 3px;
@@ -249,7 +251,7 @@
 }
 
 .shortsThumbnail {
-    width: 210px;
+    width: 100%;
     border-radius: 3%;
 
 }
