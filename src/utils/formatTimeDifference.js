@@ -6,24 +6,31 @@ function formatTimeDifference(dateString) {
   
     // 경과 시간 계산 (밀리초 단위)
     const differenceInMilliseconds = currentDate - inputDate;
-  
+    const differenceInSeconds = Math.floor(differenceInMilliseconds / 1000);
+
     // 단위 변환
-    const oneDay = 1000 * 60 * 60 * 24;
-    const oneMonth = oneDay * 30; // 평균적으로 한 달을 30일로 계산
+    const oneMinute = 60;
+    const oneHour = oneMinute * 60;
+    const oneDay = oneHour * 24;
+    const oneMonth = oneDay * 30;
     const oneYear = oneDay * 365;
   
     // 년, 월, 일 계산
-    const yearsAgo = Math.floor(differenceInMilliseconds / oneYear);
-    const monthsAgo = Math.floor(differenceInMilliseconds / oneMonth);
-    const daysAgo = Math.floor(differenceInMilliseconds / oneDay);
-  
+    const yearsAgo = Math.floor(differenceInSeconds / oneYear);
+    const monthsAgo = Math.floor(differenceInSeconds / oneMonth);
+    const daysAgo = Math.floor(differenceInSeconds / oneDay);
+    const hoursAgo = Math.floor(differenceInSeconds / oneHour);
+
     if (yearsAgo >= 1) {
-      return `${yearsAgo}년 전`;
+        return `${yearsAgo}년 전`;
     }
     if (monthsAgo >= 1) {
-      return `${monthsAgo}개월 전`;
+        return `${monthsAgo}개월 전`;
     }
-    return `${daysAgo}일 전`;
+    if (daysAgo >= 1) {
+        return `${daysAgo}일 전`;
+    }
+    return `${hoursAgo}시간 전`;
   }
   
 
