@@ -12,6 +12,9 @@ const requests = {
   
     // subscriptions
     fetchSubscriptions: `/subscriptions`,
+
+    // playlists
+    fetchPlaylistsVideos: `/playlists`,
   
     // mypage
     fetchChannelVideos: (channelId) => `/search?channelId=${channelId}&order=date`,
