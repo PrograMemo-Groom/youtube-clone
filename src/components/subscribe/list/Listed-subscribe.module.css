@@ -51,6 +51,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    height: 54px;
 }
 
 .header_channel {
@@ -64,8 +66,11 @@
 
 .header_channel h4 {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 700;
     color: #0F0F0F;
+
+    padding-left: 10px;
+    padding-top: 3px;
 }
 
 /***************** 비디오클립 메인  */
@@ -112,16 +117,23 @@
 .videoDescriptions_lines {
     display: flex;
     flex-direction: column;
+    padding-left: 15px;
+    padding-top: 7px;
 }
 
 .videoTitle {
     display: flex;
     justify-content: space-between;
+
+    margin-bottom: 5px;
 }
 
 .videoTitle h5 {
     font-size: 18px;
+    font-weight: 500;
     color: #0F0F0F;
+
+    padding-bottom: 10px;
 }
 
 .videoTitle button {
@@ -129,6 +141,7 @@
     height: 40px;
     background-color: transparent;
     border: none;
+    padding-bottom: 30px;
 }
 
 .videoTitle button img{
@@ -146,6 +159,12 @@
     font-size: 12px;
     padding: 8px 0px 0px;
     margin: 0px 0px 8px;
+
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; 
 }
 
 
