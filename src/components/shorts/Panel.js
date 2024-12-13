@@ -3,9 +3,9 @@ import styles from './Panel.module.css';
 import Explain from './explain/Explain.js';
 import Comment from './comment/Comment.js';
 
-const Panel = ({onPanelToggle}) => {
+const Panel = ({onPanelToggle, isPanelOpen}) => {
   return (
-    <div className={styles.panelContainer}>
+    <div className={`${styles.panelContainer} ${isPanelOpen ? styles.slideIn : styles.slideOut}`}>
         <div className={styles.contentsContainer}>
           <header className={styles.contentsHeader}>
             <p>설명</p>

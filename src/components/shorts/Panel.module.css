@@ -1,7 +1,15 @@
 .panelContainer{
     flex-basis: 50%;
+}
+
+.slideIn{
     animation: slideIn 0.5s ease-out;
 }
+
+.slideOut {
+    animation: slideOut 0.5s ease-out;
+}
+
 
 .contentsContainer{
     /* width: 75%; */
