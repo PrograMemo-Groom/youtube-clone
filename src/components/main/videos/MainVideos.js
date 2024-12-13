@@ -15,7 +15,7 @@ const MainVideos = ({ fetchFunction }) => {
         const fetchVideos = async () => {
             try {
                 setLoading(true);
-                const videoData = await getMainVideos(fetchFunction);
+                const videoData = await getMainVideos(fetchFunction); // fetchFunction으로 카테고리 ID 전달
                 setVideos(videoData);
             } catch (e) {
                 setError("동영상을 불러오는 중 문제가 발생했습니다.");
@@ -26,6 +26,7 @@ const MainVideos = ({ fetchFunction }) => {
 
         fetchVideos();
     }, [fetchFunction]);
+
 
     const handleShowVideo = (videoId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지

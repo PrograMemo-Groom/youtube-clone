@@ -2,22 +2,21 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
 
 const categories = [
-    { name: "전체", fetchFunction: "fetchMainVideos" },
-    { name: "음악", fetchFunction: "fetchMusicData" },
-    { name: "라이브", fetchFunction: "fetchLiveData" },
-    { name: "믹스", fetchFunction: "fetchMixData" },
-    { name: "뉴스", fetchFunction: "fetchNewsData" },
-    { name: "게임", fetchFunction: "fetchGameData" },
-    { name: "애니메이션", fetchFunction: "fetchAnimationData" },
-    { name: "스케치 코미디", fetchFunction: "fetchComicData" },
-    { name: "관광", fetchFunction: "fetchTourData" },
-    { name: "랩", fetchFunction: "fetchRapData" },
-    { name: "뷰티팁", fetchFunction: "fetchBeautyData" },
-    { name: "요리", fetchFunction: "fetchCookData" },
-    { name: "최근에 업로드된 동영상", fetchFunction: "fetchRecentlyData" },
-    { name: "감상한 동영상", fetchFunction: "fetchAppreciateData" },
-    { name: "새로운 맞춤 동영상", fetchFunction: "fetchCustomData" },
+    { name: "전체", fetchFunction: null }, // 전체 동영상 (null로 설정)
+    { name: "음악", fetchFunction: "10" },
+    { name: "뉴스", fetchFunction: "25" },
+    { name: "게임", fetchFunction: "20" },
+    { name: "애니메이션", fetchFunction: "1" },
+    { name: "스케치 코미디", fetchFunction: "23" },
+    { name: "자동차", fetchFunction: "2" },
+    { name: "과학", fetchFunction: "28" },
+    { name: "스포츠", fetchFunction: "17" },
+    { name: "블로그", fetchFunction: "22" },
+    { name: "최근에 업로드된 동영상", fetchFunction: null }, // 최근 업로드 (chart: mostPopular과 관련 없음)
+    { name: "감상한 동영상", fetchFunction: null }, // 시청 기록 (YouTube 로그인 사용자 전용)
+    { name: "새로운 맞춤 동영상", fetchFunction: null }, // 개인 맞춤 추천 (로그인 필요)
 ];
+
 
 const CategoryBar = ({ onCategoryChange }) => {
     const categoryBarRef = useRef(null);
@@ -65,7 +64,7 @@ const CategoryBar = ({ onCategoryChange }) => {
     const handleCategoryClick = (category) => {
         setActiveCategory(category.name);
         if (onCategoryChange && typeof onCategoryChange === "function") {
-            onCategoryChange(category.fetchFunction);
+            onCategoryChange(category.fetchFunction); // 카테고리 ID 전달
         }
     };
 
