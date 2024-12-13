@@ -34,6 +34,7 @@ iframe {
   flex-direction: column;
   margin-top: 20px;
   flex-wrap: wrap;
+  white-space: pre-line; 
 }
 
 .details-header{
