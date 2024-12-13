@@ -9,6 +9,7 @@ import {
 import "./MainVideo.css";
 import { getChannelThumbnail } from "../../../utils/formatProfileImage.js";
 import { getChannelSubscriberCount } from "../../../utils/getChannelSubscriberCount.js";
+import { fetchVideoComments } from "../../../utils/fetchVideoComments.js";
 
 function MainVideo({ video }) {
   const { isDark } = useContext(ThemeContext);
@@ -29,14 +30,14 @@ function MainVideo({ video }) {
   });
   const [comments, setComments] = useState([
     {
-      id: Date.now(),
-      userImg: "assets/mypage/user-profile.png",
-      userName: "kimrora",
-      date: "2023-12-01",
+      id: 0,
+      userImg: "",
+      userName: "",
+      date: "",
       isEdited: true,
-      text: "섬네일에 홀린듯이 들어와있는 나자신 발견",
-      like: 51111111,
-      hate: 3000,
+      text: "",
+      like: 0,
+      hate: 0,
       reply: [{}, {}, {}],
     },
   ]);
@@ -76,8 +77,30 @@ function MainVideo({ video }) {
       setContent(videoDetail);
     };
 
-    fetchChannelInfo(); // 썸네일을 비동기적으로 가져온 후, 업데이트
-  }, [video]); // video 변경 시 업데이트
+    // 댓글 리스트 가져오기
+    const fetchComments = async () => {
+      const commentList = await fetchVideoComments(videoId, "popular");
+      console.log(commentList);
+
+      const formattedComments = commentList.map((comment) => ({
+        id: +1, 
+        userImg: comment.profileImage || "assets/mypage/default-profile.png",  
+        userName: comment.author || "Anonymous",
+        date: comment.date || new Date().toISOString(),  
+        isEdited: false,  
+        text: comment.text || "",
+        like: comment.likes || 0, 
+        hate: comment.hate || 0,  
+        reply: comment.reply || [],  
+      }));
+
+      // 상태 업데이트
+      setComments(formattedComments);
+    }
+    
+    fetchComments();
+    fetchChannelInfo(); 
+  }, [video]); 
 
   const handleToggleText = () => {
     setShowFullText((prevState) => !prevState);
@@ -201,8 +224,8 @@ function MainVideo({ video }) {
 
         <div className='comment-list'>
           {/* 댓글 리스트 반환 */}
-          {comments.map((comment) => (
-            <div className='comment' key={comment.id}>
+          {comments.map((comment, index) => (
+            <div className='comment' key={index}>
               <img src={comment.userImg} alt='사용자 이미지' />
 
               <div className='comment-contents'>
