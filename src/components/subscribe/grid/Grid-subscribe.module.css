@@ -180,14 +180,26 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    margin-top: 24px;
 }
 
 .shortsLogo {
     display: flex;
+    margin-left: 35px;
+}
+
+.shortsLogo img{
+    
+}
+
+.shortsLogo h4{
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .shortsMain {
     display: flex;
+    margin-top: 20px;
 }
 
 
