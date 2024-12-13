@@ -4,11 +4,28 @@
 }
 
 .videoSection {
-    width: 1284px;
+    width: 100%;     
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+@media (max-width: 700px) {
+
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+
+}
+
+@media (min-width: 1101px) and (max-width: 1420px) {
+
+}
+
+@media (min-width: 1421px) {
+
+}
+
 
 /************************** 페이지 전환 버튼들  */
 
@@ -48,7 +65,7 @@
     display: flex;
     flex-direction: column;
 
-    width: 1162px;
+    width: 90%;
     margin-top: 30px;
     padding-bottom: 50px;
 
@@ -85,10 +102,9 @@
 
 .videoClip_main {
     display: flex;
-    padding-right: 300px;
+    padding-right: calc(300px - (1508px - 100vw)); /* 화면 줄어드는 만큼! 그대로 줄게 !!!*/
+    transition: padding-right 0.01s ease;
 }
-
-
 
 /* 썸네일 */
 .videoThumbnail {
@@ -183,7 +199,7 @@
 /********************************* shorts 섹션 !!  */
 
 .shortsSection {
-    width: 1162px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -224,6 +240,7 @@
 
 .shortsMain {
     display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -239,7 +256,7 @@
 }
 
 .shortsThumbnail {
-    width: 180px;
+    width: 196px;
     border-radius: 3%;
 
 }
