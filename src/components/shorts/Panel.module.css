@@ -8,22 +8,23 @@
     width: 480px;
     min-width: 250px;
     height: 87vh;
+    position: relative;
 
     display: flex;
     flex-direction: column;
     background-color: rgb(255, 255, 255);
     margin: auto;
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     border-radius: 12px;
 }
 
 .contentsHeader {
-    height: 44px;
+    height: 47px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 4px 16px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1.5px solid var(--border-color);
     border-radius: 12px 12px 0 0;
 }
 
@@ -57,7 +58,7 @@
 .contentsSection p{
     padding: 17px 0px;
     font-size: 14px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1.5px solid var(--border-color);
 }
 
 /* 전체 박스 */
@@ -100,4 +101,88 @@
     font-size: 14px;
     background-color: var(--hashtag-section-color);
     border-radius: 12px;
+}
+
+/* 댓글부분 */
+.commentInputBox{
+    width: 448px;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    padding: 16px;
+    border-top: 1.5px solid var(--border-color);
+}
+
+/* 댓글 보여지는 부분 */
+.commentShowBox{
+    padding: 16px;
+}
+
+.commentContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ellipsisBtn{
+    width: 24px;
+    height: 24px;
+    padding: 16px;
+}
+
+.userid{
+    font-size: 14px;
+    font-weight: 600;
+    padding: 2px 0px;
+    margin-bottom: 4px;
+}
+
+.userComment{
+    font-size: 14px;
+    padding: 2px 0;
+    margin-bottom: 8px;
+}
+
+.userProfileImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 16px 0 0;
+}
+
+.userReactionContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.likeBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+.userReactionContainer img{
+    width: 20px;
+}
+
+/* 댓글 달기 */
+.commentInputBox img {
+    width: 40px;
+    border-radius: 50%;
+    margin: 0 16px 0 0;
+}
+
+.commentInputBox input {
+    border: none;
+    width: 100%;
+    font-size: 14px;
+    border-bottom: 1.5px solid var(--border-color);;
+}
+
+.commentInputBox input:focus{
+    outline: none;
+    border-bottom: 2px solid #0F0F0F;
 }

@@ -49,7 +49,7 @@ const Video = ({onPanelToggle}) => {
             <span>싫어요</span>
           </div>
           <div>
-            <button className={styles.commentBnt}>
+            <button className={styles.commentBnt} onClick={onPanelToggle}>
               <img src={`${process.env.PUBLIC_URL}/comment.png`}/>
             </button>
             <span>781</span>
@@ -61,7 +61,7 @@ const Video = ({onPanelToggle}) => {
             <span>공유</span>
           </div>
           <div>
-            <button className={styles.ellipsisBnt} onClick={onPanelToggle}>
+            <button className={styles.ellipsisBnt}>
               <img src={`${process.env.PUBLIC_URL}/ellipsis.png`}/>
             </button>
           </div>
