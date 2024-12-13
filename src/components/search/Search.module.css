@@ -115,17 +115,20 @@
     margin: 10px 0;
     cursor: pointer;
 }
-.channelInfo > img {
+.channelInfo > a > img {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
 }
-.channelInfo > span {
+.channelInfo > a > span {
     color: var(--video-description-font-color);
     font-size: 13px;
     cursor: pointer;
+}
+.channelInfo > a > span:hover {
+    color: #868686;
 }
 .videoDescript {
     margin: 10px 0;
