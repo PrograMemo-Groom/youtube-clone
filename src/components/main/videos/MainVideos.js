@@ -8,7 +8,7 @@ const MainVideos = ({ fetchFunction }) => {
     const [loading, setLoading] = useState(true); //로딩 상태
     const [error, setError] = useState(null); //에러 상태
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
-
+    const [openDropdown, setOpenDropdown] = useState(null); //더보기 메뉴
     const { link } = useNavigation();
 
     useEffect(() => {
@@ -29,6 +29,10 @@ const MainVideos = ({ fetchFunction }) => {
 
     const handleShowVideo = (videoId) => {
         link(`/detail?q=${videoId}`);
+    };
+
+    const toggleDropdown = (videoId) => {
+        setOpenDropdown((prev) => (prev === videoId ? null : videoId));
     };
 
     if (loading) {
@@ -76,11 +80,11 @@ const MainVideos = ({ fetchFunction }) => {
                         </div>
                         <div
                             className={styles.videoInfo}
-                             onClick={() => handleShowVideo(video.videoId)}
                         >
                             <div className={styles.titleRow}>
                                 <p
                                     className={styles.videoTitle}
+                                    onClick={() => handleShowVideo(video.videoId)}
                                 >
                                     {video.title}
                                 </p>
@@ -88,10 +92,31 @@ const MainVideos = ({ fetchFunction }) => {
                                     src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
                                     alt="more"
                                     className={styles.more}
+                                    onClick={() => toggleDropdown(video.videoId)}
                                 />
+                                {openDropdown === video.videoId && (
+                                    <div className={styles.dropdownMenu}>
+                                        <ul>
+                                            <li>현재 재생목록에 추가</li>
+                                            <li>나중에 볼 동영상에 저장</li>
+                                            <li>재생목록에 저장</li>
+                                            <li>오프라인 저장</li>
+                                            <li>공유</li>
+                                            <li>관심 없음</li>
+                                            <li>채널 추천 안함</li>
+                                            <li>신고</li>
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
-                            <p className={styles.videoAuthor}>{video.author}</p>
-                            <p className={styles.videoStats}>{video.stats}</p>
+                            <p
+                                className={styles.videoAuthor}>{video.author}
+                                onClick={() => handleShowVideo(video.videoId)}
+                            </p>
+                            <p
+                                className={styles.videoStats}>{video.stats}
+                                onClick={() => handleShowVideo(video.videoId)}
+                            </p>
                         </div>
                     </div>
                 </div>
