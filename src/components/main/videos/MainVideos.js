@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MainVideos.module.css";
-import { getMainVideos } from "../../../service/VideoService";
+import { getMainVideos } from "../../../service/MainService";
 
 const MainVideos = ({ fetchFunction }) => {
     const [videos, setVideos] = useState([]); // 비디오 데이터를 저장할 상태
