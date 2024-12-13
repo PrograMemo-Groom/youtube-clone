@@ -43,7 +43,7 @@ export const getChannelData = async (channelId) => {
 export const getSearchVideoList = async (keyword) => {
     // console.log(`${tag} 검색된 비디오[] 가져오기`);
     try {
-        const {data: items, nextPageToken} = await instance.get(requests.fetchGetSearch, {
+        const {data: {items, nextPageToken}} = await instance.get(requests.fetchGetSearch, {
             params: { part: "snippet", q: keyword, regionCode: "KR", type: "video", maxResults: 3 }});
 
         return {
