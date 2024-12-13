@@ -42,6 +42,8 @@
     justify-content: center;
 }
 
+
+
 @media (max-width: 700px) {
     .videoSection {
         grid-template-columns: 1fr;
@@ -160,4 +162,78 @@
 .videoDescriptions_button button img{
     width: 100%;
     height: 100%;
+}
+
+
+
+
+/********************************* shorts 섹션 !!  */
+
+.shortsSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-column: 1 / -1; /* 그리드의 전체 열을 차지하도록 추가 */
+}
+
+.shortsHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.shortsLogo {
+    display: flex;
+    margin-left: 35px;
+}
+
+.shortsLogo img{
+    
+}
+
+.shortsLogo h4{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.shortsMain {
+    display: flex;
+    margin-top: 20px;
+}
+
+
+/************************* shorts Clip !!  */
+
+
+.shortsClip {
+    display: flex;
+    flex-direction: column;
+}
+
+.shortsThumbnail {
+    width: 210px;
+}
+
+
+
+.shortsDetail {
+    display: flex;
+}
+
+.shortsDetail div {
+    display: flex;
+    flex-direction: column;
+}
+
+.shortsDetail button {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+}
+
+.shortsDetail button img {
+    width: 24px;
+    height: 24px;
 }
