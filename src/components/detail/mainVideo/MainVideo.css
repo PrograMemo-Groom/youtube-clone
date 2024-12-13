@@ -122,7 +122,6 @@ iframe {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  
 }
 
 .comment-header {
@@ -159,6 +158,7 @@ iframe {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  font-size: 1.4em;
 }
 
 .comment {
@@ -192,7 +192,9 @@ iframe {
 .comment-text {
   margin-top: 10px;
   font-size: 1.2em;
+  line-height: 1.5; /* 줄 간격 설정 */
 }
+
 
 .comment-actions {
   display: flex;
