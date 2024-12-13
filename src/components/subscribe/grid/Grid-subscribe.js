@@ -66,21 +66,14 @@ const GridSubscribe = () => {
                     <main className={styles.main}>
                         <section className={styles.videoSection}>
                             {videoData.map((video, index) => (
-                                <>
-                                    <article key={index} className={styles.videoClip}>
+                                <React.Fragment key={index}> {/* 기존에 여러 요소를 반환할 수 있도록 추가 */}
+                                    <article className={styles.videoClip}>
                                         <div className={styles.videoThumbnail}>
-                                            <img
-                                                src={video.thumbnail}
-                                                alt={video.title}
-                                                className={styles.thumbnail}
-                                            />
+                                            <img src={video.thumbnail} alt={video.title} />
                                             <p>{video.duration}</p>
                                         </div>
                                         <div className={styles.videoDescriptions}>
-                                            <img
-                                                src={video.channelAvatar}
-                                                alt="채널프로필사진"
-                                            />
+                                            <img src={video.channelAvatar} alt="채널프로필사진" />
                                             <div className={styles.videoDescriptions_lines}>
                                                 <h4>{video.title}</h4>
                                                 <p>{video.channel}</p>
@@ -88,24 +81,49 @@ const GridSubscribe = () => {
                                             </div>
                                             <div className={styles.videoDescriptions_button}>
                                                 <button>
-                                                    <img
-                                                        src="/assets/subscribe/video-option-btn.svg"
-                                                        alt="영상옵션버튼"
-                                                    />
+                                                    <img src="/assets/subscribe/video-option-btn.svg" alt="영상옵션버튼" />
                                                 </button>
                                             </div>
                                         </div>
                                     </article>
-                                    {/* 동영상 2줄 이후에 shorts 섹션 삽입 */}
-                                    {index === threshold - 1 && (
+
+                                    {index === threshold - 1 && ( /* 2줄 기준 threshold에서 Shorts 섹션 렌더링 */
                                         <section className={styles.shortsSection}>
-                                            shorts 섹션입니다우아우아
+                                            <header className={styles.shortsHeader}>
+                                                <div className={styles.shortsLogo}>
+                                                    <img alt="로고" />
+                                                    <h4>Shorts</h4>
+                                                </div>
+                                                <button>모두 보기</button>
+                                            </header>
+                                            <div className={styles.shortsMain}>
+                                                {shortsData.map((shorts, shortsIndex) => (
+                                                    <article key={shortsIndex} className={styles.shortsClip}>
+                                                        <img
+                                                            className={styles.shortsThumbnail}
+                                                            alt="shorts 썸네일"
+                                                            src={shorts.thumbnail}
+                                                        />
+                                                        <div className={styles.shortsDetail}>
+                                                            <div>
+                                                                <h5>{shorts.title}</h5>
+                                                                <p>조회수 {shorts.view}회</p>
+                                                            </div>
+                                                            <button>
+                                                                <img src="/assets/subscribe/video-option-btn.svg" alt="영상옵션버튼" />
+                                                            </button>
+                                                        </div>
+                                                    </article>
+                                                ))}
+                                            </div>
                                         </section>
                                     )}
-                                </>
+                                {/* react fragment 종료 */}
+                                </React.Fragment> 
                             ))}
                         </section>
                     </main>
+
                 </>
             )}
         </div>
@@ -215,3 +233,36 @@ const videoData = [{
     duration: "16:08",
 },
 ]
+
+
+const shortsData = [{
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    } , {
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    } , {
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    } , {
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    } , {
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    } , {
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    }]
