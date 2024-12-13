@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Video.module.css';
 
 const Video = ({onPanelToggle}) => {
