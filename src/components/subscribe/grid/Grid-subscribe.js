@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Grid-subscribe.module.css';
 import ListedSubscribe from '../list/Listed-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
+import ShortsSubscribe from '../shorts/Shorts-subscribe';
 
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
@@ -37,6 +38,7 @@ const GridSubscribe = () => {
         <div className={styles.container}>
             {view === "manage" && <ManageSubscribe />}
             {view === "list" && <ListedSubscribe />}
+            {view === "shorts" && <ShortsSubscribe />}
             {view === "grid" && (
                 <>
                     <header className={styles.header}>
@@ -94,7 +96,11 @@ const GridSubscribe = () => {
                                                     <img alt="로고" />
                                                     <h4>Shorts</h4>
                                                 </div>
-                                                <button>모두 보기</button>
+                                                <button
+                                                onClick={() => setView("shorts")}
+                                                >
+                                                    모두 보기
+                                                </button>
                                             </header>
                                             <div className={styles.shortsMain}>
                                                 {shortsData.map((shorts, shortsIndex) => (

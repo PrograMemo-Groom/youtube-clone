@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './Listed-subscribe.module.css';
 import GridSubscribe from '../grid/Grid-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
+import ShortsSubscribe from '../shorts/Shorts-subscribe';
 
 const ListedSubscribe = () => {
 
@@ -13,6 +14,7 @@ const ListedSubscribe = () => {
             {/* manage로 뷰 바뀌는 부분(헤더까지 바뀜 */}
             {view === "manage" && <ManageSubscribe />}
             {view === "grid" && <GridSubscribe />}
+            {view === "shorts" && <ShortsSubscribe />}
             {view === "list" && (
                 <>
                     <main>
@@ -77,7 +79,11 @@ const ListedSubscribe = () => {
                                                 <img alt='로고'/>
                                                 <h4>Shorts</h4>
                                             </div>
-                                            <button>모두 보기</button>
+                                            <button
+                                                onClick={() => setView("shorts")}
+                                            >
+                                                모두 보기
+                                            </button>
                                         </header>
                                         <div className={styles.shortsMain}>
                                             {shortsData.map((shorts, index) => (
