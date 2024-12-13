@@ -27,7 +27,8 @@ const MainVideos = ({ fetchFunction }) => {
         fetchVideos();
     }, [fetchFunction]);
 
-    const handleShowVideo = (videoId) => {
+    const handleShowVideo = (videoId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
         link(`/detail?q=${videoId}`);
     };
 
@@ -84,7 +85,7 @@ const MainVideos = ({ fetchFunction }) => {
                             <div className={styles.titleRow}>
                                 <p
                                     className={styles.videoTitle}
-                                    onClick={() => handleShowVideo(video.videoId)}
+                                    onClick={(event) => handleShowVideo(video.videoId, event)}
                                 >
                                     {video.title}
                                 </p>
@@ -167,17 +168,21 @@ const MainVideos = ({ fetchFunction }) => {
                                     )}
                                 </div>
                             </div>
-                                <p
-                                    className={styles.videoAuthor}>{video.author}
-                                    onClick={() => handleShowVideo(video.videoId)}
-                                </p>
-                                <p
-                                    className={styles.videoStats}>{video.stats}
-                                    onClick={() => handleShowVideo(video.videoId)}
-                                </p>
-                            </div>
+                            <p
+                                className={styles.videoAuthor}
+                                onClick={(event) => handleShowVideo(video.videoId, event)}
+                            >
+                                {video.author}
+                            </p>
+                            <p
+                                className={styles.videoStats}
+                                onClick={(event) => handleShowVideo(video.videoId, event)}
+                            >
+                                {video.stats}
+                            </p>
                         </div>
                     </div>
+                </div>
             ))}
         </div>
     );
