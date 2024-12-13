@@ -32,6 +32,11 @@ const Search = () => {
         link(`/detail?q=${videoId}`)
     }, [link]);
 
+    const handleShowChannel = useCallback((url) => {
+        window.open(url, "_blank");
+    }, []);
+
+
     return (
         <div className={styles.container}>
             <div className={styles.categoryWrapper}>
@@ -59,18 +64,16 @@ const Search = () => {
                                 />
                                 <span>{video.videoTime}</span>
                             </div>
-                            <div className={styles.videoDescriptions} onClick={() => handleShowVideo(video.videoId)}>
-                                <h2>{video.title}</h2>
-                                <p>{video.statistics.viewCount}•{video.videoCreated}</p>
+                            <div className={styles.videoDescriptions}>
+                                <h2 onClick={() => handleShowVideo(video.videoId)}>{video.title}</h2>
+                                <p onClick={() => handleShowVideo(video.videoId)}>{video.statistics.viewCount}•{video.videoCreated}</p>
                                 <div className={styles.videoChannelInfo}>
                                     <div className={styles.channelInfo}>
-                                        <Link to={video.channel.customUrl} target="_blank">
-                                            <img src={video.channel.channelImg} alt="img" />
-                                            <span>{video.channelTitle}</span>
-                                        </Link>
+                                        <img src={video.channel.channelImg} alt="img" onClick={() => handleShowChannel(video.channel.customUrl)}/>
+                                        <span onClick={() => handleShowChannel(video.channel.customUrl)}>{video.channelTitle}</span>
                                     </div>
                                 </div>
-                                <p className={styles.videoDescript}>{video.description}</p>
+                                <p className={styles.videoDescript} onClick={() => handleShowVideo(video.videoId)}>{video.description}</p>
                             </div>
                         </div>
                     )
