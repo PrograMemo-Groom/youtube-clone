@@ -247,15 +247,15 @@
     width: 15.5%;
     height: 0.25rem;
     background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 0.2rem;
     overflow: hidden;
 }
 
 .progress-bar {
     height: 100%;
     background-color: red;
-    width: 40%;
+    width: 100%;
     transition: width 0.3s ease;
+    border-radius: 0 0 0.5rem 0.5rem;
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1279px) {
