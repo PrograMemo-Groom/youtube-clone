@@ -3,6 +3,7 @@ import styles from "./Search.module.css";
 import {Link, useLocation} from "react-router-dom";
 import {fetchSearchList} from "../../service/SearchService";
 import useNavigation from "../../hooks/useNavigation";
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 
 const tag = '[SearchPage]';
 const Search = () => {
@@ -28,6 +29,15 @@ const Search = () => {
     }, [searchTerm]);
     // console.log("dummy data",searchResult);
 
+    const fetchNextPage = async () => {
+        if (!nextToken) return;
+
+        const { items, pageToken } = await fetchSearchList(searchTerm, nextToken);
+        console.log(tag, "fetchNextPage:", items, pageToken);
+        setSearchResult((prev) => [...prev, ...items]);
+        setNextToken(pageToken);
+    }
+
     const handleShowVideo = useCallback((videoId) => {
         link(`/detail?q=${videoId}`)
     }, [link]);
@@ -36,6 +46,7 @@ const Search = () => {
         window.open(url, "_blank");
     }, []);
 
+    const lastItemRef = useIntersectionObserver(fetchNextPage, {root: null, threshold: 0.1});
 
     return (
         <div className={styles.container}>
@@ -52,9 +63,10 @@ const Search = () => {
                 </div>
             </div>
             <div className={styles.videos}>
-                {searchResult && searchResult.map((video) => {
+                {searchResult && searchResult.map((video,i) => {
                     return (
-                        <div className={styles.videoLists} key={video.videoId}>
+                        <div className={styles.videoLists} key={video.videoId}
+                             ref={i === searchResult.length - 1 ? lastItemRef : null}>
                             <div className={styles.videoFrame} onClick={() => handleShowVideo(video.videoId)}>
                                 <iframe
                                     src={`https://www.youtube-nocookie.com/embed/${video.videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${video.videoId}`}
