@@ -14,6 +14,7 @@
     font-weight: 700;
     text-overflow: ellipsis;
     margin-left: 35px;
+    padding-bottom: 12px;
 }
 
 
@@ -21,6 +22,9 @@
 
 .pageChangeButtons {
     margin-right: 35px;
+
+    display: flex;
+    align-items: center;
 }
 
 .pageChangeButtons button {
@@ -28,10 +32,12 @@
     background-color: transparent;
     width: 40px;
     height: 40px;
+    padding-left: 3px;
 }
 
 .manageButton {
     color: blue;
+    font-size: 15px;
 }
 
 .gridButton img {

@@ -13,7 +13,10 @@
 /************************** 페이지 전환 버튼들  */
 
 .pageChangeButtons {
-    margin-right: 35px;
+    margin-right: 25px;
+
+    display: flex;
+    align-items: center;
 }
 
 .pageChangeButtons button {
@@ -21,10 +24,13 @@
     background-color: transparent;
     width: 40px;
     height: 40px;
+
+    padding-left: 3px;
 }
 
 .manageButton {
     color: blue;
+    font-size: 15px;
 }
 
 .gridButton img {
@@ -42,8 +48,7 @@
     display: flex;
     flex-direction: column;
 
-    width: 862px;
-    padding-right: 300px;
+    width: 1162px;
     margin-top: 30px;
     padding-bottom: 50px;
 
@@ -80,6 +85,7 @@
 
 .videoClip_main {
     display: flex;
+    padding-right: 300px;
 }
 
 
