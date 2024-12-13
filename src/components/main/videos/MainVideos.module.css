@@ -1,39 +1,45 @@
 .videoGrid {
     display: grid;
-    column-gap: 16px;
-    row-gap: 40px;
-    padding: 10px 20px;
-    margin-left: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 16px;
+    margin: 0 auto;
+    max-width: 1920px;
+    padding-top: 10px;
+    padding-left: 30px;
 }
 
 @media (max-width: 700px) {
     .videoGrid {
         grid-template-columns: 1fr;
+        justify-items: center;
     }
 }
 
 @media (max-width: 1100px) and (min-width: 701px) {
     .videoGrid {
         grid-template-columns: 1fr 1fr;
+        justify-items: center;
     }
 }
 
 @media (min-width: 1101px) and (max-width: 1420px) {
     .videoGrid {
         grid-template-columns: 1fr 1fr 1fr;
+        justify-items: center;
     }
 }
 
 @media (min-width: 1421px) {
     .videoGrid {
         grid-template-columns: 1fr 1fr 1fr 1fr;
+        justify-items: center;
     }
 }
 
 .thumbnailRow {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: 12px;
     margin-bottom: 10px;
