@@ -126,3 +126,65 @@
     margin: 0px 0px 8px;
 }
 
+
+
+
+
+/********************************* shorts 섹션 !!  */
+
+.shortsSection {
+    width: 862px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shortsHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.shortsLogo {
+    display: flex;
+}
+
+.shortsMain {
+    display: flex;
+}
+
+
+/************************* shorts Clip !!  */
+
+
+.shortsClip {
+    display: flex;
+    flex-direction: column;
+}
+
+.shortsThumbnail {
+    width: 210px;
+}
+
+
+
+.shortsDetail {
+    display: flex;
+}
+
+.shortsDetail div {
+    display: flex;
+    flex-direction: column;
+}
+
+.shortsDetail button {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+}
+
+.shortsDetail button img {
+    width: 24px;
+    height: 24px;
+}

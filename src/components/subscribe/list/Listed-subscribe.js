@@ -72,7 +72,33 @@ const ListedSubscribe = () => {
                                         </div>
                                     </article>
                                     {index === 0 && <section className={styles.shortsSection}>
-                                        shorts 입니다아아
+                                        <header className={styles.shortsHeader}>
+                                            <div className={styles.shortsLogo}>
+                                                <img alt='로고'/>
+                                                <h4>Shorts</h4>
+                                            </div>
+                                            <button>모두 보기</button>
+                                        </header>
+                                        <div className={styles.shortsMain}>
+                                            {shortsData.map((shorts, index) => (
+                                                <article key={index} className={styles.shortsClip}>
+                                                    <img
+                                                        className={styles.shortsThumbnail}
+                                                        alt='shorts 썸네일'
+                                                        src={shorts.thumbnail}
+                                                    />
+                                                    <div className={styles.shortsDetail}>
+                                                        <div>
+                                                            <h5>{shorts.title}</h5>
+                                                            <p>조회수 {shorts.view}회</p>
+                                                        </div>
+                                                        <button>
+                                                            <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
+                                                        </button>
+                                                    </div>
+                                                </article>
+                                            ))}
+                                        </div>
                                     </section>}
                                 </>
                             ))}
@@ -116,7 +142,20 @@ const shortsData = [{
     thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
     shortsId: "dkdkkdkdk1",
     title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    duration: "282",
+    view: "282",
     } , {
-
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    } , {
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
+    } , {
+    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
+    shortsId: "dkdkkdkdk1",
+    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
+    view: "282",
     }]
