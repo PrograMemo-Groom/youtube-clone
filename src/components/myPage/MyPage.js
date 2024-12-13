@@ -104,12 +104,22 @@ export default function MyPage() {
                                                      alt={video.title}/>
                                                 <div className="progress-container">
                                                     <section className="view-icons-container">
-                                                        <img className="video-view-later-icon"
-                                                             src="/assets/mypage/video-later-view-icon.svg"
-                                                             alt="video-later-view-icon"/>
-                                                        <img className="video-view-later-icon"
-                                                             src="/assets/mypage/playlist-icon.svg"
-                                                             alt="video-later-view-icon"/>
+                                                        <div className="icon-wrapper">
+                                                            <img
+                                                                className="video-view-later-icon"
+                                                                src="/assets/mypage/video-later-view-icon.svg"
+                                                                alt="video-later-view-icon"
+                                                            />
+                                                            <p className="video-later-view-text">나중에 볼 동영상</p>
+                                                        </div>
+                                                        {/*<div className="icon-wrapper">*/}
+                                                        {/*    <img*/}
+                                                        {/*        className="add-playlist-icon"*/}
+                                                        {/*        src="/assets/mypage/playlist-icon.svg"*/}
+                                                        {/*        alt="add-playlist-icon"*/}
+                                                        {/*    />*/}
+                                                        {/*    <p className="add-playlist-text">현재 재생목록에 추가</p>*/}
+                                                        {/*</div>*/}
                                                     </section>
                                                     <section className="progress-time-container">
                                                         <p className="progress-time">2:29:28</p>

@@ -302,19 +302,45 @@
     transition: visibility 0.3s, opacity 0.3s;
 }
 
-.video-view-later-icon {
+.video-view-later-icon,
+.add-playlist-icon {
     width: 2rem;
     height: 2rem;
-    cursor: pointer;
-}
-
-.video-view-later-icon {
     cursor: pointer;
 }
 
 .video-thumbnail-container:hover .view-icons-container {
     visibility: visible;
     opacity: 1;
+}
+
+.view-icons-container:hover .video-later-view-text {
+    visibility: visible;
+    opacity: 1;
+    bottom: 4rem;
+    left: -5rem;
+}
+
+/*.add-playlist-icon:hover + .add-playlist-text {*/
+/*    visibility: visible;*/
+/*    bottom: 4rem;*/
+/*    left: -5rem;*/
+/*}*/
+
+.video-later-view-text {
+    position: absolute;
+    bottom: -2rem; /* 텍스트를 아이콘 아래로 배치 */
+    left: 0;
+    color: #ffffff;
+    background-color: #222222;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1279px) {
