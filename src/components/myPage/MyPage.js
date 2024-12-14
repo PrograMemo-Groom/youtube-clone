@@ -2,61 +2,8 @@ import "./MyPage.css";
 import React, {useState} from "react";
 import axios from "axios";
 
-const videoData = [{
-    thumbnail: "https://i.ytimg.com/vi/Gg_J9Eonl4Q/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&amp;rs=AOn4CLAag4fMJqf99yAtvLDQNbu2ZJ94Lw",
-    title: "[KPOP Playlist] 요즘 듣는 케이팝 노동요 플레이리스트]",
-    channel: "김로라",
-    view: "7.3만회",
-    uploadedAt: "4주 전",
-    duration: "3:13:00",
-},
-    {
-        title: "11월 케이팝 여자아이돌 걸그룹 노래모음 (가사포함) | 플레이리스트 | Playlist | Kpop",
-        thumbnail: "https://i.ytimg.com/vi/xFwNdsuoseQ/hqdefault.jpg?s…BACGAY4AUAB&rs=AOn4CLBIiv2i0UwmAX5ch9qIAWpQ0m-4yA",
-        channel: "밤공원",
-        view: "6.7만회",
-        uploadedAt: "4일 전",
-        duration: "2:01:50",
-    },
-    {
-        thumbnail: "https://i.ytimg.com/vi/Gg_J9Eonl4Q/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&amp;rs=AOn4CLAag4fMJqf99yAtvLDQNbu2ZJ94Lw",
-        title: "[KPOP Playlist] 요즘 듣는 케이팝 노동요 플레이리스트]",
-        channel: "김로라",
-        view: "7.3만회",
-        uploadedAt: "4주 전",
-        duration: "3:13:00",
-    },
-    {
-        title: "11월 케이팝 여자아이돌 걸그룹 노래모음 (가사포함) | 플레이리스트 | Playlist | Kpop",
-        thumbnail: "https://i.ytimg.com/vi/xFwNdsuoseQ/hqdefault.jpg?s…BACGAY4AUAB&rs=AOn4CLBIiv2i0UwmAX5ch9qIAWpQ0m-4yA",
-        channel: "밤공원",
-        view: "6.7만회",
-        uploadedAt: "4일 전",
-        duration: "2:01:50",
-    },
-    {
-        thumbnail: "https://i.ytimg.com/vi/Gg_J9Eonl4Q/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&amp;rs=AOn4CLAag4fMJqf99yAtvLDQNbu2ZJ94Lw",
-        title: "[KPOP Playlist] 요즘 듣는 케이팝 노동요 플레이리스트]",
-        channel: "김로라",
-        view: "7.3만회",
-        uploadedAt: "4주 전",
-        duration: "3:13:00",
-    },
-    {
-        title: "11월 케이팝 여자아이돌 걸그룹 노래모음 (가사포함) | 플레이리스트 | Playlist | Kpop",
-        thumbnail: "https://i.ytimg.com/vi/xFwNdsuoseQ/hqdefault.jpg?s…BACGAY4AUAB&rs=AOn4CLBIiv2i0UwmAX5ch9qIAWpQ0m-4yA",
-        channel: "밤공원",
-        view: "6.7만회",
-        uploadedAt: "4일 전",
-        duration: "2:01:50",
-    },
-]
-
 const handleLogin = () => {
-    // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
-    // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
-    // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email profile`;
     console.log("Generated OAuth URL:", authUrl);
     window.location.href = authUrl; // Google OAuth 로그인 리디렉션
 };
@@ -89,7 +36,6 @@ const authTokenAPI = async (authCode) => {
     }
 };
 
-
 const extractAuthCode = async () => {
     console.log("여기까지 왔나? 2:", "extractAuthCode");
     console.log("Current URL:", window.location.href); // 현재 URL 출력
@@ -110,12 +56,7 @@ const extractAuthCode = async () => {
         console.log("Authorization Code from URL:", code);
         localStorage.setItem("GOOGLE_TOKEN", code);
     }
-    // if (code) {
-    //     console.log("Authorization Code:", code); // 인증 코드 출력
-    //     authTokenAPI(code); // 인증 코드를 사용해 액세스 토큰 요청
-    // } else {
-    //     console.error("Authorization Code not found in the URL");
-    // }
+
     // 토큰 요청
     const tokenData = await authTokenAPI(code);
     if (tokenData) {
@@ -136,16 +77,16 @@ const fetchYouTubePlaylists = async () => {
     try {
         const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
             headers: {
-                Authorization: `Bearer ${accessToken}`, // 액세스 토큰 추가
+                Authorization: `Bearer ${accessToken}`,
             },
             params: {
-                part: "snippet,contentDetails", // 필요한 데이터
+                part: "snippet,contentDetails",
                 mine: true, // 사용자의 재생목록
             },
         });
 
         console.log("YouTube Playlists:", response.data.items);
-        return response.data.items; // 재생목록 데이터 반환
+        return response.data.items;
     } catch (error) {
         console.error("Error fetching YouTube playlists:", error.response?.data || error.message);
     }
@@ -170,8 +111,6 @@ const fetchUserChannel = async (accessToken) => {
         console.log("Playlists Data:", response.data.items);
         return response.data.items; // 재생목록 반환
 
-        // console.log("Channel Data:", channel);
-        // return channel.snippet.title; // 채널 이름 반환
     } catch (error) {
         console.error("Error fetching user channel:", error.response?.data || error.message);
     }
@@ -186,7 +125,7 @@ const fetchUserPlaylists = async (accessToken) => {
             params: {
                 part: "snippet,contentDetails",
                 mine: true,
-                maxResults: 25, // 가져올 재생목록의 최대 개수
+                maxResults: 25,
             },
         });
 
@@ -208,7 +147,7 @@ const fetchWatchLaterVideos = async (accessToken) => {
             params: {
                 part: "snippet,contentDetails",
                 maxResults: 25,
-                playlistId: "WL", // "나중에 볼 동영상"
+                playlistId: "WL", // 나중에 볼 동영상
             },
         });
 
@@ -304,7 +243,7 @@ export default function MyPage() {
     const handleSelectOption = (option) => {
         setSelectedOption(option);
         setDropdownVisible(false); // 선택 후 드롭다운 닫기
-        // 정렬 로직 추가
+
         if (option === "가나다순") {
             const sortedPlaylists = [...playlists].sort((a, b) =>
                 a.snippet.title.localeCompare(b.snippet.title)
@@ -318,10 +257,6 @@ export default function MyPage() {
         }
         console.log(`Selected sorting option: ${option}`);
     };
-    // 인증 코드 추출 및 토큰 발급
-    // React.useEffect(() => {
-    //     extractAuthCode(); // 인증 코드 추출 및 토큰 발급
-    // }, []);
 
     // 인증 코드 추출 및 토큰 발급
     React.useEffect(() => {
@@ -356,22 +291,19 @@ export default function MyPage() {
                 return;
             }
 
-            // 채널 이름 가져오기
             const channel = await fetchUserChannel(accessToken);
             if (channel) {
                 setChannelName(channel);
             }
 
-            // 재생목록 가져오기
             const playlists = await fetchUserPlaylists(accessToken);
             if (playlists) {
                 setPlaylists(playlists);
             }
 
-            // "나중에 볼 동영상" 데이터 가져오기
             const videos = await fetchWatchLaterVideos(accessToken);
             if (videos) {
-                setWatchLaterVideos(videos); // 상태에 저장
+                setWatchLaterVideos(videos);
             }
 
             const likesVideos = await fetchLikedVideos(accessToken);
@@ -440,15 +372,15 @@ export default function MyPage() {
         }
     };
 
-    const handleScrollRight = () => {
-        const container = document.getElementById("scrollable-container");
-        container.scrollBy({ left: 300, behavior: "smooth" });
-    };
-
-    const handleScrollLeft = () => {
-        const container = document.getElementById("scrollable-container");
-        container.scrollBy({ left: -300, behavior: "smooth" });
-    };
+    // const handleScrollRight = () => {
+    //     const container = document.getElementById("scrollable-container");
+    //     container.scrollBy({left: 300, behavior: "smooth"});
+    // };
+    //
+    // const handleScrollLeft = () => {
+    //     const container = document.getElementById("scrollable-container");
+    //     container.scrollBy({left: -300, behavior: "smooth"});
+    // };
 
     return (
         <div className="container">
@@ -525,9 +457,9 @@ export default function MyPage() {
                                                     <section className="progress-time-container">
                                                         <p className="progress-time">{formatDuration(video.contentDetails.duration)}</p>
                                                     </section>
-                                                    {/*<section className="progress-bar-container">*/}
-                                                    {/*    <div className="progress-bar"></div>*/}
-                                                    {/*</section>*/}
+                                                    <section className="progress-bar-container">
+                                                        <div className="progress-bar"></div>
+                                                    </section>
                                                 </div>
                                             </div>
                                             <div className="video-info-container">
@@ -539,7 +471,6 @@ export default function MyPage() {
                                                              alt="ellipsis-toggle-btn"
                                                         />
                                                     </button>
-                                                    {/* 토글 카테고리 */}
                                                     <div className={`div-toggle ${isToggleVisible ? "visible" : ""}`}>
                                                         <p>현재 재생목록에 추가</p>
                                                         <p>나중에 볼 동영상에 저장</p>
@@ -552,8 +483,6 @@ export default function MyPage() {
                                                 <div className="video-channel-and-meta-container">
                                                     <p className="video-channel">{video.snippet.channelTitle}</p>
                                                     <p className="video-meta">
-                                                        {/*{video.publishedAt}*/}
-                                                        {/*{video.view} · {video.uploadedAt}*/}
                                                         {formatViewCount(video.statistics.viewCount)} 조회수
                                                         · {new Date(video.snippet.publishedAt).toLocaleDateString()}
                                                     </p>
@@ -561,9 +490,9 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    {/*<button className="next-video-btn">&gt;</button>*/}
-                                    <button className="next-video-btn" onClick={handleScrollRight}>&gt;</button>
-                                    <button className="prev-video-btn" onClick={handleScrollLeft}>&lt;</button>
+                                    <button className="next-video-btn">&gt;</button>
+                                    {/*<button className="next-video-btn" onClick={handleScrollRight}>&gt;</button>*/}
+                                    {/*<button className="prev-video-btn" onClick={handleScrollLeft}>&lt;</button>*/}
                                 </section>
                             </section>
                         </div>
@@ -580,30 +509,19 @@ export default function MyPage() {
                                         </button>
                                         {isDropdownVisible && (
                                             <div className="dropdown-menu">
-                                                <p
-                                                    className="dropdown-item"
-                                                    onClick={() =>
-                                                        handleSelectOption("가나다순")
-                                                    }
-                                                >
-                                                    가나다순
-                                                </p>
-                                                <p
-                                                    className="dropdown-item"
-                                                    onClick={() =>
-                                                        handleSelectOption("최신순")
-                                                    }
-                                                >
-                                                    최신순
-                                                </p>
+                                                <p className="dropdown-item"
+                                                   onClick={() => handleSelectOption("가나다순")}>가나다순</p>
+                                                <p className="dropdown-item"
+                                                   onClick={() => handleSelectOption("최신순")}>최신순</p>
                                             </div>
                                         )}
                                     </div>
-                                    {/*<button className="sort-text">가나다순 &#9660;</button>*/}
                                 </section>
                                 <section className="playlist-all-and-plus-btn">
                                     <button className="plus-btn">+</button>
-                                    <button className="playlist-all-view">모두 보기</button>
+                                    <button className="playlist-all-view"
+                                    >모두 보기
+                                    </button>
                                 </section>
                             </section>
                             <section className="playlist-contents-container">
@@ -620,7 +538,6 @@ export default function MyPage() {
                                                 <h3 className="playlist-video-title">{playlist.snippet.title}</h3>
                                                 <p className="playlist-video-channel">{playlist.snippet.channelTitle} &#183; 재생목록</p>
                                                 <p className="playlist-video-meta">
-                                                    {/*모든 재생목록 보기*/}
                                                     {playlist.contentDetails.itemCount} 개의 동영상
                                                 </p>
                                             </div>
@@ -654,7 +571,6 @@ export default function MyPage() {
                                                 <p className="video-meta">
                                                     {/* 업로드 날짜 */}
                                                     {new Date(video.snippet.publishedAt).toLocaleDateString()}
-                                                    {/*{video.view} · {video.uploadedAt}*/}
                                                 </p>
                                             </div>
                                         </section>
