@@ -204,6 +204,13 @@ export default function MyPage() {
 
     const [playlists, setPlaylists] = React.useState([]);
     const [channelName, setChannelName] = useState("");
+    const [isToggleVisible, setToggleVisible] = React.useState(false);
+    const [toggleState, setToggleState] = React.useState({});
+
+    const handleToggle = () => {
+        setToggleVisible((prev) => !prev);
+    };
+
 
     // 인증 코드 추출 및 토큰 발급
     // React.useEffect(() => {
@@ -342,12 +349,21 @@ export default function MyPage() {
                                             <div className="video-info-container">
                                                 <div className="video-title-and-toggle-container">
                                                     <h3 className="video-title">{video.title}</h3>
-                                                    <button className="toggle_btn">
+                                                    <button className="toggle_btn" onClick={handleToggle}>
                                                         <img className="ellipsis-toggle-btn"
                                                              src="/ellipsis.png"
                                                              alt="ellipsis-toggle-btn"
                                                         />
                                                     </button>
+                                                    {/* 토글 카테고리 */}
+                                                    <div className={`div-toggle ${isToggleVisible ? "visible" : ""}`}>
+                                                        <p>현재 재생목록에 추가</p>
+                                                        <p>나중에 볼 동영상에 저장</p>
+                                                        <p>재생목록에 저장</p>
+                                                        <p>오프라인 저장</p>
+                                                        <p>공유</p>
+                                                        <p>시청 기록에서 삭제</p>
+                                                    </div>
                                                 </div>
                                                 <div className="video-channel-and-meta-container">
                                                     <p className="video-channel">{video.channelTitle}</p>
