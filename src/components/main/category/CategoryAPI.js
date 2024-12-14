@@ -12,7 +12,7 @@ export const fetchRecentlyUploaded = async () => {
             params: {
                 part: "snippet",
                 order: "date",
-                maxResults: 10,
+                maxResults: 8,
             },
         });
         console.log("fetchRecentlyUploaded data:", response.data.items);
