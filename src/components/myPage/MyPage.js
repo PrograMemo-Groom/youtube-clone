@@ -1,6 +1,7 @@
 import "./MyPage.css";
 import React, {useState} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
@@ -229,6 +230,8 @@ export default function MyPage() {
     const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
     const [profileImage, setProfileImage] = React.useState("/assets/mypage/user-profile.png");
     const [likedVideos, setLikedVideos] = useState([]);
+    const [channelId, setChannelId] = useState("");
+    const navigate = useNavigate();
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
@@ -291,29 +294,48 @@ export default function MyPage() {
                 return;
             }
 
-            const channel = await fetchUserChannel(accessToken);
-            if (channel) {
-                setChannelName(channel);
-            }
+            try {
+                // 1. 채널 데이터 가져오기
+                const channelResponse = await fetch("https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true", {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                const channelData = await channelResponse.json();
+                if (channelData.items && channelData.items.length > 0) {
+                    setChannelId(channelData.items[0].id); // 채널 ID 상태 업데이트
+                    setChannelName(channelData.items[0].snippet.title); // 채널 이름 설정
+                } else {
+                    console.error("No channel data found.");
+                }
 
-            const playlists = await fetchUserPlaylists(accessToken);
-            if (playlists) {
-                setPlaylists(playlists);
-            }
+                const channel = await fetchUserChannel(accessToken);
+                if (channel) {
+                    setChannelName(channel);
+                }
 
-            const videos = await fetchWatchLaterVideos(accessToken);
-            if (videos) {
-                setWatchLaterVideos(videos);
-            }
+                const playlists = await fetchUserPlaylists(accessToken);
+                if (playlists) {
+                    setPlaylists(playlists);
+                }
 
-            const likesVideos = await fetchLikedVideos(accessToken);
-            if (likesVideos) {
-                setLikedVideos(likesVideos);
+                const videos = await fetchWatchLaterVideos(accessToken);
+                if (videos) {
+                    setWatchLaterVideos(videos);
+                }
+
+                const likesVideos = await fetchLikedVideos(accessToken);
+                if (likesVideos) {
+                    setLikedVideos(likesVideos);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
             }
-        };
+            ;
+        }
 
         fetchData(); // 데이터 요청
-    }, []);
+        }, []);
 
     const handleChannelView = async () => {
         const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
@@ -372,6 +394,13 @@ export default function MyPage() {
         }
     };
 
+    const handleViewAllClick = () => {
+        if (channelId) {
+            navigate(`/watch-history?channelId=${channelId}`);
+        } else {
+            console.error("Channel ID not available.");
+        }
+    };
     // const handleScrollRight = () => {
     //     const container = document.getElementById("scrollable-container");
     //     container.scrollBy({left: 300, behavior: "smooth"});
@@ -424,7 +453,7 @@ export default function MyPage() {
                         <div className="view-record-container">
                             <section className="view-record-text-btn">
                                 <p>기록</p>
-                                <button className="all-video-view">모두 보기</button>
+                                <button className="all-video-view" onClick={handleViewAllClick}>모두 보기</button>
                             </section>
                             <section className="view-record-contents-container">
                                 <section className="video-list" id="scrollable-container">
