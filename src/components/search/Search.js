@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styles from "./Search.module.css";
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {fetchSearchList} from "../../service/SearchService";
 import useNavigation from "../../hooks/useNavigation";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
@@ -31,10 +31,14 @@ const Search = () => {
 
     const fetchNextPage = async () => {
         if (!nextToken) return;
-
         const { items, pageToken } = await fetchSearchList(searchTerm, nextToken);
-        console.log(tag, "fetchNextPage:", items, pageToken);
-        setSearchResult((prev) => [...prev, ...items]);
+        // console.log(tag, "fetchNextPage:", items, pageToken);
+        const uniqueSet = [...searchResult, ...items];
+
+        const uniqueResults = Array.from(
+            new Map(uniqueSet.map((item) => [item.videoId, item])).values()
+        );
+        setSearchResult(uniqueResults);
         setNextToken(pageToken);
     }
 
