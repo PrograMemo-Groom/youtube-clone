@@ -403,17 +403,17 @@
     font-size: 14px;
 }
 
-.next-video-btn,
-.prev-video-btn {
-    /*position: absolute;*/
-    /*top: 50%;*/
-    /*transform: translateY(-50%);*/
-    background-color: #ffffff;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    z-index: 1;
-}
+/*.next-video-btn,*/
+/*.prev-video-btn {*/
+/*    !*position: absolute;*!*/
+/*    !*top: 50%;*!*/
+/*    !*transform: translateY(-50%);*!*/
+/*    background-color: #ffffff;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    font-size: 1.5rem;*/
+/*    z-index: 1;*/
+/*}*/
 
 .next-video-btn {
     right: 10px;
