@@ -59,7 +59,7 @@ const MainVideos = ({ fetchFunction }) => {
 
     const handleChannelClick = (channelId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
-        window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
+        window.location.href = `https://www.youtube.com/channel/${channelId}`;
     };
 
     const toggleDropdown = (videoId) => {
