@@ -205,11 +205,36 @@ export default function MyPage() {
     const [playlists, setPlaylists] = React.useState([]);
     const [channelName, setChannelName] = useState("");
     const [isToggleVisible, setToggleVisible] = React.useState(false);
+    const [isDropdownVisible, setDropdownVisible] = useState(false);
+    const [selectedOption, setSelectedOption] = useState("가나다순");
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
     };
 
+    // 드롭다운 토글 핸들러
+    const handleToggleDropdown = () => {
+        setDropdownVisible((prev) => !prev);
+    };
+
+    // 정렬 옵션 선택 핸들러
+    const handleSelectOption = (option) => {
+        setSelectedOption(option);
+        setDropdownVisible(false); // 선택 후 드롭다운 닫기
+        // 정렬 로직 추가
+        if (option === "가나다순") {
+            const sortedPlaylists = [...playlists].sort((a, b) =>
+                a.snippet.title.localeCompare(b.snippet.title)
+            );
+            setPlaylists(sortedPlaylists);
+        } else if (option === "최신순") {
+            const sortedPlaylists = [...playlists].sort((a, b) =>
+                new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt)
+            );
+            setPlaylists(sortedPlaylists);
+        }
+        console.log(`Selected sorting option: ${option}`);
+    };
     // 인증 코드 추출 및 토큰 발급
     // React.useEffect(() => {
     //     extractAuthCode(); // 인증 코드 추출 및 토큰 발급
@@ -381,7 +406,35 @@ export default function MyPage() {
                             <section className="playlist-text-btn">
                                 <section className="playlist-sort-text">
                                     <p className="playlist-text">재생목록</p>
-                                    <button className="sort-text">가나다순 &#9660;</button>
+                                    <div className="sort-dropdown-container">
+                                        <button
+                                            className="sort-button"
+                                            onClick={handleToggleDropdown}
+                                        >
+                                            {selectedOption} &#9660;
+                                        </button>
+                                        {isDropdownVisible && (
+                                            <div className="dropdown-menu">
+                                                <p
+                                                    className="dropdown-item"
+                                                    onClick={() =>
+                                                        handleSelectOption("가나다순")
+                                                    }
+                                                >
+                                                    가나다순
+                                                </p>
+                                                <p
+                                                    className="dropdown-item"
+                                                    onClick={() =>
+                                                        handleSelectOption("최신순")
+                                                    }
+                                                >
+                                                    최신순
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/*<button className="sort-text">가나다순 &#9660;</button>*/}
                                 </section>
                                 <section className="playlist-all-and-plus-btn">
                                     <button className="plus-btn">+</button>
