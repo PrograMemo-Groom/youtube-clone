@@ -17,7 +17,7 @@ export const fetchRecentlyUploaded = async () => {
         });
         console.log("fetchRecentlyUploaded data:", response.data.items);
 
-        const results = await Promise.all(
+        return await Promise.all(
             response.data.items.map(async (item) => {
                 const channelThumbnail = await getChannelThumbnail(item.snippet.channelId);
 
@@ -34,50 +34,49 @@ export const fetchRecentlyUploaded = async () => {
                 };
             })
         );
-
-        return results;
     } catch (error) {
         console.error("Error fetching recently uploaded videos:", error.message);
         return [];
     }
 };
 
-// 맞춤 추천 동영상
-export const fetchPersonalizedVideos = async () => {
-    try {
-        const response = await instance.get(requests.fetchSearchVideos, {
-            params: {
-                part: "snippet",
-                order: "relevance",
-                maxResults: 10,
-            },
-        });
-        console.log("fetchPersonalizedVideos data:", response.data.items);
-
-        const results = await Promise.all(
-            response.data.items.map(async (item) => {
-                const channelThumbnail = await getChannelThumbnail(item.snippet.channelId);
-
-                return {
-                    videoId: item.id.videoId,
-                    title: item.snippet.title,
-                    author: item.snippet.channelTitle,
-                    thumbnail: item.snippet.thumbnails.high.url,
-                    time: item.contentDetails?.duration
-                        ? formatVideoTime(item.contentDetails.duration)
-                        : "알 수 없음",
-                    profile: channelThumbnail,
-                    stats: `조회수 ${formatViewPeople(item.statistics?.viewCount || 0)} · ${formatTimeDifference(item.snippet.publishedAt)}`,
-                };
-            })
-        );
-
-        return results;
-    } catch (error) {
-        console.error("Error fetching personalized videos:", error.message);
-        return [];
-    }
-};
+//
+// // 맞춤 추천 동영상
+// export const fetchPersonalizedVideos = async () => {
+//     try {
+//         const response = await instance.get(requests.fetchSearchVideos, {
+//             params: {
+//                 part: "snippet",
+//                 order: "relevance",
+//                 maxResults: 10,
+//             },
+//         });
+//         console.log("fetchPersonalizedVideos data:", response.data.items);
+//
+//         const results = await Promise.all(
+//             response.data.items.map(async (item) => {
+//                 const channelThumbnail = await getChannelThumbnail(item.snippet.channelId);
+//
+//                 return {
+//                     videoId: item.id.videoId,
+//                     title: item.snippet.title,
+//                     author: item.snippet.channelTitle,
+//                     thumbnail: item.snippet.thumbnails.high.url,
+//                     time: item.contentDetails?.duration
+//                         ? formatVideoTime(item.contentDetails.duration)
+//                         : "알 수 없음",
+//                     profile: channelThumbnail,
+//                     stats: `조회수 ${formatViewPeople(item.statistics?.viewCount || 0)} · ${formatTimeDifference(item.snippet.publishedAt)}`,
+//                 };
+//             })
+//         );
+//
+//         return results;
+//     } catch (error) {
+//         console.error("Error fetching personalized videos:", error.message);
+//         return [];
+//     }
+// };
 
 
 
