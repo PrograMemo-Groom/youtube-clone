@@ -1,7 +1,8 @@
 import "./MyPage.css";
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import useNavigation from "../../hooks/useNavigation";
 
 const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
@@ -219,6 +220,7 @@ const fetchLikedVideos = async (accessToken) => {
     }
 };
 
+
 export default function MyPage() {
     console.log("여기까지 왔나? 3:", "MyPage()");
 
@@ -232,6 +234,7 @@ export default function MyPage() {
     const [likedVideos, setLikedVideos] = useState([]);
     const [channelId, setChannelId] = useState("");
     const navigate = useNavigate();
+    const {link} = useNavigation();
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
@@ -335,7 +338,7 @@ export default function MyPage() {
         }
 
         fetchData(); // 데이터 요청
-        }, []);
+    }, []);
 
     const handleChannelView = async () => {
         const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
@@ -411,6 +414,14 @@ export default function MyPage() {
     //     container.scrollBy({left: -300, behavior: "smooth"});
     // };
 
+
+    const handleShowVideo = (videoId) => {
+        console.log("6: ", videoId);
+        const queryParam = `?q=${videoId}`;
+        const detailPageUrl = `/detail${queryParam}`;
+        link(detailPageUrl);
+    };
+
     return (
         <div className="container">
             <div className="relative-layout-container">
@@ -463,7 +474,9 @@ export default function MyPage() {
                                             <div className="video-thumbnail-container">
                                                 <img className="video-thumbnail"
                                                      src={video.snippet.thumbnails.medium.url}
-                                                     alt={video.snippet.title}/>
+                                                     alt={video.snippet.title}
+                                                     onClick={() => handleShowVideo(video.id)}
+                                                />
                                                 <div className="progress-container">
                                                     <section className="view-icons-container">
                                                         <div className="icon-wrapper">
