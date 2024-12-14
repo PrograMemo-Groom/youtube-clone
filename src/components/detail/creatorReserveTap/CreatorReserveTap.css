@@ -77,14 +77,18 @@
     width: 168px;
     height: 94px;
     justify-content: space-between;
+    flex-shrink: 0;
 }
 
-.creator-reserve-container .video {
+.creator-reserve-container .video-box >.video {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    /* width: 168px; */
+    height: 94px;
     border-radius: 10px;
     cursor: pointer;
+    width: 100%; /* 부모 요소의 너비에 맞추기 */
+    height: 100%; /* 부모 요소의 높이에 맞추기 */
+    object-fit: cover; /* 부모 요소의 크기에 맞추면서 이미지 비율 유지 */
 }
 
 .creator-reserve-container .video-details {
@@ -94,6 +98,7 @@
     padding: 0 0 0 10px;
     margin-top: 10px;
     height:100%;
+    box-sizing: border-box; 
 }
 
 .creator-reserve-container .video-title{

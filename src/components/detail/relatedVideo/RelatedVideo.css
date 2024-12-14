@@ -23,6 +23,7 @@
     width: 168px;
     height: 94px;
     justify-content: space-between;
+    flex-shrink: 0;
 }
 
 .relatedVideo-container .video {
