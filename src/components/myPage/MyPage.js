@@ -213,7 +213,7 @@ const fetchLikedVideos = async (accessToken) => {
             },
             params: {
                 part: "snippet,contentDetails,statistics",
-                maxResults: 10, // 가져올 영상 수 (필요에 따라 조정)
+                maxResults: 15, // 가져올 영상 수 (필요에 따라 조정)
                 myRating: "like", // 좋아요 누른 영상
             },
         });
@@ -404,15 +404,15 @@ export default function MyPage() {
     };
 
 
-    // const handleScrollRight = () => {
-    //     const container = document.getElementById("scrollable-container");
-    //     container.scrollBy({left: 300, behavior: "smooth"});
-    // };
-    //
-    // const handleScrollLeft = () => {
-    //     const container = document.getElementById("scrollable-container");
-    //     container.scrollBy({left: -300, behavior: "smooth"});
-    // };
+    const handleScrollRight = () => {
+        const container = document.getElementById("scrollable-container");
+        container.scrollBy({left: 300, behavior: "smooth"});
+    };
+
+    const handleScrollLeft = () => {
+        const container = document.getElementById("scrollable-container");
+        container.scrollBy({left: -300, behavior: "smooth"});
+    };
 
     const handleShowVideo = (videoId) => {
         console.log("6: ", videoId);
@@ -491,7 +491,7 @@ export default function MyPage() {
                                 <button className="all-video-view" onClick={handleViewAllClick}>모두 보기</button>
                             </section>
                             <section className="view-record-contents-container">
-                                <section className="video-list" id="scrollable-container">
+                                <section className="video-list">
                                     {likedVideos.map((video, i) => (
                                         <section className="video-item"
                                                  key={`${i}-${video.videoId}`}>
@@ -575,9 +575,6 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="next-video-btn">&gt;</button>
-                                    {/*<button className="next-video-btn" onClick={handleScrollRight}>&gt;</button>*/}
-                                    {/*<button className="prev-video-btn" onClick={handleScrollLeft}>&lt;</button>*/}
                                 </section>
                             </section>
                         </div>
@@ -603,7 +600,6 @@ export default function MyPage() {
                                     </div>
                                 </section>
                                 <section className="playlist-all-and-plus-btn">
-                                    <button className="plus-btn">+</button>
                                     <button className="playlist-all-view"
                                             onClick={() => handViewFeed(channelId)}
                                     >모두 보기
@@ -629,7 +625,6 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="playlist-next-video-btn"> &gt; </button>
                                 </section>
                             </section>
                         </div>
@@ -661,7 +656,6 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="next-video-btn">&gt;</button>
                                 </section>
                             </section>
                         </div>
