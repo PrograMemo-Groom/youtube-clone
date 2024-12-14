@@ -15,9 +15,22 @@ const MainVideos = ({ fetchFunction }) => {
         const fetchVideos = async () => {
             try {
                 setLoading(true);
-                const videoData = await getMainVideos(fetchFunction);
+
+                console.log("fetchFunction received:", fetchFunction);
+
+                let videoData;
+                if (Array.isArray(fetchFunction)) {
+                    // 데이터 배열이 직접 전달된 경우
+                    videoData = fetchFunction;
+                } else {
+                    // 숫자 ID일 경우 기존 로직 사용
+                    videoData = await getMainVideos(fetchFunction);
+                }
+
+                console.log("Fetched video data:", videoData);
                 setVideos(videoData);
             } catch (e) {
+                console.error("Error fetching videos:", e.message);
                 setError("동영상을 불러오는 중 문제가 발생했습니다.");
             } finally {
                 setLoading(false);
@@ -26,6 +39,9 @@ const MainVideos = ({ fetchFunction }) => {
 
         fetchVideos();
     }, [fetchFunction]);
+
+
+
 
     const handleShowVideo = (videoId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지

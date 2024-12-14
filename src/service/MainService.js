@@ -6,16 +6,21 @@ import formatVideoTime from "../utils/formatVideoTime";
 import { getChannelThumbnail } from "../utils/formatProfileImage";
 
 //메인 동영상 가져오기
-export const getMainVideos = async () => {
+export const getMainVideos = async (categoryId = null) => {
     try {
-        const response = await instance.get(requests.getMainVideos, {
-            params: {
-                part: "snippet,contentDetails,statistics",
-                chart: "mostPopular",
-                regionCode: "KR",
-                maxResults: 8,
-            },
-        });
+        const params = {
+            part: "snippet,contentDetails,statistics",
+            chart: "mostPopular",
+            regionCode: "KR",
+            maxResults: 8,
+        };
+
+        // 카테고리 ID가 있다면 요청 파라미터에 추가
+        if (categoryId) {
+            params.videoCategoryId = categoryId;
+        }
+
+        const response = await instance.get(requests.getMainVideos, { params });
 
         // 동영상 데이터 가공
         const results = await Promise.allSettled(
@@ -39,7 +44,7 @@ export const getMainVideos = async () => {
             })
         );
 
-        // 성공한 결과만 필터링
+        // 성공한 결과만 반환
         return results
             .filter((result) => result.status === "fulfilled" && result.value !== null)
             .map((result) => result.value);
