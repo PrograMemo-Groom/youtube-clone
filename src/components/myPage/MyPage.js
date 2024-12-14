@@ -419,6 +419,36 @@ export default function MyPage() {
         fetchProfileImage();
     }, []);
 
+    // ISO 8601 Duration 포맷을 읽기 쉽게 변환하는 함수
+    const formatDuration = (isoDuration) => {
+        const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+        const hours = match[1] ? match[1].slice(0, -1) : "00";
+        const minutes = match[2] ? match[2].slice(0, -1) : "00";
+        const seconds = match[3] ? match[3].slice(0, -1) : "00";
+
+        return `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}`;
+    };
+
+    const formatViewCount = (viewCount) => {
+        const count = parseInt(viewCount, 10);
+        if (count >= 1000000) {
+            return `${(count / 1000000).toFixed(1)}만회`;
+        } else if (count >= 10000) {
+            return `${(count / 10000).toFixed(1)}천회`;
+        } else {
+            return `${count}회`;
+        }
+    };
+
+    const handleScrollRight = () => {
+        const container = document.getElementById("scrollable-container");
+        container.scrollBy({ left: 300, behavior: "smooth" });
+    };
+
+    const handleScrollLeft = () => {
+        const container = document.getElementById("scrollable-container");
+        container.scrollBy({ left: -300, behavior: "smooth" });
+    };
 
     return (
         <div className="container">
@@ -465,7 +495,7 @@ export default function MyPage() {
                                 <button className="all-video-view">모두 보기</button>
                             </section>
                             <section className="view-record-contents-container">
-                                <section className="video-list">
+                                <section className="video-list" id="scrollable-container">
                                     {likedVideos.map((video, i) => (
                                         <section className="video-item"
                                                  key={`${i}-${video.videoId}`}>
@@ -483,21 +513,21 @@ export default function MyPage() {
                                                             />
                                                             <p className="video-later-view-text">나중에 볼 동영상</p>
                                                         </div>
-                                                        {/*<div className="icon-wrapper">*/}
-                                                        {/*    <img*/}
-                                                        {/*        className="add-playlist-icon"*/}
-                                                        {/*        src="/assets/mypage/playlist-icon.svg"*/}
-                                                        {/*        alt="add-playlist-icon"*/}
-                                                        {/*    />*/}
-                                                        {/*    <p className="add-playlist-text">현재 재생목록에 추가</p>*/}
-                                                        {/*</div>*/}
+                                                        <div className="icon-wrapper">
+                                                            <img
+                                                                className="add-playlist-icon"
+                                                                src="/assets/mypage/playlist-icon.svg"
+                                                                alt="add-playlist-icon"
+                                                            />
+                                                            <p className="add-playlist-text">현재 재생목록에 추가</p>
+                                                        </div>
                                                     </section>
                                                     <section className="progress-time-container">
-                                                        <p className="progress-time">2:29:28</p>
+                                                        <p className="progress-time">{formatDuration(video.contentDetails.duration)}</p>
                                                     </section>
-                                                    <section className="progress-bar-container">
-                                                        <div className="progress-bar"></div>
-                                                    </section>
+                                                    {/*<section className="progress-bar-container">*/}
+                                                    {/*    <div className="progress-bar"></div>*/}
+                                                    {/*</section>*/}
                                                 </div>
                                             </div>
                                             <div className="video-info-container">
@@ -524,14 +554,16 @@ export default function MyPage() {
                                                     <p className="video-meta">
                                                         {/*{video.publishedAt}*/}
                                                         {/*{video.view} · {video.uploadedAt}*/}
-                                                        {video.statistics.viewCount} 조회수
+                                                        {formatViewCount(video.statistics.viewCount)} 조회수
                                                         · {new Date(video.snippet.publishedAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="next-video-btn"> ></button>
+                                    {/*<button className="next-video-btn">&gt;</button>*/}
+                                    <button className="next-video-btn" onClick={handleScrollRight}>&gt;</button>
+                                    <button className="prev-video-btn" onClick={handleScrollLeft}>&lt;</button>
                                 </section>
                             </section>
                         </div>
@@ -627,7 +659,7 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="next-video-btn"> &gt; </button>
+                                    <button className="next-video-btn">&gt;</button>
                                 </section>
                             </section>
                         </div>
