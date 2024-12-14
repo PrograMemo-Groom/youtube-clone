@@ -171,6 +171,10 @@
     line-height: 1.5;
 }
 
+.video-title-and-toggle-container {
+    display: flex;
+}
+
 .video-title,
 .playlist-video-title {
     display: -webkit-box;
@@ -183,6 +187,7 @@
     max-height: 3rem;
     font-size: 1rem;
     font-weight: 600;
+    width: 11rem;
 }
 
 .video-channel,
@@ -347,6 +352,24 @@
     transition: visibility 0.3s, opacity 0.3s;
 }
 
+.div-toggle {
+    display: none;
+}
+
+.toggle_btn {
+    margin-top: 0.2rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: #ffffff;
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.ellipsis-toggle-btn {
+    width: 1rem;
+    /*height: 1rem;*/
+}
 @media screen and (max-width: 1536px) and (min-width: 1279px) {
     .user-profile-img {
         height: 3.5rem;

@@ -58,7 +58,7 @@ const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
     // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
     // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email profile`;
-    console.log("Generated OAuth URL:", authUrl); // 확인용 로그
+    console.log("Generated OAuth URL:", authUrl);
     window.location.href = authUrl; // Google OAuth 로그인 리디렉션
 };
 
@@ -72,7 +72,7 @@ const authTokenAPI = async (authCode) => {
         params.append("redirect_uri", process.env.REACT_APP_REDIRECT_URI);
         params.append("grant_type", "authorization_code");
 
-        console.log("Request Params:", params.toString()); // 요청 데이터 출력
+        console.log("Request Params:", params.toString());
 
         const response = await axios.post("https://oauth2.googleapis.com/token", params, {
             headers: {"Content-Type": "application/x-www-form-urlencoded"},
@@ -290,7 +290,9 @@ export default function MyPage() {
                                                  src="/assets/mypage/google-logo-icon.svg"
                                                  alt="google-id"/>
                                             <button className="changes-id-text"
-                                                    onClick={() => window.location.href = "https://myaccount.google.com/"}>Google 계정</button>
+                                                    onClick={() => window.location.href = "https://myaccount.google.com/"}>Google
+                                                계정
+                                            </button>
                                         </section>
                                     </div>
                                 </div>
@@ -338,12 +340,22 @@ export default function MyPage() {
                                                 </div>
                                             </div>
                                             <div className="video-info-container">
-                                                <h3 className="video-title">{video.title}</h3>
-                                                <p className="video-channel">{video.channelTitle}</p>
-                                                <p className="video-meta">
-                                                    {/*{video.publishedAt}*/}
-                                                    {video.view} · {video.uploadedAt}
-                                                </p>
+                                                <div className="video-title-and-toggle-container">
+                                                    <h3 className="video-title">{video.title}</h3>
+                                                    <button className="toggle_btn">
+                                                        <img className="ellipsis-toggle-btn"
+                                                             src="/ellipsis.png"
+                                                             alt="ellipsis-toggle-btn"
+                                                        />
+                                                    </button>
+                                                </div>
+                                                <div className="video-channel-and-meta-container">
+                                                    <p className="video-channel">{video.channelTitle}</p>
+                                                    <p className="video-meta">
+                                                        {/*{video.publishedAt}*/}
+                                                        {video.view} · {video.uploadedAt}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </section>
                                     ))}
