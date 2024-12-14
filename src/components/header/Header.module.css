@@ -17,6 +17,7 @@
     border-bottom: 1px solid var(--hover-bg-color);
     z-index: 10;
     box-sizing: content-box;
+    background-color: #ffffff;
 }
 .header > section {
     display: flex;
