@@ -1,10 +1,11 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import formatViewerCount from "../../../utils/formatViewerCount.js";
 import "./CreatorReserveTap.css";
 import { ThemeContext } from "../../context/context.js";
-import {getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
-
-function CreatorReserveTap() {
+import { getMenuItemStyle } from "../../detail/themes/useThemeStyles.js";
+// import { fetchChannelVideos } from "../../../service/SubscribeService.js";
+import { fetchCreatorVideos } from "./fetchCreatorVideos.js";
+function CreatorReserveTap({ channelId }) {
   const { isDark } = useContext(ThemeContext);
   // const setTheme = getStyle(isDark);
   const setMenuTheme = getMenuItemStyle(isDark);
@@ -28,16 +29,37 @@ function CreatorReserveTap() {
   const [menu, setMenu] = useState("");
 
   // 비디오 리스트
-  const [video, setVideo] = useState([
-    {
-      title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-      channelName: "by. 채널명",
-      viewerCount: 1600000,
-      uploadDate: "4년전",
-      videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-      timestamp: "1:13:41",
-    },
-  ]);
+  const [video, setVideo] = useState([]);
+  // {
+  //   title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+  //   channelName: "by. 채널명",
+  //   viewerCount: 1600000,
+  //   uploadDate: "4년전",
+  //   videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+  //   timestamp: "1:13:41",
+  // },
+
+  useEffect(() => {
+    const fetchRelatedVideoList = async () => {
+      const videoList = await fetchCreatorVideos(channelId);
+      
+      const formatVideoData = videoList.map((video) => {
+        return {
+          id: video.videoId,
+          title: video.title,
+          channelName: video.channelTitle,
+          viewerCount: video.viewCount || 0,
+          uploadDate: video.uploadedAt || "",
+          videoSrc: video.thumbnail || "",
+          timestamp: video.duration,
+          videoLink: video.videoLink || "",
+        };
+      });
+      console.log("비디오 리스트", formatVideoData);
+      setVideo(formatVideoData);
+    };
+    fetchRelatedVideoList();
+  }, []);
 
   // 스크롤 이벤트
   const handleScroll = (direction) => {
@@ -107,16 +129,16 @@ function CreatorReserveTap() {
 
               {isDark ? (
                 <img
-                className='more-btn'
-                src='assets/icon/more_btn.svg'
-                alt='영상 더보기'
-              />
+                  className='more-btn'
+                  src='assets/icon/more_btn.svg'
+                  alt='영상 더보기'
+                />
               ) : (
                 <img
-                className='more-btn'
-                src='assets/icon/more_btn_black.svg'
-                alt='영상 더보기'
-              />
+                  className='more-btn'
+                  src='assets/icon/more_btn_black.svg'
+                  alt='영상 더보기'
+                />
               )}
             </div>
             {/* 테마 변경 테스트 */}

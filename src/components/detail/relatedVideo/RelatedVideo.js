@@ -1,97 +1,122 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./RelatedVideo.css";
 import formatViewerCount from "../../../utils/formatViewerCount";
 // import {getStyle, getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
 import { ThemeContext } from "../../context/context.js";
+import { fetchCreatorVideos } from "../creatorReserveTap/fetchCreatorVideos.js";
 
-function RelatedVideo() {
+function RelatedVideo({channelId}) {
   const { isDark } = useContext(ThemeContext);
   // const setTheme = getStyle(isDark);
 
+  
 
   const [video, setVideo] = useState([
-    {
-      title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-      channelName: "by. 채널명",
-      viewerCount: 1600000,
-      uploadDate: "4년전",
-      videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-      timestamp: "1:13:41",
-    },
-    {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
-      {
-        title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-        channelName: "by. 채널명",
-        viewerCount: 1600000,
-        uploadDate: "4년전",
-        videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        timestamp: "1:13:41",
-      },
+    // {
+    //   title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //   channelName: "by. 채널명",
+    //   viewerCount: 1600000,
+    //   uploadDate: "4년전",
+    //   videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //   timestamp: "1:13:41",
+    // },
+    // {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
+    //   {
+    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
+    //     channelName: "by. 채널명",
+    //     viewerCount: 1600000,
+    //     uploadDate: "4년전",
+    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    //     timestamp: "1:13:41",
+    //   },
 
   ]);
+
+  useEffect(() => {
+    const fetchRelatedVideoList = async () => {
+      const videoList = await fetchCreatorVideos(channelId, 5); //5개만 가져오기
+      
+      const formatVideoData = videoList.map((video) => {
+        return {
+          id: video.videoId,
+          title: video.title,
+          channelName: video.channelTitle,
+          viewerCount: video.viewCount || 0,
+          uploadDate: video.uploadedAt || "",
+          videoSrc: video.thumbnail || "",
+          timestamp: video.duration,
+          videoLink: video.videoLink || "",
+        };
+      });
+      console.log("비디오 리스트", formatVideoData);
+      setVideo(formatVideoData);
+    };
+    fetchRelatedVideoList();
+  }, []);
+
 
   return (
     <section className={`relatedVideo-container`}>
