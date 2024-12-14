@@ -1,6 +1,7 @@
 .videoGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-auto-rows: 1fr;
     gap: 16px;
     margin: 0 auto;
     max-width: 1920px;
@@ -48,6 +49,7 @@
     align-items: center;
     justify-content: center;
     background-color: #000;
+    min-height: 180px;/* 썸네일 최소 높이 설정 */
 }
 .thumbnail,
 .videoPlayer {
@@ -56,7 +58,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* 이미지 비율 유지 */
     display: block;
     transition: opacity 0.3s ease-in-out;
 }

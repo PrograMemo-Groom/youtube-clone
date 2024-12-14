@@ -11,11 +11,23 @@ const MainVideos = ({ fetchFunction }) => {
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const { link } = useNavigation();
 
+    const normalizeThumbnails = (videos) => {
+        return videos.map((video) => {
+            const defaultThumbnail = "https://via.placeholder.com/1280x720?text=No+Thumbnail"; // 기본 썸네일 URL
+
+            return {
+                ...video,
+                thumbnail: video.thumbnail || defaultThumbnail, // 썸네일 없으면 기본값
+            };
+        });
+    };
+
     useEffect(() => {
+
+
         const fetchVideos = async () => {
             try {
                 setLoading(true);
-
                 console.log("fetchFunction received:", fetchFunction);
 
                 let videoData;
@@ -25,7 +37,9 @@ const MainVideos = ({ fetchFunction }) => {
                     videoData = await getMainVideos(fetchFunction);
                 }
 
-                console.log("Fetched video data:", videoData);
+                videoData = normalizeThumbnails(videoData); // 썸네일 정규화
+                console.log("Normalized video data:", videoData);
+
                 setVideos(videoData);
             } catch (e) {
                 console.error("Error fetching videos:", e.message);

@@ -30,7 +30,7 @@ export const getMainVideos = async (categoryId = null) => {
                         videoId: item.id,
                         title: item.snippet.title,
                         author: item.snippet.channelTitle,
-                        thumbnail: item.snippet.thumbnails.high.url,
+                        thumbnail: item.snippet.thumbnails.medium.url,
                         time: formatVideoTime(item.contentDetails.duration),
                         profile: channelThumbnail,
                         stats: `조회수 ${formatViewPeople(item.statistics.viewCount)} · ${formatTimeDifference(item.snippet.publishedAt)}`,
