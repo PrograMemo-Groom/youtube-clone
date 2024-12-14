@@ -3,11 +3,47 @@ import styles from './Grid-subscribe.module.css';
 import ListedSubscribe from '../list/Listed-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
+import useGoogleAuth from "../../../hooks/useGoogleAuth";
+import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
 
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
     const [itemsPerRow, setItemsPerRow] = useState(4); // 기본값: 4개
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
+
+    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+    const [subscriptions, setSubscriptions] = useState([]);
+    const googleLogin = useGoogleAuth();
+
+
+        // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
+        const handleGetCode = async () => {
+            console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
+            await googleLogin();
+        }
+    
+        useEffect(() => {
+            accessToken && fetchData();
+        }, [accessToken]);
+
+        const fetchData = async () => {
+            try {
+                if(!accessToken) {
+                    console.log("token없다이!!발급버튼 눌러서 발급받아라이!!");
+                    return;
+                }
+                const response = await fetchSubscriptionsVideos(accessToken);  // 구독 비디오오오
+                console.log("내가 구독하는 video 갖고 왔다이!!!!! ",response);
+                if (Array.isArray(response)) {
+                    console.log('내가 가져온 동영상들 배열성공 !!');
+                    setSubscriptions(response);
+                } else {
+                    console.error("받아온게 배열이 아님.. 이거임:", response);
+                }
+            } catch (error) {
+                console.log('fetchData 에러 :', error);
+            }
+        }
 
     useEffect(() => {
         const handleResize = () => {
@@ -57,6 +93,10 @@ const GridSubscribe = () => {
 
     const threshold = itemsPerRow * 2; // 2줄 기준 계산
 
+
+
+
+    
     return (
         <div className={styles.container}>
             {view === "manage" && <ManageSubscribe />}
@@ -64,6 +104,21 @@ const GridSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "grid" && (
                 <>
+                    <button
+                        style={{width:'200px', height:'20px'}}
+                        onClick={() => {handleGetCode();}}>
+                            token 발급 받는다!!
+                    </button>
+                    <button
+                        style={{width:'200px', height:'20px'}}
+                        onClick={() => {fetchData()}}>
+                            누르면 데이터를 가져오ㅏ
+                    </button>
+                    {accessToken &&
+                        <button style={{width:'200px', height:'20px'}}>
+                            token값 있으면 노출
+                        </button>}
+
                     <header className={styles.header}>
                         <h3>최신순</h3>
                         <div className={styles.pageChangeButtons}>
@@ -90,11 +145,11 @@ const GridSubscribe = () => {
 
                     <main className={styles.main}>
                         <section className={styles.videoSection}>
-                            {videoData.map((video, index) => (
+                            {subscriptions.map((video, index) => (
                                 <React.Fragment key={index}> {/* 기존에 여러 요소를 반환할 수 있도록 추가 */}
                                     <article className={styles.videoClip}>
                                         <div className={styles.videoThumbnail}>
-                                            <img src={video.thumbnail} alt={video.title} />
+                                            <img src={video.defaultThumbnail} alt={video.title} />
                                             <p>{video.duration}</p>
                                         </div>
                                         <div className={styles.videoDescriptions}>
