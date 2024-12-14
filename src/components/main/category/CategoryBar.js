@@ -1,9 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
 import {
-    fetchRecentlyUploaded,
-    //fetchWatchHistory,
-    fetchPersonalizedVideos,
+    fetchRecentlyUploaded
 } from "./CategoryAPI";
 
 const categories = [
@@ -18,8 +16,6 @@ const categories = [
     { name: "스포츠", fetchFunction: "17" },
     { name: "블로그", fetchFunction: "22" },
     { name: "최근에 업로드된 동영상", fetchFunction: fetchRecentlyUploaded }, // 최근 업로드 (chart: mostPopular과 관련 없음)
-    //{ name: "감상한 동영상", fetchFunction: fetchWatchHistory }, // 시청 기록 (YouTube 로그인 사용자 전용)
-    //{ name: "새로운 맞춤 동영상", fetchFunction: fetchPersonalizedVideos }, // 개인 맞춤 추천 (로그인 필요)
 ];
 
 
