@@ -199,6 +199,26 @@ const fetchUserPlaylists = async (accessToken) => {
     }
 };
 
+const fetchWatchLaterVideos = async (accessToken) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet,contentDetails",
+                playlistId: "WL",
+                maxResults: 25,
+            },
+        });
+
+        console.log("Watch Later Videos:", response.data.items);
+        return response.data.items;
+    } catch (error) {
+        console.error("Error fetching Watch Later videos:", error.response?.data || error.message);
+    }
+};
+
 export default function MyPage() {
     console.log("여기까지 왔나? 3:", "MyPage()");
 
@@ -207,6 +227,7 @@ export default function MyPage() {
     const [isToggleVisible, setToggleVisible] = React.useState(false);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedOption, setSelectedOption] = useState("가나다순");
+    const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
@@ -283,6 +304,12 @@ export default function MyPage() {
             const playlists = await fetchUserPlaylists(accessToken);
             if (playlists) {
                 setPlaylists(playlists);
+            }
+
+            // "나중에 볼 동영상" 데이터 가져오기
+            const videos = await fetchWatchLaterVideos(accessToken);
+            if (videos) {
+                setWatchLaterVideos(videos); // 상태에 저장
             }
         };
 
