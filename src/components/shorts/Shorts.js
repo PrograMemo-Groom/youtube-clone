@@ -5,15 +5,32 @@ import Panel from './Panel.js';
 
 function Shorts() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false); // 퇴장 애니메이션 위해 사용 - 애니 끝난후 dom삭제해야함.
 
-  const handlePanelToggle = () => {
+  // 컨텐츠 다르게 렌더링하기위해..
+  const [panelContent, setPanelContent] = useState(null);
+
+  const handlePanelToggle = (content) => {
+    if (isPanelOpen) {
+      setTimeout(() => setShouldRender(false), 400);
+    } else {
+      setShouldRender(true);
+      setPanelContent(content);
+    }
     setIsPanelOpen(!isPanelOpen);
   }
   return (
     <main className={styles.shortsContainer}>
       <section className={styles.sectionContainer}>
         <Video onPanelToggle={handlePanelToggle}/>
-        {isPanelOpen ? <Panel onPanelToggle={handlePanelToggle} /> : null}
+        {shouldRender && (
+          <Panel
+            onPanelToggle={handlePanelToggle}
+            isPanelOpen={isPanelOpen}
+            content={panelContent}
+          />
+        )}
+        {/* {isPanelOpen ? <Panel onPanelToggle={handlePanelToggle} /> : null} */}
       </section>
     </main>
   )

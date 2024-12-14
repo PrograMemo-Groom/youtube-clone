@@ -44,11 +44,12 @@ function MainVideo({ video }) {
 
   const [showFullText, setShowFullText] = useState(false);
 
+  const videoId = video.id;
+
+
+  // 비디오 정보 업데이트
   useEffect(() => {
     const { snippet, statistics } = video;
-
-    // video id 설정
-    const videoId = video.id;
 
     const fetchChannelInfo = async () => {
       // 비동기적으로 채널 썸네일 가져오기
@@ -77,17 +78,21 @@ function MainVideo({ video }) {
       setContent(videoDetail);
     };
 
-    // 댓글 리스트 가져오기
+    fetchChannelInfo(); 
+  }, [video]); 
+
+  // 댓글 정보 업데이트
+  useEffect(() => {
     const fetchComments = async () => {
       const commentList = await fetchVideoComments(videoId, "popular");
-      console.log(commentList);
+      // console.log(commentList);
 
       const formattedComments = commentList.map((comment) => ({
         id: +1, 
         userImg: comment.profileImage || "assets/mypage/default-profile.png",  
         userName: comment.author || "Anonymous",
         date: comment.date || new Date().toISOString(),  
-        isEdited: false,  
+        isEdited: comment.isEdited || false,  
         text: comment.text || "",
         like: comment.likes || 0, 
         hate: comment.hate || 0,  
@@ -99,8 +104,7 @@ function MainVideo({ video }) {
     }
     
     fetchComments();
-    fetchChannelInfo(); 
-  }, [video]); 
+  },[])
 
   const handleToggleText = () => {
     setShowFullText((prevState) => !prevState);
@@ -126,7 +130,7 @@ function MainVideo({ video }) {
         <iframe
           width='560'
           height='315'
-          src={`https://www.youtube.com/embed/uHJDposrTMw`}
+          src={content.videoSrc}
           title='YouTube video player'
           frameBorder='0'
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
@@ -235,7 +239,8 @@ function MainVideo({ video }) {
                     {" "}
                     {formatTimeDifference(comment.date)}
                   </span>
-                  <span className='isEdited'> {"(수정됨)"} </span>
+                  {comment.isEdited && <span className='isEdited'> {"(수정됨)"} </span>}
+                  
                 </span>
                 <p className='comment-text'>{comment.text}</p>
                 <div className='comment-actions'>

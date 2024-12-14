@@ -1,13 +1,16 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import formatViewerCount from "../../../utils/formatViewerCount";
 import "./ShortsTap.css";
 import { ThemeContext } from "../../context/context";
 import { getStyle } from "../themes/useThemeStyles";
+import { fetchShortsVideos } from "./fetchShortsVideos";
 
 function ShortsTap() {
   // const { isDark } = useContext(ThemeContext);
   // const setTheme = getStyle(isDark);
-  
+  // 스크롤 이벤트를 위한 Ref
+  const categoryBarRef = useRef(null);
+
   const [shorts, setShorts] = useState([
     {
       id: 1,
@@ -45,8 +48,31 @@ function ShortsTap() {
         "https://i.ytimg.com/vi/ThJBisdZB1Y/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLDhYHosGr9qX6ZKrtIqDQriUiFHBA",
     },
   ]);
-  // 스크롤 이벤트를 위한 Ref
-  const categoryBarRef = useRef(null);
+
+  // 쇼츠 비디오 정보 업데이트
+  useEffect(() => {
+    const fetchAndSetShorts = async () => {
+      try {
+        const shortsVideoList = await fetchShortsVideos("Faker"); // 데이터를 비동기적으로 가져옴
+        console.log("shortsVideo", shortsVideoList);
+
+        // 가져온 데이터를 필요한 형식으로 변환
+        const formattedShorts = shortsVideoList.map((short, index) => ({
+          id: index + 1, // 임시 id 생성
+          title: short.snippet.title, // 제목
+          viewerCount: short.viewerCount || 0, // 조회수 (없으면 0으로 설정)
+          thumbUrl: short.snippet.thumbnails.default.url, // 썸네일 URL
+        }));
+
+        // 상태 업데이트
+        setShorts(formattedShorts);
+      } catch (error) {
+        console.error("Error fetching Shorts videos:", error);
+      }
+    };
+
+    fetchAndSetShorts();
+  }, []);
 
   // 스크롤 이벤트
   const handleScroll = (direction) => {
@@ -72,11 +98,11 @@ function ShortsTap() {
       </div>
 
       <div className='left-arrow' onClick={() => handleScroll("left")}>
-          {"<"}
-        </div>
-        <div className='right-arrow' onClick={() => handleScroll("right")}>
-          {">"}
-        </div>
+        {"<"}
+      </div>
+      <div className='right-arrow' onClick={() => handleScroll("right")}>
+        {">"}
+      </div>
 
       <div className='shorts-list' ref={categoryBarRef}>
         {shorts.map((short, index) => (

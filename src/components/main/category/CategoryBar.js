@@ -1,23 +1,23 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
+import {
+    fetchRecentlyUploaded
+} from "./CategoryAPI";
 
 const categories = [
-    { name: "전체", fetchFunction: "fetchMainVideos" },
-    { name: "음악", fetchFunction: "fetchMusicData" },
-    { name: "라이브", fetchFunction: "fetchLiveData" },
-    { name: "믹스", fetchFunction: "fetchMixData" },
-    { name: "뉴스", fetchFunction: "fetchNewsData" },
-    { name: "게임", fetchFunction: "fetchGameData" },
-    { name: "애니메이션", fetchFunction: "fetchAnimationData" },
-    { name: "스케치 코미디", fetchFunction: "fetchComicData" },
-    { name: "관광", fetchFunction: "fetchTourData" },
-    { name: "랩", fetchFunction: "fetchRapData" },
-    { name: "뷰티팁", fetchFunction: "fetchBeautyData" },
-    { name: "요리", fetchFunction: "fetchCookData" },
-    { name: "최근에 업로드된 동영상", fetchFunction: "fetchRecentlyData" },
-    { name: "감상한 동영상", fetchFunction: "fetchAppreciateData" },
-    { name: "새로운 맞춤 동영상", fetchFunction: "fetchCustomData" },
+    { name: "전체", fetchFunction: null }, // 전체 동영상 (null로 설정)
+    { name: "음악", fetchFunction: "10" },
+    { name: "뉴스", fetchFunction: "25" },
+    { name: "게임", fetchFunction: "20" },
+    { name: "애니메이션", fetchFunction: "1" },
+    { name: "스케치 코미디", fetchFunction: "23" },
+    { name: "자동차", fetchFunction: "2" },
+    { name: "과학", fetchFunction: "28" },
+    { name: "스포츠", fetchFunction: "17" },
+    { name: "블로그", fetchFunction: "22" },
+    { name: "최근에 업로드된 동영상", fetchFunction: fetchRecentlyUploaded }, // 최근 업로드 (chart: mostPopular과 관련 없음)
 ];
+
 
 const CategoryBar = ({ onCategoryChange }) => {
     const categoryBarRef = useRef(null);
@@ -63,11 +63,31 @@ const CategoryBar = ({ onCategoryChange }) => {
     }, []);
 
     const handleCategoryClick = (category) => {
+        console.log("Category clicked:", category.name);
+        console.log("Category fetchFunction:", category.fetchFunction);
+
         setActiveCategory(category.name);
+
         if (onCategoryChange && typeof onCategoryChange === "function") {
-            onCategoryChange(category.fetchFunction);
+            if (typeof category.fetchFunction === "function") {
+                category
+                    .fetchFunction()
+                    .then((result) => {
+                        onCategoryChange(result);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching data:", error.message);
+                    });
+            } else {
+                onCategoryChange(category.fetchFunction);
+            }
         }
     };
+
+
+
+
+
 
     return (
         <div className={styles.container}>

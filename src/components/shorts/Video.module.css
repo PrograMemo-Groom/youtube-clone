@@ -11,12 +11,12 @@
 
 /* 쇼츠 동영상부분. 크기 고정 */
 .videoBox{
-    width: 389px;
-    min-width: 389px;
-    height: 691px;
+    width: 49vh;
+    height: 87vh;
     background-color: rgb(173, 173, 173);
     border-radius: 12px;
     position: relative;
+    transition: "all 0.3s ease"
 }
 
 /* 모든 정보 담을 컨테이너 */
@@ -44,17 +44,34 @@
     font-weight: 700;
 }
 
+/* 구독 버튼 */
 .subscribeBnt{
     width: 46px;
     height: 33px;
     border: none;
     border-radius: 16px;
     background-color: white;
+    font-size: 12px;
     font-weight: 500;
 }
 
 .subscribeBnt:hover{
     background-color: var(--border-color);
+    cursor: pointer;
+}
+/* 구독 완료 버튼 */
+.subscribedBtn {
+    width: 55px;
+    height: 33px;
+    border: none;
+    font-size: 12px;
+    border-radius: 16px;
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+    font-weight: 600;
+}
+.subscribedBtn:hover {
+    background-color: rgba(255,255,255,0.4);
     cursor: pointer;
 }
 
@@ -115,6 +132,14 @@
     margin-bottom: 10px;
 }
 
+/* 싫어요 버튼 */
+.donlikeBnt img{
+    margin-bottom: -4px;
+}
+/* 댓글버튼 */
+.commentBnt img{
+    margin-bottom: -4px;
+}
 .musicImg img{
     width: 44px;
     height: 44px;

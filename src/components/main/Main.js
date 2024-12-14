@@ -4,7 +4,7 @@ import MainVideos from "./videos/MainVideos";
 
 
 const Main = () => {
-    const [fetchFunction, setFetchFunction] = useState("fetchMainVideos");
+    const [fetchFunction, setFetchFunction] = useState(null);
 
     const handleCategoryChange = (fetchFunctionName) => {
         setFetchFunction(fetchFunctionName);
