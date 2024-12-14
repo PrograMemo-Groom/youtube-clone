@@ -219,6 +219,26 @@ const fetchWatchLaterVideos = async (accessToken) => {
     }
 };
 
+// 채널 id 반환
+const fetchChannelId = async (accessToken) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet",
+                mine: true,
+            },
+        });
+
+        // 채널 ID 반환
+        return response.data.items[0].id;
+    } catch (error) {
+        console.error("Error fetching channel ID:", error.response?.data || error.message);
+    }
+};
+
 export default function MyPage() {
     console.log("여기까지 왔나? 3:", "MyPage()");
 
@@ -228,6 +248,7 @@ export default function MyPage() {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedOption, setSelectedOption] = useState("가나다순");
     const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
+    const [profileImage, setProfileImage] = React.useState("/assets/mypage/user-profile.png");
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
@@ -316,6 +337,25 @@ export default function MyPage() {
         fetchData(); // 데이터 요청
     }, []);
 
+    const handleChannelView = async () => {
+        const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
+
+        if (!accessToken) {
+            console.error("Access token not found. Please log in again.");
+            return;
+        }
+
+        const channelId = await fetchChannelId(accessToken); // 채널 ID 가져오기
+
+        if (channelId) {
+            const channelUrl = `https://www.youtube.com/channel/${channelId}`;
+            window.location.href = channelUrl; // 채널 페이지로 이동
+        } else {
+            console.error("Failed to fetch channel ID.");
+        }
+    };
+
+
     return (
         <div className="container">
             <div className="relative-layout-container">
@@ -328,8 +368,8 @@ export default function MyPage() {
                             <div className="user-name-and-id-container">
                                 <section className="user-name-container">
                                     <p className="user-name">공공</p>
-                                    <a href="https://www.naver.com/"
-                                       className="user-channel-move">
+                                    <a className="user-channel-move"
+                                       onClick={handleChannelView}>
                                         @o0_o0_o0 &#183; 채널 보기</a>
                                 </section>
                                 <div className="changes-container">
