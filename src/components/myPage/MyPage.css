@@ -78,6 +78,9 @@
 
 .changes-id-text {
     font-size: 1.1rem;
+    border: none;
+    background-color: #ffffff;
+    cursor: pointer;
 }
 
 .view-record-container,
@@ -157,6 +160,7 @@
     height: 100%;
     border-radius: 0.5rem;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .video-info-container,

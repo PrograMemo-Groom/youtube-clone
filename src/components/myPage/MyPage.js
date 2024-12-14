@@ -271,7 +271,6 @@ export default function MyPage() {
                             <div className="user-name-and-id-container">
                                 <section className="user-name-container">
                                     <p className="user-name">공공</p>
-                                    <button onClick={handleLogin}>Login with Google</button>
                                     <a href="https://www.naver.com/"
                                        className="user-channel-move">
                                         @o0_o0_o0 &#183; 채널 보기</a>
@@ -281,14 +280,17 @@ export default function MyPage() {
                                         <img className="chang-id-icon"
                                              src="/assets/mypage/profile-icon.svg"
                                              alt="user-pforile-icon"/>
-                                        <p className="changes-id-text">계정 전환</p>
+                                        <button className="changes-id-text"
+                                                onClick={handleLogin}>계정 전환
+                                        </button>
                                     </section>
                                     <div className="Google-id-change-container">
                                         <section className="Google-id-container">
                                             <img className="chang-id-icon"
                                                  src="/assets/mypage/google-logo-icon.svg"
                                                  alt="google-id"/>
-                                            <p className="changes-id-text">Google 계정</p>
+                                            <button className="changes-id-text"
+                                                    onClick={() => window.location.href = "https://myaccount.google.com/"}>Google 계정</button>
                                         </section>
                                     </div>
                                 </div>
