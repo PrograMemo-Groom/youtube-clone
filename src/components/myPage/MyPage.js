@@ -205,12 +205,10 @@ export default function MyPage() {
     const [playlists, setPlaylists] = React.useState([]);
     const [channelName, setChannelName] = useState("");
     const [isToggleVisible, setToggleVisible] = React.useState(false);
-    const [toggleState, setToggleState] = React.useState({});
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
     };
-
 
     // 인증 코드 추출 및 토큰 발급
     // React.useEffect(() => {
