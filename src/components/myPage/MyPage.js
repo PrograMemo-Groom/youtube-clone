@@ -524,7 +524,8 @@ export default function MyPage() {
                                                     <p className="video-meta">
                                                         {/*{video.publishedAt}*/}
                                                         {/*{video.view} · {video.uploadedAt}*/}
-                                                        {video.statistics.viewCount} 조회수 · {new Date(video.snippet.publishedAt).toLocaleDateString()}
+                                                        {video.statistics.viewCount} 조회수
+                                                        · {new Date(video.snippet.publishedAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
                                             </div>
