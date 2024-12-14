@@ -495,23 +495,17 @@ export default function MyPage() {
                                                 />
                                                 <div className="progress-container">
                                                     <section className="view-icons-container">
-                                                        <div className="icon-wrapper">
-                                                            <img
-                                                                className="video-view-later-icon"
-                                                                src="/assets/mypage/video-later-view-icon.svg"
-                                                                alt="video-later-view-icon"
-                                                            />
-                                                            <p className="video-later-view-text">나중에 볼 동영상</p>
-                                                        </div>
-                                                        <div className="icon-wrapper">
-                                                            <img
-                                                                className="add-playlist-icon"
-                                                                src="/assets/mypage/playlist-icon.svg"
-                                                                alt="add-playlist-icon"
-                                                            />
-                                                            <p className="add-playlist-text">현재 재생목록에 추가</p>
-                                                        </div>
+                                                        <img className="video-view-later-icon"
+                                                             src="/assets/mypage/video-later-view-icon.svg"
+                                                             alt="video-later-view-icon"/>
                                                     </section>
+                                                    <p className="video-later-view-text">나중에 볼 동영상</p>
+                                                    <section className="add-playlist-icons-container">
+                                                        <img className="add-playlist-icon"
+                                                             src="/assets/mypage/playlist-icon.svg"
+                                                             alt="add-playlist-icon"/>
+                                                    </section>
+                                                    <p className="add-playlist-text">현재 재생목록에 추가</p>
                                                     <section className="progress-time-container">
                                                         <p className="progress-time">{formatDuration(video.contentDetails.duration)}</p>
                                                     </section>
@@ -523,8 +517,7 @@ export default function MyPage() {
                                                     <button className="toggle_btn" onClick={handleToggle}>
                                                         <img className="ellipsis-toggle-btn"
                                                              src="/ellipsis.png"
-                                                             alt="ellipsis-toggle-btn"
-                                                        />
+                                                             alt="ellipsis-toggle-btn"/>
                                                     </button>
                                                     <div className={`div-toggle ${isToggleVisible ? "visible" : ""}`}>
                                                         <p>현재 재생목록에 추가</p>

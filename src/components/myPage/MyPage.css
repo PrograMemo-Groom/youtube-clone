@@ -287,7 +287,6 @@
 .progress-bar-container {
     position: absolute;
     bottom: 0.005rem;
-    /*left: 0;*/
     width: 15.5%;
     height: 0.25rem;
     background-color: rgba(0, 0, 0, 0.2);
@@ -304,19 +303,86 @@
 
 .view-icons-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 4rem;
+    top: 0.5rem;
     left: 11rem;
-    color: #ffffff;
     width: 1.7rem;
     height: 1.7rem;
-    border-radius: 0.3rem;
+    background-color: #ffffff;
+    border-radius: 0.2rem;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.3s, opacity 0.3s;
+}
+
+.video-later-view-text {
+    position: absolute;
+    bottom: 4.93rem;
+    left: 4.2rem;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 0.4rem;
+    border-radius: 0.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+
+.video-thumbnail-container:hover .view-icons-container {
+    visibility: visible;
+    opacity: 1;
+    bottom: 4rem;
+}
+
+.view-icons-container:hover + .video-later-view-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.add-playlist-icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 2rem;
+    left: 11rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background-color: #ffffff;
+    border-radius: 0.2rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+
+.add-playlist-text {
+    position: absolute;
+    bottom: 3.4rem;
+    left: 2.5rem;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 0.4rem;
+    border-radius: 0.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+
+.video-thumbnail-container:hover .add-playlist-icons-container {
+    visibility: visible;
+    opacity: 1;
+    bottom: 4rem;
+}
+
+.add-playlist-icons-container:hover + .add-playlist-text {
+    visibility: visible;
+    opacity: 1;
 }
 
 .video-view-later-icon,
@@ -324,40 +390,7 @@
     width: 2rem;
     height: 2rem;
     cursor: pointer;
-}
-
-.video-thumbnail-container:hover .view-icons-container {
-    visibility: visible;
-    opacity: 1;
-}
-
-.view-icons-container:hover .video-later-view-text {
-    visibility: visible;
-    opacity: 1;
-    bottom: 4rem;
-    left: -5rem;
-}
-
-/*.add-playlist-icon:hover + .add-playlist-text {*/
-/*    visibility: visible;*/
-/*    bottom: 4rem;*/
-/*    left: -5rem;*/
-/*}*/
-
-.video-later-view-text {
-    position: absolute;
-    bottom: -2rem; /* 텍스트를 아이콘 아래로 배치 */
-    left: 0;
-    color: #ffffff;
-    background-color: #222222;
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.3s, opacity 0.3s;
+    z-index: 1;
 }
 
 .div-toggle {
