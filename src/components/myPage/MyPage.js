@@ -1,4 +1,5 @@
 import "./MyPage.css";
+import "./SortDropdown.css"
 import React, {useState, useCallback} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -156,7 +157,11 @@ const fetchWatchLaterVideos = async (accessToken) => {
         console.log("Watch Later Videos:", response.data.items);
         return response.data.items;
     } catch (error) {
-        console.error("Error fetching Watch Later videos:", error.response?.data || error.message);
+        console.error("Error fetching Watch Later videos:", {
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            data: error.response?.data || error.message,
+        });
     }
 };
 
@@ -396,7 +401,6 @@ export default function MyPage() {
             return `${count}회`;
         }
     };
-
 
 
     // const handleScrollRight = () => {

@@ -12,7 +12,6 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
-
 }
 
 .sort-button:hover {
@@ -21,20 +20,18 @@
 
 .dropdown-menu {
     position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /*top: 100%;*/
+    /*left: 0;*/
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 4px;
     z-index: 10;
-    width: 100px;
-    margin-top: 5px;
+    width: 5.8rem;
 }
 
 .dropdown-item {
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: 1rem;
     cursor: pointer;
     color: #333;
     background-color: #ffffff;
