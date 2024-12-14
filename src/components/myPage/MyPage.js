@@ -414,13 +414,21 @@ export default function MyPage() {
     //     container.scrollBy({left: -300, behavior: "smooth"});
     // };
 
-
     const handleShowVideo = (videoId) => {
         console.log("6: ", videoId);
         const queryParam = `?q=${videoId}`;
         const detailPageUrl = `/detail${queryParam}`;
         link(detailPageUrl);
     };
+
+    const handViewPlayList = (channelId) => {
+        if (!channelId) {
+            console.log("channelId 못 찾겠다 꾀꼬리", "handViewPlayList");
+            return;
+        }
+        const playlistUrl = `https://www.youtube.com/feed/playlists?channelId=${channelId}`;
+        window.location.href = playlistUrl;
+    }
 
     return (
         <div className="container">
@@ -499,9 +507,6 @@ export default function MyPage() {
                                                     <section className="progress-time-container">
                                                         <p className="progress-time">{formatDuration(video.contentDetails.duration)}</p>
                                                     </section>
-                                                    <section className="progress-bar-container">
-                                                        <div className="progress-bar"></div>
-                                                    </section>
                                                 </div>
                                             </div>
                                             <div className="video-info-container">
@@ -562,6 +567,7 @@ export default function MyPage() {
                                 <section className="playlist-all-and-plus-btn">
                                     <button className="plus-btn">+</button>
                                     <button className="playlist-all-view"
+                                            onClick={() => handViewPlayList(channelId)}
                                     >모두 보기
                                     </button>
                                 </section>
