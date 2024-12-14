@@ -375,8 +375,8 @@ export default function MyPage() {
             }
 
             const likesVideos = await fetchLikedVideos(accessToken);
-            if (videos) {
-                setLikedVideos(videos);
+            if (likesVideos) {
+                setLikedVideos(likesVideos);
             }
         };
 
