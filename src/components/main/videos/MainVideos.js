@@ -1,14 +1,14 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MainVideos.module.css";
 import { getMainVideos } from "../../../service/MainService";
 import useNavigation from "../../../hooks/useNavigation";
 
 const MainVideos = ({ fetchFunction }) => {
-    const [videos, setVideos] = useState([]);// 비디오 데이터를 저장할 상태
-    const [loading, setLoading] = useState(true); //로딩 상태
-    const [error, setError] = useState(null); //에러 상태
+    const [videos, setVideos] = useState([]); // 비디오 데이터를 저장할 상태
+    const [loading, setLoading] = useState(true); // 로딩 상태
+    const [error, setError] = useState(null); // 에러 상태
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
-    const [openDropdown, setOpenDropdown] = useState(null); //더보기 메뉴
+    const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const { link } = useNavigation();
 
     useEffect(() => {
@@ -20,10 +20,8 @@ const MainVideos = ({ fetchFunction }) => {
 
                 let videoData;
                 if (Array.isArray(fetchFunction)) {
-                    // 데이터 배열이 직접 전달된 경우
                     videoData = fetchFunction;
                 } else {
-                    // 숫자 ID일 경우 기존 로직 사용
                     videoData = await getMainVideos(fetchFunction);
                 }
 
@@ -40,12 +38,14 @@ const MainVideos = ({ fetchFunction }) => {
         fetchVideos();
     }, [fetchFunction]);
 
-
-
-
     const handleShowVideo = (videoId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
         link(`/detail?q=${videoId}`);
+    };
+
+    const handleChannelClick = (channelId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
     };
 
     const toggleDropdown = (videoId) => {
@@ -93,11 +93,10 @@ const MainVideos = ({ fetchFunction }) => {
                                 className={styles.profilePicture}
                                 alt="channel profile"
                                 src={video.profile}
+                                onClick={(event) => handleChannelClick(video.channelId, event)} // 유저 프로필 클릭 이벤트 추가
                             />
                         </div>
-                        <div
-                            className={styles.videoInfo}
-                        >
+                        <div className={styles.videoInfo}>
                             <div className={styles.titleRow}>
                                 <p
                                     className={styles.videoTitle}
@@ -204,6 +203,5 @@ const MainVideos = ({ fetchFunction }) => {
         </div>
     );
 };
-
 
 export default MainVideos;

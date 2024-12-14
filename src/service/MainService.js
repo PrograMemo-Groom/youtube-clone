@@ -15,14 +15,12 @@ export const getMainVideos = async (categoryId = null) => {
             maxResults: 8,
         };
 
-        // 카테고리 ID가 있다면 요청 파라미터에 추가
         if (categoryId) {
             params.videoCategoryId = categoryId;
         }
 
         const response = await instance.get(requests.getMainVideos, { params });
 
-        // 동영상 데이터 가공
         const results = await Promise.allSettled(
             response.data.items.map(async (item) => {
                 try {
@@ -36,21 +34,21 @@ export const getMainVideos = async (categoryId = null) => {
                         time: formatVideoTime(item.contentDetails.duration),
                         profile: channelThumbnail,
                         stats: `조회수 ${formatViewPeople(item.statistics.viewCount)} · ${formatTimeDifference(item.snippet.publishedAt)}`,
+                        channelId: item.snippet.channelId,
                     };
                 } catch (error) {
                     console.error(`Error fetching thumbnail for item ${item.id}:`, error.message);
-                    return null; // 실패한 경우 null로 처리
+                    return null;
                 }
             })
         );
 
-        // 성공한 결과만 반환
         return results
             .filter((result) => result.status === "fulfilled" && result.value !== null)
             .map((result) => result.value);
 
     } catch (error) {
         console.error("Error fetching main videos:", error.message);
-        return []; // 에러 발생 시 빈 배열 반환
+        return [];
     }
 };
