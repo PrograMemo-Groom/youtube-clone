@@ -1,7 +1,5 @@
 import "./MyPage.css";
-import instance from "../../api/api";
-import requests from "../../api/endpoint";
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 const videoData = [{
@@ -55,6 +53,7 @@ const videoData = [{
 ]
 
 const handleLogin = () => {
+    // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
     // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
     // const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email profile`;
@@ -200,6 +199,7 @@ const fetchUserPlaylists = async (accessToken) => {
 };
 
 const fetchWatchLaterVideos = async (accessToken) => {
+    console.log("여긴 왔니? 4:", "fetchWatchLaterVideos");
     try {
         const response = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
             headers: {
@@ -207,8 +207,8 @@ const fetchWatchLaterVideos = async (accessToken) => {
             },
             params: {
                 part: "snippet,contentDetails",
-                playlistId: "WL",
                 maxResults: 25,
+                playlistId: "WL", // "나중에 볼 동영상"
             },
         });
 
@@ -496,30 +496,32 @@ export default function MyPage() {
                             <section className="Videos-to-watch-text-btn">
                                 <section className="Videos-to-watch-later">
                                     <p>나중에 볼 동영상</p>
-                                    <p className="watch-later-num">6</p>
+                                    <p className="watch-later-num">{watchLaterVideos.length}</p>
                                 </section>
                                 <button className="all-video-view">모두 보기</button>
                             </section>
                             <section className="view-record-contents-container">
                                 <section className="video-list">
-                                    {videoData.map((video, i) => (
+                                    {watchLaterVideos.map((video, i) => (
                                         <section className="video-item"
-                                                 key={`${i}-${video.videoId}`}>
+                                                 key={`${i}-${video.contentDetails.videoId}`}>
                                             <div className="video-thumbnail-container">
                                                 <img className="video-thumbnail"
-                                                     src={video.thumbnail}
-                                                     alt={video.title}/>
+                                                     src={video.snippet.thumbnails.medium.url}
+                                                     alt={video.snippet.title}/>
                                             </div>
                                             <div className="video-info-container">
-                                                <h3 className="video-title">{video.title}</h3>
-                                                <p className="video-channel">{video.channel}</p>
+                                                <h3 className="video-title">{video.snippet.title}</h3>
+                                                <p className="video-channel">{video.snippet.channelTitle}</p>
                                                 <p className="video-meta">
-                                                    {video.view} · {video.uploadedAt}
+                                                    {/* 업로드 날짜 */}
+                                                    {new Date(video.snippet.publishedAt).toLocaleDateString()}
+                                                    {/*{video.view} · {video.uploadedAt}*/}
                                                 </p>
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="next-video-btn"> ></button>
+                                    <button className="next-video-btn"> &gt; </button>
                                 </section>
                             </section>
                         </div>
