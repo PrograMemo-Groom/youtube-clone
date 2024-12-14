@@ -397,13 +397,8 @@ export default function MyPage() {
         }
     };
 
-    const handleViewAllClick = () => {
-        if (channelId) {
-            navigate(`/watch-history?channelId=${channelId}`);
-        } else {
-            console.error("Channel ID not available.");
-        }
-    };
+
+
     // const handleScrollRight = () => {
     //     const container = document.getElementById("scrollable-container");
     //     container.scrollBy({left: 300, behavior: "smooth"});
@@ -421,13 +416,22 @@ export default function MyPage() {
         link(detailPageUrl);
     };
 
-    const handViewPlayList = (channelId) => {
+    const handleViewAllClick = () => {
+        if (!likedVideos) {
+            console.log("videoId 못 찾겠다 꾀꼬리", "handleViewAllClick");
+            return;
+        }
+        const playlistUrl = "https://www.youtube.com/playlist?list=LL";
+        window.location.href = playlistUrl;
+    };
+
+    const handViewFeed = (channelId) => {
         if (!channelId) {
             console.log("channelId 못 찾겠다 꾀꼬리", "handViewPlayList");
             return;
         }
-        const playlistUrl = `https://www.youtube.com/feed/playlists?channelId=${channelId}`;
-        window.location.href = playlistUrl;
+        const FeedUrl = `https://www.youtube.com/feed/playlists?channelId=${channelId}`;
+        window.location.href = FeedUrl;
     }
 
     return (
@@ -567,7 +571,7 @@ export default function MyPage() {
                                 <section className="playlist-all-and-plus-btn">
                                     <button className="plus-btn">+</button>
                                     <button className="playlist-all-view"
-                                            onClick={() => handViewPlayList(channelId)}
+                                            onClick={() => handViewFeed(channelId)}
                                     >모두 보기
                                     </button>
                                 </section>
