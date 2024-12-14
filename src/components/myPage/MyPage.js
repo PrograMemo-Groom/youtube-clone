@@ -239,6 +239,46 @@ const fetchChannelId = async (accessToken) => {
     }
 };
 
+const fetchChannelProfileImage = async (accessToken) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet",
+                mine: true, // 현재 로그인된 사용자
+            },
+        });
+
+        // 채널 정보에서 프로필 이미지 URL 반환
+        return response.data.items[0].snippet.thumbnails.default.url;
+    } catch (error) {
+        console.error("Error fetching channel profile image:", error.response?.data || error.message);
+    }
+};
+
+const fetchLikedVideos = async (accessToken) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/videos", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet,contentDetails,statistics",
+                maxResults: 10, // 가져올 영상 수 (필요에 따라 조정)
+                myRating: "like", // 좋아요 누른 영상
+            },
+        });
+
+        console.log("Liked Videos Data:", response.data.items);
+        return response.data.items; // 좋아요 영상 데이터 반환
+    } catch (error) {
+        console.error("Error fetching liked videos:", error.response?.data || error.message);
+        return [];
+    }
+};
+
 export default function MyPage() {
     console.log("여기까지 왔나? 3:", "MyPage()");
 
@@ -249,6 +289,7 @@ export default function MyPage() {
     const [selectedOption, setSelectedOption] = useState("가나다순");
     const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
     const [profileImage, setProfileImage] = React.useState("/assets/mypage/user-profile.png");
+    const [likedVideos, setLikedVideos] = useState([]);
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
@@ -332,6 +373,11 @@ export default function MyPage() {
             if (videos) {
                 setWatchLaterVideos(videos); // 상태에 저장
             }
+
+            const likesVideos = await fetchLikedVideos(accessToken);
+            if (videos) {
+                setLikedVideos(videos);
+            }
         };
 
         fetchData(); // 데이터 요청
@@ -355,6 +401,24 @@ export default function MyPage() {
         }
     };
 
+    React.useEffect(() => {
+        const fetchProfileImage = async () => {
+            const accessToken = localStorage.getItem("ACCESS_TOKEN");
+
+            if (!accessToken) {
+                console.error("Access token not found. Please log in again.");
+                return;
+            }
+
+            const imageUrl = await fetchChannelProfileImage(accessToken);
+            if (imageUrl) {
+                setProfileImage(imageUrl);
+            }
+        };
+
+        fetchProfileImage();
+    }, []);
+
 
     return (
         <div className="container">
@@ -363,7 +427,7 @@ export default function MyPage() {
                     <div className="contents-container">
                         <div className="user-page-info-container">
                             <img className="user-profile-img"
-                                 src="/assets/mypage/user-profile.png"
+                                 src={profileImage}
                                  alt="user-profile-img"/>
                             <div className="user-name-and-id-container">
                                 <section className="user-name-container">
@@ -402,13 +466,13 @@ export default function MyPage() {
                             </section>
                             <section className="view-record-contents-container">
                                 <section className="video-list">
-                                    {videoData.map((video, i) => (
+                                    {likedVideos.map((video, i) => (
                                         <section className="video-item"
                                                  key={`${i}-${video.videoId}`}>
                                             <div className="video-thumbnail-container">
                                                 <img className="video-thumbnail"
-                                                     src={video.thumbnail}
-                                                     alt={video.title}/>
+                                                     src={video.snippet.thumbnails.medium.url}
+                                                     alt={video.snippet.title}/>
                                                 <div className="progress-container">
                                                     <section className="view-icons-container">
                                                         <div className="icon-wrapper">
@@ -438,7 +502,7 @@ export default function MyPage() {
                                             </div>
                                             <div className="video-info-container">
                                                 <div className="video-title-and-toggle-container">
-                                                    <h3 className="video-title">{video.title}</h3>
+                                                    <h3 className="video-title">{video.snippet.title}</h3>
                                                     <button className="toggle_btn" onClick={handleToggle}>
                                                         <img className="ellipsis-toggle-btn"
                                                              src="/ellipsis.png"
@@ -456,10 +520,11 @@ export default function MyPage() {
                                                     </div>
                                                 </div>
                                                 <div className="video-channel-and-meta-container">
-                                                    <p className="video-channel">{video.channelTitle}</p>
+                                                    <p className="video-channel">{video.snippet.channelTitle}</p>
                                                     <p className="video-meta">
                                                         {/*{video.publishedAt}*/}
-                                                        {video.view} · {video.uploadedAt}
+                                                        {/*{video.view} · {video.uploadedAt}*/}
+                                                        {video.statistics.viewCount} 조회수 · {new Date(video.snippet.publishedAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
                                             </div>
