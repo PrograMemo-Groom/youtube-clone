@@ -4,6 +4,7 @@ import React, {useState, useCallback} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import useNavigation from "../../hooks/useNavigation";
+import styles from "../main/videos/MainVideos.module.css";
 
 const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
@@ -225,7 +226,6 @@ const fetchLikedVideos = async (accessToken) => {
     }
 };
 
-
 export default function MyPage() {
     console.log("여기까지 왔나? 3:", "MyPage()");
 
@@ -238,6 +238,7 @@ export default function MyPage() {
     const [profileImage, setProfileImage] = React.useState("/assets/mypage/user-profile.png");
     const [likedVideos, setLikedVideos] = useState([]);
     const [channelId, setChannelId] = useState("");
+    const [openDropdown, setOpenDropdown] = useState(null); // 현재 열려 있는 videoId를 저장
     const navigate = useNavigate();
     const {link} = useNavigation();
 
@@ -438,6 +439,13 @@ export default function MyPage() {
         window.location.href = FeedUrl;
     }
 
+    const toggleDropdown = (videoId) => {
+        if (openDropdown === videoId) {
+            setOpenDropdown(null); // 이미 열려 있으면 닫기
+        } else {
+            setOpenDropdown(videoId); // 새로운 videoId 열기
+        }
+    };
     return (
         <div className="container">
             <div className="relative-layout-container">
@@ -514,18 +522,47 @@ export default function MyPage() {
                                             <div className="video-info-container">
                                                 <div className="video-title-and-toggle-container">
                                                     <h3 className="video-title">{video.snippet.title}</h3>
-                                                    <button className="toggle_btn" onClick={handleToggle}>
+                                                    <button
+                                                        className="toggle_btn"
+                                                        onClick={() => toggleDropdown(video.id)}>
                                                         <img className="ellipsis-toggle-btn"
                                                              src="/ellipsis.png"
                                                              alt="ellipsis-toggle-btn"/>
                                                     </button>
-                                                    <div className={`div-toggle ${isToggleVisible ? "visible" : ""}`}>
-                                                        <p>현재 재생목록에 추가</p>
-                                                        <p>나중에 볼 동영상에 저장</p>
-                                                        <p>재생목록에 저장</p>
-                                                        <p>오프라인 저장</p>
-                                                        <p>공유</p>
-                                                        <p>시청 기록에서 삭제</p>
+                                                    <div
+                                                        className={`toggle-Menu ${openDropdown === video.id ? "visible" : ""}`}>
+                                                        <ul>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/playlist.svg"
+                                                                     alt="현재 재생목록에 추가"/>
+                                                                현재 재생목록에 추가
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/clock.svg"
+                                                                     alt="나중에 볼 동영상에 저장"/>
+                                                                나중에 볼 동영상에 저장
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/bookmark.svg"
+                                                                     alt="재생목록에 저장"/>
+                                                                재생목록에 저장
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/download.svg"
+                                                                     alt="오프라인 저장"/>
+                                                                오프라인 저장
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/share.svg"
+                                                                     alt="공유"/>
+                                                                공유
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                                 <div className="video-channel-and-meta-container">

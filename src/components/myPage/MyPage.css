@@ -181,6 +181,7 @@
 
 .video-title-and-toggle-container {
     display: flex;
+    position: relative;
 }
 
 .video-title,
@@ -393,10 +394,6 @@
     z-index: 1;
 }
 
-.div-toggle {
-    display: none;
-}
-
 .toggle_btn {
     margin-top: 0.2rem;
     display: flex;
@@ -410,30 +407,36 @@
 
 .ellipsis-toggle-btn {
     width: 1rem;
-    /*height: 1rem;*/
 }
 
-/* 토글 카테고리 숨김 */
-.div-toggle {
+.menu-icons {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
+
+.toggle-Menu {
     display: none;
     position: absolute;
-    background: #ffffff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-    padding: 10px;
-    border-radius: 5px;
+    top: 40px;
+    right: 5px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 220px;
+    z-index: 2;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
-/* 토글 카테고리 보이기 */
-.div-toggle.visible {
-    display: block;
+.toggle-Menu > ul > li {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
 }
 
-.div-toggle p {
-    margin: 5px 0;
-    cursor: pointer;
-    font-size: 14px;
+.toggle-Menu.visible {
+    display: block; /* visible 클래스가 추가되면 표시 */
 }
 
 /*.next-video-btn,*/
