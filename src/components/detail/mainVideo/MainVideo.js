@@ -10,7 +10,6 @@ import "./MainVideo.css";
 import { getChannelThumbnail } from "../../../utils/formatProfileImage.js";
 import { getChannelSubscriberCount } from "../../../utils/getChannelSubscriberCount.js";
 import { fetchVideoComments } from "../../../utils/fetchVideoComments.js";
-import {fetchShortsVideos} from "../../../utils/fetchShortsVideos.js";
 
 function MainVideo({ video }) {
   const { isDark } = useContext(ThemeContext);
@@ -45,11 +44,12 @@ function MainVideo({ video }) {
 
   const [showFullText, setShowFullText] = useState(false);
 
+  const videoId = video.id;
+
+
+  // 비디오 정보 업데이트
   useEffect(() => {
     const { snippet, statistics } = video;
-
-    // video id 설정
-    const videoId = video.id;
 
     const fetchChannelInfo = async () => {
       // 비동기적으로 채널 썸네일 가져오기
@@ -78,10 +78,14 @@ function MainVideo({ video }) {
       setContent(videoDetail);
     };
 
-    // 댓글 리스트 가져오기
+    fetchChannelInfo(); 
+  }, [video]); 
+
+  // 댓글 정보 업데이트
+  useEffect(() => {
     const fetchComments = async () => {
       const commentList = await fetchVideoComments(videoId, "popular");
-      console.log(commentList);
+      // console.log(commentList);
 
       const formattedComments = commentList.map((comment) => ({
         id: +1, 
@@ -100,8 +104,7 @@ function MainVideo({ video }) {
     }
     
     fetchComments();
-    fetchChannelInfo(); 
-  }, [video]); 
+  },[])
 
   const handleToggleText = () => {
     setShowFullText((prevState) => !prevState);

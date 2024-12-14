@@ -9,6 +9,7 @@ import { getMenuItemStyle, getStyle } from "./themes/useThemeStyles";
 import { useSearchParams } from "react-router-dom";
 import instance from "../../api/api";
 import requests from "../../api/endpoint";
+// import { fetchVideoDetail } from "../../service/VideoService";
 
 function Detail() {
   const [isDark, setIsDark] = useState(false);
@@ -21,6 +22,7 @@ function Detail() {
   const setTheme = getStyle(isDark);
   // const setMenuTheme = getMenuItemStyle(isDark);
 
+  // 메인 영상 세팅
   useEffect(() => {
     const fetchVideoDetail = async () => {
       if (!videoId) return; // videoId가 없으면 요청 안 함
@@ -43,6 +45,7 @@ function Detail() {
 
     fetchVideoDetail();
   }, [videoId]);
+
 
   if (!videoData) {
     return <div>영상 정보를 불러오는 중...</div>;
