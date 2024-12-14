@@ -1,5 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
+import {
+    fetchRecentlyUploaded,
+    fetchWatchHistory,
+    fetchPersonalizedVideos,
+} from "./CategoryAPI";
 
 const categories = [
     { name: "전체", fetchFunction: null }, // 전체 동영상 (null로 설정)
@@ -12,9 +17,9 @@ const categories = [
     { name: "과학", fetchFunction: "28" },
     { name: "스포츠", fetchFunction: "17" },
     { name: "블로그", fetchFunction: "22" },
-    { name: "최근에 업로드된 동영상", fetchFunction: null }, // 최근 업로드 (chart: mostPopular과 관련 없음)
-    { name: "감상한 동영상", fetchFunction: null }, // 시청 기록 (YouTube 로그인 사용자 전용)
-    { name: "새로운 맞춤 동영상", fetchFunction: null }, // 개인 맞춤 추천 (로그인 필요)
+    { name: "최근에 업로드된 동영상", fetchFunction: fetchRecentlyUploaded }, // 최근 업로드 (chart: mostPopular과 관련 없음)
+    //{ name: "감상한 동영상", fetchFunction: fetchWatchHistory }, // 시청 기록 (YouTube 로그인 사용자 전용)
+    { name: "새로운 맞춤 동영상", fetchFunction: fetchPersonalizedVideos }, // 개인 맞춤 추천 (로그인 필요)
 ];
 
 
@@ -62,11 +67,31 @@ const CategoryBar = ({ onCategoryChange }) => {
     }, []);
 
     const handleCategoryClick = (category) => {
+        console.log("Category clicked:", category.name);
+        console.log("Category fetchFunction:", category.fetchFunction);
+
         setActiveCategory(category.name);
+
         if (onCategoryChange && typeof onCategoryChange === "function") {
-            onCategoryChange(category.fetchFunction); // 카테고리 ID 전달
+            if (typeof category.fetchFunction === "function") {
+                category
+                    .fetchFunction()
+                    .then((result) => {
+                        onCategoryChange(result);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching data:", error.message);
+                    });
+            } else {
+                onCategoryChange(category.fetchFunction);
+            }
         }
     };
+
+
+
+
+
 
     return (
         <div className={styles.container}>
