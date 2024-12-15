@@ -491,13 +491,14 @@
 .hover-overlay:hover .hover-text {
     visibility: visible;
     opacity: 1;
+    pointer-events: auto; /* hover-text가 클릭 가능하도록 설정 */
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1279px) {
     .user-profile-img {
         height: 3.5rem;
         flex-direction: column;
-        margin-left: 3rem;
+        margin-left: 8rem;
     }
 
     .user-name-and-id-container {
@@ -508,7 +509,7 @@
     .playlist-container,
     .Videos-to-watch-container {
         width: 88%;
-        margin: 0 auto;
+        margin: 0 10rem;
     }
 
     .user-profile-img {
@@ -528,7 +529,8 @@
 
     .video-list,
     .playlist-list {
-        overflow: hidden
+        overflow: hidden;
+        gap: 0.8rem;
     }
 
     .video-item,
@@ -560,7 +562,7 @@
     }
 }
 
-@media screen and (max-width: 1279px) and (min-width: 768px) {
+@media screen and (max-width: 1279px) and (min-width: 977px) {
     .view-record-container,
     .playlist-container,
     .Videos-to-watch-container {
@@ -570,6 +572,11 @@
         align-content: center;
         width: 91%;
         margin-left: 6.5rem;
+    }
+
+    .all-video-view,
+    .playlist-all-view{
+        margin-right: 0;
     }
 
     .video-item,
@@ -601,16 +608,26 @@
     }
 }
 
-@media screen and (max-width: 947px) {
+@media screen and (max-width: 976px) and (min-width: 850px) {
     .view-record-container,
     .playlist-container,
     .Videos-to-watch-container {
-        width: 95%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        width: 91%;
+        margin-left: 6.5rem;
+    }
+
+    .all-video-view,
+    .playlist-all-view{
+        margin-right: 0;
     }
 
     .video-item,
     .playlist-video-item {
-        width: calc(100% / 5 - 1rem);
+        width: calc(100% / 4 - 1rem);
     }
 
     .video-thumbnail-container,
@@ -627,12 +644,52 @@
         font-size: 0.8rem;
     }
 
-    .video-item:nth-child(n + 6),
-    .playlist-video-item:nth-child(n + 6) {
+    .video-item:nth-child(n + 5),
+    .playlist-video-item:nth-child(n + 5) {
         display: none;
     }
 
+    .progress-time-container {
+        left: 7rem;
+    }
 }
+
+
+
+
+
+/*@media screen and (max-width: 947px) {*/
+/*    .view-record-container,*/
+/*    .playlist-container,*/
+/*    .Videos-to-watch-container {*/
+/*        width: 95%;*/
+/*    }*/
+
+/*    .video-item,*/
+/*    .playlist-video-item {*/
+/*        width: calc(100% / 5 - 1rem);*/
+/*    }*/
+
+/*    .video-thumbnail-container,*/
+/*    .playlist-video-thumbnail-container {*/
+/*        width: 180px;*/
+/*        height: 100px;*/
+/*    }*/
+
+/*    .user-name {*/
+/*        font-size: 1.5rem;*/
+/*    }*/
+
+/*    .changes-id-text {*/
+/*        font-size: 0.8rem;*/
+/*    }*/
+
+/*    .video-item:nth-child(n + 6),*/
+/*    .playlist-video-item:nth-child(n + 6) {*/
+/*        display: none;*/
+/*    }*/
+
+/*}*/
 
 @media screen and (max-width: 768px) and (min-width: 480px) {
     .view-record-container,
