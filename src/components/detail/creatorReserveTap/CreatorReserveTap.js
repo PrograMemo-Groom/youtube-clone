@@ -14,6 +14,7 @@ function CreatorReserveTap({ channelId }) {
   // 스크롤 이벤트를 위한 Ref
   const categoryBarRef = useRef(null);
   const { link } = useNavigation();
+  const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
 
   // 메뉴 리스트
   const [menuList, setMenuList] = useState([
@@ -44,7 +45,7 @@ function CreatorReserveTap({ channelId }) {
   useEffect(() => {
     const fetchRelatedVideoList = async () => {
       const videoList = await fetchCreatorVideos(channelId);
-      
+
       const formatVideoData = videoList.map((video) => {
         return {
           id: video.videoId,
@@ -93,8 +94,17 @@ function CreatorReserveTap({ channelId }) {
   const handleShowVideo = (videoId, event) => {
     if (event) event.stopPropagation(); // 이벤트 버블링 방지
     link(`/detail?q=${videoId}`);
-};
+  };
 
+  const handleChannelClick = (channelId, event) => {
+    if (event) event.stopPropagation(); // 이벤트 버블링 방지
+    window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
+  };
+
+  const toggleDropdown = (videoId) => {
+    setOpenDropdown((prev) => (prev === videoId ? null : videoId));
+    console.log("videoId", videoId);
+  };
 
   return (
     <section className={`creator-reserve-container`}>
@@ -123,14 +133,20 @@ function CreatorReserveTap({ channelId }) {
         video.map((video, index) => (
           <div className='video-section' key={index}>
             <div
-            onClick={(event) => handleShowVideo(video.id, event)} 
-            className='video-box'>
+              onClick={(event) => handleShowVideo(video.id, event)}
+              className='video-box'
+            >
               <img src={video.videoSrc} alt='썸네일' className='video'></img>
               <span className='time-stamp'>{video.timestamp}</span>
             </div>
             <div className='video-details'>
               <div className={`video-title`}>{video.title}</div>
-              <div className='channel-name'>{video.channelName}</div>
+              <div
+                onClick={(event) => handleChannelClick(channelId, event)}
+                className='channel-name'
+              >
+                {video.channelName}
+              </div>
               <div className='video-info'>
                 <span className='viewer-count'>
                   {formatViewerCount(video.viewerCount)}•{video.uploadDate}
@@ -142,13 +158,86 @@ function CreatorReserveTap({ channelId }) {
                   className='more-btn'
                   src='assets/icon/more_btn.svg'
                   alt='영상 더보기'
+                  onClick={() => toggleDropdown(video.id)}
                 />
               ) : (
                 <img
                   className='more-btn'
                   src='assets/icon/more_btn_black.svg'
                   alt='영상 더보기'
+                  onClick={() => toggleDropdown(video.id)}
                 />
+              )}
+              {openDropdown === video.id && (
+                <div className='dropdownMenu'>
+                  <ul>
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/playlist.svg`}
+                        alt='현재 재생목록에 추가'
+                        className='menuIcon'
+                      />
+                      현재 재생목록에 추가
+                    </li>
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/clock.svg`}
+                        alt='나중에 볼 동영상에 저장'
+                        className='menuIcon'
+                      />
+                      나중에 볼 동영상에 저장
+                    </li>
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/bookmark.svg`}
+                        alt='재생목록에 저장'
+                        className='menuIcon'
+                      />
+                      재생목록에 저장
+                    </li>
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/download.svg`}
+                        alt='오프라인 저장'
+                        className='menuIcon'
+                      />
+                      오프라인 저장
+                    </li>
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/share.svg`}
+                        alt='공유'
+                        className='menuIcon'
+                      />
+                      공유
+                    </li>
+                    <hr className='menuDivider' />
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/wrong.svg`}
+                        alt='관심 없음'
+                        className='menuIcon'
+                      />
+                      관심 없음
+                    </li>
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/no.svg`}
+                        alt='채널 추천 안함'
+                        className='menuIcon'
+                      />
+                      채널 추천 안함
+                    </li>
+                    <li>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/assets/videoMore/flag.svg`}
+                        alt='신고'
+                        className='menuIcon'
+                      />
+                      신고
+                    </li>
+                  </ul>
+                </div>
               )}
             </div>
             {/* 테마 변경 테스트 */}

@@ -15,7 +15,7 @@ function MainVideo({ video, channelId }) {
   const { isDark } = useContext(ThemeContext);
   const setMenuTheme = getMenuItemStyle(isDark);
   const setTheme = getStyle(isDark);
-  
+  const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
 
   const [content, setContent] = useState({
     videoSrc: "",
@@ -115,7 +115,6 @@ function MainVideo({ video, channelId }) {
     window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
   };
 
-  
   // 텍스트를 단락 단위로 나누고, 첫 5단락만 표시
   const getTextWithLimitedLines = (text) => {
     if (!text) {
@@ -128,6 +127,11 @@ function MainVideo({ video, channelId }) {
       return `${visibleText}\n...`;
     }
     return text;
+  };
+
+  const toggleDropdown = (videoId) => {
+    setOpenDropdown((prev) => (prev === videoId ? null : videoId));
+    console.log("videoId", videoId);
   };
 
   return (
@@ -185,10 +189,85 @@ function MainVideo({ video, channelId }) {
               {" "}
               Thanks
             </button>
-            <button style={setMenuTheme} className='more-btn'>
+            <button
+              style={setMenuTheme}
+              onClick={() => toggleDropdown(videoId)}
+              className='more-btn'
+            >
               ···
             </button>
           </div>
+          {openDropdown === video.id && (
+              <div className='dropdownMenu'>
+                <ul>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/playlist.svg`}
+                      alt='현재 재생목록에 추가'
+                      className='menuIcon'
+                    />
+                    현재 재생목록에 추가
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/clock.svg`}
+                      alt='나중에 볼 동영상에 저장'
+                      className='menuIcon'
+                    />
+                    나중에 볼 동영상에 저장
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/bookmark.svg`}
+                      alt='재생목록에 저장'
+                      className='menuIcon'
+                    />
+                    재생목록에 저장
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/download.svg`}
+                      alt='오프라인 저장'
+                      className='menuIcon'
+                    />
+                    오프라인 저장
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/share.svg`}
+                      alt='공유'
+                      className='menuIcon'
+                    />
+                    공유
+                  </li>
+                  <hr className='menuDivider' />
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/wrong.svg`}
+                      alt='관심 없음'
+                      className='menuIcon'
+                    />
+                    관심 없음
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/no.svg`}
+                      alt='채널 추천 안함'
+                      className='menuIcon'
+                    />
+                    채널 추천 안함
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/flag.svg`}
+                      alt='신고'
+                      className='menuIcon'
+                    />
+                    신고
+                  </li>
+                </ul>
+              </div>
+            )}
         </div>
         <div style={setMenuTheme} className='details-contents'>
           <p>
