@@ -90,7 +90,7 @@ export const fetchSubscriptionsVideos = async (token) => {
         const channelVideos = await Promise.all(
             items.map(async (item) => {
                 const channelId = item.snippet.resourceId.channelId;
-                const videos = await fetchChannelVideos(channelId);  // 최신 동영상 가져오기
+                const videos = await fetchChannelVideos(channelId , token);  // 최신 동영상 가져오기
                 console.log('구독 목록의 최신동영상이어요 :' , videos);
                 return videos;
             })
@@ -106,9 +106,12 @@ export const fetchSubscriptionsVideos = async (token) => {
 
 
 // 채널 아이디로 체널 동영상 가져오기
-const fetchChannelVideos = async (channelId) => {
+const fetchChannelVideos = async (channelId , token) => {
     try {
-        const {data: response} = await instance.get(requests.fetchSearchVideos, {
+        const {data: response} = await instance.get(requests.fetchChannelVideos(channelId), {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
             params: {
                 part: "snippet",
                 channelId: channelId,

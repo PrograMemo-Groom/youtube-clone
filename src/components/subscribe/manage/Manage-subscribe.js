@@ -3,34 +3,33 @@ import styles from './Manage-subscribe.module.css';
 import {fetchSubscriptions} from "../../../service/SubscribeService";
 
 
-const ManageSubscribe = () => {
-    //const [subscriptions, setSubscriptions] = useState([]);
+const ManageSubscribe = ({ accessToken }) => {
+    const [subscriptions, setSubscriptions] = useState([]);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const data = await fetchSubscriptions();
-    //         setSubscriptions(data || []);
-    //     };
-    //     fetchData();
-    // }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await fetchSubscriptions();
+            console.log('data',data);
+            setSubscriptions(data || []);
+        };
+        fetchData();
+    }, [accessToken]);
 
     return (
         <div className={styles.container}>
             <header className={styles.header}>
                 <h1>모든 구독 채널</h1>
                 {/* 구독채널 정렬 드롭다운 박스 : value, onChange 변경해줘야함 */}
-                <select className={styles.sortDropdown} onChange="click"> 
+                <select className={styles.sortDropdown}> 
                     <option value="bySpelling">가나다순</option>
                     <option value="byRelevance">관련성순</option>
                     <option value="byNewActivity">새 활동순</option>
                 </select>
             </header>
             <main className={styles.main}>
-                {/* {subscriptions.length > 0 ? (
-                    subscriptions.map((channel) => (
-                        <div key={channel.id} className={styles.channelCard}> */}
-                {channelData.map((channel, index) => (
-                        <div className={styles.channelCard}>
+                {subscriptions.length > 0 ? (
+                    subscriptions.map((channel , index) => (
+                        <div key={channel.id} className={styles.channelCard}>
                             <img
                                 src={channel.profileImage}
                                 alt={`${channel.title} Profile`}
@@ -43,7 +42,7 @@ const ManageSubscribe = () => {
                             </div>
                             {/* 구독알림설정 드롭다운박스 : api가져와서 변경 만이 필요,,*/}
                             <div class={styles.buttonDiv}>
-                                <select className={styles.alarmDropdown} onChange="click"> 
+                                <select className={styles.alarmDropdown}> 
                                     <option value="alarmAll">전체</option>
                                     <option value="alarmSet">맞춤설정</option>
                                     <option value="alarmOff">없음</option>
@@ -51,11 +50,10 @@ const ManageSubscribe = () => {
                                 </select>
                             </div>
                         </div>
-                ))}
-                    {/* ))
+                    ))
                 ) : (
                     <p>구독한 채널이 없습니다</p>
-                )} */}
+                )} 
             </main>
         </div>
     );
