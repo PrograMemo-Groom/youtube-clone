@@ -15,6 +15,7 @@ function MainVideo({ video, channelId }) {
   const { isDark } = useContext(ThemeContext);
   const setMenuTheme = getMenuItemStyle(isDark);
   const setTheme = getStyle(isDark);
+  
 
   const [content, setContent] = useState({
     videoSrc: "",
@@ -114,6 +115,7 @@ function MainVideo({ video, channelId }) {
     window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
   };
 
+  
   // 텍스트를 단락 단위로 나누고, 첫 5단락만 표시
   const getTextWithLimitedLines = (text) => {
     if (!text) {

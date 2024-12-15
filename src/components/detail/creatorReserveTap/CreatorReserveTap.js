@@ -5,6 +5,7 @@ import { ThemeContext } from "../../context/context.js";
 import { getMenuItemStyle } from "../../detail/themes/useThemeStyles.js";
 // import { fetchChannelVideos } from "../../../service/SubscribeService.js";
 import { fetchCreatorVideos } from "./fetchCreatorVideos.js";
+import useNavigation from "../../../hooks/useNavigation.js";
 function CreatorReserveTap({ channelId }) {
   const { isDark } = useContext(ThemeContext);
   // const setTheme = getStyle(isDark);
@@ -12,6 +13,7 @@ function CreatorReserveTap({ channelId }) {
 
   // 스크롤 이벤트를 위한 Ref
   const categoryBarRef = useRef(null);
+  const { link } = useNavigation();
 
   // 메뉴 리스트
   const [menuList, setMenuList] = useState([
@@ -88,6 +90,12 @@ function CreatorReserveTap({ channelId }) {
     clickedElement.classList.add("clicked");
   };
 
+  const handleShowVideo = (videoId, event) => {
+    if (event) event.stopPropagation(); // 이벤트 버블링 방지
+    link(`/detail?q=${videoId}`);
+};
+
+
   return (
     <section className={`creator-reserve-container`}>
       <div className='menu-section'>
@@ -114,7 +122,9 @@ function CreatorReserveTap({ channelId }) {
       {video && video.length > 0 ? (
         video.map((video, index) => (
           <div className='video-section' key={index}>
-            <div className='video-box'>
+            <div
+            onClick={(event) => handleShowVideo(video.id, event)} 
+            className='video-box'>
               <img src={video.videoSrc} alt='썸네일' className='video'></img>
               <span className='time-stamp'>{video.timestamp}</span>
             </div>
