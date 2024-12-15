@@ -1,10 +1,9 @@
 import "./MyPage.css";
 import "./SortDropdown.css"
-import React, {useState, useCallback} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import useNavigation from "../../hooks/useNavigation";
-import styles from "../main/videos/MainVideos.module.css";
 
 const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
@@ -85,7 +84,7 @@ const fetchYouTubePlaylists = async () => {
             },
             params: {
                 part: "snippet,contentDetails",
-                mine: true, // 사용자의 재생목록
+                // mine: true,
             },
         });
 
@@ -104,7 +103,7 @@ const fetchUserChannel = async (accessToken) => {
             },
             params: {
                 part: "snippet, contentDetails",
-                mine: true,
+                // mine: true,
                 maxResults: 10,
             },
         });
@@ -128,7 +127,7 @@ const fetchUserPlaylists = async (accessToken) => {
             },
             params: {
                 part: "snippet,contentDetails",
-                mine: true,
+                // mine: true,
                 maxResults: 25,
             },
         });
@@ -175,7 +174,7 @@ const fetchChannelId = async (accessToken) => {
             },
             params: {
                 part: "snippet",
-                mine: true,
+                // mine: true,
             },
         });
 
@@ -194,7 +193,7 @@ const fetchChannelProfileImage = async (accessToken) => {
             },
             params: {
                 part: "snippet",
-                mine: true, // 현재 로그인된 사용자
+                // mine: true,
             },
         });
 
@@ -252,6 +251,54 @@ const fetchFirstVideoId = async (accessToken, playlistId) => {
         console.error(`Error fetching first video ID for playlist ${playlistId}:`, error.message);
         return null;
     }
+};
+
+// 빈 재생목록 제거
+const filterValidPlaylists = (playlists) => {
+    return playlists.filter((playlist) => {
+        // contentDetails.itemCount를 확인해 영상이 있는 재생목록만 반환
+        return playlist.contentDetails && playlist.contentDetails.itemCount > 0;
+    });
+};
+
+// 추가 데이터 요청
+const fetchAdditionalPlaylists = async (accessToken, nextPageToken) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
+            headers: {Authorization: `Bearer ${accessToken}`,},
+            params: {
+                part: "snippet,contentDetails",
+                mine: true,
+                maxResults: 50,
+                pageToken: nextPageToken, // 다음 페이지를 가져오기 위한 토큰
+            }
+        })
+        return response.data;
+    } catch (error) {
+        console.log("Error fetchAdditionalPlaylists: ", error.response?.data || error.message);
+    }
+}
+
+//  재생목록이 무족하면 재귀적 요청
+const fetchAllPlaylists = async (accessToken) => {
+    let playlists = [];
+    let nextPageToken = null;
+
+    do {
+        const response = await fetchAdditionalPlaylists(accessToken, nextPageToken);
+
+        if (response) {
+            // 추가된 재생목록을 필터링
+            const validPlaylists = filterValidPlaylists(response.items);
+            playlists = playlists.concat(validPlaylists); // 유효한 재생목록을 추가
+
+            nextPageToken = response.nextPageToken; // 다음 페이지 토큰
+        } else {
+            nextPageToken = null; // 에러 발생 시 루프 중단
+        }
+    } while (nextPageToken && playlists.length < 13); // 총 13개의 유효한 재생목록이 채워질 때까지 반복
+
+    return playlists;
 };
 
 export default function MyPage() {
@@ -480,6 +527,31 @@ export default function MyPage() {
         const url = `${baseUrl}?v=${playlistId}&list=${playlistId}`;
         window.location.href = url;
     };
+
+    // 13개의 유효한 재생목록 가져옴
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const accessToken = localStorage.getItem("ACCESS_TOKEN");
+
+            if (!accessToken) {
+                console.error("Access token not found. Please log in again.");
+                return;
+            }
+
+            try {
+                const playlists = await fetchAllPlaylists(accessToken);
+
+                if (playlists) {
+                    setPlaylists(playlists); // 상태 업데이트
+                    console.log("Filtered Playlists:", playlists);
+                }
+            } catch (error) {
+                console.error("Error fetching playlists:", error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className="container">
