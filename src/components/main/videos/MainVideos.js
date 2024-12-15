@@ -10,10 +10,10 @@ const MainVideos = ({ fetchFunction }) => {
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const { link } = useNavigation();
-    const [products, setProducts] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(0);
-    const elementRef = useRef(null);
+    //const [products, setProducts] = useState([]);
+    //const [hasMore, setHasMore] = useState(true);
+   // const [page, setPage] = useState(0);
+    //const elementRef = useRef(null);
 
     const normalizeThumbnails = (videos) => {
         return videos.map((video) => {
