@@ -1,0 +1,65 @@
+{
+    "shorts": [
+      {
+        "id": 1,
+        "video": "https://example.com/video1_thumbnail.jpg",
+        "userProfilePicture": "channels4_profile.jpg",
+        "uploadedBy": "@viviz.official",
+        "description": "챌린지의 지배자, 챌린지의 마스터 with #캐스퍼 #Kasper #VIVIZ #비비지 #EUNHA #은하 #SINB #신비 #UMJI #엄지 #Shhhchallenge #쉿챌린지",
+        "music": "쉿(Shhh) · KISS OF LIFE",
+        "likes": "120만",
+        "comments": "781"
+      },
+      {
+        "id": 2,
+        "video": "https://example.com/video2_thumbnail.jpg",
+        "userProfilePicture": "channels5_profile.jpg",
+        "uploadedBy": "@내딸램베몬",
+        "description": "[베이비몬스터] 무반주 생라이브로 들어보는 아사 아현 랩 파트 #베이비몬스터 #베몬 #babymonster",
+        "music": "MAMA · EXO",
+        "likes": "89만",
+        "comments": "540"
+      },
+      {
+        "id": 3,
+        "video": "https://example.com/video3_thumbnail.jpg",
+        "userProfilePicture": "unnamed.jpg",
+        "uploadedBy": "@rosieposie_hair",
+        "description": "라이브에서 화음 넣는 APT. 로제 #shorts #로제",
+        "music": "APT · ROSIE",
+        "likes": "2만",
+        "comments": "1.2K"
+      },
+      {
+        "id": 4,
+        "video": "https://example.com/video4_thumbnail.jpg",
+        "userProfilePicture": "channels4_profile.jpg",
+        "uploadedBy": "@viviz.official",
+        "description": "난리 피워보자 제대로🔥 with #BADVILLAIN #ChloeYoung #클로이영 #HUE #휴이 #VIVIZ #비비지 #SINB #신비 #Shhhchallenge #쉿챌린지",
+        "music": "Shhh! · VIVIZ (비비지)",
+        "likes": "3.3만",
+        "comments": "126"
+      },
+      {
+        "id": 5,
+        "video": "https://example.com/video5_thumbnail.jpg",
+        "userProfilePicture": "channels5_profile.jpg",
+        "uploadedBy": "@nyangnyanglove",
+        "description": "목욕중에 나갈래 하고 말하는 고양이#수속성 고양이#냥냥사랑#동물농장",
+        "music": "말하는 고양이 루벤! I TV동물농장 (Animal Farm) | SBS Story · @SBSstory.official",
+        "likes": "150K",
+        "comments": "900"
+      },
+      {
+        "id": 6,
+        "video": "https://example.com/video4_thumbnail.jpg",
+        "userProfilePicture": "channels4_profile.jpg",
+        "uploadedBy": "@이젠더적을게없어",
+        "description": "ㅋㅋㅋㅋ",
+        "music": "Shhh! · VIVIZ (비비지)",
+        "likes": "3.3만",
+        "comments": "126"
+      }
+    ]
+  }
+  

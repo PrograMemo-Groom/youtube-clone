@@ -30,7 +30,6 @@ const Comment = () => {
                         src={`${process.env.PUBLIC_URL}/ellipsis.png`}
                         alt="ellopsis" />
                 </div>
-                댓글들
             </section>
             <section className={styles.commentInputBox}>
                 <img src={`${process.env.PUBLIC_URL}/channels4_profile.jpg`}
