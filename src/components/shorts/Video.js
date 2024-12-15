@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import styles from './Video.module.css';
-import exampledata from './exampleData.json';
 
-const Video = ({onPanelToggle}) => {
+const Video = ({short, onPanelToggle}) => {
   // 구독 버튼
   const [isSubscribe, setIsSubscribe] = useState(false);
 
@@ -13,7 +12,6 @@ const Video = ({onPanelToggle}) => {
   return (
     <main className={styles.videoComponents}>
       {/* 컨테이너 하나 */}
-      {exampledata.shorts.map((short, index) => (
       <div key={short.id} className={styles.videoContainer}>
         <div className={styles.videoBox}
           style={{
@@ -79,7 +77,6 @@ const Video = ({onPanelToggle}) => {
           </div>
         </aside>
       </div>
-      ))}
     </main>
   )
 }
