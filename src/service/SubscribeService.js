@@ -131,9 +131,9 @@ const fetchChannelVideos = async (channelId , token) => {
             channelTitle: item.snippet.channelTitle,
             description: item.snippet?.description,
             publishTime: item.snippet.publishTime,
-            defaultThumbnail: item.snippet.thumbnails.default,
-            highThumbnail: item.snippet.thumbnails.high,
-            mediumThumbnail: item.snippet.thumbnails.medium,
+            defaultThumbnail: item.snippet.thumbnails.default.url,
+            highThumbnail: item.snippet.thumbnails.high.url,
+            mediumThumbnail: item.snippet.thumbnails.medium.url,
             title: item.snippet.title,
         }));
 

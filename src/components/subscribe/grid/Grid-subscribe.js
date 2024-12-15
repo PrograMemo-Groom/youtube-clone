@@ -153,7 +153,7 @@ const GridSubscribe = () => {
                                 <React.Fragment key={index}> {/* 기존에 여러 요소를 반환할 수 있도록 추가 */}
                                     <article className={styles.videoClip}>
                                         <div className={styles.videoThumbnail}>
-                                            <img src={video.defaultThumbnail} alt='나는 썸네일' />
+                                            <img src={video.highThumbnail} alt='나는 썸네일' />
                                             <p>{video.duration}</p>
                                         </div>
                                         <div className={styles.videoDescriptions}>
