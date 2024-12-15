@@ -171,3 +171,109 @@ const fetchVideoDetails = async (videoIds, token) => {
         return [];
     }
 };
+
+
+
+
+
+// 60초 이하를 숏츠로 분류 ~! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 쇼츠 섹션
+
+/*
+export const fetchSubscriptionsShorts = async (token) => {
+    try {
+        //구독 목록 가져오기
+        const {data: {items}} = await instance.get(requests.fetchSubscriptions, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                part: "snippet",
+                mine: "true",
+                regionCode: "KR",
+                maxResults: "10"  //변경하기 !
+            }
+        });
+        console.log('구독 목록이어요 :' , items);
+
+        // 아이디 넘겨서 채널 디테일 + 최신 동영상 가져오기
+        const channelVideos = await Promise.all(
+            items.map(async (item) => {
+                const channelId = item.snippet.resourceId.channelId;
+                const videos = await fetchChannelShorts(channelId, token);
+                const videoDetails = await fetchShortsDetails(videos, token);
+
+                console.log('구독 쇼츠는 이것이다 :', videoDetails);
+
+                return videoDetails;
+            })
+        );
+
+        return channelVideos;
+
+    } catch (e) {
+        console.log(tag, "fetchSubscriptionsShorts가 문제래요....", e);
+    }
+}
+
+
+
+// 채널 아이디로 체널 동영상 가져오기
+const fetchChannelShorts = async (channelId , token) => {
+    try {
+        const {data: response} = await instance.get(requests.fetchChannelVideos(channelId), {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                part: 'snippet',
+                channelId: channelId,
+                regionCode: "KR",
+                maxResults: 2,
+                type: "video"
+            }
+        });
+
+        const videoIds = response.items.map(item => item.id.videoId);
+        console.log("videoIds:", videoIds);
+        return videoIds; // videoId 목록 반환
+
+    } catch (e) {
+        console.log("채널의 쇼츠를 가져오는데 오류 발생:", e);
+        return [];
+    }
+};
+
+// 영상 아이디로 쇼츠 디테일 가져오기 (duration, view 포함)
+const fetchShortsDetails = async (videoIds, token) => {
+    try {
+        const { data: response } = await instance.get(requests.fetchGetVideo, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                part: 'snippet,contentDetails,statistics',
+                id: videoIds.join(',')  // 여러 개의 videoId를 ','로 구분하여 전달
+            }
+        });
+
+        // 여기에 duration 60초 이하 필터링하는 코드 넣기 !!
+
+        // 여러 동영상 정보를 배열로 반환
+        return response.items.map(video => ({
+            channelTitle: video.channelTitle,
+            videoId: video.id,
+            title: video.snippet.title,
+            description: video.snippet.description,
+            publishTime: formatTimeDifference(video.snippet.publishedAt),
+            defaultThumbnail: video.snippet.thumbnails.default.url,
+            highThumbnail: video.snippet.thumbnails.high.url,
+            duration: formatVideoTime(video.contentDetails.duration),
+            views: formatViewCount(video.statistics.viewCount),
+        }));
+    } catch (e) {
+        console.log("비디오 상세 정보를 가져오는데 오류 발생:", e);
+        return [];
+    }
+};
+
+*/
