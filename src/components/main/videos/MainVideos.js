@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MainVideos.module.css";
 import { getMainVideos } from "../../../service/MainService";
 import useNavigation from "../../../hooks/useNavigation";
