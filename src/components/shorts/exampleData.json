@@ -9,7 +9,8 @@
         "music": "쉿(Shhh) · KISS OF LIFE",
         "likes": "120만",
         "comments": "781",
-        "isSubscribed": true
+        "viewCount": "1,713,185",
+        "uploadedDate": "12월 6일"
       },
       {
         "id": 2,
@@ -20,7 +21,8 @@
         "music": "jangwonyoung · IVEstarship",
         "likes": "500만",
         "comments": "4,827",
-        "isSubscribed": true
+        "viewCount": "5,323,119",
+        "uploadedDate": "8월 17일"
       },
       {
         "id": 3,
@@ -31,7 +33,8 @@
         "music": "babymonster · 내딸램베몬",
         "likes": "89만",
         "comments": "540",
-        "isSubscribed": false
+        "viewCount": "1,954",
+        "uploadedDate": "11월 24일"
       },
       {
         "id": 4,
@@ -42,7 +45,8 @@
         "music": "APT · ROSIE",
         "likes": "2만",
         "comments": "20",
-        "isSubscribed": false
+        "viewCount": "53,343",
+        "uploadedDate": "12월 6일"
       },
       {
         "id": 5,
@@ -52,7 +56,9 @@
         "description": "난리 피워보자 제대로🔥 with #BADVILLAIN #ChloeYoung #클로이영 #HUE #휴이 #VIVIZ #비비지 #SINB #신비 #Shhhchallenge #쉿챌린지",
         "music": "Shhh! · VIVIZ (비비지)",
         "likes": "3.3만",
-        "comments": "126"
+        "comments": "126",
+        "viewCount": "44,235",
+        "uploadedDate": "7월 7일"
       },
       {
         "id": 6,
@@ -60,21 +66,23 @@
         "userProfilePicture": "channels5_profile.jpg",
         "uploadedBy": "@nyangnyanglove",
         "description": "목욕중에 나갈래 하고 말하는 고양이#수속성 고양이#냥냥사랑#동물농장",
-        "music": "말하는 고양이 루벤! I TV동물농장 (Animal Farm) | SBS Story · @SBSstory.official",
-        "likes": "150K",
+        "music": "말하는 고양이 루벤! I TV동물농장 (Animal Farm)",
+        "likes": "150만",
         "comments": "900",
-        "isSubscribed": false
+        "viewCount": "3,123,112",
+        "uploadedDate": "1월 29일"
       },
       {
         "id": 7,
         "video": "https://i.ytimg.com/vi/0JGQPsXZghE/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLACTxHd777c--QZrRwUr_lD8n7hfA",
         "userProfilePicture": "channels4_profile.jpg",
         "uploadedBy": "@이젠더적을게없어",
-        "description": "ㅋㅋㅋㅋ",
-        "music": "Shhh! · VIVIZ (비비지)",
+        "description": "카리나랑 나 둘중에 하나는 사람 아님 #에스파",
+        "music": "Next Level · aespa",
         "likes": "3.3만",
         "comments": "126",
-        "isSubscribed": true
+        "viewCount": "713,185",
+        "uploadedDate": "10월 5일"
       }
     ]
   }

@@ -3,18 +3,18 @@ import styles from '../Panel.module.css';
 
 const Explain= ({short}) => {
     return (
-        <div>
+        <div >
             <section className={styles.contentsSection}>
                 <p>{short.description}</p>
             </section>
             <section className={styles.contentsBox}>
                 <section className={styles.contentsFactoid}>
                     <div>
-                        <p>10만</p>
+                        <p>{short.likes}</p>
                         <span>좋아요 수</span>
                     </div>
                     <div>
-                        <p>1,713,185</p>
+                        <p>{short.viewCount}</p>
                         <span>조회 수</span>
                     </div>
                     <div>
@@ -23,7 +23,7 @@ const Explain= ({short}) => {
                     </div>
                 </section>
                 <section className={styles.tagSection}>
-                    #TWICE #트와이스 #STRATEGY
+                    #나중에 해시태그만 빼서 추가 예정
                 </section>
             </section>
         </div>
