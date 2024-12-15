@@ -1,5 +1,9 @@
 import instance from '../api/api';
 import requests from '../api/endpoint';
+import formatVideoTime from '../utils/formatVideoTime';
+import formatViewCount from "../utils/formatViewPeople";
+import formatTimeDifference from "../utils/formatTimeDifference";
+
 
 const tag = '[Service]';
 
@@ -49,9 +53,9 @@ const fetchChannelDetails = async (channelId) => {
         const channel = data.items[0];
         return {
             id: channel.id,
-            title: channel.snippet.title,
-            description: channel.snippet.description,
-            profileImage: channel.snippet.thumbnails.default.url,
+            channelTitle: channel.snippet.title,
+            channelDescription: channel.snippet.description,
+            channelAvatar: channel.snippet.thumbnails.default.url,
             subscriberCount: channel.statistics.subscriberCount,
         }
     } catch (e) {
@@ -59,11 +63,6 @@ const fetchChannelDetails = async (channelId) => {
         return null;
     }
 }
-
-
-
-
-
 
 
 
@@ -86,13 +85,24 @@ export const fetchSubscriptionsVideos = async (token) => {
         });
         console.log('구독 목록이어요 :' , items);
 
-        //아이디 넘겨서 체널 디테일 가져오기
+        // 아이디 넘겨서 채널 디테일 + 최신 동영상 가져오기
         const channelVideos = await Promise.all(
             items.map(async (item) => {
                 const channelId = item.snippet.resourceId.channelId;
-                const videos = await fetchChannelVideos(channelId);  // 최신 동영상 가져오기
-                console.log('구독 목록의 최신동영상이어요 :' , videos);
-                return videos;
+                const channelDetails = await fetchChannelDetails(channelId);
+                const videos = await fetchChannelVideos(channelId, token);
+                const videoDetails = await fetchVideoDetails(videos, token);
+
+                // 채널 정보와 동영상 정보를 합치기
+                const videosWithAvatar = videoDetails.map(video => ({
+                    ...video,
+                    channelAvatar: channelDetails.channelAvatar,
+                    channelTitle: channelDetails.channelTitle,
+                }));
+
+                console.log('아바타 합쳐진 비디오 :', videosWithAvatar);
+
+                return videosWithAvatar;
             })
         );
 
@@ -106,35 +116,58 @@ export const fetchSubscriptionsVideos = async (token) => {
 
 
 // 채널 아이디로 체널 동영상 가져오기
-const fetchChannelVideos = async (channelId) => {
+const fetchChannelVideos = async (channelId , token) => {
     try {
-        const {data: response} = await instance.get(requests.fetchSearchVideos, {
+        const {data: response} = await instance.get(requests.fetchChannelVideos(channelId), {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
             params: {
-                part: "snippet",
+                part: 'snippet',
                 channelId: channelId,
                 regionCode: "KR",
-                maxResults: 10,
+                maxResults: 2,
                 type: "video"
             }
         });
-        console.log("동영상을 가져오앗다",response);
-        // 떨어지는 data 가공
-        const videos = response.items.map((item) => ({
-            videoId: item.id.videoId,
-            channelId: item.snippet.channelId,
-            channelTitle: item.snippet.channelTitle,
-            description: item.snippet?.description,
-            publishTime: item.snippet.publishTime,
-            defaultThumbnail: item.snippet.thumbnails.default,
-            highThumbnail: item.snippet.thumbnails.high,
-            mediumThumbnail: item.snippet.thumbnails.medium,
-            title: item.snippet.title,
-        }))
 
-        return videos;
+        const videoIds = response.items.map(item => item.id.videoId);
+        console.log("videoIds:", videoIds);
+        return videoIds; // videoId 목록 반환
 
     } catch (e) {
-        console.log(tag, `fetchChannelVideos가 ${channelId} 비디오를 못가져와아아아`, e);
+        console.log("채널 동영상을 가져오는데 오류 발생:", e);
         return [];
     }
-}
+};
+
+// 영상 아이디로 체널 디테일 가져오기 (duration, view 포함)
+const fetchVideoDetails = async (videoIds, token) => {
+    try {
+        const { data: response } = await instance.get(requests.fetchGetVideo, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                part: 'snippet,contentDetails,statistics',
+                id: videoIds.join(',')  // 여러 개의 videoId를 ','로 구분하여 전달
+            }
+        });
+
+        // 여러 동영상 정보를 배열로 반환
+        return response.items.map(video => ({
+            channelTitle: video.channelTitle,
+            videoId: video.id,
+            title: video.snippet.title,
+            description: video.snippet.description,
+            publishTime: formatTimeDifference(video.snippet.publishedAt),
+            defaultThumbnail: video.snippet.thumbnails.default.url,
+            highThumbnail: video.snippet.thumbnails.high.url,
+            duration: formatVideoTime(video.contentDetails.duration),
+            views: formatViewCount(video.statistics.viewCount),
+        }));
+    } catch (e) {
+        console.log("비디오 상세 정보를 가져오는데 오류 발생:", e);
+        return [];
+    }
+};

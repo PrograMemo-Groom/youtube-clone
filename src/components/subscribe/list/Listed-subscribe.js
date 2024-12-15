@@ -3,11 +3,53 @@ import styles from './Listed-subscribe.module.css';
 import GridSubscribe from '../grid/Grid-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
+import useGoogleAuth from "../../../hooks/useGoogleAuth";
+import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
+
 
 const ListedSubscribe = () => {
 
     const [view, setView] = useState("list");
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
+
+
+    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+    const [subscriptions, setSubscriptions] = useState([]);
+    const googleLogin = useGoogleAuth();
+
+
+        // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
+        const handleGetCode = async () => {
+            console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
+            await googleLogin();
+        }
+    
+        useEffect(() => {
+            accessToken && fetchData();
+        }, [accessToken]);
+
+        const fetchData = async () => {
+            try {
+                if(!accessToken) {
+                    console.log("token없다이!!발급버튼 눌러서 발급받아라이!!");
+                    return;
+                }
+                const response = await fetchSubscriptionsVideos(accessToken);  // 구독 비디오오오
+                console.log("내가 구독하는 video 갖고 왔다이!!!!! ",response);
+                if (Array.isArray(response)) {
+                    console.log('내가 가져온 동영상들 배열성공 !!');
+                    const flattenedResponse = response.flatMap(sub => sub); //이중배열을 풀어보자
+                    const sortedResponse = flattenedResponse.sort((a, b) => {  // 영상들만 최신순 정렬하자
+                        return new Date(b.publishTime) - new Date(a.publishTime);
+                    });
+                    setSubscriptions(sortedResponse);
+                } else {
+                    console.error("받아온게 배열이 아님.. 이거임:", response);
+                }
+            } catch (error) {
+                console.log('fetchData 에러 :', error);
+            }
+        }
 
     useEffect(() => {
         const handleResize = () => {
@@ -40,18 +82,33 @@ const ListedSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "list" && (
                 <>
+                    <button
+                        style={{width:'200px', height:'20px'}}
+                        onClick={() => {handleGetCode();}}>
+                            token 발급 받는다!!
+                    </button>
+                    <button
+                        style={{width:'200px', height:'20px'}}
+                        onClick={() => {fetchData()}}>
+                            누르면 데이터를 가져오ㅏ
+                    </button>
+                    {accessToken &&
+                        <button style={{width:'200px', height:'20px'}}>
+                            token값 있으면 노출
+                        </button>
+                    }
                     <main>
                         <section className={styles.videoSection}>
-                            {video2Data.map((video, index) => (
+                            {subscriptions.map((video, index) => (
                                 <>
-                                    <article key={index} className={styles.videoClip}>
+                                    <article key={video.videoId} className={styles.videoClip}>
                                         <header className={styles.videoClip_header}>
                                             <div className={styles.header_channel}>
                                                 <img
-                                                    src={video.channelAvatar}
+                                                    src={video.highThumbnail}
                                                     alt='채널프로필사진' 
                                                 />
-                                                <h4>{video.channel}</h4>
+                                                <h4>{video.channelTitle}</h4>
                                             </div>
                                             {index === 0 && (
                                                 <div className={styles.pageChangeButtons}>
@@ -79,7 +136,7 @@ const ListedSubscribe = () => {
                                         <div className={styles.videoClip_main}>
                                             <div className={styles.videoThumbnail}>
                                                 <img
-                                                    src={video.thumbnail}
+                                                    src={video.highThumbnail}
                                                     alt='썸네일'
                                                 />
                                                 <p>{video.duration}</p>
@@ -91,7 +148,7 @@ const ListedSubscribe = () => {
                                                         <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
                                                     </button>
                                                 </div>
-                                                <p className={styles.videoInfo}>{video.channel}  {video.view} • {video.uploadedAt}</p>
+                                                <p className={styles.videoInfo}>{video.channelTitle}  {video.views} • {video.publishTime}</p>
                                                 <p className={styles.videoDes}>{video.description}</p>
                                             </div>
                                         </div>
@@ -141,31 +198,6 @@ const ListedSubscribe = () => {
 
 export default ListedSubscribe;
 
-
-const video2Data = [{
-    videoId: "8yEzRxsilu0",
-    thumbnail: "https://i.ytimg.com/vi/6ED5RqKYOfg/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAfsoZI_y_8YGR7CJupS5HgH9mcqQ",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    subscriberCount: "167만",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-    description: "모카와 우유의 일상을 함께 봐주셔서 감사합니다 :) • 모카 생년월일: 2011.10.22 견종: 폼피츠 성별: 남 • 우유 생년월일: 2016.11.07 견종: 사모예드 성별: 여 _________________________________________________________ Thank you for watching MochaMilk's daily vlog :) • Mocha Birth: 2011.10.22",
-    } , {
-    videoId: "8yEzRxsilu0",
-    thumbnail: "https://i.ytimg.com/vi/6ED5RqKYOfg/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAfsoZI_y_8YGR7CJupS5HgH9mcqQ",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    subscriberCount: "167만",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-    description: "모카와 우유의 일상을 함께 봐주셔서 감사합니다 :) • 모카 생년월일: 2011.10.22 견종: 폼피츠 성별: 남 • 우유 생년월일: 2016.11.07 견종: 사모예드 성별: 여 _________________________________________________________ Thank you for watching MochaMilk's daily vlog :) • Mocha Birth: 2011.10.22",
-    },
-]
 
 const shortsData = [{
     thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
