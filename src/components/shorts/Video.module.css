@@ -98,8 +98,8 @@
 }
 /* 버튼 컨테이너 */
 .bntContainer{
-    width: 50px;
-    padding: 12px 12px 0px 12px;
+    width: 60px;
+    padding: 12px 8px 0px 8px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
