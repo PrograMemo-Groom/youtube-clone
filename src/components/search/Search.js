@@ -10,6 +10,7 @@ const Search = () => {
     const { link } = useNavigation();
     const [searchResult, setSearchResult] = useState([]);
     const [nextToken, setNextToken] = useState("");
+    const [mouseHover, setMouseHover] = useState(null);
     const useQuery = () => {
         return new URLSearchParams(useLocation().search);
     }
@@ -67,17 +68,31 @@ const Search = () => {
                 </div>
             </div>
             <div className={styles.videos}>
-                {searchResult && searchResult.map((video,i) => {
+                {searchResult && searchResult.map((video, i) => {
+                    const iframeUrl = `https://www.youtube-nocookie.com/embed/${video.videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${video.videoId}`;
+
                     return (
                         <div className={styles.videoLists} key={video.videoId}
-                             ref={i === searchResult.length - 1 ? lastItemRef : null}>
-                            <div className={styles.videoFrame} onClick={() => handleShowVideo(video.videoId)}>
-                                <iframe
-                                    src={`https://www.youtube-nocookie.com/embed/${video.videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${video.videoId}`}
-                                    title={video.title}
-                                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-storage-access-by-user-activation"
-                                    // loading="lazy"
-                                />
+                            ref={i === searchResult.length - 1 ? lastItemRef : null}>
+                            <div className={styles.videoFrame}
+                                 onClick={() => handleShowVideo(video.videoId)}
+                                 onMouseEnter={() => setMouseHover(video.videoId)}
+                                 onMouseLeave={() => setMouseHover(null)}
+                            >
+                                {mouseHover === video.videoId ? (
+                                    <iframe
+                                        src={iframeUrl}
+                                        title={video.title}
+                                        allow="autoplay; encrypted-media"
+                                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-storage-access-by-user-activation"
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <img
+                                        alt={video.title}
+                                        src={video.thumbnailImg}
+                                    />
+                                )}
                                 <span>{video.videoTime}</span>
                             </div>
                             <div className={styles.videoDescriptions}>
@@ -85,11 +100,14 @@ const Search = () => {
                                 <p onClick={() => handleShowVideo(video.videoId)}>{video.statistics.viewCount}•{video.videoCreated}</p>
                                 <div className={styles.videoChannelInfo}>
                                     <div className={styles.channelInfo}>
-                                        <img src={video.channel.channelImg} alt="img" onClick={() => handleShowChannel(video.channel.customUrl)}/>
-                                        <span onClick={() => handleShowChannel(video.channel.customUrl)}>{video.channelTitle}</span>
+                                        <img src={video.channel.channelImg} alt="img"
+                                             onClick={() => handleShowChannel(video.channel.customUrl)}/>
+                                        <span
+                                            onClick={() => handleShowChannel(video.channel.customUrl)}>{video.channelTitle}</span>
                                     </div>
                                 </div>
-                                <p className={styles.videoDescript} onClick={() => handleShowVideo(video.videoId)}>{video.description}</p>
+                                <p className={styles.videoDescript}
+                                   onClick={() => handleShowVideo(video.videoId)}>{video.description}</p>
                             </div>
                         </div>
                     )
