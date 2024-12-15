@@ -36,7 +36,11 @@ const GridSubscribe = () => {
                 console.log("내가 구독하는 video 갖고 왔다이!!!!! ",response);
                 if (Array.isArray(response)) {
                     console.log('내가 가져온 동영상들 배열성공 !!');
-                    setSubscriptions(response);
+                    const flattenedResponse = response.flatMap(sub => sub); //이중배열을 풀어보자
+                    const sortedResponse = flattenedResponse.sort((a, b) => {  // 영상들만 최신순 정렬하자
+                        return new Date(b.publishTime) - new Date(a.publishTime);
+                    });
+                    setSubscriptions(sortedResponse);
                 } else {
                     console.error("받아온게 배열이 아님.. 이거임:", response);
                 }
