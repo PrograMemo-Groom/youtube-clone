@@ -1,7 +1,10 @@
 import "./MyPage.css";
-import React, {useState} from "react";
+import "./SortDropdown.css"
+import React, {useState, useCallback} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import useNavigation from "../../hooks/useNavigation";
+import styles from "../main/videos/MainVideos.module.css";
 
 const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
@@ -155,7 +158,11 @@ const fetchWatchLaterVideos = async (accessToken) => {
         console.log("Watch Later Videos:", response.data.items);
         return response.data.items;
     } catch (error) {
-        console.error("Error fetching Watch Later videos:", error.response?.data || error.message);
+        console.error("Error fetching Watch Later videos:", {
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            data: error.response?.data || error.message,
+        });
     }
 };
 
@@ -206,7 +213,7 @@ const fetchLikedVideos = async (accessToken) => {
             },
             params: {
                 part: "snippet,contentDetails,statistics",
-                maxResults: 10, // 가져올 영상 수 (필요에 따라 조정)
+                maxResults: 15, // 가져올 영상 수 (필요에 따라 조정)
                 myRating: "like", // 좋아요 누른 영상
             },
         });
@@ -231,7 +238,9 @@ export default function MyPage() {
     const [profileImage, setProfileImage] = React.useState("/assets/mypage/user-profile.png");
     const [likedVideos, setLikedVideos] = useState([]);
     const [channelId, setChannelId] = useState("");
+    const [openDropdown, setOpenDropdown] = useState(null); // 현재 열려 있는 videoId를 저장
     const navigate = useNavigate();
+    const {link} = useNavigation();
 
     const handleToggle = () => {
         setToggleVisible((prev) => !prev);
@@ -335,7 +344,7 @@ export default function MyPage() {
         }
 
         fetchData(); // 데이터 요청
-        }, []);
+    }, []);
 
     const handleChannelView = async () => {
         const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
@@ -394,23 +403,49 @@ export default function MyPage() {
         }
     };
 
+
+    const handleScrollRight = () => {
+        const container = document.getElementById("scrollable-container");
+        container.scrollBy({left: 300, behavior: "smooth"});
+    };
+
+    const handleScrollLeft = () => {
+        const container = document.getElementById("scrollable-container");
+        container.scrollBy({left: -300, behavior: "smooth"});
+    };
+
+    const handleShowVideo = (videoId) => {
+        console.log("6: ", videoId);
+        const queryParam = `?q=${videoId}`;
+        const detailPageUrl = `/detail${queryParam}`;
+        link(detailPageUrl);
+    };
+
     const handleViewAllClick = () => {
-        if (channelId) {
-            navigate(`/watch-history?channelId=${channelId}`);
+        if (!likedVideos) {
+            console.log("videoId 못 찾겠다 꾀꼬리", "handleViewAllClick");
+            return;
+        }
+        const playlistUrl = "https://www.youtube.com/playlist?list=LL";
+        window.location.href = playlistUrl;
+    };
+
+    const handViewFeed = (channelId) => {
+        if (!channelId) {
+            console.log("channelId 못 찾겠다 꾀꼬리", "handViewPlayList");
+            return;
+        }
+        const FeedUrl = `https://www.youtube.com/feed/playlists?channelId=${channelId}`;
+        window.location.href = FeedUrl;
+    }
+
+    const toggleDropdown = (videoId) => {
+        if (openDropdown === videoId) {
+            setOpenDropdown(null); // 이미 열려 있으면 닫기
         } else {
-            console.error("Channel ID not available.");
+            setOpenDropdown(videoId); // 새로운 videoId 열기
         }
     };
-    // const handleScrollRight = () => {
-    //     const container = document.getElementById("scrollable-container");
-    //     container.scrollBy({left: 300, behavior: "smooth"});
-    // };
-    //
-    // const handleScrollLeft = () => {
-    //     const container = document.getElementById("scrollable-container");
-    //     container.scrollBy({left: -300, behavior: "smooth"});
-    // };
-
     return (
         <div className="container">
             <div className="relative-layout-container">
@@ -456,57 +491,78 @@ export default function MyPage() {
                                 <button className="all-video-view" onClick={handleViewAllClick}>모두 보기</button>
                             </section>
                             <section className="view-record-contents-container">
-                                <section className="video-list" id="scrollable-container">
+                                <section className="video-list">
                                     {likedVideos.map((video, i) => (
                                         <section className="video-item"
                                                  key={`${i}-${video.videoId}`}>
                                             <div className="video-thumbnail-container">
                                                 <img className="video-thumbnail"
                                                      src={video.snippet.thumbnails.medium.url}
-                                                     alt={video.snippet.title}/>
+                                                     alt={video.snippet.title}
+                                                     onClick={() => handleShowVideo(video.id)}
+                                                />
                                                 <div className="progress-container">
                                                     <section className="view-icons-container">
-                                                        <div className="icon-wrapper">
-                                                            <img
-                                                                className="video-view-later-icon"
-                                                                src="/assets/mypage/video-later-view-icon.svg"
-                                                                alt="video-later-view-icon"
-                                                            />
-                                                            <p className="video-later-view-text">나중에 볼 동영상</p>
-                                                        </div>
-                                                        <div className="icon-wrapper">
-                                                            <img
-                                                                className="add-playlist-icon"
-                                                                src="/assets/mypage/playlist-icon.svg"
-                                                                alt="add-playlist-icon"
-                                                            />
-                                                            <p className="add-playlist-text">현재 재생목록에 추가</p>
-                                                        </div>
+                                                        <img className="video-view-later-icon"
+                                                             src="/assets/mypage/video-later-view-icon.svg"
+                                                             alt="video-later-view-icon"/>
                                                     </section>
+                                                    <p className="video-later-view-text">나중에 볼 동영상</p>
+                                                    <section className="add-playlist-icons-container">
+                                                        <img className="add-playlist-icon"
+                                                             src="/assets/mypage/playlist-icon.svg"
+                                                             alt="add-playlist-icon"/>
+                                                    </section>
+                                                    <p className="add-playlist-text">현재 재생목록에 추가</p>
                                                     <section className="progress-time-container">
                                                         <p className="progress-time">{formatDuration(video.contentDetails.duration)}</p>
-                                                    </section>
-                                                    <section className="progress-bar-container">
-                                                        <div className="progress-bar"></div>
                                                     </section>
                                                 </div>
                                             </div>
                                             <div className="video-info-container">
                                                 <div className="video-title-and-toggle-container">
                                                     <h3 className="video-title">{video.snippet.title}</h3>
-                                                    <button className="toggle_btn" onClick={handleToggle}>
+                                                    <button
+                                                        className="toggle_btn"
+                                                        onClick={() => toggleDropdown(video.id)}>
                                                         <img className="ellipsis-toggle-btn"
                                                              src="/ellipsis.png"
-                                                             alt="ellipsis-toggle-btn"
-                                                        />
+                                                             alt="ellipsis-toggle-btn"/>
                                                     </button>
-                                                    <div className={`div-toggle ${isToggleVisible ? "visible" : ""}`}>
-                                                        <p>현재 재생목록에 추가</p>
-                                                        <p>나중에 볼 동영상에 저장</p>
-                                                        <p>재생목록에 저장</p>
-                                                        <p>오프라인 저장</p>
-                                                        <p>공유</p>
-                                                        <p>시청 기록에서 삭제</p>
+                                                    <div
+                                                        className={`toggle-Menu ${openDropdown === video.id ? "visible" : ""}`}>
+                                                        <ul>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/playlist.svg"
+                                                                     alt="현재 재생목록에 추가"/>
+                                                                현재 재생목록에 추가
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/clock.svg"
+                                                                     alt="나중에 볼 동영상에 저장"/>
+                                                                나중에 볼 동영상에 저장
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/bookmark.svg"
+                                                                     alt="재생목록에 저장"/>
+                                                                재생목록에 저장
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/download.svg"
+                                                                     alt="오프라인 저장"/>
+                                                                오프라인 저장
+                                                            </li>
+                                                            <li>
+                                                                <img className="menu-icons"
+                                                                     src="/assets/videoMore/share.svg"
+                                                                     alt="공유"/>
+                                                                공유
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                                 <div className="video-channel-and-meta-container">
@@ -519,9 +575,6 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="next-video-btn">&gt;</button>
-                                    {/*<button className="next-video-btn" onClick={handleScrollRight}>&gt;</button>*/}
-                                    {/*<button className="prev-video-btn" onClick={handleScrollLeft}>&lt;</button>*/}
                                 </section>
                             </section>
                         </div>
@@ -547,8 +600,8 @@ export default function MyPage() {
                                     </div>
                                 </section>
                                 <section className="playlist-all-and-plus-btn">
-                                    <button className="plus-btn">+</button>
                                     <button className="playlist-all-view"
+                                            onClick={() => handViewFeed(channelId)}
                                     >모두 보기
                                     </button>
                                 </section>
@@ -572,7 +625,6 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="playlist-next-video-btn"> &gt; </button>
                                 </section>
                             </section>
                         </div>
@@ -604,7 +656,6 @@ export default function MyPage() {
                                             </div>
                                         </section>
                                     ))}
-                                    <button className="next-video-btn">&gt;</button>
                                 </section>
                             </section>
                         </div>
