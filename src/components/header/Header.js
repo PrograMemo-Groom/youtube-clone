@@ -6,7 +6,7 @@ import useGoogleAuth from "../../hooks/useGoogleAuth";
 const Header = () => {
     const { link } = useNavigation();
     const [search, setSearch] = useState('');
-    const [auth, setAuth] = useState(() => localStorage.getItem('GOOGLE_TOKEN'));
+    const [auth, ] = useState(() => localStorage.getItem('GOOGLE_TOKEN'));
     const googleLogin = useGoogleAuth();
 
     // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용

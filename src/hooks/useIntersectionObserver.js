@@ -4,7 +4,8 @@ const useIntersectionObserver = (onIntersect, options) => {
     const targetRef = useRef(null);
 
     useEffect(() => {
-        if (!targetRef.current) return;
+        const targetElement = targetRef.current;
+        if (!targetElement) return;
 
         const observer = new IntersectionObserver((items) => {
             // 관찰대상이 화면에 보이면 실행
@@ -13,10 +14,10 @@ const useIntersectionObserver = (onIntersect, options) => {
             }
         }, options);
 
-        observer.observe(targetRef.current);
+        observer.observe(targetElement);
 
         return () => {
-            if(targetRef.current) observer.disconnect();
+            if(targetElement) observer.disconnect();
         }
 
     }, [onIntersect, options]);
