@@ -13,16 +13,15 @@ const ListedSubscribe = () => {
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
 
 
-    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+    const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
     const googleLogin = useGoogleAuth();
-
-
-        // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
-        const handleGetCode = async () => {
-            console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
-            await googleLogin();
-        }
+    
+    // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
+    const handleGetCode = async () => {
+        console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
+        await googleLogin();
+    };
     
         useEffect(() => {
             accessToken && fetchData();

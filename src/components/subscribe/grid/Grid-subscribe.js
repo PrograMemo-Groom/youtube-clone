@@ -13,17 +13,16 @@ const GridSubscribe = () => {
     const [itemsPerRow, setItemsPerRow] = useState(4); // 기본값: 4개
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
 
-    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+    const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
     const googleLogin = useGoogleAuth();
     const [shorts, setShorts] = useState([]);
 
-
-        // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
-        const handleGetCode = async () => {
-            console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
-            await googleLogin();
-        }
+    // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
+    const handleGetCode = async () => {
+        console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
+        await googleLogin();
+    };
     
         useEffect(() => {
             accessToken && fetchData();
@@ -248,36 +247,3 @@ const GridSubscribe = () => {
 export default GridSubscribe;
 
 
-
-
-const shortsData = [{
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    }]
