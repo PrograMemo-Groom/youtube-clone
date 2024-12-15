@@ -36,10 +36,11 @@ export const getChannelData = async (channelId) => {
         const {data: {items: [response]}} = await instance.get(requests.fetchGetChannel, {
             params:{ part: "snippet", id: channelId, regionCode: "KR", maxResults: 1 }})
         const {snippet : {title, customUrl, thumbnails}} = response;
+        console.log(`thumbnails`,thumbnails);
         return {
             title,
             customUrl: `https://youtube.com/${customUrl}`,
-            channelImg: thumbnails.default.url
+            channelImg: thumbnails.high.url
         }
         // console.log(`${tag} Channel 정보 가져왔음!`,channelResult);
     } catch (e) {
