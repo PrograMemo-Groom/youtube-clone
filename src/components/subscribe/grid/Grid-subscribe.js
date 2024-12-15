@@ -161,7 +161,7 @@ const GridSubscribe = () => {
                                             <div className={styles.videoDescriptions_lines}>
                                                 <h4>{video.title}</h4>
                                                 <p>{video.channelTitle}</p>
-                                                <p>{video.view} • {video.publishTime}</p>
+                                                <p>{video.views} • {video.publishTime}</p>
                                             </div>
                                             <div className={styles.videoDescriptions_button}>
                                                 <button>
