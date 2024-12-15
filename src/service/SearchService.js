@@ -36,7 +36,7 @@ export const getChannelData = async (channelId) => {
         const {data: {items: [response]}} = await instance.get(requests.fetchGetChannel, {
             params:{ part: "snippet", id: channelId, regionCode: "KR", maxResults: 1 }})
         const {snippet : {title, customUrl, thumbnails}} = response;
-        console.log(`thumbnails`,thumbnails);
+        // console.log(`thumbnails`,thumbnails);
         return {
             title,
             customUrl: `https://youtube.com/${customUrl}`,
@@ -44,7 +44,8 @@ export const getChannelData = async (channelId) => {
         }
         // console.log(`${tag} Channel 정보 가져왔음!`,channelResult);
     } catch (e) {
-        console.trace(tag, "getChannelData can't get response data", e);
+        console.log(tag, "getChannelData : return null");
+        // console.trace(tag, "getChannelData can't get response data", e);
         return null;
     }
 }
@@ -61,7 +62,8 @@ export const getSearchVideoList = async (keyword, pageToken="") => {
         }
         // console.log(`${tag} 검색된 비디오[] 가져왔음`,videoListResult);
     } catch (e) {
-        console.trace(tag, "fetchSearchVideos can't get response data", e);
+        console.log(tag, "fetchSearchVideos : return null");
+        // console.trace(tag, "fetchSearchVideos can't get response data", e);
         return null;
     }
 }
@@ -101,7 +103,8 @@ export const getVideoDetails = async (videoId) => {
         }
         // console.log(`${tag} 비디오(id)에 대한 정보 가져왔음`,detailResult);
     } catch (e) {
-        console.log(tag, "getVideoDetails can't get response data", e);
+        // console.log(tag, "getVideoDetails can't get response data", e);
+        console.log(tag, "getVideoDetails : return null");
         return null;
     }
 }
