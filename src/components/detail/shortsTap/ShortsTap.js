@@ -4,50 +4,16 @@ import "./ShortsTap.css";
 import { ThemeContext } from "../../context/context";
 import { getStyle } from "../themes/useThemeStyles";
 import { fetchShortsVideos } from "./fetchShortsVideos";
+import useNavigation from "../../../hooks/useNavigation.js";
 
 function ShortsTap() {
   // const { isDark } = useContext(ThemeContext);
   // const setTheme = getStyle(isDark);
   // 스크롤 이벤트를 위한 Ref
   const categoryBarRef = useRef(null);
+  const { link } = useNavigation();
 
-  const [shorts, setShorts] = useState([
-    {
-      id: 1,
-      title: "모동숲 새해 카운트 다운",
-      viewerCount: 123,
-      thumbUrl:
-        "https://i.ytimg.com/vi/ThJBisdZB1Y/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLDhYHosGr9qX6ZKrtIqDQriUiFHBA",
-    },
-    {
-      id: 2,
-      title: "모동숲 새해 카운트 다운",
-      viewerCount: 540000,
-      thumbUrl:
-        "https://i.ytimg.com/vi/ThJBisdZB1Y/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLDhYHosGr9qX6ZKrtIqDQriUiFHBA",
-    },
-    {
-      id: 3,
-      title: "모동숲 새해 카운트 다운",
-      viewerCount: 231,
-      thumbUrl:
-        "https://i.ytimg.com/vi/ThJBisdZB1Y/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLDhYHosGr9qX6ZKrtIqDQriUiFHBA",
-    },
-    {
-      id: 4,
-      title: "모동숲 새해 카운트 다운",
-      viewerCount: 123,
-      thumbUrl:
-        "https://i.ytimg.com/vi/ThJBisdZB1Y/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLDhYHosGr9qX6ZKrtIqDQriUiFHBA",
-    },
-    {
-      id: 5,
-      title: "모동숲 새해 카운트 다운",
-      viewerCount: 540000,
-      thumbUrl:
-        "https://i.ytimg.com/vi/ThJBisdZB1Y/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLDhYHosGr9qX6ZKrtIqDQriUiFHBA",
-    },
-  ]);
+  const [shorts, setShorts] = useState([]);
 
   // 쇼츠 비디오 정보 업데이트
   useEffect(() => {
@@ -57,8 +23,8 @@ function ShortsTap() {
         console.log("shortsVideo", shortsVideoList);
 
         // 가져온 데이터를 필요한 형식으로 변환
-        const formattedShorts = shortsVideoList.map((short, index) => ({
-          id: index + 1, // 임시 id 생성
+        const formattedShorts = shortsVideoList.map((short) => ({
+          id: short.id.videoId,
           title: short.snippet.title, // 제목
           viewerCount: short.viewerCount || 0, // 조회수 (없으면 0으로 설정)
           thumbUrl: short.snippet.thumbnails.default.url, // 썸네일 URL
@@ -86,6 +52,12 @@ function ShortsTap() {
     }
   };
 
+  // 해당 id의 쇼츠 페이지로 이동 
+  const handleShortsVideo = (videoId, event) => {
+    if (event) event.stopPropagation(); // 이벤트 버블링 방지
+    link(`/shorts?q=${videoId}`);
+  };
+
   return (
     <div className='shortsTap-container'>
       <div className='shorts-header'>
@@ -111,9 +83,12 @@ function ShortsTap() {
               className='shorts-item-img'
               src={short.thumbUrl}
               alt='미리보기 이미지'
+              onClick={(event) => handleShortsVideo(short.id, event)}
             />
             <div className='shorts-item-info'>
-              <span className='title'>{short.title}</span>
+              <span 
+              onClick={(event) => handleShortsVideo(short.id, event)}
+              className='title'>{short.title}</span>
               <span className='viewer-count'>
                 조회수 {formatViewerCount(short.viewerCount)}
               </span>

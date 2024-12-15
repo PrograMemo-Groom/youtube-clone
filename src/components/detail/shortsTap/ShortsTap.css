@@ -54,6 +54,7 @@
   object-fit: cover; /* Ensures the image is properly cropped */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  cursor: pointer;
 }
 
 .shorts-item-info {
@@ -70,6 +71,7 @@
   -webkit-line-clamp: 2; /* Limit to 2 lines */
   text-overflow: ellipsis;
   font-weight: bold;
+  cursor: pointer;
 }
 .viewer-count {
   margin-top: 10px;
