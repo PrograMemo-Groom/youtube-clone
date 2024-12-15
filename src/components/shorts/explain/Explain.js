@@ -5,7 +5,8 @@ const Comment = () => {
     return (
         <div>
             <section className={styles.contentsSection}>
-                <p>HEY BOY IMMA GETCHA 😘💗 <a>#TWICE #트와이스 #STRATEGY</a></p>
+                <p>HEY BOY IMMA GETCHA 😘💗 
+                    <span>#TWICE #트와이스 #STRATEGY</span></p>
             </section>
             <section className={styles.contentsBox}>
                 <section className={styles.contentsFactoid}>
