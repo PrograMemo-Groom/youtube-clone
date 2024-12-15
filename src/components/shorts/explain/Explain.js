@@ -18,7 +18,7 @@ const Explain= ({short}) => {
                         <span>조회 수</span>
                     </div>
                     <div>
-                        <p>12월 6일</p>
+                        <p>{short.uploadedDate}</p>
                         <span>2024년</span>
                     </div>
                 </section>
