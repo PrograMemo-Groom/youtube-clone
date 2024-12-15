@@ -10,12 +10,28 @@ const MainVideos = ({ fetchFunction }) => {
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const { link } = useNavigation();
+    //const [products, setProducts] = useState([]);
+    //const [hasMore, setHasMore] = useState(true);
+   // const [page, setPage] = useState(0);
+    //const elementRef = useRef(null);
+
+    const normalizeThumbnails = (videos) => {
+        return videos.map((video) => {
+            const defaultThumbnail = "https://via.placeholder.com/1280x720?text=No+Thumbnail"; // 기본 썸네일 URL
+
+            return {
+                ...video,
+                thumbnail: video.thumbnail || defaultThumbnail, // 썸네일 없으면 기본값
+            };
+        });
+    };
 
     useEffect(() => {
+
+
         const fetchVideos = async () => {
             try {
                 setLoading(true);
-
                 console.log("fetchFunction received:", fetchFunction);
 
                 let videoData;
@@ -25,7 +41,9 @@ const MainVideos = ({ fetchFunction }) => {
                     videoData = await getMainVideos(fetchFunction);
                 }
 
-                console.log("Fetched video data:", videoData);
+                videoData = normalizeThumbnails(videoData); // 썸네일 정규화
+                console.log("Normalized video data:", videoData);
+
                 setVideos(videoData);
             } catch (e) {
                 console.error("Error fetching videos:", e.message);
@@ -45,7 +63,7 @@ const MainVideos = ({ fetchFunction }) => {
 
     const handleChannelClick = (channelId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
-        window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
+        window.location.href = `https://www.youtube.com/channel/${channelId}`;
     };
 
     const toggleDropdown = (videoId) => {
