@@ -65,6 +65,7 @@ iframe {
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 
 .creator-tab button {
@@ -142,6 +143,7 @@ iframe {
   /* border: 1px solid black; */
   width: 45px;
   height: 45px;
+  cursor: pointer;
 }
 
 .input-container input {

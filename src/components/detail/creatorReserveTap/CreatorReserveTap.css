@@ -119,6 +119,7 @@
     right: 0;
     width: 24px;
     height: 24px;
+    cursor: pointer;
 }
 
 .creator-reserve-container .time-stamp {

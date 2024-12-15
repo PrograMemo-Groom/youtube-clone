@@ -45,3 +45,9 @@
         width: 100%;
     }
 }
+
+@media (max-width: 1440px) {
+    .side-section{
+        width: 370px;
+    }
+}

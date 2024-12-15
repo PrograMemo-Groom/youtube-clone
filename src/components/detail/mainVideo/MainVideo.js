@@ -11,7 +11,7 @@ import { getChannelThumbnail } from "../../../utils/formatProfileImage.js";
 import { getChannelSubscriberCount } from "../../../utils/getChannelSubscriberCount.js";
 import { fetchVideoComments } from "../../../utils/fetchVideoComments.js";
 
-function MainVideo({ video }) {
+function MainVideo({ video, channelId }) {
   const { isDark } = useContext(ThemeContext);
   const setMenuTheme = getMenuItemStyle(isDark);
   const setTheme = getStyle(isDark);
@@ -46,7 +46,6 @@ function MainVideo({ video }) {
 
   const videoId = video.id;
 
-
   // 비디오 정보 업데이트
   useEffect(() => {
     const { snippet, statistics } = video;
@@ -78,8 +77,8 @@ function MainVideo({ video }) {
       setContent(videoDetail);
     };
 
-    fetchChannelInfo(); 
-  }, [video]); 
+    fetchChannelInfo();
+  }, [video]);
 
   // 댓글 정보 업데이트
   useEffect(() => {
@@ -88,26 +87,31 @@ function MainVideo({ video }) {
       // console.log(commentList);
 
       const formattedComments = commentList.map((comment) => ({
-        id: +1, 
-        userImg: comment.profileImage || "assets/mypage/default-profile.png",  
+        id: +1,
+        userImg: comment.profileImage || "assets/mypage/default-profile.png",
         userName: comment.author || "Anonymous",
-        date: comment.date || new Date().toISOString(),  
-        isEdited: comment.isEdited || false,  
+        date: comment.date || new Date().toISOString(),
+        isEdited: comment.isEdited || false,
         text: comment.text || "",
-        like: comment.likes || 0, 
-        hate: comment.hate || 0,  
-        reply: comment.reply || [],  
+        like: comment.likes || 0,
+        hate: comment.hate || 0,
+        reply: comment.reply || [],
       }));
 
       // 상태 업데이트
       setComments(formattedComments);
-    }
-    
+    };
+
     fetchComments();
-  },[])
+  }, []);
 
   const handleToggleText = () => {
     setShowFullText((prevState) => !prevState);
+  };
+
+  const handleChannelClick = (channelId, event) => {
+    if (event) event.stopPropagation(); // 이벤트 버블링 방지
+    window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
   };
 
   // 텍스트를 단락 단위로 나누고, 첫 5단락만 표시
@@ -144,7 +148,11 @@ function MainVideo({ video }) {
         <div className='details-header'>{content.title}</div>
         <div className='details-actions'>
           <div className='creator-tab'>
-            <img src={content.channelImgUrl} alt='creator' />
+            <img
+              onClick={(event) => handleChannelClick(channelId, event)} // 유저 프로필 클릭 이벤트 추가
+              src={content.channelImgUrl}
+              alt='creator'
+            />
             <div className='creator-info'>
               <span>{content.channel}</span>
               <span>
@@ -239,8 +247,9 @@ function MainVideo({ video }) {
                     {" "}
                     {formatTimeDifference(comment.date)}
                   </span>
-                  {comment.isEdited && <span className='isEdited'> {"(수정됨)"} </span>}
-                  
+                  {comment.isEdited && (
+                    <span className='isEdited'> {"(수정됨)"} </span>
+                  )}
                 </span>
                 <p className='comment-text'>{comment.text}</p>
                 <div className='comment-actions'>
