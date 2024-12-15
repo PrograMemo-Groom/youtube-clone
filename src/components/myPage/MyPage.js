@@ -226,6 +226,34 @@ const fetchLikedVideos = async (accessToken) => {
     }
 };
 
+const fetchFirstVideoId = async (accessToken, playlistId) => {
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet",
+                playlistId,
+                maxResults: 1, // 첫 번째 동영상만 가져오기
+            },
+        });
+
+        console.log("API Response for Playlist Items:", response.data);
+
+        // 첫 번째 동영상 ID 추출
+        const firstVideoId =
+            response.data.items && response.data.items.length > 0
+                ? response.data.items[0].snippet.resourceId.videoId
+                : null;
+
+        return firstVideoId;
+    } catch (error) {
+        console.error(`Error fetching first video ID for playlist ${playlistId}:`, error.message);
+        return null;
+    }
+};
+
 export default function MyPage() {
     console.log("여기까지 왔나? 3:", "MyPage()");
 
@@ -239,6 +267,7 @@ export default function MyPage() {
     const [likedVideos, setLikedVideos] = useState([]);
     const [channelId, setChannelId] = useState("");
     const [openDropdown, setOpenDropdown] = useState(null); // 현재 열려 있는 videoId를 저장
+    const [FirstVideoId, setFirstVideoId] = useState("");
     const navigate = useNavigate();
     const {link} = useNavigation();
 
@@ -337,6 +366,11 @@ export default function MyPage() {
                 if (likesVideos) {
                     setLikedVideos(likesVideos);
                 }
+
+                const FirstVideoId = await fetchFirstVideoId(accessToken);
+                if (FirstVideoId) {
+                    setFirstVideoId(FirstVideoId);
+                }
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -403,17 +437,6 @@ export default function MyPage() {
         }
     };
 
-
-    const handleScrollRight = () => {
-        const container = document.getElementById("scrollable-container");
-        container.scrollBy({left: 300, behavior: "smooth"});
-    };
-
-    const handleScrollLeft = () => {
-        const container = document.getElementById("scrollable-container");
-        container.scrollBy({left: -300, behavior: "smooth"});
-    };
-
     const handleShowVideo = (videoId) => {
         console.log("6: ", videoId);
         const queryParam = `?q=${videoId}`;
@@ -446,6 +469,18 @@ export default function MyPage() {
             setOpenDropdown(videoId); // 새로운 videoId 열기
         }
     };
+
+    const navigateToPlaylist = async (playlistId, accessToken) => {
+        const baseUrl = 'https://www.youtube.com/watch';
+
+        if (!playlistId) {
+            console.error("First video ID is missing.");
+            return;
+        }
+        const url = `${baseUrl}?v=${playlistId}&list=${playlistId}`;
+        window.location.href = url;
+    };
+
     return (
         <div className="container">
             <div className="relative-layout-container">
@@ -618,10 +653,15 @@ export default function MyPage() {
                                                         className="playlist-video-thumbnail"
                                                         src={playlist.snippet.thumbnails.medium.url}
                                                         alt={playlist.snippet.title}/>
-                                                    <div className="hover-text"> ▶ 모두 재생</div>
+                                                    <div className="hover-text"
+                                                         onClick={() => navigateToPlaylist(playlist.id, playlist.firstVideoId)}>
+                                                        ▶ 모두 재생
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="playlist-video-info-container">
+                                            <div className="playlist-video-info-container"
+                                                 key={playlist.id}
+                                                 onClick={() => navigateToPlaylist(playlist.id, playlist.firstVideoId)}>
                                                 <h3 className="playlist-video-title">{playlist.snippet.title}</h3>
                                                 <p className="playlist-video-channel">{playlist.snippet.channelTitle} &#183; 재생목록</p>
                                                 <p className="playlist-video-meta">
