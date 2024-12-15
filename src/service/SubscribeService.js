@@ -174,6 +174,31 @@ const fetchVideoDetails = async (videoIds, token) => {
 
 
 
+// 페이커 쇼츠 가져오기
+
+export const fetchShortsVideos = async (query = "NewJeans") => {
+    try {
+        const {
+            data: { items: response },
+        } = await instance.get(requests.fetchGetSearch, {
+            params: {
+                part: "snippet",
+                regionCode: "KR",
+                maxResults: 6,
+                q: query,
+                videoDuration: "short", // 짧은 영상 필터링
+                type: "video",
+            },
+        });
+        // console.log("fetchShortsVideos response",response);
+        return response;
+    } catch (e) {
+        console.log("fetchShortsVideo can't get response data", e);
+    }
+};
+
+
+
 
 
 // 60초 이하를 숏츠로 분류 ~! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 쇼츠 섹션
