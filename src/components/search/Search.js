@@ -11,6 +11,8 @@ const Search = () => {
     const [searchResult, setSearchResult] = useState([]);
     const [nextToken, setNextToken] = useState("");
     const [mouseHover, setMouseHover] = useState(null);
+    const [itemRef, ] = useState([]);
+
     const useQuery = () => {
         return new URLSearchParams(useLocation().search);
     }
@@ -30,18 +32,23 @@ const Search = () => {
     }, [searchTerm]);
     // console.log("dummy data",searchResult);
 
-    const fetchNextPage = async () => {
+    const fetchNextPage = useCallback(async() => {
         if (!nextToken) return;
-        const { items, pageToken } = await fetchSearchList(searchTerm, nextToken);
-        // console.log(tag, "fetchNextPage:", items, pageToken);
-        const uniqueSet = [...searchResult, ...items];
+        try {
+            const { items, pageToken } = await fetchSearchList(searchTerm, nextToken);
+            console.log(tag, "fetchNextPage:", items, pageToken);
+            const uniqueSet = [...searchResult, ...items];
 
-        const uniqueResults = Array.from(
-            new Map(uniqueSet.map((item) => [item.videoId, item])).values()
-        );
-        setSearchResult(uniqueResults);
-        setNextToken(pageToken);
-    }
+            const uniqueResults = Array.from(
+                new Map(uniqueSet.map((item) => [item.videoId, item])).values()
+            );
+            setSearchResult(uniqueResults);
+            setNextToken(pageToken);
+        } catch (e) {
+            console.error("Error fetchNextPage:", e);
+        }
+    }, [nextToken, searchTerm, searchResult]);
+    const lastItemRef = useIntersectionObserver(fetchNextPage, {root: null, threshold: 0.1});
 
     const handleShowVideo = useCallback((videoId) => {
         link(`/detail?q=${videoId}`)
@@ -51,7 +58,15 @@ const Search = () => {
         window.open(url, "_blank");
     }, []);
 
-    const lastItemRef = useIntersectionObserver(fetchNextPage, {root: null, threshold: 0.1});
+    const handleAddRefs = (refs, index) => {
+        if (!itemRef.current) itemRef.current = [];
+        if (refs) {
+            itemRef.current[index] = refs;
+            if (index === searchResult.length - 1) {
+                lastItemRef.current = refs;
+            }
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -73,7 +88,7 @@ const Search = () => {
 
                     return (
                         <div className={styles.videoLists} key={video.videoId}
-                            ref={i === searchResult.length - 1 ? lastItemRef : null}>
+                            ref={(ref) => handleAddRefs(ref, i)}>
                             <div className={styles.videoFrame}
                                  onClick={() => handleShowVideo(video.videoId)}
                                  onMouseEnter={() => setMouseHover(video.videoId)}
