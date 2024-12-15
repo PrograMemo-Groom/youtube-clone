@@ -49,9 +49,9 @@ const fetchChannelDetails = async (channelId) => {
         const channel = data.items[0];
         return {
             id: channel.id,
-            title: channel.snippet.title,
-            description: channel.snippet.description,
-            profileImage: channel.snippet.thumbnails.default.url,
+            channelTitle: channel.snippet.title,
+            channelDescription: channel.snippet.description,
+            channelAvatar: channel.snippet.thumbnails.default.url,
             subscriberCount: channel.statistics.subscriberCount,
         }
     } catch (e) {
@@ -59,11 +59,6 @@ const fetchChannelDetails = async (channelId) => {
         return null;
     }
 }
-
-
-
-
-
 
 
 
@@ -86,13 +81,22 @@ export const fetchSubscriptionsVideos = async (token) => {
         });
         console.log('구독 목록이어요 :' , items);
 
-        //아이디 넘겨서 체널 디테일 가져오기
+        // 아이디 넘겨서 채널 디테일 + 최신 동영상 가져오기
         const channelVideos = await Promise.all(
             items.map(async (item) => {
                 const channelId = item.snippet.resourceId.channelId;
-                const videos = await fetchChannelVideos(channelId , token);  // 최신 동영상 가져오기
-                console.log('구독 목록의 최신동영상이어요 :' , videos);
-                return videos;
+                const channelDetails = await fetchChannelDetails(channelId);
+                const videos = await fetchChannelVideos(channelId, token);
+
+                // 채널 정보와 동영상 정보를 합치기
+                const videosWithAvatar = videos.map(video => ({
+                    ...video,
+                    channelAvatar: channelDetails.channelAvatar,
+                }));
+
+                console.log('아바타 합쳐진 비디오 :', videosWithAvatar);
+
+                return videosWithAvatar;
             })
         );
 
@@ -116,11 +120,10 @@ const fetchChannelVideos = async (channelId , token) => {
                 part: "snippet",
                 channelId: channelId,
                 regionCode: "KR",
-                maxResults: 10,
+                maxResults: 2,
                 type: "video"
             }
         });
-        console.log("동영상을 가져오앗다",response);
         // 떨어지는 data 가공
         const videos = response.items.map((item) => ({
             videoId: item.id.videoId,
@@ -132,7 +135,7 @@ const fetchChannelVideos = async (channelId , token) => {
             highThumbnail: item.snippet.thumbnails.high,
             mediumThumbnail: item.snippet.thumbnails.medium,
             title: item.snippet.title,
-        }))
+        }));
 
         return videos;
 
