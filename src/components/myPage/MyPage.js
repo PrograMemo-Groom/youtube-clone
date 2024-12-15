@@ -611,10 +611,15 @@ export default function MyPage() {
                                     {playlists.map((playlist, i) => (
                                         <section className="playlist-video-item"
                                                  key={`${i}-${playlist.id}`}>
+
                                             <div className="playlist-video-thumbnail-container">
-                                                <img className="playlist-video-thumbnail"
-                                                     src={playlist.snippet.thumbnails.medium.url}
-                                                     alt={playlist.snippet.title}/>
+                                                <div className="hover-overlay">
+                                                    <img
+                                                        className="playlist-video-thumbnail"
+                                                        src={playlist.snippet.thumbnails.medium.url}
+                                                        alt={playlist.snippet.title}/>
+                                                    <div className="hover-text"> ▶ 모두 재생</div>
+                                                </div>
                                             </div>
                                             <div className="playlist-video-info-container">
                                                 <h3 className="playlist-video-title">{playlist.snippet.title}</h3>
