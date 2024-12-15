@@ -105,7 +105,7 @@ const ListedSubscribe = () => {
                                         <header className={styles.videoClip_header}>
                                             <div className={styles.header_channel}>
                                                 <img
-                                                    src={video.highThumbnail}
+                                                    src={video.channelAvatar}
                                                     alt='채널프로필사진' 
                                                 />
                                                 <h4>{video.channelTitle}</h4>

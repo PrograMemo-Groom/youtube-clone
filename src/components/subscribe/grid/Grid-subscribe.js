@@ -5,6 +5,8 @@ import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
 import useGoogleAuth from "../../../hooks/useGoogleAuth";
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
+import { fetchShortsVideos } from "../../../service/SubscribeService";
+
 
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
@@ -14,6 +16,7 @@ const GridSubscribe = () => {
     const [accessToken, setAccessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
     const googleLogin = useGoogleAuth();
+    const [shorts, setShorts] = useState([]);
 
 
         // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
@@ -33,7 +36,6 @@ const GridSubscribe = () => {
                     return;
                 }
                 const response = await fetchSubscriptionsVideos(accessToken);  // 구독 비디오오오
-                console.log("내가 구독하는 video 갖고 왔다이!!!!! ",response);
                 if (Array.isArray(response)) {
                     console.log('내가 가져온 동영상들 배열성공 !!');
                     const flattenedResponse = response.flatMap(sub => sub); //이중배열을 풀어보자
@@ -48,6 +50,31 @@ const GridSubscribe = () => {
                 console.log('fetchData 에러 :', error);
             }
         }
+
+        // 쇼츠 비디오 정보 업데이트
+        useEffect(() => {
+        const fetchAndSetShorts = async () => {
+            try {
+            const shortsVideoList = await fetchShortsVideos("NewJeans"); // 데이터를 비동기적으로 가져옴
+            console.log("shortsVideo", shortsVideoList);
+
+            // 가져온 데이터를 필요한 형식으로 변환
+            const formattedShorts = shortsVideoList.map((short, index) => ({
+            id: index + 1, // 임시 id 생성
+            title: short.snippet.title, // 제목
+            viewerCount: short.viewerCount || 0, // 조회수 (없으면 0으로 설정)
+            thumbUrl: short.snippet.thumbnails.high.url, // 썸네일 URL
+            }));
+
+            // 상태 업데이트
+            setShorts(formattedShorts);
+            } catch (error) {
+            console.error("Error fetching Shorts videos:", error);
+            }
+        };
+        fetchAndSetShorts();
+    }, []);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -185,17 +212,17 @@ const GridSubscribe = () => {
                                                 </button>
                                             </header>
                                             <div className={styles.shortsMain}>
-                                                {shortsData.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
+                                                {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
                                                     <article key={shortsIndex} className={styles.shortsClip}>
                                                         <img
                                                             className={styles.shortsThumbnail}
                                                             alt="shorts 썸네일"
-                                                            src={shorts.thumbnail}
+                                                            src={shorts.thumbUrl}
                                                         />
                                                         <div className={styles.shortsDetail}>
                                                             <div>
                                                                 <h5>{shorts.title}</h5>
-                                                                <p>조회수 {shorts.view}회</p>
+                                                                <p>조회수 {shorts.viewerCount}회</p>
                                                             </div>
                                                             <button>
                                                                 <img src="/assets/subscribe/video-option-btn.svg" alt="영상옵션버튼" />

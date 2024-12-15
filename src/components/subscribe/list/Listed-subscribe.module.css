@@ -78,6 +78,7 @@
     justify-content: space-between;
 
     height: 54px;
+    min-height: 54px;
 }
 
 .header_channel {
@@ -87,6 +88,7 @@
 .header_channel img {
     width: 32px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .header_channel h4 {
@@ -110,6 +112,8 @@
 .videoThumbnail {
     position: relative;
     width: 100%;
+    min-width: 246px;
+    max-width: 246px;
     aspect-ratio: 16 / 9;
     margin-bottom: 10px;
     border-radius: 5%;

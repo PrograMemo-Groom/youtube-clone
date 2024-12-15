@@ -253,7 +253,8 @@
 .shortsThumbnail {
     width: 100%;
     border-radius: 3%;
-
+    min-width: 210px;
+    min-width: 315px;
 }
 
 

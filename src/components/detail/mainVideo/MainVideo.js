@@ -196,8 +196,7 @@ function MainVideo({ video, channelId }) {
             >
               ···
             </button>
-          </div>
-          {openDropdown === video.id && (
+            {openDropdown === video.id && (
               <div className='dropdownMenu'>
                 <ul>
                   <li>
@@ -268,6 +267,7 @@ function MainVideo({ video, channelId }) {
                 </ul>
               </div>
             )}
+          </div>
         </div>
         <div style={setMenuTheme} className='details-contents'>
           <p>
