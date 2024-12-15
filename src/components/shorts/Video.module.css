@@ -7,6 +7,7 @@
     flex-direction: row;
     justify-content: center;
     margin: auto;
+    margin-bottom: 20px;
 }
 
 /* 쇼츠 동영상부분. 크기 고정 */
@@ -16,7 +17,11 @@
     background-color: rgb(173, 173, 173);
     border-radius: 12px;
     position: relative;
-    transition: "all 0.3s ease"
+    transition: "all 0.3s ease";
+
+    background-size: cover; /* 이미지가 컨테이너에 맞게 조정 */
+    background-position: center; /* 이미지를 중앙에 위치 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
 }
 
 /* 모든 정보 담을 컨테이너 */

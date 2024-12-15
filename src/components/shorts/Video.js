@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styles from './Video.module.css';
+import exampledata from './exampleData.json';
 
 const Video = ({onPanelToggle}) => {
   // 구독 버튼
@@ -12,14 +13,20 @@ const Video = ({onPanelToggle}) => {
   return (
     <main className={styles.videoComponents}>
       {/* 컨테이너 하나 */}
-      <div className={styles.videoContainer}>
-        <div className={styles.videoBox}>
-          {/* 비디오 넣고 */}
+      {exampledata.shorts.map((short, index) => (
+      <div key={short.id} className={styles.videoContainer}>
+        <div className={styles.videoBox}
+          style={{
+            backgroundImage: `url(${short.video})`,
+          }}
+        >
+          {/* 비디오 들어가는거임 여기에 */}
+
           <div className={styles.infoContainer}>
             {/* 프로필박스 */}
             <div className={styles.profileBox}>
-              <img src={`${process.env.PUBLIC_URL}/channels4_profile.jpg`} alt="channel_profile"/>
-              <p>@viviz.official</p>
+              <img src={`${process.env.PUBLIC_URL}/${short.userProfilePicture}`} alt="channel_profile"/>
+              <p>{short.uploadedBy}</p>
               <button 
                 className={isSubscribe ? styles.subscribedBtn : styles.subscribeBnt}
                 onClick={handleSubscribeBnt}>
@@ -27,11 +34,11 @@ const Video = ({onPanelToggle}) => {
               </button>
             </div>
             <div className={styles.explanBox}>
-              <p>챌린지의 지배자, 챌린지의 마스터 with #캐스퍼 #Kasper #VIVIZ #비비지 #EUNHA #은하 #SINB #신비 #UMJI #엄지 #Shhhchallenge #쉿챌린지</p>
+              <p>{short.description}</p>
             </div>
             <div className={styles.musicBox}>
               <img src={`${process.env.PUBLIC_URL}/shortmusic.png`} alt="music_icon"/>
-              <p> 쉿(Shhh) · KISS OF LIFE </p>
+              <p>{short.music}</p>
             </div>
           </div>
         </div>
@@ -40,7 +47,7 @@ const Video = ({onPanelToggle}) => {
             <button>
               <img src={`${process.env.PUBLIC_URL}/likeicon.png`} alt="likeBtn"/>
             </button>
-            <span>12만</span>
+            <span>{short.likes}</span>
           </div>
           <div>
             <button className={styles.donlikeBnt}>
@@ -53,7 +60,7 @@ const Video = ({onPanelToggle}) => {
               onClick={() => onPanelToggle("comment")}>
               <img src={`${process.env.PUBLIC_URL}/comment.png`} alt="commentBtn"/>
             </button>
-            <span>781</span>
+            <span>{short.comments}</span>
           </div>
           <div>
             <button className={styles.shareBnt}>
@@ -72,6 +79,7 @@ const Video = ({onPanelToggle}) => {
           </div>
         </aside>
       </div>
+      ))}
     </main>
   )
 }
