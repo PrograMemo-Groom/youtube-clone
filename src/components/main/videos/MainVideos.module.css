@@ -1,3 +1,8 @@
+.container {
+    min-height: 100vh; /* 화면 높이만큼 최소 크기 설정 */
+    overflow-y: auto;
+}
+
 .videoGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
