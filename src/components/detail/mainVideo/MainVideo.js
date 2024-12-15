@@ -104,7 +104,7 @@ function MainVideo({ video, channelId }) {
     };
 
     fetchComments();
-  }, []);
+  }, [video]);
 
   const handleToggleText = () => {
     setShowFullText((prevState) => !prevState);
