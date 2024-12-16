@@ -5,7 +5,6 @@
     max-width: 1400px;
     width: 100%;
     box-sizing: border-box;
-    width: 100%;
 
 }
 
@@ -51,6 +50,8 @@
     transition: opacity 0.3s ease-in-out;
     border-radius: 12px;
     cursor: pointer;
+    top: 0;
+    left: 0;
 }
 
 .thumbnailRow:hover .thumbnail {
@@ -80,12 +81,10 @@
 }
 
 .videoInfoGrid {
-    display: flex;
+    display: grid;
     padding: 10px;
     grid-template-columns: 50px 1fr;
     gap: 5px;
-    box-sizing: border-box;
-    width: 90%;
 }
 
 .profilePicture {
@@ -136,6 +135,8 @@
     flex-shrink: 0;
     margin-left: 8px;
     cursor: pointer;
+    top: 0;
+    right: 0;
 }
 
 .dropdownMenu {
