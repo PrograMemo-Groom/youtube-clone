@@ -1,71 +1,62 @@
 .container {
-    min-height: 100vh; /* 화면 높이만큼 최소 크기 설정 */
+    min-height: 80vh; /* 화면 높이만큼 최소 크기 설정 */
     overflow-y: auto;
+    width: 100%;
 }
 
 .videoGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 16px;
-    margin: 0 auto;
+    padding: 10px;
     max-width: 1920px;
-    padding-top: 10px;
-    padding-left: 30px;
+    width: 100%;
+    box-sizing: border-box;
+
 }
 
 @media (max-width: 700px) {
     .videoGrid {
         grid-template-columns: 1fr;
-        justify-items: center;
     }
 }
 
 @media (max-width: 1100px) and (min-width: 701px) {
     .videoGrid {
-        grid-template-columns: 1fr 1fr;
-        justify-items: center;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 1101px) and (max-width: 1420px) {
     .videoGrid {
-        grid-template-columns: 1fr 1fr 1fr;
-        justify-items: center;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 1421px) {
     .videoGrid {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        justify-items: center;
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 .thumbnailRow {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    aspect-ratio: 16 / 9 !important; /* 비율 유지 */
     background-color: #000;
-    min-height: 180px;/* 썸네일 최소 높이 설정 */
+    border-radius: 12px;
+    cursor: pointer;
 }
 .thumbnail,
 .videoPlayer {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지 비율 유지 */
-    display: block;
+    aspect-ratio: 16/9 !important;
+    object-fit: cover; /* 썸네일 비율 유지 */
     transition: opacity 0.3s ease-in-out;
+    border-radius: 12px;
+    cursor: pointer;
 }
 
 .thumbnailRow:hover .thumbnail {
@@ -95,12 +86,17 @@
 }
 
 .videoInfoGrid {
-    display: grid;
+    display: flex;
+    padding: 10px;
     grid-template-columns: 50px 1fr;
+    gap: 5px;
+    box-sizing: border-box;
+    width: 90%;
 }
 
 .profilePicture {
     width: 36px;
+    height: 36px;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -116,7 +112,7 @@
     margin-right: 8px;
     cursor: pointer;
     font-size: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     overflow: hidden;
     text-overflow: ellipsis; /* 생략 부호 추가 */
     display: -webkit-box; /* 플렉스 박스 사용 */
@@ -137,6 +133,7 @@
     align-items: flex-start;
     justify-content: space-between;
     position: relative;
+
 }
 
 .more {
@@ -199,4 +196,16 @@
     border: 0;
     border-top: 1px solid #e1e1e1;
     margin: 5px 0;
+}
+
+.videoPreview {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    border-radius: 12px;
+    aspect-ratio: 16/9 !important;
+    padding: 0;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
