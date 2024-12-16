@@ -3,7 +3,7 @@ import styles from './Panel.module.css';
 import Explain from './explain/Explain.js';
 import Comment from './comment/Comment.js';
 
-const Panel = ({onPanelToggle, isPanelOpen, content}) => {
+const Panel = ({onPanelToggle, isPanelOpen, content, short}) => {
   return (
     <div className={`${styles.panelContainer} ${isPanelOpen ? styles.slideIn : styles.slideOut}`}>
         <div className={styles.contentsContainer}>
@@ -19,7 +19,10 @@ const Panel = ({onPanelToggle, isPanelOpen, content}) => {
             </button>
           </header>
           <div>
-            {content === "explain" && <Explain />}
+            {content === "explain" && 
+            <Explain short={short} />
+            }
+
             {content === "comment" && <Comment />}
             {/* <Comment /> */}
             {/* <Explain /> */}
