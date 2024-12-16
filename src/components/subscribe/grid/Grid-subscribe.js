@@ -203,7 +203,7 @@ const GridSubscribe = () => {
                                                 </button>
                                             </header>
                                             <div className={styles.shortsMain}>
-                                                {shorts.map((shorts, shortsIndex) => (
+                                                {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
                                                     <article key={shortsIndex} className={styles.shortsClip}>
                                                         <img
                                                             className={styles.shortsThumbnail}
