@@ -54,19 +54,11 @@ const GridSubscribe = () => {
         useEffect(() => {
         const fetchAndSetShorts = async () => {
             try {
-            const shortsVideoList = await fetchShortsVideos("NewJeans"); // 데이터를 비동기적으로 가져옴
+            const shortsVideoList = await fetchShortsVideos("귀여운 강아지 쇼츠"); // 데이터를 비동기적으로 가져옴
             console.log("shortsVideo", shortsVideoList);
 
-            // 가져온 데이터를 필요한 형식으로 변환
-            const formattedShorts = shortsVideoList.map((short, index) => ({
-            id: index + 1, // 임시 id 생성
-            title: short.snippet.title, // 제목
-            viewerCount: short.viewerCount || 0, // 조회수 (없으면 0으로 설정)
-            thumbUrl: short.snippet.thumbnails.high.url, // 썸네일 URL
-            }));
-
             // 상태 업데이트
-            setShorts(formattedShorts);
+            setShorts(shortsVideoList);
             } catch (error) {
             console.error("Error fetching Shorts videos:", error);
             }
@@ -211,7 +203,7 @@ const GridSubscribe = () => {
                                                 </button>
                                             </header>
                                             <div className={styles.shortsMain}>
-                                                {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
+                                                {shorts.map((shorts, shortsIndex) => (
                                                     <article key={shortsIndex} className={styles.shortsClip}>
                                                         <img
                                                             className={styles.shortsThumbnail}
@@ -221,7 +213,7 @@ const GridSubscribe = () => {
                                                         <div className={styles.shortsDetail}>
                                                             <div>
                                                                 <h5>{shorts.title}</h5>
-                                                                <p>조회수 {shorts.viewerCount}회</p>
+                                                                <p>조회수 {shorts.viewerCount}</p>
                                                             </div>
                                                             <button>
                                                                 <img src="/assets/subscribe/video-option-btn.svg" alt="영상옵션버튼" />
