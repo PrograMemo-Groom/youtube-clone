@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./MainVideos.module.css";
 import { getMainVideos } from "../../../service/MainService";
 import useNavigation from "../../../hooks/useNavigation";
@@ -10,10 +10,9 @@ const MainVideos = ({ fetchFunction }) => {
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const { link } = useNavigation();
-    //const [products, setProducts] = useState([]);
-    //const [hasMore, setHasMore] = useState(true);
-   // const [page, setPage] = useState(0);
-    //const elementRef = useRef(null);
+    const [page, setPage] = useState(0);
+    const observerRef = useRef(null); // Intersection Observer를 위한 ref
+    const scrollPositionRef = useRef(0); // 스크롤 위치 추적
 
     const normalizeThumbnails = (videos) => {
         return videos.map((video) => {
@@ -26,35 +25,60 @@ const MainVideos = ({ fetchFunction }) => {
         });
     };
 
-    useEffect(() => {
+    const fetchVideos = async (currentPage) => {
+        try {
+            setLoading(true);
 
+            let videoData;
 
-        const fetchVideos = async () => {
-            try {
-                setLoading(true);
-                console.log("fetchFunction received:", fetchFunction);
-
-                let videoData;
-                if (Array.isArray(fetchFunction)) {
-                    videoData = fetchFunction;
-                } else {
-                    videoData = await getMainVideos(fetchFunction);
-                }
-
-                videoData = normalizeThumbnails(videoData); // 썸네일 정규화
-                console.log("Normalized video data:", videoData);
-
-                setVideos(videoData);
-            } catch (e) {
-                console.error("Error fetching videos:", e.message);
-                setError("동영상을 불러오는 중 문제가 발생했습니다.");
-            } finally {
-                setLoading(false);
+            if (Array.isArray(fetchFunction)) {
+                videoData = fetchFunction.slice(currentPage * 16, (currentPage + 1) * 16); // 페이지별로 데이터 슬라이스
+            } else {
+                videoData = await getMainVideos({ ...fetchFunction, page: currentPage, limit: 16 });
             }
-        };
 
-        fetchVideos();
-    }, [fetchFunction]);
+            const normalizedVideos = normalizeThumbnails(videoData);
+            setVideos((prev) => [...prev, ...normalizedVideos]); // 기존 데이터에 새 데이터 추가
+        } catch (e) {
+            console.error("Error fetching videos:", e.message);
+            setError("동영상을 불러오는 중 문제가 발생했습니다.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchVideos(page);
+    }, [page]);
+
+    // Intersection Observer 설정
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && !loading) {
+                    // 스크롤 위치 저장
+                    scrollPositionRef.current = window.scrollY;
+
+                    setPage((prev) => prev + 1); // 페이지 증가
+                }
+            },
+            { threshold: 0.1 } // 요소가 10% 이상 보이면 트리거
+        );
+
+        const currentRef = observerRef.current; // 현재 ref 복사
+        if (currentRef) observer.observe(currentRef); // observer 연결
+
+        return () => {
+            if (currentRef) observer.unobserve(currentRef); // observer 해제
+        };
+    }, [loading]);
+
+    // 스크롤 위치 복원
+    useEffect(() => {
+        if (!loading) {
+            window.scrollTo(0, scrollPositionRef.current); // 이전 스크롤 위치로 복원
+        }
+    }, [videos]); // videos 상태가 업데이트될 때 실행
 
     const handleShowVideo = (videoId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
@@ -79,6 +103,7 @@ const MainVideos = ({ fetchFunction }) => {
     }
 
     return (
+        <>
         <div className={styles.videoGrid}>
             {videos.map((video, index) => (
                 <div
@@ -219,6 +244,9 @@ const MainVideos = ({ fetchFunction }) => {
                 </div>
             ))}
         </div>
+    {loading && <div className={styles.loading}>로딩 중...</div>}
+    <div ref={observerRef} style={{ height: "1px", background: "transparent"  }}></div>
+</>
     );
 };
 
