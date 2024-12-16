@@ -174,28 +174,48 @@ const fetchVideoDetails = async (videoIds, token) => {
 
 
 
-// 페이커 쇼츠 가져오기
+// 쇼츠 가져오기
 
-export const fetchShortsVideos = async (query = "NewJeans") => {
+export const fetchShortsVideos = async (query = "shorts") => {
     try {
-        const {
-            data: { items: response },
-        } = await instance.get(requests.fetchGetSearch, {
+        // Step 1: /search 요청으로 videoId 가져오기
+        const { data: { items: searchResults = [] } = {} } = await instance.get(requests.fetchGetSearch, {
             params: {
                 part: "snippet",
                 regionCode: "KR",
                 maxResults: 6,
                 q: query,
-                videoDuration: "short", // 짧은 영상 필터링
                 type: "video",
             },
         });
-        // console.log("fetchShortsVideos response",response);
-        return response;
+
+        // videoId 목록 생성
+        const videoIds = searchResults.map(item => item.id.videoId).join(",");
+
+        if (!videoIds) return []; // videoId가 없으면 빈 배열 반환
+
+        // Step 2: /videos 요청으로 statistics 가져오기
+        const { data: { items: videoDetails = [] } = {} } = await instance.get(requests.fetchGetVideo, {
+            params: {
+                part: "snippet,statistics",
+                id: videoIds,
+            },
+        });
+
+        // 필요한 데이터 매핑
+        return videoDetails.map((video) => ({
+            id: video.id,
+            title: video.snippet.title,
+            viewerCount: formatViewCount(video.statistics?.viewCount || 0),
+            thumbUrl: video.snippet.thumbnails.high.url,
+        }));
+
     } catch (e) {
-        console.log("fetchShortsVideo can't get response data", e);
+        console.error("Error fetching Shorts videos:", e.response?.data || e.message);
+        return []; // 에러 발생 시 빈 배열 반환
     }
 };
+
 
 
 
