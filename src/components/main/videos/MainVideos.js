@@ -30,15 +30,19 @@ const MainVideos = ({ fetchFunction }) => {
             setLoading(true);
 
             let videoData;
+            let nextToken;
 
             if (Array.isArray(fetchFunction)) {
                 videoData = fetchFunction.slice(currentPage * 16, (currentPage + 1) * 16); // 페이지별로 데이터 슬라이스
             } else {
-                videoData = await getMainVideos({ ...fetchFunction, page: currentPage, limit: 16 });
+                const response = await getMainVideos(null, nextPageToken);
+                videoData = response.videos;
+                nextToken = response.nextPageToken;
             }
 
             const normalizedVideos = normalizeThumbnails(videoData);
             setVideos((prev) => [...prev, ...normalizedVideos]); // 기존 데이터에 새 데이터 추가
+            setNextPageToken(nextToken); // 다음 페이지 토큰 저장
         } catch (e) {
             console.error("Error fetching videos:", e.message);
             setError("동영상을 불러오는 중 문제가 발생했습니다.");
@@ -46,6 +50,8 @@ const MainVideos = ({ fetchFunction }) => {
             setLoading(false);
         }
     };
+
+    const [nextPageToken, setNextPageToken] = useState(null); // 다음 페이지 토큰 상태
 
     useEffect(() => {
         fetchVideos(page);

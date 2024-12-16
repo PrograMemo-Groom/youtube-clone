@@ -6,7 +6,7 @@ import formatVideoTime from "../utils/formatVideoTime";
 import { getChannelThumbnail } from "../utils/formatProfileImage";
 
 //메인 동영상 가져오기
-export const getMainVideos = async (categoryId = null) => {
+export const getMainVideos = async (categoryId = null, pageToken = null) => {
     try {
         const params = {
             part: "snippet,contentDetails,statistics",
@@ -18,9 +18,13 @@ export const getMainVideos = async (categoryId = null) => {
         if (categoryId) {
             params.videoCategoryId = categoryId;
         }
+        if (pageToken) {
+            params.pageToken = pageToken; // 다음 페이지를 가져오기 위한 토큰
+        }
 
         const response = await instance.get(requests.getMainVideos, { params });
 
+        const nextPageToken = response.data.nextPageToken; // 다음 페이지 토큰
         const results = await Promise.allSettled(
             response.data.items.map(async (item) => {
                 try {
@@ -43,12 +47,14 @@ export const getMainVideos = async (categoryId = null) => {
             })
         );
 
-        return results
-            .filter((result) => result.status === "fulfilled" && result.value !== null)
-            .map((result) => result.value);
-
+        return {
+            videos: results
+                .filter((result) => result.status === "fulfilled" && result.value !== null)
+                .map((result) => result.value),
+            nextPageToken, // 다음 페이지 토큰 반환
+        };
     } catch (error) {
         console.error("Error fetching main videos:", error.message);
-        return [];
+        return { videos: [], nextPageToken: null };
     }
 };
