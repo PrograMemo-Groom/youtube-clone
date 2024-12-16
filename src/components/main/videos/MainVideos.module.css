@@ -1,8 +1,10 @@
 .videoGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    padding: 10px;
-    max-width: 1400px;
+    margin: 0 auto;
+    max-width: 1920px;
+    padding-top: 10px;
+    padding-left: 20px;
     width: 100%;
     box-sizing: border-box;
 
