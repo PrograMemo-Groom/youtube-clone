@@ -3,7 +3,6 @@ import styles from './Listed-subscribe.module.css';
 import GridSubscribe from '../grid/Grid-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
-import useGoogleAuth from "../../../hooks/useGoogleAuth";
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
 import { fetchShortsVideos } from "../../../service/SubscribeService";
 
@@ -15,19 +14,12 @@ const ListedSubscribe = () => {
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
-    const googleLogin = useGoogleAuth();
     const [shorts, setShorts] = useState([]);
 
-    
-    // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
-    const handleGetCode = async () => {
-        console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
-        await googleLogin();
-    };
-    
-        useEffect(() => {
-            accessToken && fetchData();
-        }, [accessToken]);
+        
+    useEffect(() => {
+        accessToken && fetchData();
+    }, [accessToken]);
 
         const fetchData = async () => {
             try {
@@ -99,21 +91,6 @@ const ListedSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "list" && (
                 <>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {handleGetCode();}}>
-                            token 발급 받는다!!
-                    </button>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {fetchData()}}>
-                            누르면 데이터를 가져오ㅏ
-                    </button>
-                    {accessToken &&
-                        <button style={{width:'200px', height:'20px'}}>
-                            token값 있으면 노출
-                        </button>
-                    }
                     <main>
                         <section className={styles.videoSection}>
                             {subscriptions.map((video, index) => (
