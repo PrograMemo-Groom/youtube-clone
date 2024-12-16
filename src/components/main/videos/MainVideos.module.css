@@ -1,17 +1,11 @@
-.container {
-    min-height: 80vh; /* 화면 높이만큼 최소 크기 설정 */
-    overflow-y: auto;
-    width: 100%;
-}
-
 .videoGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     padding: 10px;
-    max-width: 1920px;
+    max-width: 1400px;
     width: 100%;
     box-sizing: border-box;
+    width: 100%;
 
 }
 
@@ -46,13 +40,13 @@
     background-color: #000;
     border-radius: 12px;
     cursor: pointer;
+    overflow: hidden;
 }
 .thumbnail,
 .videoPlayer {
     position: absolute;
     width: 100%;
     height: 100%;
-    aspect-ratio: 16/9 !important;
     object-fit: cover; /* 썸네일 비율 유지 */
     transition: opacity 0.3s ease-in-out;
     border-radius: 12px;
@@ -201,11 +195,9 @@
 .videoPreview {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
+    justify-self: center;
+    width: 95%;
     border-radius: 12px;
-    aspect-ratio: 16/9 !important;
-    padding: 0;
     margin-bottom: 10px;
     cursor: pointer;
 }
