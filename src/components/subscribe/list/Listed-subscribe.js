@@ -214,36 +214,3 @@ const ListedSubscribe = () => {
 };
 
 export default ListedSubscribe;
-
-
-const shortsData = [{
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    }]
