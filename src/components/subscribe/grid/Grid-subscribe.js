@@ -12,17 +12,12 @@ const GridSubscribe = () => {
     const [view, setView] = useState("grid");
     const [itemsPerRow, setItemsPerRow] = useState(4); // 기본값: 4개
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
-
-    const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
-    const googleLogin = useGoogleAuth();
     const [shorts, setShorts] = useState([]);
 
-    // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
-    const handleGetCode = async () => {
-        console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
-        await googleLogin();
-    };
+    const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+    const googleLogin = useGoogleAuth();
+
     
         useEffect(() => {
             accessToken && fetchData();
@@ -126,21 +121,6 @@ const GridSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "grid" && (
                 <>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {handleGetCode();}}>
-                            token 발급 받는다!!
-                    </button>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {fetchData()}}>
-                            누르면 데이터를 가져오ㅏ
-                    </button>
-                    {accessToken &&
-                        <button style={{width:'200px', height:'20px'}}>
-                            token값 있으면 노출
-                        </button>}
-
                     <header className={styles.header}>
                         <h3>최신순</h3>
                         <div className={styles.pageChangeButtons}>
