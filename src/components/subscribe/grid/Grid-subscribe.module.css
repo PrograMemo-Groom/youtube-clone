@@ -234,7 +234,7 @@
 
 .shortsMain {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 20px;
 }
 
@@ -251,10 +251,10 @@
 }
 
 .shortsThumbnail {
-    width: 100%;
+    width: 210px;
+    height: 315px;
     border-radius: 3%;
-    min-width: 210px;
-    min-width: 315px;
+    object-fit: cover;
 }
 
 
@@ -274,6 +274,11 @@
     font-weight: 500;
 
     padding-top: 10px;
+
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;  
 }
 
 .shortsDetail div p {
