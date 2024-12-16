@@ -10,9 +10,9 @@ const MainVideos = ({ fetchFunction }) => {
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const { link } = useNavigation();
-    const [page, setPage] = useState(0);
     const observerRef = useRef(null); // Intersection Observer를 위한 ref
     const scrollPositionRef = useRef(0); // 스크롤 위치 추적
+    const [nextPageToken, setNextPageToken] = useState(null);
 
     const normalizeThumbnails = (videos) => {
         return videos.map((video) => {
@@ -25,24 +25,21 @@ const MainVideos = ({ fetchFunction }) => {
         });
     };
 
-    const fetchVideos = async (currentPage) => {
+    const fetchVideos = async (fetchFunction, pageToken = null) => {
         try {
             setLoading(true);
-
             let videoData;
-            let nextToken;
 
             if (Array.isArray(fetchFunction)) {
-                videoData = fetchFunction.slice(currentPage * 16, (currentPage + 1) * 16); // 페이지별로 데이터 슬라이스
+                videoData = fetchFunction;
             } else {
-                const response = await getMainVideos(null, nextPageToken);
+                const response = await getMainVideos(fetchFunction, pageToken);
                 videoData = response.videos;
-                nextToken = response.nextPageToken;
+                setNextPageToken(response.nextPageToken);
             }
 
             const normalizedVideos = normalizeThumbnails(videoData);
-            setVideos((prev) => [...prev, ...normalizedVideos]); // 기존 데이터에 새 데이터 추가
-            setNextPageToken(nextToken); // 다음 페이지 토큰 저장
+            setVideos((prev) => (pageToken ? [...prev, ...normalizedVideos] : normalizedVideos)); // 기존 데이터에 새 데이터 추가
         } catch (e) {
             console.error("Error fetching videos:", e.message);
             setError("동영상을 불러오는 중 문제가 발생했습니다.");
@@ -51,21 +48,21 @@ const MainVideos = ({ fetchFunction }) => {
         }
     };
 
-    const [nextPageToken, setNextPageToken] = useState(null); // 다음 페이지 토큰 상태
-
+    // fetchFunction 변경 시 데이터 새로 로드
     useEffect(() => {
-        fetchVideos(page);
-    }, [page]);
+        setVideos([]); // 이전 데이터 초기화
+        setNextPageToken(null); // 페이지 토큰 초기화
+        fetchVideos(fetchFunction);
+    }, [fetchFunction]);
 
     // Intersection Observer 설정
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting && !loading) {
+                if (entries[0].isIntersecting && nextPageToken && !loading) {
                     // 스크롤 위치 저장
-                    scrollPositionRef.current = window.scrollY;
-
-                    setPage((prev) => prev + 1); // 페이지 증가
+                    scrollPositionRef.current = window.scrollY; // 현재 스크롤 위치 저장
+                    fetchVideos(fetchFunction, nextPageToken);
                 }
             },
             { threshold: 0.1 } // 요소가 10% 이상 보이면 트리거
@@ -77,7 +74,7 @@ const MainVideos = ({ fetchFunction }) => {
         return () => {
             if (currentRef) observer.unobserve(currentRef); // observer 해제
         };
-    }, [loading]);
+    }, [nextPageToken, loading, fetchFunction]);
 
     // 스크롤 위치 복원
     useEffect(() => {
