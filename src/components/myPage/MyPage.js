@@ -6,12 +6,19 @@ import {useNavigate} from "react-router-dom";
 import useNavigation from "../../hooks/useNavigation";
 
 const handleLogin = () => {
-    const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
-    window.location.href = authUrl; // Google OAuth 로그인 리디렉션
+    console.log("[handleLogin] 0: ", "handleLogin");
+
+    try {
+        const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;        window.location.href = authUrl; // Google OAuth 로그인 리디렉션
+    } catch (error) {
+        console.log("[handleLogin error] 실패? 0:", error.message);
+    }
 };
 
+// 리디렉션된 url에서 code 추출한 후 Access Token과 Refresh Token 토큰 요청
 const authTokenAPI = async (authCode) => {
-    console.log("여기까지 왔나? 1:", "authTokenAPI");
+    console.log("[authTokenAPI] 1: ", authCode);
+
     try {
         const params = new URLSearchParams();
         params.append("code", authCode);
@@ -28,71 +35,69 @@ const authTokenAPI = async (authCode) => {
 
         console.log("Access Token:", response.data.access_token);
         console.log("Refresh Token:", response.data.refresh_token);
-        return response.data; // 필요한 토큰 반환
+
+        return response.data; // 토큰 반환
     } catch (error) {
         console.error("Error exchanging authorization code for tokens:", error.response?.data || error.message);
-
-        if (error.response && error.response.data) {
-            console.error("Error details:", error.response.data);
-        }
     }
 };
 
-// const extractAuthCode = async () => {
-//     console.log("여기까지 왔나? 2:", "extractAuthCode");
-//     console.log("Current URL:", window.location.href); // 현재 URL 출력
-//     const urlParams = new URLSearchParams(window.location.search);
-//     let code = urlParams.get("code");
-//
-//     if (!code) {
-//         // URL에 code가 없으면 로컬 스토리지에서 가져오기
-//         code = localStorage.getItem("GOOGLE_TOKEN");
-//         if (code) {
-//             console.log("Authorization Code from localStorage:", code); // 인증 코드 출력
-//         } else {
-//             console.error("Authorization Code not found in the URL or localStorage");
-//             return;
-//         }
-//     } else {
-//         // URL에 code가 있으면 로컬 스토리지에 저장
-//         console.log("Authorization Code from URL:", code);
-//         localStorage.setItem("GOOGLE_TOKEN", code);
-//     }
+const extractAuthCode = async () => {
+    console.log("[extractAuthCode] 2: extractAuthCode()");
+    console.log("Current URL:", window.location.href); // 현재 URL 출력
 
-// 토큰 요청
-//     const tokenData = await authTokenAPI(code);
-//     if (tokenData) {
-//         console.log("Tokens:", tokenData);
-//         // 토큰 데이터를 로컬 스토리지에 저장
-//         localStorage.setItem("ACCESS_TOKEN", tokenData.access_token);
-//         localStorage.setItem("REFRESH_TOKEN", tokenData.refresh_token);
-//     }
-// };
+    const urlParams = new URLSearchParams(window.location.search);
+    let code = urlParams.get("code");
 
-// const fetchYouTubePlaylists = async () => {
-//     const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
-//     if (!accessToken) {
-//         console.error("Access token not found. Please log in again.");
-//         return;
-//     }
-//
-//     try {
-//         const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
-//             headers: {
-//                 Authorization: `Bearer ${accessToken}`,
-//             },
-//             params: {
-//                 part: "snippet,contentDetails",
-//                 // mine: true,
-//             },
-//         });
-//
-//         console.log("YouTube Playlists:", response.data.items);
-//         return response.data.items;
-//     } catch (error) {
-//         console.error("Error fetching YouTube playlists:", error.response?.data || error.message);
-//     }
-// };
+    if (!code) {
+        // URL에 code가 없으면 로컬 스토리지에서 가져오기
+        code = localStorage.getItem("GOOGLE_TOKEN");
+        if (code) {
+            console.log("Authorization Code from localStorage:", code); // 인증 코드 출력
+        } else {
+            console.error("Authorization Code not found in the URL or localStorage");
+            return;
+        }
+    } else {
+        // URL에 code가 있으면 로컬 스토리지에 저장
+        console.log("Authorization Code from URL:", code);
+        localStorage.setItem("GOOGLE_TOKEN", code);
+    }
+
+    // 토큰 요청
+    const tokenData = await authTokenAPI(code);
+    if (tokenData) {
+        console.log("Tokens:", tokenData);
+
+        localStorage.setItem("ACCESS_TOKEN", tokenData.access_token);
+        localStorage.setItem("REFRESH_TOKEN", tokenData.refresh_token);
+    }
+};
+
+const fetchYouTubePlaylists = async () => {
+    const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
+    if (!accessToken) {
+        console.error("Access token not found. Please log in again.");
+        return;
+    }
+
+    try {
+        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                part: "snippet,contentDetails",
+                // mine: true,
+            },
+        });
+
+        console.log("YouTube Playlists:", response.data.items);
+        return response.data.items;
+    } catch (error) {
+        console.error("Error fetching YouTube playlists:", error.response?.data || error.message);
+    }
+};
 
 const fetchUserChannel = async (accessToken) => {
     try {
@@ -109,7 +114,6 @@ const fetchUserChannel = async (accessToken) => {
 
         // 채널 정보 추출
         // const channel = response.data.items[0];
-
         console.log("Playlists Data:", response.data.items);
         return response.data.items; // 재생목록 반환
 
@@ -304,7 +308,7 @@ const fetchAllPlaylists = async (accessToken) => {
 };
 
 export default function MyPage() {
-    console.log("여기까지 왔나? 3:", "MyPage()");
+    console.log("[MyPage()] 0: ", "MyPage()");
 
     const [playlists, setPlaylists] = React.useState([]);
     const [channelName, setChannelName] = useState("");
@@ -319,10 +323,6 @@ export default function MyPage() {
     const [FirstVideoId, setFirstVideoId] = useState("");
     const navigate = useNavigate();
     const {link} = useNavigation();
-
-    // const handleToggle = () => {
-    //     setToggleVisible((prev) => !prev);
-    // };
 
     // 드롭다운 토글 핸들러
     const handleToggleDropdown = () => {
@@ -350,34 +350,7 @@ export default function MyPage() {
 
     // 인증 코드 추출 및 토큰 발급
     React.useEffect(() => {
-        const extractAuthCode = async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get("code");
-
-            if (!code) {
-                console.warn("Authorization code not found in the URL.");
-                const storedAccessToken = localStorage.getItem("ACCESS_TOKEN");
-                console.log("[extractAuthCode()] storedAccessToken: ", storedAccessToken)
-
-                if (storedAccessToken) {
-                    console.log("Access token found in localStorage. Skipping auth flow.");
-                    return;
-                }
-
-                console.error("No authorization code or access token found. Please log in again.");
-                return;
-            }
-
-            // 토큰 발급 요청
-            const tokenData = await authTokenAPI(code);
-            if (tokenData) {
-                localStorage.setItem("ACCESS_TOKEN", tokenData.access_token);
-                localStorage.setItem("REFRESH_TOKEN", tokenData.refresh_token);
-                console.log("Tokens stored successfully.");
-            }
-        };
-
-        extractAuthCode(); // 인증 코드 추출 및 토큰 요청
+        extractAuthCode(); // 외부 함수 호출
     }, []);
 
     // 유튜브 API 데이터 가져오기
