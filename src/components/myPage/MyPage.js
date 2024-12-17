@@ -7,7 +7,6 @@ import useNavigation from "../../hooks/useNavigation";
 
 const handleLogin = () => {
     const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
-    console.log("Generated OAuth URL:", authUrl);
     window.location.href = authUrl; // Google OAuth 로그인 리디렉션
 };
 
@@ -39,61 +38,61 @@ const authTokenAPI = async (authCode) => {
     }
 };
 
-const extractAuthCode = async () => {
-    console.log("여기까지 왔나? 2:", "extractAuthCode");
-    console.log("Current URL:", window.location.href); // 현재 URL 출력
-    const urlParams = new URLSearchParams(window.location.search);
-    let code = urlParams.get("code");
+// const extractAuthCode = async () => {
+//     console.log("여기까지 왔나? 2:", "extractAuthCode");
+//     console.log("Current URL:", window.location.href); // 현재 URL 출력
+//     const urlParams = new URLSearchParams(window.location.search);
+//     let code = urlParams.get("code");
+//
+//     if (!code) {
+//         // URL에 code가 없으면 로컬 스토리지에서 가져오기
+//         code = localStorage.getItem("GOOGLE_TOKEN");
+//         if (code) {
+//             console.log("Authorization Code from localStorage:", code); // 인증 코드 출력
+//         } else {
+//             console.error("Authorization Code not found in the URL or localStorage");
+//             return;
+//         }
+//     } else {
+//         // URL에 code가 있으면 로컬 스토리지에 저장
+//         console.log("Authorization Code from URL:", code);
+//         localStorage.setItem("GOOGLE_TOKEN", code);
+//     }
 
-    if (!code) {
-        // URL에 code가 없으면 로컬 스토리지에서 가져오기
-        code = localStorage.getItem("GOOGLE_TOKEN");
-        if (code) {
-            console.log("Authorization Code from localStorage:", code); // 인증 코드 출력
-        } else {
-            console.error("Authorization Code not found in the URL or localStorage");
-            return;
-        }
-    } else {
-        // URL에 code가 있으면 로컬 스토리지에 저장
-        console.log("Authorization Code from URL:", code);
-        localStorage.setItem("GOOGLE_TOKEN", code);
-    }
+// 토큰 요청
+//     const tokenData = await authTokenAPI(code);
+//     if (tokenData) {
+//         console.log("Tokens:", tokenData);
+//         // 토큰 데이터를 로컬 스토리지에 저장
+//         localStorage.setItem("ACCESS_TOKEN", tokenData.access_token);
+//         localStorage.setItem("REFRESH_TOKEN", tokenData.refresh_token);
+//     }
+// };
 
-    // 토큰 요청
-    const tokenData = await authTokenAPI(code);
-    if (tokenData) {
-        console.log("Tokens:", tokenData);
-        // 토큰 데이터를 로컬 스토리지에 저장
-        localStorage.setItem("ACCESS_TOKEN", tokenData.access_token);
-        localStorage.setItem("REFRESH_TOKEN", tokenData.refresh_token);
-    }
-};
-
-const fetchYouTubePlaylists = async () => {
-    const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
-    if (!accessToken) {
-        console.error("Access token not found. Please log in again.");
-        return;
-    }
-
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet,contentDetails",
-                // mine: true,
-            },
-        });
-
-        console.log("YouTube Playlists:", response.data.items);
-        return response.data.items;
-    } catch (error) {
-        console.error("Error fetching YouTube playlists:", error.response?.data || error.message);
-    }
-};
+// const fetchYouTubePlaylists = async () => {
+//     const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
+//     if (!accessToken) {
+//         console.error("Access token not found. Please log in again.");
+//         return;
+//     }
+//
+//     try {
+//         const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
+//             headers: {
+//                 Authorization: `Bearer ${accessToken}`,
+//             },
+//             params: {
+//                 part: "snippet,contentDetails",
+//                 // mine: true,
+//             },
+//         });
+//
+//         console.log("YouTube Playlists:", response.data.items);
+//         return response.data.items;
+//     } catch (error) {
+//         console.error("Error fetching YouTube playlists:", error.response?.data || error.message);
+//     }
+// };
 
 const fetchUserChannel = async (accessToken) => {
     try {
@@ -103,13 +102,13 @@ const fetchUserChannel = async (accessToken) => {
             },
             params: {
                 part: "snippet, contentDetails",
-                // mine: true,
+                mine: true,
                 maxResults: 10,
             },
         });
 
         // 채널 정보 추출
-        const channel = response.data.items[0];
+        // const channel = response.data.items[0];
 
         console.log("Playlists Data:", response.data.items);
         return response.data.items; // 재생목록 반환
@@ -127,7 +126,7 @@ const fetchUserPlaylists = async (accessToken) => {
             },
             params: {
                 part: "snippet,contentDetails",
-                // mine: true,
+                mine: true,
                 maxResults: 25,
             },
         });
@@ -142,6 +141,7 @@ const fetchUserPlaylists = async (accessToken) => {
 
 const fetchWatchLaterVideos = async (accessToken) => {
     console.log("여긴 왔니? 4:", "fetchWatchLaterVideos");
+    console.log("여긴 왔니? 4:", accessToken);
     try {
         const response = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
             headers: {
@@ -154,6 +154,7 @@ const fetchWatchLaterVideos = async (accessToken) => {
             },
         });
 
+        console.log("Requested Playlist ID:", response.data.playlistId);
         console.log("Watch Later Videos:", response.data.items);
         return response.data.items;
     } catch (error) {
@@ -174,7 +175,7 @@ const fetchChannelId = async (accessToken) => {
             },
             params: {
                 part: "snippet",
-                // mine: true,
+                mine: true,
             },
         });
 
@@ -193,7 +194,7 @@ const fetchChannelProfileImage = async (accessToken) => {
             },
             params: {
                 part: "snippet",
-                // mine: true,
+                mine: true,
             },
         });
 
@@ -238,6 +239,7 @@ const fetchFirstVideoId = async (accessToken, playlistId) => {
             },
         });
 
+        console.log("Requested Playlist ID:", playlistId);
         console.log("API Response for Playlist Items:", response.data);
 
         // 첫 번째 동영상 ID 추출
@@ -310,7 +312,7 @@ export default function MyPage() {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedOption, setSelectedOption] = useState("가나다순");
     const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
-    const [profileImage, setProfileImage] = React.useState("/assets/mypage/user-profile.png");
+    const [profileImage, setProfileImage] = React.useState("/assets/myPage/user-profile.png");
     const [likedVideos, setLikedVideos] = useState([]);
     const [channelId, setChannelId] = useState("");
     const [openDropdown, setOpenDropdown] = useState(null); // 현재 열려 있는 videoId를 저장
@@ -318,9 +320,9 @@ export default function MyPage() {
     const navigate = useNavigate();
     const {link} = useNavigation();
 
-    const handleToggle = () => {
-        setToggleVisible((prev) => !prev);
-    };
+    // const handleToggle = () => {
+    //     setToggleVisible((prev) => !prev);
+    // };
 
     // 드롭다운 토글 핸들러
     const handleToggleDropdown = () => {
@@ -353,7 +355,16 @@ export default function MyPage() {
             const code = urlParams.get("code");
 
             if (!code) {
-                console.error("Authorization Code not found in the URL.");
+                console.warn("Authorization code not found in the URL.");
+                const storedAccessToken = localStorage.getItem("ACCESS_TOKEN");
+                console.log("[extractAuthCode()] storedAccessToken: ", storedAccessToken)
+
+                if (storedAccessToken) {
+                    console.log("Access token found in localStorage. Skipping auth flow.");
+                    return;
+                }
+
+                console.error("No authorization code or access token found. Please log in again.");
                 return;
             }
 
@@ -565,9 +576,10 @@ export default function MyPage() {
                             <div className="user-name-and-id-container">
                                 <section className="user-name-container">
                                     <p className="user-name">공공</p>
-                                    <a className="user-channel-move"
-                                       onClick={handleChannelView}>
-                                        @o0_o0_o0 &#183; 채널 보기</a>
+                                    <p className="user-channel-move"
+                                       onClick={handleChannelView}
+                                    >
+                                        @o0_o0_o0 &#183; 채널 보기</p>
                                 </section>
                                 <div className="changes-container">
                                     <section className="changes-id-container">
@@ -620,7 +632,7 @@ export default function MyPage() {
                                                              src="/assets/mypage/playlist-icon.svg"
                                                              alt="add-playlist-icon"/>
                                                     </section>
-                                                    <p className="add-playlist-text">현재 재생목록에 추가</p>
+                                                    <p className="add-playlist-text">현재 재생 목록에 추가</p>
                                                     <section className="progress-time-container">
                                                         <p className="progress-time">{formatDuration(video.contentDetails.duration)}</p>
                                                     </section>
@@ -643,25 +655,25 @@ export default function MyPage() {
                                                                 <img className="menu-icons"
                                                                      src="/assets/videoMore/playlist.svg"
                                                                      alt="현재 재생목록에 추가"/>
-                                                                현재 재생목록에 추가
+                                                                현재 재생 목록에 추가
                                                             </li>
                                                             <li>
                                                                 <img className="menu-icons"
                                                                      src="/assets/videoMore/clock.svg"
                                                                      alt="나중에 볼 동영상에 저장"/>
-                                                                나중에 볼 동영상에 저장
+                                                                나중에 볼 영상에 저장
                                                             </li>
                                                             <li>
                                                                 <img className="menu-icons"
                                                                      src="/assets/videoMore/bookmark.svg"
                                                                      alt="재생목록에 저장"/>
-                                                                재생목록에 저장
+                                                                재생 목록에 저장
                                                             </li>
                                                             <li>
                                                                 <img className="menu-icons"
                                                                      src="/assets/videoMore/download.svg"
                                                                      alt="오프라인 저장"/>
-                                                                오프라인 저장
+                                                                offline 저장
                                                             </li>
                                                             <li>
                                                                 <img className="menu-icons"
@@ -688,7 +700,7 @@ export default function MyPage() {
                         <div className="playlist-container playlist-container-margin">
                             <section className="playlist-text-btn">
                                 <section className="playlist-sort-text">
-                                    <p className="playlist-text">재생목록</p>
+                                    <p className="playlist-text">재생 목록</p>
                                     <div className="sort-dropdown-container">
                                         <button
                                             className="sort-button"
@@ -735,7 +747,8 @@ export default function MyPage() {
                                                  key={playlist.id}
                                                  onClick={() => navigateToPlaylist(playlist.id, playlist.firstVideoId)}>
                                                 <h3 className="playlist-video-title">{playlist.snippet.title}</h3>
-                                                <p className="playlist-video-channel">{playlist.snippet.channelTitle} &#183; 재생목록</p>
+                                                <p className="playlist-video-channel">{playlist.snippet.channelTitle} &#183; 재생
+                                                    목록</p>
                                                 <p className="playlist-video-meta">
                                                     {playlist.contentDetails.itemCount} 개의 동영상
                                                 </p>
