@@ -4,7 +4,8 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import useNavigation from "../../hooks/useNavigation";
-import {formatVideoTime} from "../../utils/formatVideoTime";
+import formatVideoTime from "../../utils/formatVideoTime";
+import formatViewerCount from "../../utils/formatViewerCount";
 
 const handleLogin = () => {
     try {
@@ -93,10 +94,24 @@ const fetchYouTubeData = async (url, accessToken, params = {}) => {
 
 // 채널 프로필 이미지 가져오기
 const fetchChannelProfileImage = async (accessToken) => {
-    const url = "https://www.googleapis.com/youtube/v3/channels";
-    const params = {part: "snippet", mine: true};
-    const data = await fetchYouTubeData(url, accessToken, params);
-    return data.length > 0 ? data[0].snippet.thumbnails.default.url : null;
+    try {
+        const url = "https://www.googleapis.com/youtube/v3/channels";
+        const params = { part: "snippet", mine: true };
+
+        // fetchYouTubeData를 통해 API 요청
+        const data = await fetchYouTubeData(url, accessToken, params);
+
+        // 응답 검증: data가 유효한지 확인
+        if (data && data.length > 0) {
+            return data[0].snippet.thumbnails.default.url;
+        } else {
+            console.warn("No channel profile image found or items are empty.");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching channel profile image:", error.response?.data || error.message);
+        return null;
+    }
 };
 
 // 좋아요한 영상 가져오기
@@ -264,12 +279,18 @@ export default function MyPage() {
             }
 
             const imageUrl = await fetchChannelProfileImage(accessToken);
-            if (imageUrl) setProfileImage(imageUrl);
+
+            // 반환된 이미지 URL 검사
+            if (imageUrl) {
+                setProfileImage(imageUrl);
+            } else {
+                console.warn("No valid profile image found. Using default image.");
+                setProfileImage("/assets/mypage/user-profile.png");
+            }
         };
 
         fetchProfileImage();
     }, [accessToken]);
-
 
     // 드롭다운 토글 핸들러
     const handleToggleDropdown = () => {
@@ -309,27 +330,6 @@ export default function MyPage() {
             window.location.href = channelUrl; // 채널 페이지로 이동
         } else {
             console.error("Failed to fetch channel ID.");
-        }
-    };
-
-    // ISO 8601 Duration 포맷을 읽기 쉽게 변환하는 함수
-    const formatDuration = (isoDuration) => {
-        const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-        const hours = match[1] ? match[1].slice(0, -1) : "00";
-        const minutes = match[2] ? match[2].slice(0, -1) : "00";
-        const seconds = match[3] ? match[3].slice(0, -1) : "00";
-
-        return `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}`;
-    };
-
-    const formatViewCount = (viewCount) => {
-        const count = parseInt(viewCount, 10);
-        if (count >= 1000000) {
-            return `${(count / 1000000).toFixed(1)}만회`;
-        } else if (count >= 10000) {
-            return `${(count / 10000).toFixed(1)}천회`;
-        } else {
-            return `${count}회`;
         }
     };
 
@@ -525,7 +525,7 @@ export default function MyPage() {
                                                 <div className="video-channel-and-meta-container">
                                                     <p className="video-channel">{video.snippet.channelTitle}</p>
                                                     <p className="video-meta">
-                                                        {formatViewCount(video.statistics.viewCount)} 조회수
+                                                        {formatViewerCount(video.statistics.viewCount)} 조회수
                                                         · {new Date(video.snippet.publishedAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
@@ -618,7 +618,6 @@ export default function MyPage() {
                                                 <h3 className="video-title">{video.snippet.title}</h3>
                                                 <p className="video-channel">{video.snippet.channelTitle}</p>
                                                 <p className="video-meta">
-                                                    {/* 업로드 날짜 */}
                                                     {new Date(video.snippet.publishedAt).toLocaleDateString()}
                                                 </p>
                                             </div>
