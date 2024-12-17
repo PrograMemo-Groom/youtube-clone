@@ -58,7 +58,7 @@ function Detail() {
     <ThemeContext.Provider value={{ isDark, setIsDark }}>
       <div style={setTheme} className='detail-container'>
         <div className='main-section'>
-          <MainVideo video={videoData}/>
+          <MainVideo video={videoData} channelId={channelId}/>
         </div>
         <div style={setTheme} className='side-section'>
           <CreatorReserveTap channelId={channelId}/>

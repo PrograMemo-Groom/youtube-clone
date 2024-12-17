@@ -3,8 +3,8 @@ import styles from './Listed-subscribe.module.css';
 import GridSubscribe from '../grid/Grid-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
-import useGoogleAuth from "../../../hooks/useGoogleAuth";
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
+import { fetchShortsVideos } from "../../../service/SubscribeService";
 
 
 const ListedSubscribe = () => {
@@ -12,21 +12,14 @@ const ListedSubscribe = () => {
     const [view, setView] = useState("list");
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
 
-
-    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+    const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
-    const googleLogin = useGoogleAuth();
+    const [shorts, setShorts] = useState([]);
 
-
-        // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
-        const handleGetCode = async () => {
-            console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
-            await googleLogin();
-        }
-    
-        useEffect(() => {
-            accessToken && fetchData();
-        }, [accessToken]);
+        
+    useEffect(() => {
+        accessToken && fetchData();
+    }, [accessToken]);
 
         const fetchData = async () => {
             try {
@@ -51,6 +44,22 @@ const ListedSubscribe = () => {
             }
         }
 
+        // 쇼츠 비디오 정보 업데이트
+        useEffect(() => {
+            const fetchAndSetShorts = async () => {
+                try {
+                const shortsVideoList = await fetchShortsVideos("귀여운 강아지 쇼츠"); // 데이터를 비동기적으로 가져옴
+                console.log("shortsVideo", shortsVideoList);
+    
+                    // 상태 업데이트
+                setShorts(shortsVideoList);
+                } catch (error) {
+                console.error("Error fetching Shorts videos:", error);
+                }
+            };
+            fetchAndSetShorts();
+        }, []);
+        
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 750) {
@@ -82,21 +91,6 @@ const ListedSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "list" && (
                 <>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {handleGetCode();}}>
-                            token 발급 받는다!!
-                    </button>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {fetchData()}}>
-                            누르면 데이터를 가져오ㅏ
-                    </button>
-                    {accessToken &&
-                        <button style={{width:'200px', height:'20px'}}>
-                            token값 있으면 노출
-                        </button>
-                    }
                     <main>
                         <section className={styles.videoSection}>
                             {subscriptions.map((video, index) => (
@@ -105,7 +99,7 @@ const ListedSubscribe = () => {
                                         <header className={styles.videoClip_header}>
                                             <div className={styles.header_channel}>
                                                 <img
-                                                    src={video.highThumbnail}
+                                                    src={video.channelAvatar}
                                                     alt='채널프로필사진' 
                                                 />
                                                 <h4>{video.channelTitle}</h4>
@@ -166,17 +160,17 @@ const ListedSubscribe = () => {
                                             </button>
                                         </header>
                                         <div className={styles.shortsMain}>
-                                            {shortsData.slice(0, shortsVisibleCount).map((shorts, index) => (
+                                            {shorts.slice(0, shortsVisibleCount).map((shorts, index) => (
                                                 <article key={index} className={styles.shortsClip}>
                                                     <img
                                                         className={styles.shortsThumbnail}
                                                         alt='shorts 썸네일'
-                                                        src={shorts.thumbnail}
+                                                        src={shorts.thumbUrl}
                                                     />
                                                     <div className={styles.shortsDetail}>
                                                         <div>
                                                             <h5>{shorts.title}</h5>
-                                                            <p>조회수 {shorts.view}회</p>
+                                                            <p>조회수 {shorts.viewerCount}</p>
                                                         </div>
                                                         <button>
                                                             <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
@@ -197,36 +191,3 @@ const ListedSubscribe = () => {
 };
 
 export default ListedSubscribe;
-
-
-const shortsData = [{
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    }]

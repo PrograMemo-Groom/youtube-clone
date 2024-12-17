@@ -1,8 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
-import {
-    fetchRecentlyUploaded
-} from "./CategoryAPI";
 
 const categories = [
     { name: "전체", fetchFunction: null }, // 전체 동영상 (null로 설정)
@@ -15,7 +12,6 @@ const categories = [
     { name: "과학", fetchFunction: "28" },
     { name: "스포츠", fetchFunction: "17" },
     { name: "블로그", fetchFunction: "22" },
-    { name: "최근에 업로드된 동영상", fetchFunction: fetchRecentlyUploaded }, // 최근 업로드 (chart: mostPopular과 관련 없음)
 ];
 
 

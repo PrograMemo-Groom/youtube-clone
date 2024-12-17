@@ -11,10 +11,11 @@ import { getChannelThumbnail } from "../../../utils/formatProfileImage.js";
 import { getChannelSubscriberCount } from "../../../utils/getChannelSubscriberCount.js";
 import { fetchVideoComments } from "../../../utils/fetchVideoComments.js";
 
-function MainVideo({ video }) {
+function MainVideo({ video, channelId }) {
   const { isDark } = useContext(ThemeContext);
   const setMenuTheme = getMenuItemStyle(isDark);
   const setTheme = getStyle(isDark);
+  const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
 
   const [content, setContent] = useState({
     videoSrc: "",
@@ -45,7 +46,6 @@ function MainVideo({ video }) {
   const [showFullText, setShowFullText] = useState(false);
 
   const videoId = video.id;
-
 
   // 비디오 정보 업데이트
   useEffect(() => {
@@ -78,8 +78,8 @@ function MainVideo({ video }) {
       setContent(videoDetail);
     };
 
-    fetchChannelInfo(); 
-  }, [video]); 
+    fetchChannelInfo();
+  }, [video]);
 
   // 댓글 정보 업데이트
   useEffect(() => {
@@ -88,26 +88,31 @@ function MainVideo({ video }) {
       // console.log(commentList);
 
       const formattedComments = commentList.map((comment) => ({
-        id: +1, 
-        userImg: comment.profileImage || "assets/mypage/default-profile.png",  
+        id: +1,
+        userImg: comment.profileImage || "assets/mypage/default-profile.png",
         userName: comment.author || "Anonymous",
-        date: comment.date || new Date().toISOString(),  
-        isEdited: comment.isEdited || false,  
+        date: comment.date || new Date().toISOString(),
+        isEdited: comment.isEdited || false,
         text: comment.text || "",
-        like: comment.likes || 0, 
-        hate: comment.hate || 0,  
-        reply: comment.reply || [],  
+        like: comment.likes || 0,
+        hate: comment.hate || 0,
+        reply: comment.reply || [],
       }));
 
       // 상태 업데이트
       setComments(formattedComments);
-    }
-    
+    };
+
     fetchComments();
-  },[])
+  }, [video]);
 
   const handleToggleText = () => {
     setShowFullText((prevState) => !prevState);
+  };
+
+  const handleChannelClick = (channelId, event) => {
+    if (event) event.stopPropagation(); // 이벤트 버블링 방지
+    window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
   };
 
   // 텍스트를 단락 단위로 나누고, 첫 5단락만 표시
@@ -122,6 +127,11 @@ function MainVideo({ video }) {
       return `${visibleText}\n...`;
     }
     return text;
+  };
+
+  const toggleDropdown = (videoId) => {
+    setOpenDropdown((prev) => (prev === videoId ? null : videoId));
+    console.log("videoId", videoId);
   };
 
   return (
@@ -144,7 +154,11 @@ function MainVideo({ video }) {
         <div className='details-header'>{content.title}</div>
         <div className='details-actions'>
           <div className='creator-tab'>
-            <img src={content.channelImgUrl} alt='creator' />
+            <img
+              onClick={(event) => handleChannelClick(channelId, event)} // 유저 프로필 클릭 이벤트 추가
+              src={content.channelImgUrl}
+              alt='creator'
+            />
             <div className='creator-info'>
               <span>{content.channel}</span>
               <span>
@@ -175,9 +189,84 @@ function MainVideo({ video }) {
               {" "}
               Thanks
             </button>
-            <button style={setMenuTheme} className='more-btn'>
+            <button
+              style={setMenuTheme}
+              onClick={() => toggleDropdown(videoId)}
+              className='more-btn'
+            >
               ···
             </button>
+            {openDropdown === video.id && (
+              <div className='dropdownMenu'>
+                <ul>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/playlist.svg`}
+                      alt='현재 재생목록에 추가'
+                      className='menuIcon'
+                    />
+                    현재 재생목록에 추가
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/clock.svg`}
+                      alt='나중에 볼 동영상에 저장'
+                      className='menuIcon'
+                    />
+                    나중에 볼 동영상에 저장
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/bookmark.svg`}
+                      alt='재생목록에 저장'
+                      className='menuIcon'
+                    />
+                    재생목록에 저장
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/download.svg`}
+                      alt='오프라인 저장'
+                      className='menuIcon'
+                    />
+                    오프라인 저장
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/share.svg`}
+                      alt='공유'
+                      className='menuIcon'
+                    />
+                    공유
+                  </li>
+                  <hr className='menuDivider' />
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/wrong.svg`}
+                      alt='관심 없음'
+                      className='menuIcon'
+                    />
+                    관심 없음
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/no.svg`}
+                      alt='채널 추천 안함'
+                      className='menuIcon'
+                    />
+                    채널 추천 안함
+                  </li>
+                  <li>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/videoMore/flag.svg`}
+                      alt='신고'
+                      className='menuIcon'
+                    />
+                    신고
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
         <div style={setMenuTheme} className='details-contents'>
@@ -239,8 +328,9 @@ function MainVideo({ video }) {
                     {" "}
                     {formatTimeDifference(comment.date)}
                   </span>
-                  {comment.isEdited && <span className='isEdited'> {"(수정됨)"} </span>}
-                  
+                  {comment.isEdited && (
+                    <span className='isEdited'> {"(수정됨)"} </span>
+                  )}
                 </span>
                 <p className='comment-text'>{comment.text}</p>
                 <div className='comment-actions'>
