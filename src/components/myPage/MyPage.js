@@ -6,10 +6,9 @@ import {useNavigate} from "react-router-dom";
 import useNavigation from "../../hooks/useNavigation";
 
 const handleLogin = () => {
-    console.log("[handleLogin] 0: ", "handleLogin");
-
     try {
-        const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;        window.location.href = authUrl; // Google OAuth 로그인 리디렉션
+        const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=email%20profile%20https://www.googleapis.com/auth/youtube.readonly&access_type=offline&prompt=consent`;
+        window.location.href = authUrl; // Google OAuth 로그인 리디렉션
     } catch (error) {
         console.log("[handleLogin error] 실패? 0:", error.message);
     }
@@ -18,7 +17,6 @@ const handleLogin = () => {
 // 리디렉션된 url에서 code 추출한 후 Access Token과 Refresh Token 토큰 요청
 const authTokenAPI = async (authCode) => {
     console.log("[authTokenAPI] 1: ", authCode);
-
     try {
         const params = new URLSearchParams();
         params.append("code", authCode);
@@ -74,190 +72,83 @@ const extractAuthCode = async () => {
     }
 };
 
-const fetchYouTubePlaylists = async () => {
-    const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
+const fetchYouTubeData = async (url, accessToken, params = {}) => {
     if (!accessToken) {
         console.error("Access token not found. Please log in again.");
-        return;
+        return null;
     }
 
     try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet,contentDetails",
-                // mine: true,
-            },
+        const response = await axios.get(url, {
+            headers: {Authorization: `Bearer ${accessToken}`},
+            params,
         });
-
-        console.log("YouTube Playlists:", response.data.items);
-        return response.data.items;
+        return response.data.items || [];
     } catch (error) {
-        console.error("Error fetching YouTube playlists:", error.response?.data || error.message);
-    }
-};
-
-const fetchUserChannel = async (accessToken) => {
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet, contentDetails",
-                mine: true,
-                maxResults: 10,
-            },
-        });
-
-        // 채널 정보 추출
-        // const channel = response.data.items[0];
-        console.log("Playlists Data:", response.data.items);
-        return response.data.items; // 재생목록 반환
-
-    } catch (error) {
-        console.error("Error fetching user channel:", error.response?.data || error.message);
-    }
-};
-
-const fetchUserPlaylists = async (accessToken) => {
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlists", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet,contentDetails",
-                mine: true,
-                maxResults: 25,
-            },
-        });
-
-        // 재생목록 데이터 추출
-        console.log("Playlists Data:", response.data.items);
-        return response.data.items; // 재생목록 반환
-    } catch (error) {
-        console.error("Error fetching user playlists:", error.response?.data || error.message);
-    }
-};
-
-const fetchWatchLaterVideos = async (accessToken) => {
-    console.log("여긴 왔니? 4:", "fetchWatchLaterVideos");
-    console.log("여긴 왔니? 4:", accessToken);
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet,contentDetails",
-                maxResults: 25,
-                playlistId: "WL", // 나중에 볼 동영상
-            },
-        });
-
-        console.log("Requested Playlist ID:", response.data.playlistId);
-        console.log("Watch Later Videos:", response.data.items);
-        return response.data.items;
-    } catch (error) {
-        console.error("Error fetching Watch Later videos:", {
-            status: error.response?.status,
-            statusText: error.response?.statusText,
-            data: error.response?.data || error.message,
-        });
-    }
-};
-
-// 채널 id 반환
-const fetchChannelId = async (accessToken) => {
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet",
-                mine: true,
-            },
-        });
-
-        // 채널 ID 반환
-        return response.data.items[0].id;
-    } catch (error) {
-        console.error("Error fetching channel ID:", error.response?.data || error.message);
-    }
-};
-
-const fetchChannelProfileImage = async (accessToken) => {
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet",
-                mine: true,
-            },
-        });
-
-        // 채널 정보에서 프로필 이미지 URL 반환
-        return response.data.items[0].snippet.thumbnails.default.url;
-    } catch (error) {
-        console.error("Error fetching channel profile image:", error.response?.data || error.message);
-    }
-};
-
-const fetchLikedVideos = async (accessToken) => {
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/videos", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet,contentDetails,statistics",
-                maxResults: 15, // 가져올 영상 수 (필요에 따라 조정)
-                myRating: "like", // 좋아요 누른 영상
-            },
-        });
-
-        console.log("Liked Videos Data:", response.data.items);
-        return response.data.items; // 좋아요 영상 데이터 반환
-    } catch (error) {
-        console.error("Error fetching liked videos:", error.response?.data || error.message);
-        return [];
-    }
-};
-
-const fetchFirstVideoId = async (accessToken, playlistId) => {
-    try {
-        const response = await axios.get("https://www.googleapis.com/youtube/v3/playlistItems", {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-                part: "snippet",
-                playlistId,
-                maxResults: 1, // 첫 번째 동영상만 가져오기
-            },
-        });
-
-        console.log("Requested Playlist ID:", playlistId);
-        console.log("API Response for Playlist Items:", response.data);
-
-        // 첫 번째 동영상 ID 추출
-        const firstVideoId =
-            response.data.items && response.data.items.length > 0
-                ? response.data.items[0].snippet.resourceId.videoId
-                : null;
-
-        return firstVideoId;
-    } catch (error) {
-        console.error(`Error fetching first video ID for playlist ${playlistId}:`, error.message);
+        console.error(`Error fetching data from ${url}:`, error.response?.data || error.message);
         return null;
     }
 };
+
+// 채널 프로필 이미지 가져오기
+const fetchChannelProfileImage = async (accessToken) => {
+    const url = "https://www.googleapis.com/youtube/v3/channels";
+    const params = {part: "snippet", mine: true};
+    const data = await fetchYouTubeData(url, accessToken, params);
+    return data.length > 0 ? data[0].snippet.thumbnails.default.url : null;
+};
+
+// 좋아요한 영상 가져오기
+const fetchLikedVideos = async (accessToken) => {
+    const url = "https://www.googleapis.com/youtube/v3/videos";
+    const params = {part: "snippet,contentDetails,statistics", myRating: "like", maxResults: 15};
+    return await fetchYouTubeData(url, accessToken, params);
+};
+
+// 채널 ID 가져오기
+const fetchChannelId = async (accessToken) => {
+    const url = "https://www.googleapis.com/youtube/v3/channels";
+    const params = {part: "snippet", mine: true};
+    const data = await fetchYouTubeData(url, accessToken, params);
+    return data.length > 0 ? data[0].id : null;
+};
+
+// 사용자 채널 정보 가져오기
+const fetchUserChannel = async (accessToken) => {
+    const url = "https://www.googleapis.com/youtube/v3/channels";
+    const params = {part: "snippet,contentDetails", mine: true, maxResults: 10};
+    return await fetchYouTubeData(url, accessToken, params);
+};
+
+// 사용자 재생목록 가져오기
+const fetchUserPlaylists = async (accessToken) => {
+    const url = "https://www.googleapis.com/youtube/v3/playlists";
+    const params = {part: "snippet,contentDetails", mine: true, maxResults: 25};
+    return await fetchYouTubeData(url, accessToken, params);
+};
+
+// 유튜브 재생목록 가져오기
+const fetchYouTubePlaylists = async (accessToken) => {
+    const url = "https://www.googleapis.com/youtube/v3/playlists";
+    const params = {part: "snippet,contentDetails"};
+    return await fetchYouTubeData(url, accessToken, params);
+};
+
+// 나중에 볼 동영상 가져오기
+const fetchWatchLaterVideos = async (accessToken) => {
+    const url = "https://www.googleapis.com/youtube/v3/playlistItems";
+    const params = {part: "snippet,contentDetails", playlistId: "WL", maxResults: 25};
+    return await fetchYouTubeData(url, accessToken, params);
+};
+
+// 첫 번째 동영상 ID 가져오기
+const fetchFirstVideoId = async (accessToken, playlistId) => {
+    const url = "https://www.googleapis.com/youtube/v3/playlistItems";
+    const params = {part: "snippet", playlistId, maxResults: 1};
+    const data = await fetchYouTubeData(url, accessToken, params);
+    return data.length > 0 ? data[0].snippet.resourceId.videoId : null;
+};
+
 
 // 빈 재생목록 제거
 const filterValidPlaylists = (playlists) => {
@@ -308,8 +199,6 @@ const fetchAllPlaylists = async (accessToken) => {
 };
 
 export default function MyPage() {
-    console.log("[MyPage()] 0: ", "MyPage()");
-
     const [playlists, setPlaylists] = React.useState([]);
     const [channelName, setChannelName] = useState("");
     const [isToggleVisible, setToggleVisible] = React.useState(false);
@@ -323,6 +212,63 @@ export default function MyPage() {
     const [FirstVideoId, setFirstVideoId] = useState("");
     const navigate = useNavigate();
     const {link} = useNavigation();
+    const accessToken = localStorage.getItem("ACCESS_TOKEN"); // accessToken 공유
+
+    // 인증 코드 추출 및 토큰 발급
+    React.useEffect(() => {
+        extractAuthCode(); // 외부 함수 호출
+    }, []);
+
+    // 유튜브 데이터 요청
+    React.useEffect(() => {
+        const fetchData = async () => {
+            if (!accessToken) {
+                console.error("Access token not found. Please log in again.");
+                return;
+            }
+
+            try {
+                // MyPage() 외부에 있는 API 함수 호출
+                const channelData = await fetchUserChannel(accessToken);
+                if (channelData?.length > 0) {
+                    setChannelId(channelData[0].id);
+                    setChannelName(channelData[0].snippet.title);
+                }
+
+                const userPlaylists = await fetchUserPlaylists(accessToken);
+                setPlaylists(userPlaylists || []);
+
+                const watchLater = await fetchWatchLaterVideos(accessToken);
+                setWatchLaterVideos(watchLater || []);
+
+                const liked = await fetchLikedVideos(accessToken);
+                setLikedVideos(liked || []);
+
+                const firstVideo = await fetchFirstVideoId(accessToken, "WL");
+                setFirstVideoId(firstVideo || "");
+            } catch (error) {
+                console.error("Error fetching YouTube data:", error.message);
+            }
+        };
+
+        fetchData();
+    }, [accessToken]);
+
+    // 프로필 이미지 불러오기
+    React.useEffect(() => {
+        const fetchProfileImage = async () => {
+            if (!accessToken) {
+                console.error("Access token not found. Please log in again.");
+                return;
+            }
+
+            const imageUrl = await fetchChannelProfileImage(accessToken);
+            if (imageUrl) setProfileImage(imageUrl);
+        };
+
+        fetchProfileImage();
+    }, [accessToken]);
+
 
     // 드롭다운 토글 핸들러
     const handleToggleDropdown = () => {
@@ -348,69 +294,6 @@ export default function MyPage() {
         console.log(`Selected sorting option: ${option}`);
     };
 
-    // 인증 코드 추출 및 토큰 발급
-    React.useEffect(() => {
-        extractAuthCode(); // 외부 함수 호출
-    }, []);
-
-    // 유튜브 API 데이터 가져오기
-    React.useEffect(() => {
-        const fetchData = async () => {
-            const accessToken = localStorage.getItem("ACCESS_TOKEN");
-
-            if (!accessToken) {
-                console.error("Access token not found. Please log in again.");
-                return;
-            }
-
-            try {
-                // 1. 채널 데이터 가져오기
-                const channelResponse = await fetch("https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true", {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-                const channelData = await channelResponse.json();
-                if (channelData.items && channelData.items.length > 0) {
-                    setChannelId(channelData.items[0].id); // 채널 ID 상태 업데이트
-                    setChannelName(channelData.items[0].snippet.title); // 채널 이름 설정
-                } else {
-                    console.error("No channel data found.");
-                }
-
-                const channel = await fetchUserChannel(accessToken);
-                if (channel) {
-                    setChannelName(channel);
-                }
-
-                const playlists = await fetchUserPlaylists(accessToken);
-                if (playlists) {
-                    setPlaylists(playlists);
-                }
-
-                const videos = await fetchWatchLaterVideos(accessToken);
-                if (videos) {
-                    setWatchLaterVideos(videos);
-                }
-
-                const likesVideos = await fetchLikedVideos(accessToken);
-                if (likesVideos) {
-                    setLikedVideos(likesVideos);
-                }
-
-                const FirstVideoId = await fetchFirstVideoId(accessToken);
-                if (FirstVideoId) {
-                    setFirstVideoId(FirstVideoId);
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-            ;
-        }
-
-        fetchData(); // 데이터 요청
-    }, []);
-
     const handleChannelView = async () => {
         const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
 
@@ -429,23 +312,7 @@ export default function MyPage() {
         }
     };
 
-    React.useEffect(() => {
-        const fetchProfileImage = async () => {
-            const accessToken = localStorage.getItem("ACCESS_TOKEN");
 
-            if (!accessToken) {
-                console.error("Access token not found. Please log in again.");
-                return;
-            }
-
-            const imageUrl = await fetchChannelProfileImage(accessToken);
-            if (imageUrl) {
-                setProfileImage(imageUrl);
-            }
-        };
-
-        fetchProfileImage();
-    }, []);
 
     // ISO 8601 Duration 포맷을 읽기 쉽게 변환하는 함수
     const formatDuration = (isoDuration) => {
