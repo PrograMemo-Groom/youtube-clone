@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import useNavigation from "../../hooks/useNavigation";
+import {formatVideoTime} from "../../utils/formatVideoTime";
 
 const handleLogin = () => {
     try {
@@ -295,7 +296,6 @@ export default function MyPage() {
     };
 
     const handleChannelView = async () => {
-        const accessToken = localStorage.getItem("ACCESS_TOKEN"); // 저장된 액세스 토큰 불러오기
 
         if (!accessToken) {
             console.error("Access token not found. Please log in again.");
@@ -311,8 +311,6 @@ export default function MyPage() {
             console.error("Failed to fetch channel ID.");
         }
     };
-
-
 
     // ISO 8601 Duration 포맷을 읽기 쉽게 변환하는 함수
     const formatDuration = (isoDuration) => {
@@ -474,7 +472,7 @@ export default function MyPage() {
                                                     </section>
                                                     <p className="add-playlist-text">현재 재생 목록에 추가</p>
                                                     <section className="progress-time-container">
-                                                        <p className="progress-time">{formatDuration(video.contentDetails.duration)}</p>
+                                                        <p className="progress-time">{formatVideoTime(video.contentDetails.duration)}</p>
                                                     </section>
                                                 </div>
                                             </div>
