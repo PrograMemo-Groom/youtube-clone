@@ -117,32 +117,32 @@ const Sidebar = ({ isExpanded }) => {
                             style={{ cursor: 'pointer' }}>
                                 내 페이지 &nbsp;＞ </h3>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/history.svg`} alt="시청 기록"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/history.svg`} alt="시청 기록"
                                  className={styles.icon}/>
                             시청 기록
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/playlist.svg`} alt="재생목록"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/playlist.svg`} alt="재생목록"
                                  className={styles.icon}/>
                             재생목록
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/videos.svg`} alt="내 동영상"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/videos.svg`} alt="내 동영상"
                                  className={styles.icon}/>
                             내 동영상
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/learning.svg`} alt="내 학습 프로그램"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/learning.svg`} alt="내 학습 프로그램"
                                  className={styles.icon}/>
                             내 학습 프로그램
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/later.svg`} alt="나중에 볼 동영상"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/later.svg`} alt="나중에 볼 동영상"
                                  className={styles.icon}/>
                             나중에 볼 동영상
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/liked.svg`} alt="좋아요"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/liked.svg`} alt="좋아요"
                                  className={styles.icon}/>
                             좋아요 표시한 동영상
                         </div>
@@ -154,47 +154,47 @@ const Sidebar = ({ isExpanded }) => {
                     <div className={styles.menuSection}>
                         <h3 className={styles.sectionTitle}>탐색</h3>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/trending.svg`} alt="인기 급상승"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/trending.svg`} alt="인기 급상승"
                                  className={styles.icon}/>
                             인기 급상승
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shop.svg`} alt="쇼핑"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/shop.svg`} alt="쇼핑"
                                  className={styles.icon}/>
                             쇼핑
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/music.svg`} alt="음악"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/music.svg`} alt="음악"
                                  className={styles.icon}/>
                             음악
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/movie.svg`} alt="영화"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/movie.svg`} alt="영화"
                                  className={styles.icon}/>
                             영화
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/live.svg`} alt="실시간"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/live.svg`} alt="실시간"
                                  className={styles.icon}/>
                             실시간
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/game.svg`} alt="게임"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/game.svg`} alt="게임"
                                  className={styles.icon}/>
                             게임
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/sport.svg`} alt="스포츠"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/sport.svg`} alt="스포츠"
                                  className={styles.icon}/>
                             스포츠
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/learn.svg`} alt="학습 프로그램"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/learning.svg`} alt="학습 프로그램"
                                  className={styles.icon}/>
                             학습 프로그램
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/podcast.svg`} alt="팟캐스트"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/podcast.svg`} alt="팟캐스트"
                                  className={styles.icon}/>
                             팟캐스트
                         </div>
@@ -205,22 +205,22 @@ const Sidebar = ({ isExpanded }) => {
                     <div className={styles.menuSection}>
                         <h3 className={styles.sectionTitle}>YouTube 더보기</h3>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/premium.svg`}
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/logo.svg`}
                                  alt="YouTube Premium" className={styles.icon}/>
                             YouTube Premium
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/studio.svg`} alt="YouTube 스튜디오"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/logo.svg`} alt="YouTube 스튜디오"
                                  className={styles.icon}/>
                             YouTube 스튜디오
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/music.svg`} alt="YouTube Music"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/logo.svg`} alt="YouTube Music"
                                  className={styles.icon}/>
                             YouTube Music
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/kids.svg`} alt="YouTube Kids"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/logo.svg`} alt="YouTube Kids"
                                  className={styles.icon}/>
                             YouTube Kids
                         </div>
@@ -231,22 +231,22 @@ const Sidebar = ({ isExpanded }) => {
                     {/* 설정 섹션 */}
                     <div className={styles.menuSection}>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/settings.svg`} alt="설정"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/settings.svg`} alt="설정"
                                  className={styles.icon}/>
                             설정
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/report.svg`} alt="신고 기록"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/flag.svg`} alt="신고 기록"
                                  className={styles.icon}/>
                             신고 기록
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/help.svg`} alt="고객센터"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/help.svg`} alt="고객센터"
                                  className={styles.icon}/>
                             고객센터
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/feedback.svg`} alt="의견 보내기"
+                            <img src={`${process.env.PUBLIC_URL}/assets/sidebar/feedback.svg`} alt="의견 보내기"
                                  className={styles.icon}/>
                             의견 보내기
                         </div>
