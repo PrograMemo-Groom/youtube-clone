@@ -58,6 +58,9 @@
   color: var(--dark--theme-text-color) !important;
   background-color: var(--dark--theme-menu-item-background-color) !important;
 }
+.menu-item:hover {
+  opacity: 0.7;
+}
 
 .creator-reserve-container .video-section {
   position: relative;
