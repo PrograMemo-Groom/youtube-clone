@@ -139,6 +139,7 @@
     margin-bottom: 10px;
     border-radius: 5%;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .videoThumbnail img {
@@ -169,12 +170,14 @@
     flex-direction: column;
     padding-left: 15px;
     padding-top: 7px;
+
+    flex-shrink: 1;
+    max-width: 639px;
 }
 
 .videoTitle {
     display: flex;
     justify-content: space-between;
-    width: 639px;
     margin-bottom: 5px;
 }
 
