@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import styles from './Header.module.css';
 import useNavigation from "../../hooks/useNavigation";
 import useGoogleAuth from "../../hooks/useGoogleAuth";
+import Sidebar from '../sidebar/Sidebar';
 
 const Header = () => {
     const { link } = useNavigation();
@@ -10,6 +11,11 @@ const Header = () => {
     const googleLogin = useGoogleAuth();
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+
+    const [isSidebarExpanded, setSidebarExpanded] = useState(false); // 사이드바 확장 상태
+    const handleSidebarToggle = () => {
+        setSidebarExpanded(prev => !prev);
+    };
 
     // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
     const handleGetCode = async () => {
@@ -33,7 +39,7 @@ const Header = () => {
     return (
         <div className={styles.header}>
             <section>
-                <div className={styles.icoContainer}>
+                <div className={styles.icoContainer} onClick={handleSidebarToggle}>
                     <img src={`${process.env.PUBLIC_URL}/assets/white/header/burger.svg`}
                          alt="menu"/>
                 </div>
@@ -82,6 +88,7 @@ const Header = () => {
                     </button>
                 }
             </section>
+            <Sidebar isExpanded={isSidebarExpanded} />
         </div>
     );
 };
