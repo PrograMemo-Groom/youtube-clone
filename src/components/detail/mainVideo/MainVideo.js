@@ -17,6 +17,7 @@ function MainVideo({video, channelId}) {
     const setMenuTheme = getMenuItemStyle(isDark);
     const setTheme = getStyle(isDark);
     const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
+    const [isSubscribe, setIsSubscribe] = useState(false);
 
     const [content, setContent] = useState({
         videoSrc: "",
@@ -165,9 +166,14 @@ function MainVideo({video, channelId}) {
                 구독자 {formatViewerCount(content.channelSubscribers)}명
               </span>
                         </div>
-                        <button style={setMenuTheme} className='subscribe-btn'>
-                            구독
-                        </button>
+                        {isSubscribe ?
+                            (<button onClick={() => setIsSubscribe(!isSubscribe)} style={setMenuTheme} className='subscribe-btn'>
+                                구독
+                            </button>) :
+                            <button onClick={() => setIsSubscribe(!isSubscribe)} style={setMenuTheme} className='subscribe-btn subscribe'>
+                                구독 중
+                            </button>}
+
                     </div>
 
                     <div className='actions'>

@@ -88,6 +88,11 @@ iframe {
   opacity: 0.8;
 }
 
+.subscribe-btn.subscribe {
+  background-color: var(--dark--theme-background-color) !important;
+  color: var(--dark--theme-text-color) !important;
+}
+
 .actions {
   display: flex;
   flex-direction: row;
