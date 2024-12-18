@@ -84,6 +84,10 @@ iframe {
   flex-direction: column;
 }
 
+.subscribe-btn:hover {
+  opacity: 0.8;
+}
+
 .actions {
   display: flex;
   flex-direction: row;
@@ -99,6 +103,11 @@ iframe {
   border: none;
   font-size: 14px;
   cursor: pointer;
+}
+
+.actions button:hover {
+  opacity: 0.8;
+
 }
 
 .details-contents {

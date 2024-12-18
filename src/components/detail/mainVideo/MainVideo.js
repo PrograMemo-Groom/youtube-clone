@@ -27,7 +27,6 @@ function MainVideo({ video, channelId }) {
     views: 0,
     uploadDate: "",
     like: 0,
-    hate: 0,
   });
   const [comments, setComments] = useState([
     {
@@ -176,7 +175,7 @@ function MainVideo({ video, channelId }) {
                 👍좋아요 {formatViewerCount(content.likes)}
               </button>
               <button style={setMenuTheme} className='hate-btn'>
-                👎 {formatViewerCount(content.hate)}{" "}
+                👎
               </button>
             </div>
             <button style={setMenuTheme} className='share-btn'>
