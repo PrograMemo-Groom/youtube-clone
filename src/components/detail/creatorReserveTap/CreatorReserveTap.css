@@ -54,15 +54,13 @@
   cursor: pointer;
 }
 
-/* .creator-reserve-container .menu-item.clicked {
-    color: var(--light--theme-text-color);
-    background-color: var(--light--theme-menu-item-background-color);
+.menu-item.clicked {
+  color: var(--dark--theme-text-color) !important;
+  background-color: var(--dark--theme-menu-item-background-color) !important;
 }
-
-.creator-reserve-container .menu-item.clicked {
-    color: var(--dark--theme-text-color);
-    background-color: var(--dark--theme-menu-item-background-color);
-} */
+.menu-item:hover {
+  opacity: 0.7;
+}
 
 .creator-reserve-container .video-section {
   position: relative;

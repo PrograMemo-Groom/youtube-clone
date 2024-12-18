@@ -17,7 +17,7 @@ function CreatorReserveTap({ channelId }) {
   const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
 
   // 메뉴 리스트
-  const [menuList, setMenuList] = useState([
+  const menuList = [
     { id: 1, text: "모두" },
     { id: 2, text: "시리즈" },
     { id: 3, text: "blue rain 제공" },
@@ -26,21 +26,13 @@ function CreatorReserveTap({ channelId }) {
     { id: 6, text: "관련 콘텐츠" },
     { id: 7, text: "blue rain 제공" },
     { id: 8, text: "관련 콘텐츠" },
-  ]);
+  ]
 
   // 현재 선택된 메뉴
   const [menu, setMenu] = useState("");
 
   // 비디오 리스트
   const [video, setVideo] = useState([]);
-  // {
-  //   title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-  //   channelName: "by. 채널명",
-  //   viewerCount: 1600000,
-  //   uploadDate: "4년전",
-  //   videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-  //   timestamp: "1:13:41",
-  // },
 
   useEffect(() => {
     const fetchRelatedVideoList = async () => {
