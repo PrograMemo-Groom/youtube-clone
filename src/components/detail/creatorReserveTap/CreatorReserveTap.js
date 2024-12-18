@@ -17,7 +17,7 @@ function CreatorReserveTap({ channelId }) {
   const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
 
   // 메뉴 리스트
-  const [menuList, setMenuList] = useState([
+  const menuList = [
     { id: 1, text: "모두" },
     { id: 2, text: "시리즈" },
     { id: 3, text: "blue rain 제공" },
@@ -26,7 +26,7 @@ function CreatorReserveTap({ channelId }) {
     { id: 6, text: "관련 콘텐츠" },
     { id: 7, text: "blue rain 제공" },
     { id: 8, text: "관련 콘텐츠" },
-  ]);
+  ]
 
   // 현재 선택된 메뉴
   const [menu, setMenu] = useState("");
