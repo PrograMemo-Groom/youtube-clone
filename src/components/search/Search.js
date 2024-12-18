@@ -9,13 +9,8 @@ import {fetchSearchListResults, setMouseHover} from "../../store/actions/searchA
 // const tag = '[SearchPage]';
 const Search = () => {
     const { link } = useNavigation();
-    // redux 구문 추가
     const dispatch = useDispatch();
-    // store에서 state값 가져올 때 useSelector로 값 가져올 수 있음
     const { searchResult, nextToken, mouseHover } = useSelector((state) => state.search);
-    // const [searchResult, setSearchResult] = useState([]);
-    // const [nextToken, setNextToken] = useState("");
-    // const [mouseHover, setMouseHover] = useState(null);
     const [itemRef, ] = useState([]);
 
     const useQuery = () => {
@@ -25,46 +20,13 @@ const Search = () => {
     const searchTerm = query.get("q");
 
     useEffect(() => {
-        if (searchTerm.trim().length > 0) {
-            dispatch(fetchSearchListResults(searchTerm));
-        }
+        searchTerm.trim().length > 0 && dispatch(fetchSearchListResults(searchTerm));
     }, [dispatch, searchTerm]);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         if (searchTerm.trim().length > 0) {
-    //             const {items, pageToken} = await fetchSearchList(searchTerm);
-    //             console.log(tag, "fetchData:", items, pageToken);
-    //             dispatch(setSearchResult(items || []));
-    //             dispatch(setNextToken(pageToken || ""));
-    //         }
-    //     }
-    //     fetchData();
-    // }, [searchTerm]);
-    // console.log("dummy data",searchResult);
-
     const fetchNextPage = useCallback(() => {
-        if (nextToken) {
-            dispatch(fetchSearchListResults(searchTerm, nextToken));
-        }
+        nextToken && dispatch(fetchSearchListResults(searchTerm, nextToken));
     }, [dispatch, nextToken, searchTerm]);
 
-    // const fetchNextPage = useCallback(async() => {
-    //     if (!nextToken) return;
-    //     try {
-    //         const { items, pageToken } = await fetchSearchList(searchTerm, nextToken);
-    //         console.log(tag, "fetchNextPage:", items, pageToken);
-    //         const uniqueSet = [...searchResult, ...items];
-    //
-    //         const uniqueResults = Array.from(
-    //             new Map(uniqueSet.map((item) => [item.videoId, item])).values()
-    //         );
-    //         setSearchResult(uniqueResults);
-    //         setNextToken(pageToken);
-    //     } catch (e) {
-    //         console.error("Error fetchNextPage:", e);
-    //     }
-    // }, [nextToken, searchTerm, searchResult]);
     const lastItemRef = useIntersectionObserver(fetchNextPage, {root: null, threshold: 0.1});
 
     const handleShowVideo = useCallback((videoId) => {
