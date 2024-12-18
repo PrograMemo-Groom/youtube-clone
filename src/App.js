@@ -16,7 +16,6 @@ const LayOut = () => {
         <>
             <Header />
             <SideBar />
-            <NewSidebar/>
             <div className={styles.container}>
                 <Outlet /> {/* 현재 라우터에 따라 변경 되는 내용 */}
             </div>
