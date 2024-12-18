@@ -11,12 +11,14 @@
     left: 0;
     transition: width 0.3s ease;
     align-items: center;
+    overflow: hidden;
 }
 
 .expanded {
     width: 240px; /* 확장된 상태 */
     align-items: flex-start;
     padding-left: 20px;
+    overflow-y: auto;
 }
 
 .sidebar_icons{
@@ -55,6 +57,9 @@
 
 .expandedMenu {
     margin-top: 20px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
 .sectionTitle {
