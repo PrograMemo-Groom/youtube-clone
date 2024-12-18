@@ -5,6 +5,7 @@ import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
 import { fetchShortsVideos } from "../../../service/SubscribeService";
+import useNavigation from "../../../hooks/useNavigation";
 
 
 const GridSubscribe = () => {
@@ -14,7 +15,7 @@ const GridSubscribe = () => {
     const [subscriptions, setSubscriptions] = useState([]);
     const [shorts, setShorts] = useState([]);
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
-
+    const { link } = useNavigation();
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     
         useEffect(() => {
@@ -108,7 +109,15 @@ const GridSubscribe = () => {
 
     const threshold = itemsPerRow * 2; // 2줄 기준 계산
 
+    const handleShowVideo = (videoId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        link(`/detail?q=${videoId}`);
+    };
 
+    const handleChannelClick = (channelId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        window.location.href = `https://www.youtube.com/channel/${channelId}`;
+    };
 
 
     
@@ -167,8 +176,15 @@ const GridSubscribe = () => {
                                             <p>{video.duration}</p>
                                         </div>
                                         <div className={styles.videoDescriptions}>
-                                            <img src={video.channelAvatar} alt="채널프로필사진" />
-                                            <div className={styles.videoDescriptions_lines}>
+                                            <img
+                                                src={video.channelAvatar}
+                                                alt="채널프로필사진"
+                                                onClick={(event) => handleChannelClick(video.channelId, event)}
+                                            />
+                                            <div
+                                                className={styles.videoDescriptions_lines}
+                                                onClick={(event) => handleShowVideo(video.videoId, event)}
+                                            >
                                                 <h4>{video.title}</h4>
                                                 <p>{video.channelTitle}</p>
                                                 <p>{video.views} • {video.publishTime}</p>
@@ -196,7 +212,8 @@ const GridSubscribe = () => {
                                             </header>
                                             <div className={styles.shortsMain}>
                                                 {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
-                                                    <article key={shortsIndex} className={styles.shortsClip}>
+                                                    <article key={shortsIndex} className={styles.shortsClip}
+                                                        onClick={(event) => handleShowVideo(video.videoId, event)}>
                                                         <div
                                                             className={styles.shortsThumbnail_div}
                                                             onMouseEnter={() => setHoveredVideo(shorts.id)}
