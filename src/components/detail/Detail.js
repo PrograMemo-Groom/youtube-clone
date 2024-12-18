@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import CreatorReserveTap from "./creatorReserveTap/CreatorReserveTap";
 import ShortsTap from "./shortsTap/ShortsTap";
-import RelatedVideo from "./relatedVideo/RelatedVideo";
 import MainVideo from "./mainVideo/MainVideo";
 import "./Detail.css";
 import {ThemeContext} from "../context/context";
@@ -61,7 +60,7 @@ function Detail() {
                 <div style={setTheme} className='side-section'>
                     <CreatorReserveTap channelId={channelId}/>
                     <ShortsTap/>
-                    <RelatedVideo channelId={channelId}/>
+                    {/*<RelatedVideo channelId={channelId}/>*/}
                 </div>
             </div>
         </ThemeContext.Provider>
