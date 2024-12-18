@@ -8,6 +8,7 @@ import {getStyle} from "./themes/useThemeStyles";
 import {useSearchParams} from "react-router-dom";
 import instance from "../../api/api";
 import requests from "../../api/endpoint";
+import RelatedVideo from "./relatedVideo/RelatedVideo";
 
 
 function Detail() {
@@ -60,7 +61,7 @@ function Detail() {
                 <div style={setTheme} className='side-section'>
                     <CreatorReserveTap channelId={channelId}/>
                     <ShortsTap/>
-                    {/*<RelatedVideo channelId={channelId}/>*/}
+                    <RelatedVideo channelId={channelId}/>
                 </div>
             </div>
         </ThemeContext.Provider>
