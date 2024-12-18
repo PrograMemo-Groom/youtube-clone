@@ -53,7 +53,7 @@
 }
 
 .sidebar_icons{
-    margin-top: 15px;
+    margin-top: 10px;
 }
 .sidebar_Item {
     display: flex;
@@ -84,13 +84,6 @@
 
 .sidebar_Item:hover .sidebar_icon {
     transform: scale(1.15);
-}
-
-.sectionTitle {
-    margin-top: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #606060;
 }
 
 .exp_home,
@@ -135,12 +128,14 @@
     color: #606060;
     line-height: 1.5;
     margin-bottom: 20px;
+    padding: 5px 7px;
 }
 
 .infoLinks span {
     cursor: pointer;
     margin-right: 5px;
     transition: color 0.2s ease;
+    font-weight: bold;
 }
 
 .infoLinks span:hover {
@@ -172,4 +167,30 @@
 .divider {
     border-bottom: 1px solid #e0e0e0;
     margin: 10px 0;
+}
+
+.sectionTitleMypage {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    margin-bottom: 5px;
+    padding: 10px 12px;
+}
+
+.sectionTitleMypage:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.sectionTitle {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #000;
+    transition: color 0.2s ease;
+    margin-bottom: 5px;
+    padding: 10px 12px;
 }

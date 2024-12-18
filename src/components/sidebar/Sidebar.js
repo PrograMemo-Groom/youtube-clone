@@ -112,7 +112,10 @@ const Sidebar = ({ isExpanded }) => {
 
                     {/* 내 페이지 섹션 */}
                     <div className={styles.menuSection}>
-                        <h3 className={styles.sectionTitle}>내 페이지</h3>
+                        <h3 className={styles.sectionTitleMypage}
+                            onClick={() => handleGoto('/myPage', 'myPage')}
+                            style={{ cursor: 'pointer' }}>
+                                내 페이지 &nbsp;＞ </h3>
                         <div className={styles.menuItem}>
                             <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/history.svg`} alt="시청 기록"
                                  className={styles.icon}/>
@@ -257,7 +260,7 @@ const Sidebar = ({ isExpanded }) => {
                             <span>크리에이터</span> <span>광고</span> <span>개발자</span>
                         </div>
                         <div className={styles.infoLinks}>
-                            <span>약관</span> <span>개인정보처리방침</span> <br/>
+                            <span><br/>약관</span> <span>개인정보처리방침</span> <br/>
                             <span>정책 및 안전</span> <br/>
                             <span>YouTube 작동의 원리</span> <br/>
                             <span>새로운 기능 테스트하기</span>
@@ -273,7 +276,10 @@ const Sidebar = ({ isExpanded }) => {
                         </div>
 
                         <p className={styles.notice}>
-                            크리에이터들이 유튜브 상에 게시, 태그 또는 추천한 상품들은 판매자들의 약관에 따라 판매됩니다. 유튜브는 이러한 제품들을 판매하지 않으며, 그에 대한 책임을 지지
+                            크리에이터들이 유튜브 상에 게시, 태그<br/>
+                            또는 추천한 상품들은 판매자들의 약관에<br/>
+                            따라 판매됩니다. 유튜브는 이러한 제품들을<br/>
+                            판매하지 않으며, 그에 대한 책임을 지지<br/>
                             않습니다.
                         </p>
                     </div>
