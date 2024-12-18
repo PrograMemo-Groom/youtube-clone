@@ -9,7 +9,6 @@ import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
 import Subscribe from "./components/subscribe/Subscribe";
 import Shorts from "./components/shorts/Shorts";
-import NewSidebar from "./components/sidebar/NewSidebar";
 
 const LayOut = () => {
     return (
