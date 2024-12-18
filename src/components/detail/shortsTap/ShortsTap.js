@@ -74,8 +74,6 @@ function ShortsTap() {
         <div className='right-arrow' onClick={() => handleScroll("right")}>
             {">"}
         </div>
-
-
         <ShortsVideos shorts={shorts} handleShortsVideo={handleShortsVideo} categoryBarRef={categoryBarRef}/>
     </div>);
 }
