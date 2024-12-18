@@ -25,6 +25,8 @@ const Sidebar = ({ isExpanded }) => {
         });
     }, [location]);
 
+    const [isHovered, setIsHovered] = useState(false); // 스크롤바 표시 상태
+
     const handleGoto = (url, item) => {
         navigate(url);
         setSelected({
@@ -37,7 +39,10 @@ const Sidebar = ({ isExpanded }) => {
     }
 
     return (
-        <div className={`${styles.container} ${isExpanded ? styles.expanded : ''}`}>
+        <div className={`${styles.container} ${isExpanded ? styles.expanded : ''}`}
+             onMouseEnter={() => isExpanded && setIsHovered(true)}
+             onMouseLeave={() => isExpanded && setIsHovered(false)}
+        >
             {/* 기존 메뉴 */}
             {!isExpanded && (
                 <div className={styles.sidebar_icons}>
@@ -69,8 +74,12 @@ const Sidebar = ({ isExpanded }) => {
             )}
 
             {/* 확장된 메뉴 */}
+
             {isExpanded && (
-                <div className={styles.expandedMenu}>
+
+                <div className={`${styles.expandedMenu} ${
+                    isHovered ? styles.showScrollbar : styles.hideScrollbar
+                }`}>
                     {/* 기본 메뉴*/}
                     <div className={styles.menuSection}>
                         <div className={styles.menuItem} onClick={() => handleGoto('/', 'home')}>

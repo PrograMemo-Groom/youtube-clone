@@ -15,10 +15,38 @@
 }
 
 .expanded {
-    width: 240px; /* 확장된 상태 */
+    width: 220px; /* 확장된 상태 */
     align-items: flex-start;
     padding-left: 20px;
+    overflow-y: hidden;
+
+}
+.expandedMenu {
+    margin-top: 20px;
+    max-height: calc(100vh - 80px);
     overflow-y: auto;
+    padding-right: 10px;
+}
+
+.showScrollbar {
+    overflow-y: auto;
+}
+
+.hideScrollbar {
+    overflow-y: hidden;
+}
+
+
+.expanded:hover {
+    overflow-y: auto;
+}
+
+.expanded::-webkit-scrollbar {
+    width: 1px;
+}
+
+.expanded::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .sidebar_icons{
@@ -53,13 +81,6 @@
 
 .sidebar_Item:hover .sidebar_icon {
     transform: scale(1.15);
-}
-
-.expandedMenu {
-    margin-top: 20px;
-    max-height: calc(100vh - 80px);
-    overflow-y: auto;
-    padding-right: 10px;
 }
 
 .sectionTitle {
