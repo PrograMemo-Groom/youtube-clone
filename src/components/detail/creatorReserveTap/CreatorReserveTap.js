@@ -33,14 +33,6 @@ function CreatorReserveTap({ channelId }) {
 
   // 비디오 리스트
   const [video, setVideo] = useState([]);
-  // {
-  //   title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-  //   channelName: "by. 채널명",
-  //   viewerCount: 1600000,
-  //   uploadDate: "4년전",
-  //   videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-  //   timestamp: "1:13:41",
-  // },
 
   useEffect(() => {
     const fetchRelatedVideoList = async () => {
