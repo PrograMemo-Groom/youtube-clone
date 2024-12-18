@@ -84,9 +84,11 @@ const Sidebar = ({ isExpanded }) => {
                     <div className={styles.menuSection}>
                         <div className={styles.menuItem} onClick={() => handleGoto('/', 'home')}>
                             {selected.home
-                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home_select.svg`} alt="홈" className={styles.sidebar_icon} />
-                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home.svg`} alt="홈" className={styles.sidebar_icon} />}
-                            <span  className={styles.exp_home}>홈</span>
+                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home_select.svg`} alt="홈"
+                                       className={styles.sidebar_icon}/>
+                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home.svg`} alt="홈"
+                                       className={styles.sidebar_icon}/>}
+                            <span className={styles.exp_home}>홈</span>
                         </div>
                         <div className={styles.menuItem} onClick={() => handleGoto('/shorts', 'shorts')}>
                             {selected.shorts
@@ -195,23 +197,28 @@ const Sidebar = ({ isExpanded }) => {
                         </div>
                     </div>
 
+                    <div className={styles.divider}></div>
                     {/* YouTube 더보기 섹션 */}
                     <div className={styles.menuSection}>
                         <h3 className={styles.sectionTitle}>YouTube 더보기</h3>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/premium.svg`} alt="YouTube Premium" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/premium.svg`}
+                                 alt="YouTube Premium" className={styles.icon}/>
                             YouTube Premium
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/studio.svg`} alt="YouTube 스튜디오" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/studio.svg`} alt="YouTube 스튜디오"
+                                 className={styles.icon}/>
                             YouTube 스튜디오
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/music.svg`} alt="YouTube Music" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/music.svg`} alt="YouTube Music"
+                                 className={styles.icon}/>
                             YouTube Music
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/kids.svg`} alt="YouTube Kids" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/kids.svg`} alt="YouTube Kids"
+                                 className={styles.icon}/>
                             YouTube Kids
                         </div>
                     </div>
@@ -221,19 +228,23 @@ const Sidebar = ({ isExpanded }) => {
                     {/* 설정 섹션 */}
                     <div className={styles.menuSection}>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/settings.svg`} alt="설정" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/settings.svg`} alt="설정"
+                                 className={styles.icon}/>
                             설정
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/report.svg`} alt="신고 기록" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/report.svg`} alt="신고 기록"
+                                 className={styles.icon}/>
                             신고 기록
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/help.svg`} alt="고객센터" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/help.svg`} alt="고객센터"
+                                 className={styles.icon}/>
                             고객센터
                         </div>
                         <div className={styles.menuItem}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/feedback.svg`} alt="의견 보내기" className={styles.icon} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/feedback.svg`} alt="의견 보내기"
+                                 className={styles.icon}/>
                             의견 보내기
                         </div>
                     </div>
@@ -242,7 +253,7 @@ const Sidebar = ({ isExpanded }) => {
                     <div className={styles.divider}></div>
                     <div className={styles.infoSection}>
                         <div className={styles.infoLinks}>
-                            <span>정보</span> <span>보도자료</span> <span>저작권</span> <span>문의하기</span><br />
+                            <span>정보</span> <span>보도자료</span> <span>저작권</span> <span>문의하기</span><br/>
                             <span>크리에이터</span> <span>광고</span> <span>개발자</span>
                         </div>
                         <div className={styles.infoLinks}>
@@ -253,16 +264,17 @@ const Sidebar = ({ isExpanded }) => {
                         </div>
 
                         <div className={styles.copyright}>
-                            © 2024 Google LLC, Sundar Pichai,<br />
+                            © 2024 Google LLC, Sundar Pichai,<br/>
                             1600 Amphitheatre Parkway,<br/>
-                            Mountain View CA 94043, USA,<br />
+                            Mountain View CA 94043, USA,<br/>
                             0807-882-594 (무료), yt-support-solutions-kr@google.com, 호스팅: <br/>
                             Google LLC,
                             <span className={styles.blueLink}> 사업자정보, 불법촬영물 신고</span>
                         </div>
 
                         <p className={styles.notice}>
-                            크리에이터들이 유튜브 상에 게시, 태그 또는 추천한 상품들은 판매자들의 약관에 따라 판매됩니다. 유튜브는 이러한 제품들을 판매하지 않으며, 그에 대한 책임을 지지 않습니다.
+                            크리에이터들이 유튜브 상에 게시, 태그 또는 추천한 상품들은 판매자들의 약관에 따라 판매됩니다. 유튜브는 이러한 제품들을 판매하지 않으며, 그에 대한 책임을 지지
+                            않습니다.
                         </p>
                     </div>
                 </div>
