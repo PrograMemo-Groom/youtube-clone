@@ -1,13 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styles from "./Search.module.css";
 import {useLocation} from "react-router-dom";
-import {fetchSearchList} from "../../service/SearchService";
 import useNavigation from "../../hooks/useNavigation";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchSearchListResults, setMouseHover, setNextToken, setSearchResult} from "../../store/actions/searchAction";
+import {fetchSearchListResults, setMouseHover} from "../../store/actions/searchAction";
 
-const tag = '[SearchPage]';
+// const tag = '[SearchPage]';
 const Search = () => {
     const { link } = useNavigation();
     // redux 구문 추가
