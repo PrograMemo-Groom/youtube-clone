@@ -3,9 +3,11 @@ import formatViewerCount from "../../../utils/formatViewerCount.js";
 import "./CreatorReserveTap.css";
 import { ThemeContext } from "../../context/context.js";
 import { getMenuItemStyle } from "../../detail/themes/useThemeStyles.js";
-// import { fetchChannelVideos } from "../../../service/SubscribeService.js";
-import { fetchCreatorVideos } from "./fetchCreatorVideos.js";
+import { fetchCreatorVideos } from "../../../utils/fetchCreatorVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
+import DropdownMenu from "../../dropdownMenu/DropdownMenu"
+
+
 function CreatorReserveTap({ channelId }) {
   const { isDark } = useContext(ThemeContext);
   // const setTheme = getStyle(isDark);
@@ -50,7 +52,7 @@ function CreatorReserveTap({ channelId }) {
           videoLink: video.videoLink || "",
         };
       });
-      console.log("비디오 리스트", formatVideoData);
+      // console.log("비디오 리스트", formatVideoData);
       setVideo(formatVideoData);
     };
     fetchRelatedVideoList();
@@ -161,75 +163,7 @@ function CreatorReserveTap({ channelId }) {
                 />
               )}
               {openDropdown === video.id && (
-                <div className='dropdownMenu'>
-                  <ul>
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/playlist.svg`}
-                        alt='현재 재생목록에 추가'
-                        className='menuIcon'
-                      />
-                      현재 재생목록에 추가
-                    </li>
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/clock.svg`}
-                        alt='나중에 볼 동영상에 저장'
-                        className='menuIcon'
-                      />
-                      나중에 볼 동영상에 저장
-                    </li>
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/bookmark.svg`}
-                        alt='재생목록에 저장'
-                        className='menuIcon'
-                      />
-                      재생목록에 저장
-                    </li>
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/download.svg`}
-                        alt='오프라인 저장'
-                        className='menuIcon'
-                      />
-                      오프라인 저장
-                    </li>
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/share.svg`}
-                        alt='공유'
-                        className='menuIcon'
-                      />
-                      공유
-                    </li>
-                    <hr className='menuDivider' />
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/wrong.svg`}
-                        alt='관심 없음'
-                        className='menuIcon'
-                      />
-                      관심 없음
-                    </li>
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/no.svg`}
-                        alt='채널 추천 안함'
-                        className='menuIcon'
-                      />
-                      채널 추천 안함
-                    </li>
-                    <li>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/assets/videoMore/flag.svg`}
-                        alt='신고'
-                        className='menuIcon'
-                      />
-                      신고
-                    </li>
-                  </ul>
-                </div>
+               <DropdownMenu />
               )}
             </div>
             {/* 테마 변경 테스트 */}
