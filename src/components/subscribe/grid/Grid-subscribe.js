@@ -3,7 +3,6 @@ import styles from './Grid-subscribe.module.css';
 import ListedSubscribe from '../list/Listed-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
-import useGoogleAuth from "../../../hooks/useGoogleAuth";
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
 import { fetchShortsVideos } from "../../../service/SubscribeService";
 
@@ -14,10 +13,9 @@ const GridSubscribe = () => {
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
     const [subscriptions, setSubscriptions] = useState([]);
     const [shorts, setShorts] = useState([]);
+    const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
-    const googleLogin = useGoogleAuth();
-
     
         useEffect(() => {
             accessToken && fetchData();
@@ -150,8 +148,22 @@ const GridSubscribe = () => {
                             {subscriptions.map((video, index) => (
                                 <React.Fragment key={index}> {/* 기존에 여러 요소를 반환할 수 있도록 추가 */}
                                     <article className={styles.videoClip}>
-                                        <div className={styles.videoThumbnail}>
-                                            <img src={video.highThumbnail} alt='나는 썸네일' />
+                                        <div
+                                            className={styles.videoThumbnail}
+                                            onMouseEnter={() => setHoveredVideo(video.videoId)}
+                                            onMouseLeave={() => setHoveredVideo(null)}
+                                        >
+                                            {hoveredVideo === video.videoId ? (
+                                                    <iframe
+                                                        className={styles.videoPlayer}
+                                                        src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&mute=1`}
+                                                        title={video.title}
+                                                        allow="autoplay; encrypted-media"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                ) : (
+                                                    <img src={video.highThumbnail} alt='나는 썸네일' />
+                                                )}
                                             <p>{video.duration}</p>
                                         </div>
                                         <div className={styles.videoDescriptions}>
@@ -185,11 +197,27 @@ const GridSubscribe = () => {
                                             <div className={styles.shortsMain}>
                                                 {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
                                                     <article key={shortsIndex} className={styles.shortsClip}>
-                                                        <img
-                                                            className={styles.shortsThumbnail}
-                                                            alt="shorts 썸네일"
-                                                            src={shorts.thumbUrl}
-                                                        />
+                                                        <div
+                                                            className={styles.shortsThumbnail_div}
+                                                            onMouseEnter={() => setHoveredVideo(shorts.id)}
+                                                            onMouseLeave={() => setHoveredVideo(null)}
+                                                        >
+                                                            {hoveredVideo === shorts.id ? (
+                                                                    <iframe
+                                                                    className={styles.shortsPlayer}
+                                                                    src={`https://www.youtube.com/embed/${shorts.id}?autoplay=1&mute=1`}
+                                                                    title={shorts.title}
+                                                                    allow="autoplay; encrypted-media"
+                                                                    allowFullScreen
+                                                                    ></iframe>
+                                                                ) : (
+                                                                    <img
+                                                                    className={styles.shortsThumbnail}
+                                                                    alt="shorts 썸네일"
+                                                                    src={shorts.thumbUrl}
+                                                                    />
+                                                            )}
+                                                        </div>
                                                         <div className={styles.shortsDetail}>
                                                             <div>
                                                                 <h5>{shorts.title}</h5>

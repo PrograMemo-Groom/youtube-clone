@@ -122,6 +122,12 @@
     display: block;
 }
 
+.videoPlayer {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
 .videoThumbnail p  {
     position: absolute;
     bottom: 8px;
@@ -250,14 +256,27 @@
     padding-right: 3px;
 }
 
-.shortsThumbnail {
-    width: 210px;
+.shortsThumbnail_div {
+    min-width: 210px;
+    max-width: 210px;
     height: 315px;
-    border-radius: 3%;
+    border-radius: 5%;
+    overflow: hidden;
+}
+
+.shortsThumbnail {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-
+.shortsPlayer {
+    min-width: 210px;
+    max-width: 210px;
+    height: 315px;
+    border-radius: 5%;
+    overflow: hidden;
+}
 
 .shortsDetail {
     display: flex;

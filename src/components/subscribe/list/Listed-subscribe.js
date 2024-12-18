@@ -11,6 +11,7 @@ const ListedSubscribe = () => {
 
     const [view, setView] = useState("list");
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
+    const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
@@ -128,11 +129,22 @@ const ListedSubscribe = () => {
                                             )}
                                         </header>
                                         <div className={styles.videoClip_main}>
-                                            <div className={styles.videoThumbnail}>
-                                                <img
-                                                    src={video.highThumbnail}
-                                                    alt='썸네일'
-                                                />
+                                            <div
+                                                className={styles.videoThumbnail}
+                                                onMouseEnter={() => setHoveredVideo(video.videoId)}
+                                                onMouseLeave={() => setHoveredVideo(null)}
+                                            >
+                                                {hoveredVideo === video.videoId ? (
+                                                    <iframe
+                                                        className={styles.videoPlayer}
+                                                        src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&mute=1`}
+                                                        title={video.title}
+                                                        allow="autoplay; encrypted-media"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                ) : (
+                                                    <img src={video.highThumbnail} alt='나는 썸네일' />
+                                                )}
                                                 <p>{video.duration}</p>
                                             </div>
                                             <div className={styles.videoDescriptions_lines}>
