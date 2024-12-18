@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import he from "he";
 import formatViewerCount from "../../../utils/formatViewerCount";
 import formatTimeDifference from "../../../utils/formatTimeDifference";
 import { ThemeContext } from "../../context/context.js";
@@ -92,7 +93,7 @@ function MainVideo({ video, channelId }) {
         userName: comment.author || "Anonymous",
         date: comment.date || new Date().toISOString(),
         isEdited: comment.isEdited || false,
-        text: comment.text || "",
+        text: he.decode(comment.text) || "",
         like: comment.likes || 0,
         hate: comment.hate || 0,
         reply: comment.reply || [],
@@ -331,7 +332,7 @@ function MainVideo({ video, channelId }) {
                     <span className='isEdited'> {"(수정됨)"} </span>
                   )}
                 </span>
-                <p className='comment-text'>{comment.text}</p>
+                <p className='comment-text' dangerouslySetInnerHTML={{ __html: comment.text }}></p>
                 <div className='comment-actions'>
                   <span className='comment-like-count'>
                     👍🏻 {formatViewerCount(comment.like)}
