@@ -3,7 +3,6 @@ import styles from './Header.module.css';
 import useNavigation from "../../hooks/useNavigation";
 import useGoogleAuth from "../../hooks/useGoogleAuth";
 import Sidebar from '../sidebar/Sidebar';
-import NewSidebar from "../sidebar/NewSidebar";
 
 const Header = () => {
     const { link } = useNavigation();
@@ -13,12 +12,9 @@ const Header = () => {
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
 
-    const [isOldSidebarHidden, setOldSidebarHidden] = useState(false); //기존 사이드바
-    const [isNewSidebarOpen, setNewSidebarOpen] = useState(false); //새로운 사이드바
-
-    const handleNewSidebarToggle = () => {
-        setNewSidebarOpen(prev => !prev);
-        setOldSidebarHidden((prev) => !prev);
+    const [isSidebarExpanded, setSidebarExpanded] = useState(false); // 사이드바 확장 상태
+    const handleSidebarToggle = () => {
+        setSidebarExpanded(prev => !prev);
     };
 
     // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
@@ -43,7 +39,7 @@ const Header = () => {
     return (
         <div className={styles.header}>
             <section>
-                <div className={styles.icoContainer} onClick={handleNewSidebarToggle}>
+                <div className={styles.icoContainer} onClick={handleSidebarToggle}>
                     <img src={`${process.env.PUBLIC_URL}/assets/white/header/burger.svg`}
                          alt="menu"/>
                 </div>
@@ -92,12 +88,7 @@ const Header = () => {
                     </button>
                 }
             </section>
-
-            {/* 기존 사이드바 */}
-            {!isOldSidebarHidden && <Sidebar />}
-
-            {/* 사이드바 토글 */}
-            {isNewSidebarOpen && <NewSidebar />}
+            <Sidebar isExpanded={isSidebarExpanded} />
         </div>
     );
 };
