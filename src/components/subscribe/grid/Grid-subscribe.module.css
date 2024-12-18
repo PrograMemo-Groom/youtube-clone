@@ -33,6 +33,7 @@
     width: 40px;
     height: 40px;
     padding-left: 3px;
+    cursor: pointer;
 }
 
 .manageButton {
@@ -152,12 +153,14 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 12px;
+    cursor: pointer;
 }
 
 .videoDescriptions_lines {
     flex: 1;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .videoDescriptions_lines h4 {
@@ -190,6 +193,7 @@
     height: 24px;
     background-color: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .videoDescriptions_button button img{
@@ -236,6 +240,7 @@
     border: transparent;
     background-color: transparent;
     padding-right: 35px;
+    cursor: pointer;
 }
 
 .shortsMain {
@@ -254,6 +259,7 @@
     flex-direction: column;
     padding-left: 3px;
     padding-right: 3px;
+    cursor: pointer;
 }
 
 .shortsThumbnail_div {

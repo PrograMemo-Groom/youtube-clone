@@ -63,6 +63,7 @@
     height: 40px;
 
     padding-left: 3px;
+    cursor: pointer;
 }
 
 .manageButton {
@@ -104,6 +105,7 @@
 
 .header_channel {
     display: flex;
+    cursor: pointer;
 }
 
 .header_channel img {
@@ -119,6 +121,7 @@
 
     padding-left: 10px;
     padding-top: 3px;
+    cursor: pointer;
 }
 
 /***************** 비디오클립 메인  */
@@ -191,6 +194,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
+    cursor: pointer;
 }
 
 .videoTitle h5 {
@@ -203,6 +207,7 @@
     -webkit-line-clamp: 2;        /* 2줄로 제한 */
     overflow: hidden;             /* 넘치는 부분 숨기기 */
     text-overflow: ellipsis; 
+    cursor: pointer;
 }
 
 .videoTitle button {
@@ -211,6 +216,7 @@
     background-color: transparent;
     border: none;
     padding-bottom: 30px;
+    cursor: pointer;
 }
 
 .videoTitle button img{
@@ -221,6 +227,7 @@
 .videoInfo {
     font-size: #060606;
     font-size: 12px;
+    cursor: pointer;
 }
 
 .videoDes {
@@ -234,6 +241,7 @@
     -webkit-line-clamp: 2;        /* 2줄로 제한 */
     overflow: hidden;             /* 넘치는 부분 숨기기 */
     text-overflow: ellipsis; 
+    cursor: pointer;
 }
 
 
@@ -279,6 +287,7 @@
     border: transparent;
     background-color: transparent;
     padding-right: 35px;
+    cursor: pointer;
 }
 
 
@@ -298,6 +307,7 @@
     flex-direction: column;
     padding-left: 3px;
     padding-right: 3px;
+    cursor: pointer;
 }
 
 

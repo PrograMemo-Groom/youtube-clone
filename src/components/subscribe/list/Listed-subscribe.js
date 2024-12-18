@@ -162,18 +162,21 @@ const ListedSubscribe = () => {
                                                 )}
                                                 <p>{video.duration}</p>
                                             </div>
-                                            <div
-                                                className={styles.videoDescriptions_lines}
-                                                onClick={(event) => handleShowVideo(video.videoId, event)}
-                                            >
+                                            <div className={styles.videoDescriptions_lines}>
                                                 <div className={styles.videoTitle}>
-                                                    <h5>{video.title}</h5>
+                                                    <h5 onClick={(event) => handleShowVideo(video.videoId, event)}>
+                                                        {video.title}
+                                                    </h5>
                                                     <button>
                                                         <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
                                                     </button>
                                                 </div>
-                                                <p className={styles.videoInfo}>{video.channelTitle}  {video.views} • {video.publishTime}</p>
-                                                <p className={styles.videoDes}>{video.description}</p>
+                                                <p className={styles.videoInfo} onClick={(event) => handleShowVideo(video.videoId, event)}>
+                                                    {video.channelTitle}  {video.views} • {video.publishTime}
+                                                </p>
+                                                <p className={styles.videoDes} onClick={(event) => handleShowVideo(video.videoId, event)}>
+                                                    {video.description}
+                                                </p>
                                             </div>
                                         </div>
                                     </article>
