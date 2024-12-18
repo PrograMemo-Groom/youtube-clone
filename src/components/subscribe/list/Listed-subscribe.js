@@ -91,7 +91,7 @@ const ListedSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "list" && (
                 <>
-                    <main>
+                    <main className={styles.main}>
                         <section className={styles.videoSection}>
                             {subscriptions.map((video, index) => (
                                 <>

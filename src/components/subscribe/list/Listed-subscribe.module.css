@@ -1,13 +1,49 @@
 .main {
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
-.videoSection {
-    width: 100%;     
+.videoSection {   
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media (max-width: 750px) {
+    .shortsSection,
+    .videoClip {
+        width: 410px  !important;
+    }
+}
+
+@media (min-width: 751px) and (max-width: 1010px) {
+    .shortsSection,
+    .videoClip {
+        width: 605px  !important;
+    }
+}
+
+@media (min-width: 1011px) and (max-width: 1230px) {
+    .shortsSection,
+    .videoClip {
+        width: 805px !important;
+    }
+}
+
+@media (min-width: 1231px) and (max-width: 1440px) {
+    .shortsSection,
+    .videoClip {
+        width: 1010px !important;
+    }
+}
+
+@media (min-width: 1441px) {
+    .shortsSection,
+    .videoClip {
+        width: 1190px !important;
+    }
 }
 
 
@@ -49,7 +85,7 @@
     display: flex;
     flex-direction: column;
 
-    width: 90%;
+    width: 1190px;
     margin-top: 30px;
     padding-bottom: 50px;
 
@@ -61,6 +97,7 @@
     align-items: center;
     justify-content: space-between;
 
+    width: 100%;
     height: 54px;
     min-height: 54px;
 }
@@ -187,7 +224,7 @@
 /********************************* shorts 섹션 !!  */
 
 .shortsSection {
-    width: 90%;
+    width: 1190px;
     display: flex;
     flex-direction: column;
     align-items: center;
