@@ -212,8 +212,11 @@ const GridSubscribe = () => {
                                             </header>
                                             <div className={styles.shortsMain}>
                                                 {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
-                                                    <article key={shortsIndex} className={styles.shortsClip}
-                                                        onClick={(event) => handleShowVideo(video.videoId, event)}>
+                                                    <article
+                                                        key={shortsIndex}
+                                                        className={styles.shortsClip}
+                                                        onClick={(event) => handleShowVideo(shorts.id, event)}
+                                                    >
                                                         <div
                                                             className={styles.shortsThumbnail_div}
                                                             onMouseEnter={() => setHoveredVideo(shorts.id)}
