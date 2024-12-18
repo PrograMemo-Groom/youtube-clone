@@ -3,8 +3,7 @@ import formatViewerCount from "../../../utils/formatViewerCount.js";
 import "./CreatorReserveTap.css";
 import { ThemeContext } from "../../context/context.js";
 import { getMenuItemStyle } from "../../detail/themes/useThemeStyles.js";
-// import { fetchChannelVideos } from "../../../service/SubscribeService.js";
-import { fetchCreatorVideos } from "./fetchCreatorVideos.js";
+import { fetchCreatorVideos } from "../../../utils/fetchCreatorVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 function CreatorReserveTap({ channelId }) {
   const { isDark } = useContext(ThemeContext);

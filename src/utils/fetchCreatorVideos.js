@@ -1,4 +1,4 @@
-import { API_URL, API_KEY } from "../../../config/config.js";
+import { API_URL, API_KEY } from "../config/config";
 
 export const fetchCreatorVideos = async (channelId, maxResults = 1) => {
     const url = `${API_URL}/search?part=snippet&channelId=${channelId}&maxResults=${maxResults}&type=video&key=${API_KEY}`;

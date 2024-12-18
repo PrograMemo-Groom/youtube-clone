@@ -3,7 +3,7 @@ import "./RelatedVideo.css";
 import formatViewerCount from "../../../utils/formatViewerCount";
 // import {getStyle, getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
 import { ThemeContext } from "../../context/context.js";
-import { fetchCreatorVideos } from "../creatorReserveTap/fetchCreatorVideos.js";
+import { fetchCreatorVideos } from "../../../utils/fetchCreatorVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 
 function RelatedVideo({ channelId }) {
