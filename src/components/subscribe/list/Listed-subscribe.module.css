@@ -186,7 +186,11 @@
     font-weight: 600;
     color: #0F0F0F;
 
-    padding-bottom: 10px;
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; 
 }
 
 .videoTitle button {
