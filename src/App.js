@@ -9,12 +9,14 @@ import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
 import Subscribe from "./components/subscribe/Subscribe";
 import Shorts from "./components/shorts/Shorts";
+import NewSidebar from "./components/sidebar/NewSidebar";
 
 const LayOut = () => {
     return (
         <>
             <Header />
             <SideBar />
+            <NewSidebar/>
             <div className={styles.container}>
                 <Outlet /> {/* 현재 라우터에 따라 변경 되는 내용 */}
             </div>
