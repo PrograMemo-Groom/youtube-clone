@@ -4,13 +4,19 @@ import {useLocation} from "react-router-dom";
 import {fetchSearchList} from "../../service/SearchService";
 import useNavigation from "../../hooks/useNavigation";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchSearchListResults, setMouseHover, setNextToken, setSearchResult} from "../../store/actions/searchAction";
 
 const tag = '[SearchPage]';
 const Search = () => {
     const { link } = useNavigation();
-    const [searchResult, setSearchResult] = useState([]);
-    const [nextToken, setNextToken] = useState("");
-    const [mouseHover, setMouseHover] = useState(null);
+    // redux 구문 추가
+    const dispatch = useDispatch();
+    // store에서 state값 가져올 때 useSelector로 값 가져올 수 있음
+    const { searchResult, nextToken, mouseHover } = useSelector((state) => state.search);
+    // const [searchResult, setSearchResult] = useState([]);
+    // const [nextToken, setNextToken] = useState("");
+    // const [mouseHover, setMouseHover] = useState(null);
     const [itemRef, ] = useState([]);
 
     const useQuery = () => {
@@ -20,34 +26,46 @@ const Search = () => {
     const searchTerm = query.get("q");
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (searchTerm.trim().length > 0) {
-                const {items, pageToken} = await fetchSearchList(searchTerm);
-                console.log(tag, "fetchData:", items, pageToken);
-                setSearchResult(items || []);
-                setNextToken(pageToken || "");
-            }
+        if (searchTerm.trim().length > 0) {
+            dispatch(fetchSearchListResults(searchTerm));
         }
-        fetchData();
-    }, [searchTerm]);
+    }, [dispatch, searchTerm]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         if (searchTerm.trim().length > 0) {
+    //             const {items, pageToken} = await fetchSearchList(searchTerm);
+    //             console.log(tag, "fetchData:", items, pageToken);
+    //             dispatch(setSearchResult(items || []));
+    //             dispatch(setNextToken(pageToken || ""));
+    //         }
+    //     }
+    //     fetchData();
+    // }, [searchTerm]);
     // console.log("dummy data",searchResult);
 
-    const fetchNextPage = useCallback(async() => {
-        if (!nextToken) return;
-        try {
-            const { items, pageToken } = await fetchSearchList(searchTerm, nextToken);
-            console.log(tag, "fetchNextPage:", items, pageToken);
-            const uniqueSet = [...searchResult, ...items];
-
-            const uniqueResults = Array.from(
-                new Map(uniqueSet.map((item) => [item.videoId, item])).values()
-            );
-            setSearchResult(uniqueResults);
-            setNextToken(pageToken);
-        } catch (e) {
-            console.error("Error fetchNextPage:", e);
+    const fetchNextPage = useCallback(() => {
+        if (nextToken) {
+            dispatch(fetchSearchListResults(searchTerm, nextToken));
         }
-    }, [nextToken, searchTerm, searchResult]);
+    }, [dispatch, nextToken, searchTerm]);
+
+    // const fetchNextPage = useCallback(async() => {
+    //     if (!nextToken) return;
+    //     try {
+    //         const { items, pageToken } = await fetchSearchList(searchTerm, nextToken);
+    //         console.log(tag, "fetchNextPage:", items, pageToken);
+    //         const uniqueSet = [...searchResult, ...items];
+    //
+    //         const uniqueResults = Array.from(
+    //             new Map(uniqueSet.map((item) => [item.videoId, item])).values()
+    //         );
+    //         setSearchResult(uniqueResults);
+    //         setNextToken(pageToken);
+    //     } catch (e) {
+    //         console.error("Error fetchNextPage:", e);
+    //     }
+    // }, [nextToken, searchTerm, searchResult]);
     const lastItemRef = useIntersectionObserver(fetchNextPage, {root: null, threshold: 0.1});
 
     const handleShowVideo = useCallback((videoId) => {
@@ -91,8 +109,8 @@ const Search = () => {
                             ref={(ref) => handleAddRefs(ref, i)}>
                             <div className={styles.videoFrame}
                                  onClick={() => handleShowVideo(video.videoId)}
-                                 onMouseEnter={() => setMouseHover(video.videoId)}
-                                 onMouseLeave={() => setMouseHover(null)}
+                                 onMouseEnter={() => dispatch(setMouseHover(video.videoId))}
+                                 onMouseLeave={() => dispatch(setMouseHover(null))}
                             >
                                 {mouseHover === video.videoId ? (
                                     <iframe
