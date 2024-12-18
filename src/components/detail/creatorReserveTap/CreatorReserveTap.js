@@ -37,9 +37,9 @@ function CreatorReserveTap({channelId}) {
 
     useEffect(() => {
         const fetchRelatedVideoList = async () => {
-            const videoList = await fetchCreatorVideos(channelId);
+            const {videos} = await fetchCreatorVideos(channelId, 1);
 
-            const formatVideoData = videoList.map((video) => {
+            const formatVideoData = videos.map((video) => {
                 return {
                     id: video.videoId,
                     title: video.title,
