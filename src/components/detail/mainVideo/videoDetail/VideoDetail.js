@@ -3,7 +3,7 @@ import formatViewerCount from "../../../../utils/formatViewerCount";
 import DropdownMenu from "../../../dropdownMenu/DropdownMenu";
 import formatTimeDifference from "../../../../utils/formatTimeDifference";
 
-const VideoDetail = ({content, channelId, setMenuTheme,video, videoId}) => {
+const VideoDetail = ({content, channelId, setMenuTheme, video, videoId}) => {
     const [isSubscribe, setIsSubscribe] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
     const [showFullText, setShowFullText] = useState(false);
@@ -11,7 +11,6 @@ const VideoDetail = ({content, channelId, setMenuTheme,video, videoId}) => {
 
     const toggleDropdown = (videoId) => {
         setOpenDropdown((prev) => (prev === videoId ? null : videoId));
-        console.log("videoId", videoId);
     };
 
 

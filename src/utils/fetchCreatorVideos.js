@@ -16,7 +16,7 @@ export const fetchCreatorVideos = async (channelId, maxResults = 1) => {
           videoLink: `https://www.youtube.com/watch?v=${item.id.videoId}`,
         }));
 
-        console.log(videoList);
+        // console.log(videoList);
         return videoList;
       } else {
         return [];

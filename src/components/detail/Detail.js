@@ -47,9 +47,6 @@ function Detail() {
     fetchVideoDetail();
   }, [videoId]);
 
-  console.log("videoData@@#!@#", videoData);
-
-
   if (!videoData) {
     return <div>영상 정보를 불러오는 중...</div>;
   }

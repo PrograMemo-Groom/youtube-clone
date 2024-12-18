@@ -31,7 +31,7 @@ function RelatedVideo({ channelId }) {
           videoLink: video.videoLink || "",
         };
       });
-      console.log("비디오 리스트", formatVideoData);
+
       setVideo(formatVideoData);
     };
     fetchRelatedVideoList();
@@ -49,7 +49,7 @@ function RelatedVideo({ channelId }) {
 
   const toggleDropdown = (videoId) => {
     setOpenDropdown((prev) => (prev === videoId ? null : videoId));
-    console.log("videoId", videoId);
+
   };
 
   return (

@@ -21,7 +21,7 @@ function ShortsTap() {
         const fetchAndSetShorts = async () => {
             try {
                 const shortsVideoList = await fetchShortsVideos("Faker"); // 데이터를 비동기적으로 가져옴
-                console.log("shortsVideo", shortsVideoList);
+                // console.log("shortsVideo", shortsVideoList);
 
                 // 가져온 데이터를 필요한 형식으로 변환
                 const formattedShorts = shortsVideoList.map((short) => ({

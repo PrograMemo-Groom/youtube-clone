@@ -52,7 +52,7 @@ function CreatorReserveTap({ channelId }) {
           videoLink: video.videoLink || "",
         };
       });
-      console.log("비디오 리스트", formatVideoData);
+      // console.log("비디오 리스트", formatVideoData);
       setVideo(formatVideoData);
     };
     fetchRelatedVideoList();
