@@ -174,11 +174,27 @@ const ListedSubscribe = () => {
                                         <div className={styles.shortsMain}>
                                             {shorts.slice(0, shortsVisibleCount).map((shorts, index) => (
                                                 <article key={index} className={styles.shortsClip}>
-                                                    <img
-                                                        className={styles.shortsThumbnail}
-                                                        alt='shorts 썸네일'
-                                                        src={shorts.thumbUrl}
-                                                    />
+                                                        <div
+                                                            className={styles.shortsThumbnail_div}
+                                                            onMouseEnter={() => setHoveredVideo(shorts.id)}
+                                                            onMouseLeave={() => setHoveredVideo(null)}
+                                                        >
+                                                            {hoveredVideo === shorts.id ? (
+                                                                    <iframe
+                                                                    className={styles.shortsPlayer}
+                                                                    src={`https://www.youtube.com/embed/${shorts.id}?autoplay=1&mute=1`}
+                                                                    title={shorts.title}
+                                                                    allow="autoplay; encrypted-media"
+                                                                    allowFullScreen
+                                                                    ></iframe>
+                                                                ) : (
+                                                                    <img
+                                                                    className={styles.shortsThumbnail}
+                                                                    alt="shorts 썸네일"
+                                                                    src={shorts.thumbUrl}
+                                                                    />
+                                                            )}
+                                                        </div>
                                                     <div className={styles.shortsDetail}>
                                                         <div>
                                                             <h5>{shorts.title}</h5>

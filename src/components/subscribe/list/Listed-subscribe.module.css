@@ -300,14 +300,31 @@
     padding-right: 3px;
 }
 
-.shortsThumbnail {
-    width: 100%;
+
+.shortsThumbnail_div {
+    min-width: 196px;
+    max-width: 196px;
     height: 300px;
-    border-radius: 3%;
-    object-fit: cover;
+    border-radius: 5%;
+    overflow: hidden;
+    position: relative
 }
 
+.shortsThumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute
+}
 
+.shortsPlayer {
+    min-width: 196px;
+    max-width: 196px;
+    height: 300px;
+    border-radius: 5%;
+    overflow: hidden;
+    position: absolute
+}
 
 .shortsDetail {
     display: flex;
