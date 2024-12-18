@@ -6,6 +6,7 @@ import { getMenuItemStyle } from "../../detail/themes/useThemeStyles.js";
 import { fetchCreatorVideos } from "../../../utils/fetchCreatorVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 import DropdownMenu from "../../dropdownMenu/DropdownMenu"
+import Videos from "./videos/Videos";
 
 
 function CreatorReserveTap({ channelId }) {
@@ -90,14 +91,9 @@ function CreatorReserveTap({ channelId }) {
     link(`/detail?q=${videoId}`);
   };
 
-  const handleChannelClick = (channelId, event) => {
-    if (event) event.stopPropagation(); // 이벤트 버블링 방지
-    window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
-  };
-
   const toggleDropdown = (videoId) => {
     setOpenDropdown((prev) => (prev === videoId ? null : videoId));
-    console.log("videoId", videoId);
+    // console.log("videoId", videoId);
   };
 
   return (
@@ -123,56 +119,7 @@ function CreatorReserveTap({ channelId }) {
           {">"}
         </span>
       </div>
-      {video && video.length > 0 ? (
-        video.map((video, index) => (
-          <div className='video-section' key={index}>
-            <div
-              onClick={(event) => handleShowVideo(video.id, event)}
-              className='video-box'
-            >
-              <img src={video.videoSrc} alt='썸네일' className='video'></img>
-              <span className='time-stamp'>{video.timestamp}</span>
-            </div>
-            <div className='video-details'>
-              <div className={`video-title`}>{video.title}</div>
-              <div
-                onClick={(event) => handleChannelClick(channelId, event)}
-                className='channel-name'
-              >
-                {video.channelName}
-              </div>
-              <div className='video-info'>
-                <span className='viewer-count'>
-                  {formatViewerCount(video.viewerCount)}•{video.uploadDate}
-                </span>
-              </div>
-
-              {isDark ? (
-                <img
-                  className='more-btn'
-                  src='assets/icon/more_btn.svg'
-                  alt='영상 더보기'
-                  onClick={() => toggleDropdown(video.id)}
-                />
-              ) : (
-                <img
-                  className='more-btn'
-                  src='assets/icon/more_btn_black.svg'
-                  alt='영상 더보기'
-                  onClick={() => toggleDropdown(video.id)}
-                />
-              )}
-              {openDropdown === video.id && (
-               <DropdownMenu />
-              )}
-            </div>
-            {/* 테마 변경 테스트 */}
-            {/* <button onClick={() => setTheme(!theme)}>딸깍</button> */}
-          </div>
-        ))
-      ) : (
-        <div>비디오가 없습니다.</div>
-      )}
+      <Videos video={video} channelId={channelId} openDropdown={openDropdown} handleShowVideo={handleShowVideo} toggleDropdown={toggleDropdown}/>
     </section>
   );
 }
