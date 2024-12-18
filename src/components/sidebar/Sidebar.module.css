@@ -1,17 +1,22 @@
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     position: fixed;
     width: 80px;
     height: 100vh;;
-    box-sizing: border-box;
     z-index: 1000;
     background-color: white;
     margin-top: 60px;
     top: 0;
     left: 0;
+    transition: width 0.3s ease;
+    align-items: center;
+}
+
+.expanded {
+    width: 240px; /* 확장된 상태 */
+    align-items: flex-start;
+    padding-left: 20px;
 }
 
 .sidebar_icons{
@@ -46,4 +51,37 @@
 
 .sidebar_Item:hover .sidebar_icon {
     transform: scale(1.15);
+}
+
+.expandedMenu {
+    margin-top: 20px;
+}
+
+.sectionTitle {
+    margin-top: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #606060;
+}
+
+.menuItem {
+    margin: 5px 0;
+    padding: 5px 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #000;
+    transition: background-color 0.2s ease;
+}
+
+.menuItem:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none; /* 숨겨진 상태 */
+}
+
+.visible {
+    display: block;
 }
