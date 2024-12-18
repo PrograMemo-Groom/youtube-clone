@@ -12,6 +12,7 @@ import {getChannelThumbnail} from "../../../utils/formatProfileImage.js";
 import {getChannelSubscriberCount} from "../../../utils/getChannelSubscriberCount.js";
 import {fetchVideoComments} from "../../../utils/fetchVideoComments.js";
 import DropdownMenu from "../../dropdownMenu/DropdownMenu";
+import VideoPlayer from "./videoPlayer/VideoPlayer";
 
 function MainVideo({video, channelId}) {
     const {isDark} = useContext(ThemeContext);
@@ -138,18 +139,7 @@ function MainVideo({video, channelId}) {
 
     return (
         <section className='mainVideo-container'>
-            <figure className='video-container'>
-                <iframe
-                    width='560'
-                    height='315'
-                    src={content.videoSrc}
-                    title='YouTube video player'
-                    frameBorder='0'
-                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-                    referrerPolicy='strict-origin-when-cross-origin'
-                    allowFullScreen
-                ></iframe>
-            </figure>
+            <VideoPlayer content={content} />
 
             {/* 영상 설명란 */}
             <figure className='video-details'>
