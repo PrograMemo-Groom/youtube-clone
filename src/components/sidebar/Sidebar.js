@@ -86,19 +86,23 @@ const Sidebar = ({ isExpanded }) => {
                             {selected.home
                                 ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home_select.svg`} alt="홈" className={styles.sidebar_icon} />
                                 : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home.svg`} alt="홈" className={styles.sidebar_icon} />}
-                            홈
+                            <span  className={styles.exp_home}>홈</span>
                         </div>
                         <div className={styles.menuItem} onClick={() => handleGoto('/shorts', 'shorts')}>
                             {selected.shorts
-                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts_select.svg`} alt="Shorts" className={styles.sidebar_icon} />
-                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts.svg`} alt="Shorts" className={styles.sidebar_icon} />}
-                            Shorts
+                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts_select.svg`}
+                                       alt="Shorts" className={styles.sidebar_icon}/>
+                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts.svg`} alt="Shorts"
+                                       className={styles.sidebar_icon}/>}
+                            <span className={styles.exp_shorts}>Shorts</span>
                         </div>
                         <div className={styles.menuItem} onClick={() => handleGoto('/subscribe', 'subscribe')}>
                             {selected.subscribe
-                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe_select.svg`} alt="구독" className={styles.sidebar_icon} />
-                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe.svg`} alt="구독" className={styles.sidebar_icon} />}
-                            구독
+                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe_select.svg`}
+                                       alt="구독" className={styles.sidebar_icon}/>
+                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe.svg`} alt="구독"
+                                       className={styles.sidebar_icon}/>}
+                            <span className={styles.exp_subscribe}>구독</span>
                         </div>
                     </div>
 

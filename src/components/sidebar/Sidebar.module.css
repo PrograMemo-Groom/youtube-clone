@@ -30,6 +30,7 @@
 
 .showScrollbar {
     overflow-y: auto;
+    border: none;
 }
 
 .hideScrollbar {
@@ -39,6 +40,7 @@
 
 .expanded:hover {
     overflow-y: auto;
+    border: none;
 }
 
 .expanded::-webkit-scrollbar {
@@ -47,6 +49,7 @@
 
 .expanded::-webkit-scrollbar-track {
     background: transparent;
+    border: none;
 }
 
 .sidebar_icons{
@@ -90,13 +93,27 @@
     color: #606060;
 }
 
+.exp_home,
+.exp_shorts,
+.exp_subscribe {
+    margin-left: 20px;
+}
+
 .menuItem {
-    margin: 5px 0;
-    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
     cursor: pointer;
     font-size: 14px;
     color: #000;
     transition: background-color 0.2s ease;
+    border-radius: 5px;
+}
+
+.menuItem img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
 }
 
 .menuItem:hover {
@@ -105,7 +122,7 @@
 }
 
 .hidden {
-    display: none; /* 숨겨진 상태 */
+    display: none;
 }
 
 .visible {
