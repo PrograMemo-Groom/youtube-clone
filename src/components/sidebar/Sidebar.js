@@ -83,18 +83,21 @@ const Sidebar = ({ isExpanded }) => {
                     {/* 기본 메뉴*/}
                     <div className={styles.menuSection}>
                         <div className={styles.menuItem} onClick={() => handleGoto('/', 'home')}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home.svg`} alt="홈"
-                                 className={styles.icon}/>
+                            {selected.home
+                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home_select.svg`} alt="홈" className={styles.sidebar_icon} />
+                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home.svg`} alt="홈" className={styles.sidebar_icon} />}
                             홈
                         </div>
                         <div className={styles.menuItem} onClick={() => handleGoto('/shorts', 'shorts')}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts.svg`} alt="Shorts"
-                                 className={styles.icon}/>
+                            {selected.shorts
+                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts_select.svg`} alt="Shorts" className={styles.sidebar_icon} />
+                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts.svg`} alt="Shorts" className={styles.sidebar_icon} />}
                             Shorts
                         </div>
                         <div className={styles.menuItem} onClick={() => handleGoto('/subscribe', 'subscribe')}>
-                            <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe.svg`} alt="구독"
-                                 className={styles.icon}/>
+                            {selected.subscribe
+                                ? <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe_select.svg`} alt="구독" className={styles.sidebar_icon} />
+                                : <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe.svg`} alt="구독" className={styles.sidebar_icon} />}
                             구독
                         </div>
                     </div>
