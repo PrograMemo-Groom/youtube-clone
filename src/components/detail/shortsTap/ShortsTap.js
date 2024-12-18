@@ -3,7 +3,7 @@ import formatViewerCount from "../../../utils/formatViewerCount";
 import "./ShortsTap.css";
 import { ThemeContext } from "../../context/context";
 import { getStyle } from "../themes/useThemeStyles";
-import { fetchShortsVideos } from "./fetchShortsVideos";
+import { fetchShortsVideos } from "../../../utils/fetchShortsVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 
 function ShortsTap() {
