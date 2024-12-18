@@ -5,22 +5,19 @@ import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
 import useGoogleAuth from "../../../hooks/useGoogleAuth";
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
+import { fetchShortsVideos } from "../../../service/SubscribeService";
+
 
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
     const [itemsPerRow, setItemsPerRow] = useState(4); // 기본값: 4개
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
-
-    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
+    const [shorts, setShorts] = useState([]);
+
+    const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const googleLogin = useGoogleAuth();
 
-
-        // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
-        const handleGetCode = async () => {
-            console.log(`handleLogin: 구글 로그인 다시 하는 중 ㅠㅠ`);
-            await googleLogin();
-        }
     
         useEffect(() => {
             accessToken && fetchData();
@@ -33,10 +30,13 @@ const GridSubscribe = () => {
                     return;
                 }
                 const response = await fetchSubscriptionsVideos(accessToken);  // 구독 비디오오오
-                console.log("내가 구독하는 video 갖고 왔다이!!!!! ",response);
                 if (Array.isArray(response)) {
                     console.log('내가 가져온 동영상들 배열성공 !!');
-                    setSubscriptions(response);
+                    const flattenedResponse = response.flatMap(sub => sub); //이중배열을 풀어보자
+                    const sortedResponse = flattenedResponse.sort((a, b) => {  // 영상들만 최신순 정렬하자
+                        return new Date(b.publishTime) - new Date(a.publishTime);
+                    });
+                    setSubscriptions(sortedResponse);
                 } else {
                     console.error("받아온게 배열이 아님.. 이거임:", response);
                 }
@@ -44,6 +44,23 @@ const GridSubscribe = () => {
                 console.log('fetchData 에러 :', error);
             }
         }
+
+        // 쇼츠 비디오 정보 업데이트
+        useEffect(() => {
+        const fetchAndSetShorts = async () => {
+            try {
+            const shortsVideoList = await fetchShortsVideos("귀여운 강아지 쇼츠"); // 데이터를 비동기적으로 가져옴
+            console.log("shortsVideo", shortsVideoList);
+
+            // 상태 업데이트
+            setShorts(shortsVideoList);
+            } catch (error) {
+            console.error("Error fetching Shorts videos:", error);
+            }
+        };
+        fetchAndSetShorts();
+    }, []);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -104,21 +121,6 @@ const GridSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "grid" && (
                 <>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {handleGetCode();}}>
-                            token 발급 받는다!!
-                    </button>
-                    <button
-                        style={{width:'200px', height:'20px'}}
-                        onClick={() => {fetchData()}}>
-                            누르면 데이터를 가져오ㅏ
-                    </button>
-                    {accessToken &&
-                        <button style={{width:'200px', height:'20px'}}>
-                            token값 있으면 노출
-                        </button>}
-
                     <header className={styles.header}>
                         <h3>최신순</h3>
                         <div className={styles.pageChangeButtons}>
@@ -149,15 +151,15 @@ const GridSubscribe = () => {
                                 <React.Fragment key={index}> {/* 기존에 여러 요소를 반환할 수 있도록 추가 */}
                                     <article className={styles.videoClip}>
                                         <div className={styles.videoThumbnail}>
-                                            <img src={video.defaultThumbnail} alt={video.title} />
+                                            <img src={video.highThumbnail} alt='나는 썸네일' />
                                             <p>{video.duration}</p>
                                         </div>
                                         <div className={styles.videoDescriptions}>
                                             <img src={video.channelAvatar} alt="채널프로필사진" />
                                             <div className={styles.videoDescriptions_lines}>
                                                 <h4>{video.title}</h4>
-                                                <p>{video.channel}</p>
-                                                <p>{video.view} • {video.uploadedAt}</p>
+                                                <p>{video.channelTitle}</p>
+                                                <p>{video.views} • {video.publishTime}</p>
                                             </div>
                                             <div className={styles.videoDescriptions_button}>
                                                 <button>
@@ -181,17 +183,17 @@ const GridSubscribe = () => {
                                                 </button>
                                             </header>
                                             <div className={styles.shortsMain}>
-                                                {shortsData.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
+                                                {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
                                                     <article key={shortsIndex} className={styles.shortsClip}>
                                                         <img
                                                             className={styles.shortsThumbnail}
                                                             alt="shorts 썸네일"
-                                                            src={shorts.thumbnail}
+                                                            src={shorts.thumbUrl}
                                                         />
                                                         <div className={styles.shortsDetail}>
                                                             <div>
                                                                 <h5>{shorts.title}</h5>
-                                                                <p>조회수 {shorts.view}회</p>
+                                                                <p>조회수 {shorts.viewerCount}</p>
                                                             </div>
                                                             <button>
                                                                 <img src="/assets/subscribe/video-option-btn.svg" alt="영상옵션버튼" />
@@ -217,136 +219,3 @@ const GridSubscribe = () => {
 export default GridSubscribe;
 
 
-
-const videoData = [{
-    videoId: "8yEzRxsilu0",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-}, {
-    videoId: "8yEzRxsilu1",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-{
-    videoId: "8yEzRxsilu2",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-}, {
-    videoId: "8yEzRxsilu3",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-{
-    videoId: "8yEzRxsilu4",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-{
-    videoId: "8yEzRxsilu4",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-{
-    videoId: "8yEzRxsilu4",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-{
-    videoId: "8yEzRxsilu4",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-{
-    videoId: "8yEzRxsilu4",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-{
-    videoId: "8yEzRxsilu4",
-    thumbnail: "https://i.ytimg.com/vi/smx-qgs5BQ8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBhF5sXiudQvocqJbkJMnrOqrTNAA",
-    title: "[subsoon] 웜톤이 겨울에 하기 좋은..🤎포근한 베이지 메이크업 | 미지근 메이크업 | 겨울 메이크업 | 웜톤 메이크업 | 라떼 메이크업 | 재유JEYU",
-    channel: "재유JEYU",
-    channelAvatar: "https://yt3.ggpht.com/8tchUMsRZMDjy2cBo1NFolFTM2CBb4PzMKQJv-xqGJlBo99hGHLNMnJzSOI2v3dargo7iEu-3xI=s68-c-k-c0x00ffffff-no-rj-mo",
-    view: "1.5만회",
-    uploadedAt: "15시간 전",
-    duration: "16:08",
-},
-]
-
-
-const shortsData = [{
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    } , {
-    thumbnail: "https://i.ytimg.com/vi/ELqqGhM6Q88/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA0y2husIrvzHjdSCivicyMwNnIyw",
-    shortsId: "dkdkkdkdk1",
-    title: "🔥SNS에서 난리난 게임기 모양 핸드크림?!",
-    view: "282",
-    }]

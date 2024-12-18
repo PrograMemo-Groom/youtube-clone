@@ -110,7 +110,6 @@
     font-weight: 500;
 }
 
-
 .next-video-btn,
 .playlist-next-video-btn {
     width: 2.5rem;
@@ -129,34 +128,55 @@
     width: 100%;
     height: 14rem;
     margin-top: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
-.view-record-contents-container {
+.view-record-contents-container,
+.playlist-container {
     scrollbar-width: none;
 }
+
 .video-list-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
 }
-.video-list,
-.playlist-list {
+
+.playlist-contents-container::-webkit-scrollbar {
+    display: none;
+}
+
+.video-list
+    /*.playlist-list*/
+{
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
     gap: 0.5rem;
     scroll-behavior: smooth;
     position: relative;
 }
 
+.playlist-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.4rem;
+}
+
 .view-record-contents-container {
     overflow-x: auto;
-    /*overflow-y: hidden;*/
     white-space: nowrap;
 }
 
-.video-item,
-.playlist-video-item {
+.video-item
+    /*.playlist-video-item */
+{
     align-items: flex-start;
-    /*width: calc(100% / 6 - 1rem);*/
     gap: 0.5rem;
+}
+
+.playlist-video-item {
+    box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
 .video-thumbnail-container,
@@ -452,11 +472,53 @@
     display: block; /* visible 클래스가 추가되면 표시 */
 }
 
+.hover-overlay {
+    position: relative; /* 이미지와 텍스트를 같은 위치에 배치 */
+}
+
+.playlist-video-thumbnail {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.hover-overlay:hover .playlist-video-thumbnail {
+    transform: scale(1.05);
+}
+
+.hover-text {
+    justify-content: center;
+    align-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 11rem;
+    height: 6rem;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.hover-overlay:hover .hover-text {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto; /* hover-text가 클릭 가능하도록 설정 */
+}
+
 @media screen and (max-width: 1536px) and (min-width: 1279px) {
     .user-profile-img {
         height: 3.5rem;
         flex-direction: column;
-        margin-left: 3rem;
+        margin-left: 8rem;
     }
 
     .user-name-and-id-container {
@@ -467,7 +529,7 @@
     .playlist-container,
     .Videos-to-watch-container {
         width: 88%;
-        margin: 0 auto;
+        margin: 0 10rem;
     }
 
     .user-profile-img {
@@ -487,7 +549,8 @@
 
     .video-list,
     .playlist-list {
-        overflow: hidden
+        overflow: hidden;
+        gap: 0.8rem;
     }
 
     .video-item,
@@ -519,11 +582,21 @@
     }
 }
 
-@media screen and (max-width: 1279px) and (min-width: 768px) {
+@media screen and (max-width: 1279px) and (min-width: 977px) {
     .view-record-container,
     .playlist-container,
     .Videos-to-watch-container {
-        width: 95%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        width: 91%;
+        margin-left: 6.5rem;
+    }
+
+    .all-video-view,
+    .playlist-all-view {
+        margin-right: 0;
     }
 
     .video-item,
@@ -549,18 +622,32 @@
     .playlist-video-item:nth-child(n + 6) {
         display: none;
     }
+
+    .progress-time-container {
+        left: 7rem;
+    }
 }
 
-@media screen and (max-width: 947px) {
+@media screen and (max-width: 976px) and (min-width: 850px) {
     .view-record-container,
     .playlist-container,
     .Videos-to-watch-container {
-        width: 95%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        width: 91%;
+        margin-left: 6.5rem;
+    }
+
+    .all-video-view,
+    .playlist-all-view {
+        margin-right: 0;
     }
 
     .video-item,
     .playlist-video-item {
-        width: calc(100% / 5 - 1rem);
+        width: calc(100% / 4 - 1rem);
     }
 
     .video-thumbnail-container,
@@ -577,12 +664,49 @@
         font-size: 0.8rem;
     }
 
-    .video-item:nth-child(n + 6),
-    .playlist-video-item:nth-child(n + 6) {
+    .video-item:nth-child(n + 5),
+    .playlist-video-item:nth-child(n + 5) {
         display: none;
     }
 
+    .progress-time-container {
+        left: 7rem;
+    }
 }
+
+
+/*@media screen and (max-width: 947px) {*/
+/*    .view-record-container,*/
+/*    .playlist-container,*/
+/*    .Videos-to-watch-container {*/
+/*        width: 95%;*/
+/*    }*/
+
+/*    .video-item,*/
+/*    .playlist-video-item {*/
+/*        width: calc(100% / 5 - 1rem);*/
+/*    }*/
+
+/*    .video-thumbnail-container,*/
+/*    .playlist-video-thumbnail-container {*/
+/*        width: 180px;*/
+/*        height: 100px;*/
+/*    }*/
+
+/*    .user-name {*/
+/*        font-size: 1.5rem;*/
+/*    }*/
+
+/*    .changes-id-text {*/
+/*        font-size: 0.8rem;*/
+/*    }*/
+
+/*    .video-item:nth-child(n + 6),*/
+/*    .playlist-video-item:nth-child(n + 6) {*/
+/*        display: none;*/
+/*    }*/
+
+/*}*/
 
 @media screen and (max-width: 768px) and (min-width: 480px) {
     .view-record-container,
@@ -637,11 +761,11 @@
 
     .video-item,
     .playlist-video-item {
-        width: calc(100% / 4 - 1rem);
+        width: calc(100% / 2 - 1rem);
     }
 
-    .video-item:nth-child(n + 5),
-    .playlist-video-item:nth-child(n + 5) {
+    .video-item:nth-child(n + 3),
+    .playlist-video-item:nth-child(n + 3) {
         display: none;
     }
 
@@ -656,5 +780,9 @@
 
     .changes-id-text {
         font-size: 0.6rem;
+    }
+
+    .progress-time-container {
+        left: 7rem;
     }
 }

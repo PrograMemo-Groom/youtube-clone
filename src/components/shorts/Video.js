@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styles from './Video.module.css';
 
-const Video = ({onPanelToggle}) => {
+const Video = ({short, onPanelToggle}) => {
   // 구독 버튼
   const [isSubscribe, setIsSubscribe] = useState(false);
 
@@ -12,14 +12,19 @@ const Video = ({onPanelToggle}) => {
   return (
     <main className={styles.videoComponents}>
       {/* 컨테이너 하나 */}
-      <div className={styles.videoContainer}>
-        <div className={styles.videoBox}>
-          {/* 비디오 넣고 */}
+      <div key={short.id} className={styles.videoContainer}>
+        <div className={styles.videoBox}
+          style={{
+            backgroundImage: `url(${short.video})`,
+          }}
+        >
+          {/* 비디오 들어가는거임 여기에 */}
+
           <div className={styles.infoContainer}>
             {/* 프로필박스 */}
             <div className={styles.profileBox}>
-              <img src={`${process.env.PUBLIC_URL}/channels4_profile.jpg`}/>
-              <p>@viviz.official</p>
+              <img src={`${process.env.PUBLIC_URL}/${short.userProfilePicture}`} alt="channel_profile"/>
+              <p>{short.uploadedBy}</p>
               <button 
                 className={isSubscribe ? styles.subscribedBtn : styles.subscribeBnt}
                 onClick={handleSubscribeBnt}>
@@ -27,48 +32,48 @@ const Video = ({onPanelToggle}) => {
               </button>
             </div>
             <div className={styles.explanBox}>
-              <p>챌린지의 지배자, 챌린지의 마스터 with #캐스퍼 #Kasper #VIVIZ #비비지 #EUNHA #은하 #SINB #신비 #UMJI #엄지 #Shhhchallenge #쉿챌린지</p>
+              <p>{short.description}</p>
             </div>
             <div className={styles.musicBox}>
-              <img src={`${process.env.PUBLIC_URL}/shortmusic.png`}/>
-              <p> 쉿(Shhh) · KISS OF LIFE </p>
+              <img src={`${process.env.PUBLIC_URL}/shortmusic.png`} alt="music_icon"/>
+              <p>{short.music}</p>
             </div>
           </div>
         </div>
         <aside className={styles.bntContainer}>
           <div>
             <button>
-              <img src={`${process.env.PUBLIC_URL}/likeicon.png`}/>
+              <img src={`${process.env.PUBLIC_URL}/likeicon.png`} alt="likeBtn"/>
             </button>
-            <span>12만</span>
+            <span>{short.likes}</span>
           </div>
           <div>
             <button className={styles.donlikeBnt}>
-              <img src={`${process.env.PUBLIC_URL}/thumbsdown.png`}/>
+              <img src={`${process.env.PUBLIC_URL}/thumbsdown.png`} alt="donlikeBtn"/>
             </button>
             <span>싫어요</span>
           </div>
           <div>
             <button className={styles.commentBnt} 
               onClick={() => onPanelToggle("comment")}>
-              <img src={`${process.env.PUBLIC_URL}/comment.png`}/>
+              <img src={`${process.env.PUBLIC_URL}/comment.png`} alt="commentBtn"/>
             </button>
-            <span>781</span>
+            <span>{short.comments}</span>
           </div>
           <div>
             <button className={styles.shareBnt}>
-              <img src={`${process.env.PUBLIC_URL}/forward.png`}/>
+              <img src={`${process.env.PUBLIC_URL}/forward.png`} alt="shareBtn"/>
             </button>
             <span>공유</span>
           </div>
           <div>
             <button className={styles.ellipsisBnt}
               onClick={() => onPanelToggle("explain")}>
-              <img src={`${process.env.PUBLIC_URL}/ellipsis.png`}/>
+              <img src={`${process.env.PUBLIC_URL}/ellipsis.png`} alt="ellipsBtn"/>
             </button>
           </div>
           <div className={styles.musicImg}>
-            <img src={`${process.env.PUBLIC_URL}/unnamed.jpg`}/>
+            <img src={`${process.env.PUBLIC_URL}/unnamed.jpg`} alt="musicImg"/>
           </div>
         </aside>
       </div>

@@ -1,164 +1,151 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import "./RelatedVideo.css";
 import formatViewerCount from "../../../utils/formatViewerCount";
-// import {getStyle, getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
-import { ThemeContext } from "../../context/context.js";
-import { fetchCreatorVideos } from "../creatorReserveTap/fetchCreatorVideos.js";
+import {ThemeContext} from "../../context/context.js";
+import {fetchCreatorVideos} from "../../../utils/fetchCreatorVideos.js";
+import useNavigation from "../../../hooks/useNavigation.js";
+import DropdownMenu from "../../dropdownMenu/DropdownMenu";
 
 function RelatedVideo({channelId}) {
-  const { isDark } = useContext(ThemeContext);
-  // const setTheme = getStyle(isDark);
+    const {isDark} = useContext(ThemeContext);
+    const {link} = useNavigation();
+    const observerRef = useRef(null); // Intersection Observer를 위한 ref
+    const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
 
-  
+    const [video, setVideo] = useState([]); // 영상 데이터
+    const [nextPageToken, setNextPageToken] = useState(""); // 다음 페이지 토큰
+    const [isFetching, setIsFetching] = useState(false); // 데이터 요청 중 상태
 
-  const [video, setVideo] = useState([
-    // {
-    //   title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //   channelName: "by. 채널명",
-    //   viewerCount: 1600000,
-    //   uploadDate: "4년전",
-    //   videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //   timestamp: "1:13:41",
-    // },
-    // {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-    //   {
-    //     title: "잠잘 때, 작업할 때 듣기좋은 시간대별 BGM 모음",
-    //     channelName: "by. 채널명",
-    //     viewerCount: 1600000,
-    //     uploadDate: "4년전",
-    //     videoSrc: "https://www.w3schools.com/howto/img_snow_wide.jpg",
-    //     timestamp: "1:13:41",
-    //   },
-
-  ]);
-
-  useEffect(() => {
     const fetchRelatedVideoList = async () => {
-      const videoList = await fetchCreatorVideos(channelId, 5); //5개만 가져오기
-      
-      const formatVideoData = videoList.map((video) => {
-        return {
-          id: video.videoId,
-          title: video.title,
-          channelName: video.channelTitle,
-          viewerCount: video.viewCount || 0,
-          uploadDate: video.uploadedAt || "",
-          videoSrc: video.thumbnail || "",
-          timestamp: video.duration,
-          videoLink: video.videoLink || "",
-        };
-      });
-      console.log("비디오 리스트", formatVideoData);
-      setVideo(formatVideoData);
+        if (isFetching) return; // 중복 요청 방지
+        setIsFetching(true);
+
+        try {
+            const {videos, nextPageToken: newNextPageToken} = await fetchCreatorVideos(
+                channelId,
+                2,
+                nextPageToken
+            );
+
+            const formatVideoData = videos.map((video) => {
+                return {
+                    id: video.videoId,
+                    title: video.title,
+                    channelName: video.channelTitle,
+                    viewerCount: video.viewCount || 0,
+                    uploadDate: video.uploadedAt || "",
+                    videoSrc: video.thumbnail || "",
+                    timestamp: video.duration,
+                    videoLink: video.videoLink || "",
+                };
+            });
+
+            // formatVideoData로 setVideo
+            setVideo((prevVideos) => [...prevVideos, ...formatVideoData]);
+            setNextPageToken(newNextPageToken || ""); // 다음 페이지 토큰 업데이트
+        } catch (error) {
+            console.error("Error fetching related video list:", error);
+        } finally {
+            setIsFetching(false); // 요청 종료
+        }
     };
-    fetchRelatedVideoList();
-  }, []);
 
 
-  return (
-    <section className={`relatedVideo-container`}>
-      {video && video.length > 0 ? (
-        video.map((video, index) => (
-          <div className='video-section' key={index}>
-            <div className='video-box'>
-              <img src={video.videoSrc} alt='썸네일' className='video'></img>
-              <span className='time-stamp'>{video.timestamp}</span>
-            </div>
-            <div className='video-details'>
-              <div className={`video-title`}>
-                {video.title}
-              </div>
-              <div className='channel-name'>{video.channelName}</div>
-              <div className='video-info'>
-                <span className='viewer-count'>
-                  {formatViewerCount(video.viewerCount)}•{video.uploadDate}
-                </span>
-              </div>
+    useEffect(() => {
+        fetchRelatedVideoList(); // 첫 번째 페이지 데이터 요청
+    }, []);
 
-              {isDark ? (
-                <img
-                className='more-btn'
-                src='assets/icon/more_btn.svg'
-                alt='영상 더보기'
-              />
-              ) : (
-                <img
-                className='more-btn'
-                src='assets/icon/more_btn_black.svg'
-                alt='영상 더보기'
-              />
-              )}
-            </div>
-          </div>
-        ))
-      ) : (
-        <div>비디오가 없습니다.</div>
-      )}
-    </section>
-  );
+    // 무한 스크롤 구현
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && nextPageToken) {
+                    fetchRelatedVideoList(); // 다음 페이지 데이터 요청
+                }
+            },
+            {threshold: 0.1} // 요소가 10% 이상 보이면 트리거
+        );
+        const currentRef = observerRef.current;
+        if (currentRef) observer.observe(currentRef); // observer 연결
+
+        return () => {
+            if (currentRef) observer.unobserve(currentRef); // observer 해제
+        };
+    }, [nextPageToken]); // nextPageToken이 변경될 때마다 observer 설정
+
+    const handleShowVideo = (videoId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        link(`/detail?q=${videoId}`);
+    };
+
+    const handleChannelClick = (channelId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
+    };
+
+    const toggleDropdown = (videoId) => {
+        setOpenDropdown((prev) => (prev === videoId ? null : videoId));
+    };
+
+    return (
+        <section className={`relatedVideo-container`}>
+            {video && video.length > 0 ? (
+                video.map((video, index) => (
+                    <div className="video-section" key={index}>
+                        <div
+                            onClick={(event) => handleShowVideo(video.id, event)}
+                            className="video-box"
+                        >
+                            <img
+                                src={video.videoSrc}
+                                alt="썸네일"
+                                className="video"
+                            ></img>
+                            <span className="time-stamp">{video.timestamp}</span>
+                        </div>
+                        <div className="video-details">
+                            <div className={`video-title`}>{video.title}</div>
+                            <div
+                                onClick={(event) => handleChannelClick(channelId, event)}
+                                className="channel-name"
+                            >
+                                {video.channelName}
+                            </div>
+                            <div className="video-info">
+                                <span className="viewer-count">
+                                    {formatViewerCount(video.viewerCount)} •{" "}
+                                    {video.uploadDate}
+                                </span>
+                            </div>
+
+                            {isDark ? (
+                                <img
+                                    className="more-btn"
+                                    src="assets/icon/more_btn.svg"
+                                    alt="영상 더보기"
+                                    onClick={() => toggleDropdown(video.id)}
+                                />
+                            ) : (
+                                <img
+                                    className="more-btn"
+                                    src="assets/icon/more_btn_black.svg"
+                                    alt="영상 더보기"
+                                    onClick={() => toggleDropdown(video.id)}
+                                />
+                            )}
+                            {openDropdown === video.id && <DropdownMenu/>}
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <div>비디오가 없습니다.</div>
+            )}
+            <div
+                ref={observerRef}
+                style={{height: "1px", background: "transparent"}}
+            ></div>
+        </section>
+    );
 }
 
 export default RelatedVideo;

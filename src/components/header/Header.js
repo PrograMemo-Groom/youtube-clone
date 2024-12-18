@@ -6,11 +6,13 @@ import useGoogleAuth from "../../hooks/useGoogleAuth";
 const Header = () => {
     const { link } = useNavigation();
     const [search, setSearch] = useState('');
-    const [auth, setAuth] = useState(() => localStorage.getItem('GOOGLE_TOKEN'));
+    const [auth, ] = useState(() => localStorage.getItem('GOOGLE_TOKEN'));
     const googleLogin = useGoogleAuth();
 
+    const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
+
     // 최초 인증 및 accessToken 만료시간 이후 재발급 받을 때 사용
-    const handleLogin = async () => {
+    const handleGetCode = async () => {
         console.log(`handleLogin: Starting Google Login...`);
         await googleLogin();
     }
@@ -70,11 +72,11 @@ const Header = () => {
                     <img className={styles.icoImg} src={`${process.env.PUBLIC_URL}/assets/white/header/notice.svg`} alt="알림"/>
                 </div>
                 {auth ?
-                    <div className={styles.myPageIco}>
+                    <div className={styles.myPageIco} onClick={() => handleGetCode()}>
                         <span>My</span>
                     </div>
                     :
-                    <button className={styles.login} onClick={() => handleLogin()}>
+                    <button className={styles.login} onClick={() => handleGetCode()}>
                         <img src={`${process.env.PUBLIC_URL}/assets/white/header/login.svg`} alt="login"/>
                         <span >로그인</span>
                     </button>
