@@ -5,12 +5,15 @@ import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
 import { fetchShortsVideos } from "../../../service/SubscribeService";
+import useNavigation from "../../../hooks/useNavigation";
 
 
 const ListedSubscribe = () => {
 
     const [view, setView] = useState("list");
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
+    const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
+    const { link } = useNavigation();
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
@@ -82,6 +85,16 @@ const ListedSubscribe = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    const handleShowVideo = (videoId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        link(`/detail?q=${videoId}`);
+    };
+
+    const handleChannelClick = (channelId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        window.location.href = `https://www.youtube.com/channel/${channelId}`;
+    };
+
     return (
         <div className={styles.container}>
 
@@ -91,13 +104,16 @@ const ListedSubscribe = () => {
             {view === "shorts" && <ShortsSubscribe />}
             {view === "list" && (
                 <>
-                    <main>
+                    <main className={styles.main}>
                         <section className={styles.videoSection}>
                             {subscriptions.map((video, index) => (
                                 <>
                                     <article key={video.videoId} className={styles.videoClip}>
                                         <header className={styles.videoClip_header}>
-                                            <div className={styles.header_channel}>
+                                            <div
+                                                className={styles.header_channel}
+                                                onClick={(event) => handleChannelClick(video.channelId, event)}
+                                            >
                                                 <img
                                                     src={video.channelAvatar}
                                                     alt='채널프로필사진' 
@@ -128,22 +144,39 @@ const ListedSubscribe = () => {
                                             )}
                                         </header>
                                         <div className={styles.videoClip_main}>
-                                            <div className={styles.videoThumbnail}>
-                                                <img
-                                                    src={video.highThumbnail}
-                                                    alt='썸네일'
-                                                />
+                                            <div
+                                                className={styles.videoThumbnail}
+                                                onMouseEnter={() => setHoveredVideo(video.videoId)}
+                                                onMouseLeave={() => setHoveredVideo(null)}
+                                            >
+                                                {hoveredVideo === video.videoId ? (
+                                                    <iframe
+                                                        className={styles.videoPlayer}
+                                                        src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&mute=1`}
+                                                        title={video.title}
+                                                        allow="autoplay; encrypted-media"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                ) : (
+                                                    <img src={video.highThumbnail} alt='나는 썸네일' />
+                                                )}
                                                 <p>{video.duration}</p>
                                             </div>
                                             <div className={styles.videoDescriptions_lines}>
                                                 <div className={styles.videoTitle}>
-                                                    <h5>{video.title}</h5>
+                                                    <h5 onClick={(event) => handleShowVideo(video.videoId, event)}>
+                                                        {video.title}
+                                                    </h5>
                                                     <button>
                                                         <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
                                                     </button>
                                                 </div>
-                                                <p className={styles.videoInfo}>{video.channelTitle}  {video.views} • {video.publishTime}</p>
-                                                <p className={styles.videoDes}>{video.description}</p>
+                                                <p className={styles.videoInfo} onClick={(event) => handleShowVideo(video.videoId, event)}>
+                                                    {video.channelTitle}  {video.views} • {video.publishTime}
+                                                </p>
+                                                <p className={styles.videoDes} onClick={(event) => handleShowVideo(video.videoId, event)}>
+                                                    {video.description}
+                                                </p>
                                             </div>
                                         </div>
                                     </article>
@@ -161,12 +194,32 @@ const ListedSubscribe = () => {
                                         </header>
                                         <div className={styles.shortsMain}>
                                             {shorts.slice(0, shortsVisibleCount).map((shorts, index) => (
-                                                <article key={index} className={styles.shortsClip}>
-                                                    <img
-                                                        className={styles.shortsThumbnail}
-                                                        alt='shorts 썸네일'
-                                                        src={shorts.thumbUrl}
-                                                    />
+                                                <article
+                                                    key={index}
+                                                    className={styles.shortsClip}
+                                                    onClick={(event) => handleShowVideo(shorts.id, event)}
+                                                >
+                                                        <div
+                                                            className={styles.shortsThumbnail_div}
+                                                            onMouseEnter={() => setHoveredVideo(shorts.id)}
+                                                            onMouseLeave={() => setHoveredVideo(null)}
+                                                        >
+                                                            {hoveredVideo === shorts.id ? (
+                                                                    <iframe
+                                                                    className={styles.shortsPlayer}
+                                                                    src={`https://www.youtube.com/embed/${shorts.id}?autoplay=1&mute=1`}
+                                                                    title={shorts.title}
+                                                                    allow="autoplay; encrypted-media"
+                                                                    allowFullScreen
+                                                                    ></iframe>
+                                                                ) : (
+                                                                    <img
+                                                                    className={styles.shortsThumbnail}
+                                                                    alt="shorts 썸네일"
+                                                                    src={shorts.thumbUrl}
+                                                                    />
+                                                            )}
+                                                        </div>
                                                     <div className={styles.shortsDetail}>
                                                         <div>
                                                             <h5>{shorts.title}</h5>
