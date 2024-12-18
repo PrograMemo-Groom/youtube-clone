@@ -1,8 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import formatViewerCount from "../../../utils/formatViewerCount";
 import "./ShortsTap.css";
-import {ThemeContext} from "../../context/context";
-import {getStyle} from "../themes/useThemeStyles";
 import {fetchShortsVideos} from "../../../utils/fetchShortsVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 import ShortsVideos from "./shortsVideo/ShortsVideos.js";
