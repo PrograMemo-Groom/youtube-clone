@@ -55,24 +55,26 @@ function ShortsTap() {
         link(`/shorts?q=${videoId}`);
     };
 
-    return (<div className='shortsTap-container'>
-        <div className='shorts-header'>
-            <img
-                className='shorts-header-img'
-                src='https://i.namu.wiki/i/LkKUWu-wSjxhbv9Nc1TeDv7cQVGAm9fb51bMED8S73h0495WomoGvYlS2pbfJAx14IEeHDyMJO85nKL2Q5cs4qgVW458GNv1F3aEghP0Pgb-iDX50RJI_rhRxsOpOCJqWmnEZk-3psmR7uYQu4Kzag.svg'
-                alt='쇼츠 아이콘'
-            />
-            <span>Shorts</span>
-        </div>
+    return (
+        <div className='shortsTap-container'>
+            <div className='shorts-header'>
+                <img
+                    className='shorts-header-img'
+                    src='https://i.namu.wiki/i/LkKUWu-wSjxhbv9Nc1TeDv7cQVGAm9fb51bMED8S73h0495WomoGvYlS2pbfJAx14IEeHDyMJO85nKL2Q5cs4qgVW458GNv1F3aEghP0Pgb-iDX50RJI_rhRxsOpOCJqWmnEZk-3psmR7uYQu4Kzag.svg'
+                    alt='쇼츠 아이콘'
+                />
+                <span>Shorts</span>
+            </div>
 
-        <div className='left-arrow' onClick={() => handleScroll("left")}>
-            {"<"}
+            <div className='left-arrow' onClick={() => handleScroll("left")}>
+                {"<"}
+            </div>
+            <div className='right-arrow' onClick={() => handleScroll("right")}>
+                {">"}
+            </div>
+            <ShortsVideos shorts={shorts} handleShortsVideo={handleShortsVideo} categoryBarRef={categoryBarRef}/>
         </div>
-        <div className='right-arrow' onClick={() => handleScroll("right")}>
-            {">"}
-        </div>
-        <ShortsVideos shorts={shorts} handleShortsVideo={handleShortsVideo} categoryBarRef={categoryBarRef}/>
-    </div>);
+    );
 }
 
 export default ShortsTap;

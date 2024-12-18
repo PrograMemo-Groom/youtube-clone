@@ -42,6 +42,7 @@ const Comments = ({video, content, setTheme, videoId}) => {
 
         fetchComments();
     }, [video]);
+    
     return <figure className='comment-container'>
         <div className='comment-header'>
             <span>{formatViewerCount(content.comments)}개 </span>
