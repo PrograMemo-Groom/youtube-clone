@@ -246,7 +246,7 @@
 
 
 .shortsClip {
-    width: 210px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     padding-left: 3px;
@@ -255,9 +255,9 @@
 }
 
 .shortsThumbnail_div {
-    min-width: 210px;
-    max-width: 210px;
-    height: 315px;
+    min-width: 200px;
+    max-width: 200px;
+    height: 310px;
     border-radius: 5%;
     overflow: hidden;
     position: relative
@@ -271,9 +271,9 @@
 }
 
 .shortsPlayer {
-    min-width: 210px;
-    max-width: 210px;
-    height: 315px;
+    min-width: 200px;
+    max-width: 200px;
+    height: 310px;
     border-radius: 5%;
     overflow: hidden;
     position: absolute
