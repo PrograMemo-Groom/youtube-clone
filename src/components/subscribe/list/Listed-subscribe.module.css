@@ -186,8 +186,15 @@
     padding-left: 15px;
     padding-top: 7px;
 
-    flex-shrink: 1;
+    flex: 1;
     max-width: 639px;
+
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; 
+    cursor: pointer;
 }
 
 .videoTitle {
@@ -231,7 +238,7 @@
 }
 
 .videoDes {
-    font-size: #060606;
+    color: #060606;
     font-size: 12px;
     padding: 8px 0px 0px;
     margin: 0px 0px 8px;
