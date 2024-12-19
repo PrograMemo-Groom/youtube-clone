@@ -1,22 +1,18 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import he from "he";
-import {ThemeContext} from "../../context/context.js";
-import {
-    getStyle,
-    getMenuItemStyle,
-} from "../themes/useThemeStyles";
+import {getMenuItemStyle, getStyle,} from "../themes/useThemeStyles";
 import "./MainVideo.css";
 import {getChannelThumbnail} from "../../../utils/formatProfileImage.js";
 import {getChannelSubscriberCount} from "../../../utils/getChannelSubscriberCount.js";
 import VideoPlayer from "./videoPlayer/VideoPlayer";
 import VideoDetail from "./videoDetail/VideoDetail";
 import Comments from "./comments/Comments";
+import {useSelector} from "react-redux";
 
-function MainVideo({video, channelId}) {
-    const {isDark} = useContext(ThemeContext);
+function MainVideo() {
+    const {isDark, channelId, videoData} = useSelector(state => state.detail);
     const setMenuTheme = getMenuItemStyle(isDark);
     const setTheme = getStyle(isDark);
-
 
     const [content, setContent] = useState({
         videoSrc: "",
@@ -31,11 +27,11 @@ function MainVideo({video, channelId}) {
     });
 
 
-    const videoId = video.id;
+    const videoId = videoData.id;
 
     // 비디오 정보 업데이트
     useEffect(() => {
-        const {snippet, statistics} = video;
+        const {snippet, statistics} = videoData;
 
         const fetchChannelInfo = async () => {
             // 비동기적으로 채널 썸네일 가져오기
@@ -65,14 +61,14 @@ function MainVideo({video, channelId}) {
         };
 
         fetchChannelInfo();
-    }, [video]);
+    }, [videoData]);
 
     return (
         <section className='mainVideo-container'>
             <VideoPlayer content={content}/>
             <VideoDetail content={content} channelId={channelId} setMenuTheme={setMenuTheme}
-                         video={video} videoId={videoId}/>
-            <Comments videoId={videoId} video={video} setTheme={setTheme} content={content}/>
+                         videoData={videoData} videoId={videoId}/>
+            <Comments videoId={videoId} videoData={videoData} setTheme={setTheme} content={content}/>
         </section>
     );
 }

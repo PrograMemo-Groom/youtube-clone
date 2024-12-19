@@ -4,7 +4,6 @@ const initialState = {
     isDark: false,
     videoData: null,
     channelId: false,
-    isDarkStyle: null,
 }
 
 const detailReducer = (state = initialState, action) => {

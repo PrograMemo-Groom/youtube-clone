@@ -2,7 +2,7 @@ import React from 'react';
 import formatViewerCount from "../../../../utils/formatViewerCount";
 import DropdownMenu from "../../../dropdownMenu/DropdownMenu";
 
-const Videos = ({channelId, video, handleShowVideo, toggleDropdown, openDropdown}) => {
+const Videos = ({channelId, video, handleShowVideo, toggleDropdown, creator_dropdownState}) => {
     const handleChannelClick = (channelId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
         window.open(`https://www.youtube.com/channel/${channelId}`, "_blank");
@@ -34,7 +34,7 @@ const Videos = ({channelId, video, handleShowVideo, toggleDropdown, openDropdown
                 alt='영상 더보기'
                 onClick={() => toggleDropdown(video.id)}
             />
-            {openDropdown === video.id && (<DropdownMenu/>)}
+            {creator_dropdownState && (<DropdownMenu/>)}
         </div>
     </div>))) : (<div>비디오가 없습니다.</div>));
 

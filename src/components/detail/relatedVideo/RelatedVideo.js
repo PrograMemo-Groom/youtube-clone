@@ -1,17 +1,18 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./RelatedVideo.css";
 import formatViewerCount from "../../../utils/formatViewerCount";
-import {ThemeContext} from "../../context/context.js";
 import {fetchCreatorVideos} from "../../../utils/fetchCreatorVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 import DropdownMenu from "../../dropdownMenu/DropdownMenu";
+import {useSelector} from "react-redux";
 
-function RelatedVideo({channelId}) {
-    const {isDark} = useContext(ThemeContext);
+function RelatedVideo() {
+    // const {isDark} = useContext(ThemeContext);
     const {link} = useNavigation();
     const observerRef = useRef(null); // Intersection Observer를 위한 ref
-    const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
+    const {isDark, channelId} = useSelector(state => state.detail);
 
+    const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const [video, setVideo] = useState([]); // 영상 데이터
     const [nextPageToken, setNextPageToken] = useState(""); // 다음 페이지 토큰
     const [isFetching, setIsFetching] = useState(false); // 데이터 요청 중 상태

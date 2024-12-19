@@ -5,8 +5,10 @@ import fetchVideoComments from "../../../../utils/fetchVideoComments";
 import he from "he";
 
 const Comments = ({video, content, setTheme, videoId}) => {
-    const [comments, setComments] = useState([]); // 초기 댓글 상태 빈 배열로 설정
     const observerRef = useRef(null); // Intersection Observer를 위한 ref
+
+
+    const [comments, setComments] = useState([]); // 초기 댓글 상태 빈 배열로 설정
     const [nextPageToken, setNextPageToken] = useState(""); // 다음 페이지 토큰
     const [isFetching, setIsFetching] = useState(false); // 요청 중 상태
 

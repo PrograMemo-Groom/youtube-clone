@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import formatViewerCount from "../../../../utils/formatViewerCount";
 import DropdownMenu from "../../../dropdownMenu/DropdownMenu";
 import formatTimeDifference from "../../../../utils/formatTimeDifference";
+import {useSelector} from "react-redux";
 
-const VideoDetail = ({content, channelId, setMenuTheme, video, videoId}) => {
+const VideoDetail = ({content, setMenuTheme, videoId}) => {
+    const {channelId, videoData} = useSelector((state) => state.detail);
     const [isSubscribe, setIsSubscribe] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
     const [showFullText, setShowFullText] = useState(false);
-
 
     const toggleDropdown = (videoId) => {
         setOpenDropdown((prev) => (prev === videoId ? null : videoId));
@@ -88,7 +89,7 @@ const VideoDetail = ({content, channelId, setMenuTheme, video, videoId}) => {
                 >
                     ···
                 </button>
-                {openDropdown === video.id && (<DropdownMenu/>)}
+                {openDropdown === videoData.id && (<DropdownMenu/>)}
             </div>
         </div>
         <div style={setMenuTheme} className='details-contents'>
