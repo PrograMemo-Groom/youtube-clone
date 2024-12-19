@@ -6,7 +6,6 @@ const Playlist = ({likedVideos}) => {
     const [playlists, setPlaylists] = React.useState([]);
     const [selectedOption, setSelectedOption] = useState("가나다순");
     const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const {link} = useNavigation();
     // 드롭다운 토글 핸들러
     const handleToggleDropdown = () => {
         setDropdownVisible((prev) => !prev);
@@ -49,13 +48,6 @@ const Playlist = ({likedVideos}) => {
         }
         const url = `${baseUrl}?v=${playlistId}&list=${playlistId}`;
         window.location.href = url;
-    };
-
-    const handleShowVideo = (videoId) => {
-        console.log("6: ", videoId);
-        const queryParam = `?q=${videoId}`;
-        const detailPageUrl = `/detail${queryParam}`;
-        link(detailPageUrl);
     };
 
     return (
