@@ -1,4 +1,5 @@
 import searchReducer from "./reducer/SearchReducer";
+import mainReducer from "./reducer/MainReducer"
 import {configureStore} from "@reduxjs/toolkit";
 
 export const Store = configureStore({
