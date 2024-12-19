@@ -7,7 +7,10 @@ export const fetchVideos = createAsyncThunk(
     async ({ categoryId, pageToken }, { rejectWithValue }) => {
         try {
             const response = await getMainVideos(categoryId, pageToken);
-            return response;
+            return {
+                videos: response.videos, // API에서 받은 비디오 데이터
+                nextPageToken: response.nextPageToken, // API에서 받은 다음 페이지 토큰
+            };
         } catch (error) {
             return rejectWithValue(error.message);
         }
