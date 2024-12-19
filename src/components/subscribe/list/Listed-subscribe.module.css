@@ -194,7 +194,6 @@
     -webkit-line-clamp: 2;        /* 2줄로 제한 */
     overflow: hidden;             /* 넘치는 부분 숨기기 */
     text-overflow: ellipsis; 
-    cursor: pointer;
 }
 
 .videoTitle {
@@ -230,6 +229,13 @@
 .videoInfo {
     font-size: #060606;
     font-size: 12px;
+    cursor: pointer;
+    
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; 
     cursor: pointer;
 }
 
