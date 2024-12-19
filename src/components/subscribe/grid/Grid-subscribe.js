@@ -225,7 +225,6 @@ const GridSubscribe = () => {
                                                     <article
                                                         key={shortsIndex}
                                                         className={styles.shortsClip}
-                                                        onClick={(event) => handleShowVideo(shorts.id, event)}
                                                     >
                                                         <div
                                                             className={styles.shortsThumbnail_div}
@@ -249,15 +248,15 @@ const GridSubscribe = () => {
                                                             )}
                                                         </div>
                                                         <div className={styles.shortsDetail}>
-                                                            <div>
+                                                            <div onClick={(event) => handleShowVideo(shorts.id, event)}>
                                                                 <h5>{shorts.title}</h5>
                                                                 <p>조회수 {shorts.viewerCount}</p>
                                                             </div>
                                                             <div style={{position: "relative"}}>
                                                                 <img
                                                                     src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
-                                                                    alt="more"
-                                                                    className={styles.more}
+                                                                    alt="shorts more"
+                                                                    className={styles.shorts_more}
                                                                     onClick={() => toggleDropdown(shorts.id)}
                                                                 />
                                                                 {openDropdown === shorts.id && (
