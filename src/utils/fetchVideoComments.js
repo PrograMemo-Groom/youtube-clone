@@ -23,7 +23,7 @@ export const fetchVideoComments = async (videoId, sortBy = "latest", nextPageTok
                 };
             });
 
-            console.log("fetchVideoComments() - comments:", comments);
+            // console.log("fetchVideoComments() - comments:", comments);
 
             return {
                 comments,

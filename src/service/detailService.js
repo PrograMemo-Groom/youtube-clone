@@ -9,7 +9,6 @@ export const fetchVideoDetails = async (videoId) => {
         const response = await instance.get(requests.fetchPopularVideos, {
             params: {
                 part: "snippet,statistics,contentDetails",
-                // chart: "mostPopular",
                 regionCode: "KR",
                 maxResults: 1,
                 id: videoId,
@@ -21,3 +20,4 @@ export const fetchVideoDetails = async (videoId) => {
         console.log(tag, "PopularVideos can't get response data", e);
     }
 };
+

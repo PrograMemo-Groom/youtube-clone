@@ -2,18 +2,22 @@ import React, {useState} from 'react';
 import formatViewerCount from "../../../../utils/formatViewerCount";
 import DropdownMenu from "../../../dropdownMenu/DropdownMenu";
 import formatTimeDifference from "../../../../utils/formatTimeDifference";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setToggleSubscribe} from "../../../../store/actions/DetailActions";
 
-const VideoDetail = ({content, setMenuTheme, videoId}) => {
-    const {channelId, videoData} = useSelector((state) => state.detail);
-    const [isSubscribe, setIsSubscribe] = useState(false);
+const VideoDetail = ({setMenuTheme}) => {
+    const {channelId, videoData, content, subscriptions} = useSelector((state) => state.detail);
+    const dispatch = useDispatch();
+
+    const videoId = videoData.id;
+
+    // const [isSubscribe, setIsSubscribe] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
     const [showFullText, setShowFullText] = useState(false);
 
     const toggleDropdown = (videoId) => {
         setOpenDropdown((prev) => (prev === videoId ? null : videoId));
     };
-
 
     const handleChannelClick = (channelId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
@@ -38,6 +42,11 @@ const VideoDetail = ({content, setMenuTheme, videoId}) => {
         return text;
     };
 
+    const handleSubscribeToggle = () => {
+        dispatch(setToggleSubscribe(videoId)); // 구독 상태 토글
+    }
+
+
     return <figure className='video-details'>
         <div className='details-header'>{content.title}</div>
         <div className='details-actions'>
@@ -53,13 +62,15 @@ const VideoDetail = ({content, setMenuTheme, videoId}) => {
                 구독자 {formatViewerCount(content.channelSubscribers)}명
               </span>
                 </div>
-                {isSubscribe ? (<button onClick={() => setIsSubscribe(!isSubscribe)} style={setMenuTheme}
-                                        className='subscribe-btn'>
-                    구독
-                </button>) : <button onClick={() => setIsSubscribe(!isSubscribe)} style={setMenuTheme}
-                                     className='subscribe-btn subscribe'>
-                    구독 중
-                </button>}
+                {subscriptions[videoId] ?
+                    (<button onClick={handleSubscribeToggle} style={setMenuTheme}
+                             className='subscribe-btn subscribe'>
+                        구독 중
+                    </button>)
+                    :
+                    (<button onClick={handleSubscribeToggle} style={setMenuTheme}
+                             className='subscribe-btn'>구독</button>)}
+
 
             </div>
 

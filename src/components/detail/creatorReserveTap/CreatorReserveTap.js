@@ -19,8 +19,8 @@ function CreatorReserveTap() {
 
     const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
 
-    const {creator_dropdownState} = useSelector((state) => state.detail);
-    console.log("creator_dropdownState", creator_dropdownState);
+    const {videoData, creator_dropdownState} = useSelector((state) => state.detail);
+    // console.log("creator_dropdownState", creator_dropdownState);
     const dispatch = useDispatch();
 
     // 메뉴 리스트
@@ -61,7 +61,7 @@ function CreatorReserveTap() {
             setVideo(formatVideoData);
         };
         fetchRelatedVideoList();
-    }, []);
+    }, [videoData]);
 
     // 스크롤 이벤트
     const handleScroll = (direction) => {
