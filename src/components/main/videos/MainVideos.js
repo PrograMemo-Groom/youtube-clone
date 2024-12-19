@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./MainVideos.module.css";
-import { getMainVideos } from "../../../service/MainService";
 import useNavigation from "../../../hooks/useNavigation";
 import { useSelector, useDispatch } from "react-redux";
 import {fetchVideos} from "../../../store/reducer/MainReducer";
@@ -139,7 +138,6 @@ const MainVideos = ({ fetchFunction }) => {
     return (
         <>
             <div className={styles.videoGrid}>
-                {'videos 대신 videoList를 사용하여 Redux 상태에서 데이터를 가져오기'}
                 {videoList.map((video, index) => (
                     <div
                         key={index}
