@@ -186,8 +186,14 @@
     padding-left: 15px;
     padding-top: 7px;
 
-    flex-shrink: 1;
+    flex: 1;
     max-width: 639px;
+
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; 
 }
 
 .videoTitle {
@@ -210,28 +216,31 @@
     cursor: pointer;
 }
 
-.videoTitle button {
-    width: 40px;
-    height: 30px;
-    background-color: transparent;
-    border: none;
-    padding-bottom: 30px;
+.more {
+    width: 30px !important;
+    height: 30px !important;
+    flex-shrink: 0;
+    margin-left: 8px;
     cursor: pointer;
-}
-
-.videoTitle button img{
-    width: 24px;
-    height: 24px;
+    top: 0;
+    right: 0;
 }
 
 .videoInfo {
     font-size: #060606;
     font-size: 12px;
     cursor: pointer;
+    
+    display: -webkit-box;         /* Flexbox-like layout */
+    -webkit-box-orient: vertical; /* 세로로 정렬 */
+    -webkit-line-clamp: 2;        /* 2줄로 제한 */
+    overflow: hidden;             /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; 
+    cursor: pointer;
 }
 
 .videoDes {
-    font-size: #060606;
+    color: #060606;
     font-size: 12px;
     padding: 8px 0px 0px;
     margin: 0px 0px 8px;
@@ -366,16 +375,12 @@
 }
 
 
-.shortsDetail button {
-    width: 40px;
-    height: 40px;
-    background-color: transparent;
-    border: none;
-}
-
-.shortsDetail button img {
-    width: 24px;
-    height: 24px;
-
-    padding-left: 5px;
+.shorts_more {
+    width: 25px !important;
+    height: 25px !important;
+    flex-shrink: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    top: 0;
+    right: 0;
 }

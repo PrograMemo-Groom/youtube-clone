@@ -182,25 +182,17 @@
     color: #606060;
 }
 
-.videoDescriptions_button {
-    display: flex;
-    justify-content: end;
-    padding-left: 5px;
-}
 
-.videoDescriptions_button button{
-    width: 24px;
-    height: 24px;
-    background-color: transparent;
-    border: none;
+
+.more {
+    width: 30px !important;
+    height: 30px !important;
+    flex-shrink: 0;
+    margin-left: 8px;
     cursor: pointer;
+    top: 0;
+    right: 0;
 }
-
-.videoDescriptions_button button img{
-    width: 100%;
-    height: 100%;
-}
-
 
 
 
@@ -254,7 +246,7 @@
 
 
 .shortsClip {
-    width: 210px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     padding-left: 3px;
@@ -263,9 +255,9 @@
 }
 
 .shortsThumbnail_div {
-    min-width: 210px;
-    max-width: 210px;
-    height: 315px;
+    min-width: 200px;
+    max-width: 200px;
+    height: 310px;
     border-radius: 5%;
     overflow: hidden;
     position: relative
@@ -279,9 +271,9 @@
 }
 
 .shortsPlayer {
-    min-width: 210px;
-    max-width: 210px;
-    height: 315px;
+    min-width: 200px;
+    max-width: 200px;
+    height: 310px;
     border-radius: 5%;
     overflow: hidden;
     position: absolute
@@ -289,6 +281,7 @@
 
 .shortsDetail {
     display: flex;
+    justify-content: space-between;
 }
 
 .shortsDetail div {
@@ -318,16 +311,12 @@
 }
 
 
-.shortsDetail button {
-    width: 40px;
-    height: 40px;
-    background-color: transparent;
-    border: none;
-}
-
-.shortsDetail button img {
-    width: 24px;
-    height: 24px;
-
-    padding-left: 5px;
+.shorts_more {
+    width: 25px !important;
+    height: 25px !important;
+    flex-shrink: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    top: 0;
+    right: 0;
 }
