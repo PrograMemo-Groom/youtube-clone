@@ -1,7 +1,35 @@
 import "../MyPage.css";
 import React from "react";
+import {fetchAllPlaylists} from "../../../service/MyPageService"
 
-const WatchVideos = () => {
+const WatchVideos = ({watchLaterVideos}) => {
+    const [playlists, setPlaylists] = React.useState([]);
+
+    // 13개의 유효한 재생목록 가져옴
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const accessToken = localStorage.getItem("ACCESS_TOKEN");
+
+            if (!accessToken) {
+                console.error("Access token not found. Please log in again.");
+                return;
+            }
+
+            try {
+                const playlists = await fetchAllPlaylists(accessToken);
+
+                if (playlists) {
+                    setPlaylists(playlists); // 상태 업데이트
+                    console.log("Filtered Playlists:", playlists);
+                }
+            } catch (error) {
+                console.error("Error fetching playlists:", error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="Videos-to-watch-container Videos-to-watch-container-height">
             <section className="Videos-to-watch-text-btn">
