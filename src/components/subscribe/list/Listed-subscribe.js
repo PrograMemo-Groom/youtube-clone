@@ -211,7 +211,6 @@ const ListedSubscribe = () => {
                                                 <article
                                                     key={index}
                                                     className={styles.shortsClip}
-                                                    onClick={(event) => handleShowVideo(shorts.id, event)}
                                                 >
                                                         <div
                                                             className={styles.shortsThumbnail_div}
@@ -235,7 +234,7 @@ const ListedSubscribe = () => {
                                                             )}
                                                         </div>
                                                     <div className={styles.shortsDetail}>
-                                                        <div>
+                                                        <div onClick={(event) => handleShowVideo(shorts.id, event)}>
                                                             <h5>{shorts.title}</h5>
                                                             <p>조회수 {shorts.viewerCount}</p>
                                                         </div>
