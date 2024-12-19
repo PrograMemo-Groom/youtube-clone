@@ -1,7 +1,66 @@
 import "../MyPage.css";
-import React from "react";
+import React, {useState} from "react";
+import { fetchChannelId, fetchChannelProfileImage} from "../../../service/MyPageService"
 
-const Profile = () => {
+const Profile = ({accessToken}) => {
+    const [profileImage, setProfileImage] = useState("/assets/myPage/user-profile.png");
+
+    const handleChannelView = async () => {
+
+        if (!accessToken) {
+            console.error("Access token not found. Please log in again.");
+            return;
+        }
+
+        const channelId = await fetchChannelId(accessToken); // 채널 ID 가져오기
+
+        if (channelId) {
+            const channelUrl = `https://www.youtube.com/channel/${channelId}`;
+            window.location.href = channelUrl; // 채널 페이지로 이동
+        } else {
+            console.error("Failed to fetch channel ID.");
+        }
+    };
+
+    const handleLogin = () => {
+        try {
+            const scope = encodeURIComponent("email profile https://www.googleapis.com/auth/youtube.readonly");
+            const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`;
+
+            // localStorage.removeItem("ACCESS_TOKEN");
+            // localStorage.removeItem("REFRESH_TOKEN");
+            // localStorage.removeItem("GOOGLE_TOKEN");
+
+            console.log("Redirecting to Google OAuth for a new Authorization Code...");
+            window.location.href = authUrl; // Google OAuth 로그인 리디렉션
+        } catch (error) {
+            console.log("[handleLogin error] 실패 0:", error.message);
+        }
+    };
+
+    // 프로필 이미지 불러오기
+    React.useEffect(() => {
+        const fetchProfileImage = async () => {
+            if (!accessToken) {
+                console.error("Access token not found. Please log in again.");
+                // refreshAccessToken();
+                return;
+            }
+
+            const imageUrl = await fetchChannelProfileImage(accessToken);
+
+            // 반환된 이미지 URL 검사
+            if (imageUrl) {
+                setProfileImage(imageUrl);
+            } else {
+                console.warn("No valid profile image found. Using default image.");
+                setProfileImage("/assets/mypage/user-profile.png");
+            }
+        };
+
+        fetchProfileImage();
+    }, []);
+
     return (
         <div className="user-page-info-container">
             <img className="user-profile-img"
@@ -11,8 +70,7 @@ const Profile = () => {
                 <section className="user-name-container">
                     <p className="user-name">공공</p>
                     <p className="user-channel-move"
-                       onClick={handleChannelView}
-                    >
+                       onClick={handleChannelView}>
                         @o0_o0_o0 &#183; 채널 보기</p>
                 </section>
                 <div className="changes-container">
