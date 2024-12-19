@@ -1,9 +1,37 @@
 import "../MyPage.css";
-import React from "react";
+import React, {useState} from "react";
 import formatVideoTime from "../../../utils/formatVideoTime";
 import formatViewerCount from "../../../utils/formatViewerCount";
+import useNavigation from "../../../hooks/useNavigation";
 
-const Record = () => {
+const Record = ({likedVideos}) => {
+    const [openDropdown, setOpenDropdown] = useState(null); // 현재 열려 있는 videoId를 저장
+    const {link} = useNavigation();
+
+    const handleViewAllClick = () => {
+        if (!likedVideos) {
+            console.log("videoId 못 찾겠다 꾀꼬리", "handleViewAllClick");
+            return;
+        }
+        const playlistUrl = "https://www.youtube.com/playlist?list=LL";
+        window.location.href = playlistUrl;
+    };
+
+    const handleShowVideo = (videoId) => {
+        console.log("6: ", videoId);
+        const queryParam = `?q=${videoId}`;
+        const detailPageUrl = `/detail${queryParam}`;
+        link(detailPageUrl);
+    };
+
+    const toggleDropdown = (videoId) => {
+        if (openDropdown === videoId) {
+            setOpenDropdown(null); // 이미 열려 있으면 닫기
+        } else {
+            setOpenDropdown(videoId); // 새로운 videoId 열기
+        }
+    };
+
     return (
         <div className="view-record-container">
             <section className="view-record-text-btn">
