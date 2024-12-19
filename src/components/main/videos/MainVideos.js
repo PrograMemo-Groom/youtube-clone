@@ -10,7 +10,7 @@ const MainVideos = ({ fetchFunction }) => {
     //const [loading, setLoading] = useState(true); // 로딩 상태
     //const [error, setError] = useState(null); // 에러 상태
     //  const [nextPageToken, setNextPageToken] = useState(null);
-    //const scrollPositionRef = useRef(0); // 스크롤 위치 추적
+    const scrollPositionRef = useRef(0); // 스크롤 위치 추적
 
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
@@ -30,6 +30,7 @@ const MainVideos = ({ fetchFunction }) => {
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && nextPageToken && !loading) {
+                    scrollPositionRef.current = window.scrollY; // 현재 스크롤 위치 저장
                     dispatch(fetchVideos({ categoryId: fetchFunction, pageToken: nextPageToken }));
                 }
             },
@@ -43,6 +44,13 @@ const MainVideos = ({ fetchFunction }) => {
             if (currentRef) observer.unobserve(currentRef);
         };
     }, [dispatch, nextPageToken, loading, fetchFunction]);
+
+    // 스크롤 위치 복원
+    useEffect(() => {
+        if (!loading) {
+            window.scrollTo(0, scrollPositionRef.current); // 이전 스크롤 위치로 복원
+        }
+    }, [videoList]); // videoList가 업데이트될 때 실행
 
     const handleShowVideo = (videoId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
@@ -128,12 +136,7 @@ const MainVideos = ({ fetchFunction }) => {
     //     };
     // }, [nextPageToken, loading, fetchFunction]);
     //
-    // // 스크롤 위치 복원
-    // useEffect(() => {
-    //     if (!loading) {
-    //         window.scrollTo(0, scrollPositionRef.current); // 이전 스크롤 위치로 복원
-    //     }
-    // }, [videos]); // videos 상태가 업데이트될 때 실행
+
 
     return (
         <>
