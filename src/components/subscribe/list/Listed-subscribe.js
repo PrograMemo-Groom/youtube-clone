@@ -6,6 +6,7 @@ import ShortsSubscribe from '../shorts/Shorts-subscribe';
 import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
 import { fetchShortsVideos } from "../../../service/SubscribeService";
 import useNavigation from "../../../hooks/useNavigation";
+import DropdownMenu from "../dropdown-menu/DropdownMenu";
 
 
 const ListedSubscribe = () => {
@@ -14,6 +15,7 @@ const ListedSubscribe = () => {
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
     const { link } = useNavigation();
+    const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const [subscriptions, setSubscriptions] = useState([]);
@@ -95,6 +97,10 @@ const ListedSubscribe = () => {
         window.location.href = `https://www.youtube.com/channel/${channelId}`;
     };
 
+    const toggleDropdown = (videoId) => {
+        setOpenDropdown((prev) => (prev === videoId ? null : videoId));
+    };
+
     return (
         <div className={styles.container}>
 
@@ -167,9 +173,17 @@ const ListedSubscribe = () => {
                                                     <h5 onClick={(event) => handleShowVideo(video.videoId, event)}>
                                                         {video.title}
                                                     </h5>
-                                                    <button>
-                                                        <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
-                                                    </button>
+                                                    <div style={{position: "relative"}}>
+                                                        <img
+                                                            src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
+                                                            alt="more"
+                                                            className={styles.more}
+                                                            onClick={() => toggleDropdown(video.videoId)}
+                                                        />
+                                                        {openDropdown === video.videoId && (
+                                                            <DropdownMenu />
+                                                        )}
+                                                    </div>
                                                 </div>
                                                 <p className={styles.videoInfo} onClick={(event) => handleShowVideo(video.videoId, event)}>
                                                     {video.channelTitle}  {video.views} • {video.publishTime}
@@ -225,9 +239,17 @@ const ListedSubscribe = () => {
                                                             <h5>{shorts.title}</h5>
                                                             <p>조회수 {shorts.viewerCount}</p>
                                                         </div>
-                                                        <button>
-                                                            <img src='/assets/subscribe/video-option-btn.svg' alt='영상옵션버튼'/>
-                                                        </button>
+                                                        <div style={{position: "relative"}}>
+                                                            <img
+                                                                src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
+                                                                alt="shorts more"
+                                                                className={styles.shorts_more}
+                                                                onClick={() => toggleDropdown(shorts.id)}
+                                                            />
+                                                            {openDropdown === shorts.id && (
+                                                                <DropdownMenu />
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </article>
                                             ))}

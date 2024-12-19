@@ -217,18 +217,14 @@
     cursor: pointer;
 }
 
-.videoTitle button {
-    width: 40px;
-    height: 30px;
-    background-color: transparent;
-    border: none;
-    padding-bottom: 30px;
+.more {
+    width: 30px !important;
+    height: 30px !important;
+    flex-shrink: 0;
+    margin-left: 8px;
     cursor: pointer;
-}
-
-.videoTitle button img{
-    width: 24px;
-    height: 24px;
+    top: 0;
+    right: 0;
 }
 
 .videoInfo {
@@ -373,16 +369,12 @@
 }
 
 
-.shortsDetail button {
-    width: 40px;
-    height: 40px;
-    background-color: transparent;
-    border: none;
-}
-
-.shortsDetail button img {
-    width: 24px;
-    height: 24px;
-
-    padding-left: 5px;
+.shorts_more {
+    width: 25px !important;
+    height: 25px !important;
+    flex-shrink: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    top: 0;
+    right: 0;
 }
