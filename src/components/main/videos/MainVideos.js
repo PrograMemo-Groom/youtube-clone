@@ -22,6 +22,7 @@ const MainVideos = ({ fetchFunction }) => {
 
     // 컴포넌트 내부의 fetchVideos 함수 제거하고, Redux Thunk를 사용
     useEffect(() => {
+        dispatch({ type: "videos/reset" }); // Redux 상태 초기화 액션 디스패치
         dispatch(fetchVideos({ categoryId: fetchFunction }));
     }, [dispatch, fetchFunction]);
 

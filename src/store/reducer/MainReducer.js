@@ -26,7 +26,14 @@ const MainReducer = createSlice({
         loading: false,
         error: null, // 에러 메시지
     },
-    reducers: {}, // 필요 시 동기 액션 추가
+    reducers: {
+        reset: (state) => {
+            state.videoList = [];
+            state.nextPageToken = null;
+            state.loading = false;
+            state.error = null;
+        },
+    }, // 필요 시 동기 액션 추가
     extraReducers: (builder) => {
         // fetchVideos 상태 처리
         builder
@@ -46,5 +53,5 @@ const MainReducer = createSlice({
             });
     },
 });
-
+export const { reset } = MainReducer.actions;
 export default MainReducer.reducer;
