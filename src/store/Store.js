@@ -5,7 +5,7 @@ export const Store = configureStore({
     reducer: {
         search: searchReducer,
         // 다른 페이지 여기 주입
-        // main : mainReducer
+        main : mainReducer,
     },
 });
 
