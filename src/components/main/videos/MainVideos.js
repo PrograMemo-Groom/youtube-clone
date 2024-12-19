@@ -51,7 +51,7 @@ const MainVideos = ({ fetchFunction }) => {
         if (!loading) {
             window.scrollTo(0, scrollPositionRef.current); // 이전 스크롤 위치로 복원
         }
-    }, [videoList]); // videoList가 업데이트될 때 실행
+    }, [videoList, loading]); // videoList가 업데이트될 때 실행
 
     const handleShowVideo = (videoId, event) => {
         if (event) event.stopPropagation(); // 이벤트 버블링 방지
