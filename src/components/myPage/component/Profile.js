@@ -75,12 +75,12 @@ const Profile = ({accessToken}) => {
                 </section>
                 <div className="changes-container">
                     <section className="changes-id-container">
-                        <img className="chang-id-icon"
-                             src="/assets/mypage/profile-icon.svg"
-                             alt="user-pforile-icon"/>
-                        <button className="changes-id-text"
-                                onClick={handleLogin}>계정 전환
-                        </button>
+                        {/*<img className="chang-id-icon"*/}
+                        {/*     src="/assets/mypage/profile-icon.svg"*/}
+                        {/*     alt="user-pforile-icon"/>*/}
+                        {/*<button className="changes-id-text"*/}
+                        {/*        onClick={handleLogin}>계정 전환*/}
+                        {/*</button>*/}
                     </section>
                     <div className="Google-id-change-container">
                         <section className="Google-id-container">

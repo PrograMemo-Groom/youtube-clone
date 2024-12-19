@@ -2,8 +2,9 @@ import "../MyPage.css";
 import React from "react";
 import {fetchAllPlaylists} from "../../../service/MyPageService"
 
-const WatchVideos = ({watchLaterVideos}) => {
+const WatchVideos = () => {
     const [playlists, setPlaylists] = React.useState([]);
+    const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
 
     // 13개의 유효한 재생목록 가져옴
     React.useEffect(() => {

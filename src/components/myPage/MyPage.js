@@ -9,10 +9,10 @@ import WatchVideos from "./component/WatchVideos";
 import {extractAuthCode, fetchUserChannel, fetchUserPlaylists, fetchWatchLaterVideos, fetchLikedVideos, fetchFirstVideoId} from "../../service/MyPageService";
 
 export default function MyPage() {
+    const [likedVideos, setLikedVideos] = useState([]);
     const [playlists, setPlaylists] = React.useState([]);
     const [channelName, setChannelName] = useState("");
     const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
-    const [likedVideos, setLikedVideos] = useState([]);
     const [channelId, setChannelId] = useState("");
     const [FirstVideoId, setFirstVideoId] = useState("");
     const accessToken = localStorage.getItem("ACCESS_TOKEN"); // accessToken 공유
@@ -74,7 +74,7 @@ export default function MyPage() {
                     <div className="contents-container">
                         <Profile accessToken={accessToken}/>
                         <Record likedVideos={likedVideos}/>
-                        <Playlist likedVideos={likedVideos} channelId={channelId}/>
+                        <Playlist playlists={playlists} setPlaylists={setPlaylists} channelId={channelId}/>
                         <WatchVideos watchLaterVideos={watchLaterVideos}/>
                     </div>
                 </div>
