@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getMainVideos } from "../../../../service/MainService";
+import { getMainVideos } from "../../service/MainService";
 
 // 비디오 데이터를 비동기로 가져오는 Thunk 생성
 export const fetchVideos = createAsyncThunk(
@@ -15,7 +15,7 @@ export const fetchVideos = createAsyncThunk(
 );
 
 // Slice 정의
-const videoSlice = createSlice({
+const MainReducer = createSlice({
     name: "videos",
     initialState: {
         videoList: [], // 비디오 데이터
@@ -44,4 +44,4 @@ const videoSlice = createSlice({
     },
 });
 
-export default videoSlice.reducer;
+export default MainReducer.reducer;
