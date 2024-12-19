@@ -3,7 +3,7 @@ import styles from "./MainVideos.module.css";
 import { getMainVideos } from "../../../service/MainService";
 import useNavigation from "../../../hooks/useNavigation";
 import { useSelector, useDispatch } from "react-redux";
-import {fetchVideos} from "./features/videoSlice";
+import {fetchVideos} from "../../../store/reducer/MainReducer";
 
 const MainVideos = ({ fetchFunction }) => {
     // **기존 useState 관리 코드 삭제**
