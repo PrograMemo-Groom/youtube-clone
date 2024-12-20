@@ -4,7 +4,7 @@ import formatVideoTime from "../../../utils/formatVideoTime";
 import formatViewerCount from "../../../utils/formatViewerCount";
 import useNavigation from "../../../hooks/useNavigation";
 
-const Record = ({likedVideos}) => {
+const Record = () => {
     const [likedVideos, setLikedVideos] = useState([]);
     const [openDropdown, setOpenDropdown] = useState(null); // 현재 열려 있는 videoId를 저장
     const {link} = useNavigation();
@@ -46,7 +46,7 @@ const Record = ({likedVideos}) => {
                                  key={`${i}-${video.videoId}`}>
                             <div className="video-thumbnail-container">
                                 <img className="video-thumbnail"
-                                     src={video.snippet.thumbnails.medium.url}
+                                     src={video.snippet.thumbnails.medium.url || ""}
                                      alt={video.snippet.title}
                                      onClick={() => handleShowVideo(video.id)}
                                 />
