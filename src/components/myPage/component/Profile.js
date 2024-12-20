@@ -1,9 +1,17 @@
 import "../MyPage.css";
-import React, {useState} from "react";
-import { fetchChannelId, fetchChannelProfileImage} from "../../../service/MyPageService"
+import React, {useEffect, useState} from "react";
+import { fetchChannelId } from "../../../service/MyPageService"
+import axios from "axios";
 
 const Profile = ({accessToken}) => {
     const [profileImage, setProfileImage] = useState("/assets/myPage/user-profile.png");
+    const [userName, setUserName] = useState("");
+    const [userId, setUserId] = useState("");
+
+    // 프로필 데이터 가져오기 호출
+    useEffect(() => {
+        fetchUserProfile();
+    }, []);
 
     const handleChannelView = async () => {
 
@@ -22,44 +30,33 @@ const Profile = ({accessToken}) => {
         }
     };
 
-    const handleLogin = () => {
+// 사용자 정보 가져오기
+    const fetchUserProfile = async () => {
+        if (!accessToken) {
+            console.error("Access token not found. Please log in again.");
+            return;
+        }
+
         try {
-            const scope = encodeURIComponent("email profile https://www.googleapis.com/auth/youtube.readonly");
-            const authUrl = `${process.env.REACT_APP_GOOGLE_OAUTH_URL}?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`;
+            const response = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
 
-            // localStorage.removeItem("ACCESS_TOKEN");
-            // localStorage.removeItem("REFRESH_TOKEN");
-            // localStorage.removeItem("GOOGLE_TOKEN");
+            const { name, email, picture } = response.data;
 
-            console.log("Redirecting to Google OAuth for a new Authorization Code...");
-            window.location.href = authUrl; // Google OAuth 로그인 리디렉션
+            // 상태에 저장
+            setProfileImage(picture || "/assets/mypage/user-profile.png");
+            setUserName(name || "가나다");
+            setUserId(email || "abc@gmail.com");
         } catch (error) {
-            console.log("[handleLogin error] 실패 0:", error.message);
+            console.error("Error fetching user profile:", error.response?.data || error.message);
+            setProfileImage("/assets/mypage/user-profile.png");
+            setUserName("공공");
+            setUserId("@o0_o0_o0");
         }
     };
-
-    // 프로필 이미지 불러오기
-    React.useEffect(() => {
-        const fetchProfileImage = async () => {
-            if (!accessToken) {
-                console.error("Access token not found. Please log in again.");
-                // refreshAccessToken();
-                return;
-            }
-
-            const imageUrl = await fetchChannelProfileImage(accessToken);
-
-            // 반환된 이미지 URL 검사
-            if (imageUrl) {
-                setProfileImage(imageUrl);
-            } else {
-                console.warn("No valid profile image found. Using default image.");
-                setProfileImage("/assets/mypage/user-profile.png");
-            }
-        };
-
-        fetchProfileImage();
-    }, []);
 
     return (
         <div className="user-page-info-container">
@@ -68,20 +65,12 @@ const Profile = ({accessToken}) => {
                  alt="user-profile-img"/>
             <div className="user-name-and-id-container">
                 <section className="user-name-container">
-                    <p className="user-name">공공</p>
+                    <p className="user-name">{userName}</p>
                     <p className="user-channel-move"
                        onClick={handleChannelView}>
-                        @o0_o0_o0 &#183; 채널 보기</p>
+                        @{userId} &#183; 채널 보기</p>
                 </section>
                 <div className="changes-container">
-                    <section className="changes-id-container">
-                        {/*<img className="chang-id-icon"*/}
-                        {/*     src="/assets/mypage/profile-icon.svg"*/}
-                        {/*     alt="user-pforile-icon"/>*/}
-                        {/*<button className="changes-id-text"*/}
-                        {/*        onClick={handleLogin}>계정 전환*/}
-                        {/*</button>*/}
-                    </section>
                     <div className="Google-id-change-container">
                         <section className="Google-id-container">
                             <img className="chang-id-icon"
