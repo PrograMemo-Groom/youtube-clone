@@ -6,7 +6,14 @@ import Profile from "./component/Profile";
 import Record from "./component/Record";
 import Playlist from "./component/Playlist";
 import WatchVideos from "./component/WatchVideos";
-import {extractAuthCode, fetchUserChannel, fetchUserPlaylists, fetchWatchLaterVideos, fetchLikedVideos, fetchFirstVideoId} from "../../service/MyPageService";
+import {
+    fetchUserChannel,
+    fetchUserPlaylists,
+    // fetchWatchLaterVideos,
+    fetchLikedVideos,
+    // fetchFirstVideoId,
+    fetchYouTubeData
+} from "../../service/MyPageService";
 
 export default function MyPage() {
     const [likedVideos, setLikedVideos] = useState([]);
@@ -15,29 +22,26 @@ export default function MyPage() {
     const [watchLaterVideos, setWatchLaterVideos] = React.useState([]);
     const [channelId, setChannelId] = useState("");
     const [FirstVideoId, setFirstVideoId] = useState("");
-    const accessToken = localStorage.getItem("ACCESS_TOKEN"); // accessToken 공유
-    console.log("Stored Access Token:", accessToken);
+    const [accessToken, setAccessToken] = useState(null);
+    // const accessToken = localStorage.getItem("ACCESS_TOKEN"); // accessToken 공유
 
-    // 인증 코드 추출 및 토큰 발급
+    // 로컬스토리지에서 Access Token 가져오기
     useEffect(() => {
-        const accessToken = localStorage.getItem("ACCESS_TOKEN");
-        if (!accessToken) {
-            console.log("Access Token not found. Calling extractAuthCode...");
-            extractAuthCode(); // Access Token이 없을 때만 호출
+        const token = localStorage.getItem("GOOGLE_TOKEN");
+        if (token) {
+            console.log("Access Token found in localStorage:", token);
+            setAccessToken(token); // 상태에 저장
         } else {
-            console.log("Access Token already exists. Skipping extractAuthCode.");
+            console.warn("Access Token not found in localStorage. Please log in.");
         }
     }, []);
 
     // 유튜브 데이터 요청
     useEffect(() => {
+        const accessToken = localStorage.getItem("GOOGLE_TOKEN");
         const fetchData = async () => {
             if (!accessToken) {
-                console.error("Access token not found. Please log in again.");
-                // refreshAccessToken();
-                // localStorage.removeItem("ACCESS_TOKEN");
-                // localStorage.removeItem("REFRESH_TOKEN");
-                // handleLogin(); // OAuth 로그인 함수 호출
+                console.error("Access token이 존재하지 않습니다. 로그인을 하세요.");
                 return;
             }
 
@@ -51,14 +55,15 @@ export default function MyPage() {
                 const userPlaylists = await fetchUserPlaylists(accessToken);
                 setPlaylists(userPlaylists || []);
 
-                const watchLater = await fetchWatchLaterVideos(accessToken);
-                setWatchLaterVideos(watchLater || []);
+                // const watchLater = await fetchWatchLaterVideos(accessToken);
+                // setWatchLaterVideos(watchLater || []);
 
-                const liked = await fetchLikedVideos(accessToken);
+                // 좋아요한 영상 가져오기
+                const liked = await fetchYouTubeData("videos", accessToken);
                 setLikedVideos(liked || []);
 
-                const firstVideo = await fetchFirstVideoId(accessToken, "WL");
-                setFirstVideoId(firstVideo || "");
+                // const firstVideo = await fetchFirstVideoId(accessToken, "WL");
+                // setFirstVideoId(firstVideo || "");
             } catch (error) {
                 console.error("Error fetching YouTube data:", error.message);
             }
