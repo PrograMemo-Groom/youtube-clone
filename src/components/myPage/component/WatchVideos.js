@@ -1,6 +1,6 @@
 import "../MyPage.css";
 import React from "react";
-import {fetchAllPlaylists} from "../../../service/MyPageService"
+// import {fetchAllPlaylists} from "../../../service/MyPageService"
 
 const WatchVideos = () => {
     const [playlists, setPlaylists] = React.useState([]);
@@ -16,16 +16,16 @@ const WatchVideos = () => {
                 return;
             }
 
-            try {
-                const playlists = await fetchAllPlaylists(accessToken);
-
-                if (playlists) {
-                    setPlaylists(playlists); // 상태 업데이트
-                    console.log("Filtered Playlists:", playlists);
-                }
-            } catch (error) {
-                console.error("Error fetching playlists:", error.message);
-            }
+            // try {
+            //     const playlists = await fetchAllPlaylists(accessToken);
+            //
+            //     if (playlists) {
+            //         setPlaylists(playlists); // 상태 업데이트
+            //         console.log("Filtered Playlists:", playlists);
+            //     }
+            // } catch (error) {
+            //     console.error("Error fetching playlists:", error.message);
+            // }
         };
 
         fetchData();
