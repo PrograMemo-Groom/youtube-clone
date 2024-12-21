@@ -92,9 +92,11 @@ const Sidebar = ({ isExpanded }) => {
                     {/* 기본 메뉴*/}
                     <div className={styles.menuSection}>
                         <div className={styles.menuItem} onClick={() => handleGoto('/', 'home')}>
-                            src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home${selected.home ? '_select' : ''}.svg`}
-                            alt="홈"
-                            className={styles.sidebar_icon}
+                            <img
+                                src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home${selected.home ? '_select' : ''}.svg`}
+                                alt="홈"
+                                className={styles.sidebar_icon}
+                            />
                             <span className={styles.exp_home}>홈</span>
                         </div>
                         <div className={styles.menuItem} onClick={() => handleGoto('/shorts', 'shorts')}>
