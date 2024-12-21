@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Manage-subscribe.module.css';
-import { fetchSubscriptions } from "../../../service/SubscribeService";
+// import { fetchSubscriptions } from "../../../service/SubscribeService";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchSubscribeList} from "../../../store/actions/subscribeAction";
 
 const ManageSubscribe = () => {
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
-    const [subscriptions, setSubscriptions] = useState([]);
-    
+    // const [subscriptions, setSubscriptions] = useState([]);
+    const dispatch = useDispatch();
+    const { list } = useSelector((state) => state.subscribe);
     
         useEffect(() => {
-            accessToken && fetchData();
-        }, [accessToken]);
+            accessToken && dispatch(fetchSubscribeList(accessToken));
+        }, [dispatch,accessToken]);
 
+        /*
         const fetchData = async () => {
             try {
                 if(!accessToken) {
@@ -33,6 +37,7 @@ const ManageSubscribe = () => {
                 console.log('fetchData 에러 :', error);
             }
         }
+        */
 
     return (
         <>
@@ -47,8 +52,8 @@ const ManageSubscribe = () => {
                 </select>
             </header>
             <main className={styles.main}>
-                {subscriptions.length > 0 ? (
-                    subscriptions.map((channel) => (
+                {list.length > 0 ? (
+                    list.map((channel) => (
                         <div key={channel.id} className={styles.channelCard}>
                             <img
                                 src={channel.channelAvatar}

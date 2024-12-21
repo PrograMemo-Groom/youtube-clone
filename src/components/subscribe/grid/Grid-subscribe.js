@@ -3,28 +3,32 @@ import styles from './Grid-subscribe.module.css';
 import ListedSubscribe from '../list/Listed-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
-import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
-import { fetchShortsVideos } from "../../../service/SubscribeService";
+// import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
+// import { fetchShortsVideos } from "../../../service/SubscribeService";
 import useNavigation from "../../../hooks/useNavigation";
 import DropdownMenu from "../dropdown-menu/DropdownMenu";
 import {useDispatch, useSelector} from "react-redux";
+import {fetchSubscribeVideos,fetchSubscribeShorts} from "../../../store/actions/subscribeAction";
 
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
     const [itemsPerRow, setItemsPerRow] = useState(4); // 기본값: 4개
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
-    const [subscriptions, setSubscriptions] = useState([]);
-    const [shorts, setShorts] = useState([]);
+    // const [subscriptions, setSubscriptions] = useState([]);
+    // const [shorts, setShorts] = useState([]);
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
     const { link } = useNavigation();
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
     const dispatch = useDispatch();
+    const { videos, shorts} = useSelector((state) => state.subscribe);
+    
 
         useEffect(() => {
-            accessToken && fetchData();
-        }, [accessToken]);
+            accessToken && dispatch(fetchSubscribeVideos(accessToken));
+        }, [dispatch, accessToken]);
 
+        /*
         const fetchData = async () => {
             try {
                 if(!accessToken) {
@@ -46,7 +50,13 @@ const GridSubscribe = () => {
                 console.log('fetchData 에러 :', error);
             }
         }
+        */
 
+        useEffect(()=> {
+            dispatch(fetchSubscribeShorts());
+        }, [dispatch]);
+
+        /*
         // 쇼츠 비디오 정보 업데이트
         useEffect(() => {
         const fetchAndSetShorts = async () => {
@@ -62,6 +72,7 @@ const GridSubscribe = () => {
         };
         fetchAndSetShorts();
     }, []);
+    */
 
 
     useEffect(() => {
@@ -160,7 +171,7 @@ const GridSubscribe = () => {
 
                     <main className={styles.main}>
                         <section className={styles.videoSection}>
-                            {subscriptions.map((video, index) => (
+                            {videos.map((video, index) => (
                                 <React.Fragment key={index}> {/* 기존에 여러 요소를 반환할 수 있도록 추가 */}
                                     <article className={styles.videoClip}>
                                         <div
