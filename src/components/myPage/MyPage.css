@@ -67,11 +67,11 @@
     display: flex;
     align-items: center;
     gap: 0.2rem;
-    margin-bottom: 0.2rem;
+    margin-top: 1rem;
 }
 
 .changes-id-container {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .chang-id-icon {

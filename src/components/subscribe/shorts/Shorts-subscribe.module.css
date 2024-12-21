@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding-left: 10px;
 }
 
 .header {
@@ -10,6 +11,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding-left: 15px;
 }
 
 .header h3 {
@@ -24,18 +26,48 @@
     gap: 10px;
     justify-content: center;
     width: 100%;
+    padding: 10px 0px;
+}
+
+@media (max-width: 750px) {
+    .main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 751px) and (max-width: 1010px) {
+    .main {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1011px) and (max-width: 1230px) {
+    .main {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1231px) and (max-width: 1440px) {
+    .main {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1441px) {
+    .main {
+        grid-template-columns: repeat(6, 1fr);
+    }
 }
 
 /****************** 쇼츠 하나  */
 
 .shortsContainer {
-    width: 220px;
+    width: 100%;
 }
 
 .shorts {
     position: relative;
     width: 100%;
-    max-width: 220px; /* 최대 너비 제한 */
     aspect-ratio: 9 / 16;
     overflow: hidden;
 }
@@ -51,7 +83,24 @@
     background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
 }
 
-.shorts img {
+
+.shortsThumbnail_div {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    position: relative;
+}
+
+.shortsPlayer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    position: absolute;
+}
+
+.shortsThumbnail {
     position: absolute;
     top: 0;
     left: 0;
