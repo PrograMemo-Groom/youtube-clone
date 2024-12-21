@@ -3,10 +3,12 @@ import styles from './Listed-subscribe.module.css';
 import GridSubscribe from '../grid/Grid-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
-import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
-import { fetchShortsVideos } from "../../../service/SubscribeService";
+// import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
+// import { fetchShortsVideos } from "../../../service/SubscribeService";
 import useNavigation from "../../../hooks/useNavigation";
 import DropdownMenu from "../dropdown-menu/DropdownMenu";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchSubscribeVideos,fetchSubscribeShorts} from "../../../store/actions/subscribeAction";
 
 
 const ListedSubscribe = () => {
@@ -18,10 +20,20 @@ const ListedSubscribe = () => {
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
-    const [subscriptions, setSubscriptions] = useState([]);
-    const [shorts, setShorts] = useState([]);
+    // const [subscriptions, setSubscriptions] = useState([]);
+    // const [shorts, setShorts] = useState([]);
+    const dispatch = useDispatch();
+    const { videos, shorts} = useSelector((state) => state.subscribe);
 
-        
+        useEffect(() => {
+            accessToken && dispatch(fetchSubscribeVideos(accessToken));
+        }, [dispatch, accessToken]);
+
+        useEffect(()=> {
+            dispatch(fetchSubscribeShorts());
+        }, [dispatch]);
+
+    /*
     useEffect(() => {
         accessToken && fetchData();
     }, [accessToken]);
@@ -64,7 +76,9 @@ const ListedSubscribe = () => {
             };
             fetchAndSetShorts();
         }, []);
-        
+    
+    */
+
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 750) {
@@ -112,7 +126,7 @@ const ListedSubscribe = () => {
                 <>
                     <main className={styles.main}>
                         <section className={styles.videoSection}>
-                            {subscriptions.map((video, index) => (
+                            {videos.map((video, index) => (
                                 <>
                                     <article key={video.videoId} className={styles.videoClip}>
                                         <header className={styles.videoClip_header}>
