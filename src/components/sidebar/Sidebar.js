@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styles from "./Sidebar.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
+const SidebarItem = ({ url, itemKey, label, iconBasePath, selected, isExternal, handleClick }) => {
+    const iconPath = `${iconBasePath}${itemKey}${selected ? '_select' : ''}.svg`;
+    const onClick = isExternal
+        ? () => window.location.href = url
+        : () => handleClick(url, itemKey);
+
+    return (
+        <div className={styles.sidebar_Item} onClick={onClick}>
+            <img src={iconPath} alt={label} className={styles.sidebar_icon} />
+            <span className={styles[`text_${itemKey}`]}>{label}</span>
+        </div>
+    );
+};
+
 const Sidebar = ({ isExpanded }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -29,14 +43,18 @@ const Sidebar = ({ isExpanded }) => {
 
     const handleGoto = (url, item) => {
         navigate(url);
-        setSelected({
-            home: false,
-            shorts: false,
-            subscribe: false,
-            myPage: false,
+        setSelected(prevState => ({
+            ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])),
             [item]: true
-        });
+        }));
     }
+
+    const menuItems = [
+        { url: '/', key: 'home', label: '홈' },
+        { url: '/shorts', key: 'shorts', label: 'Shorts' },
+        { url: '/subscribe', key: 'subscribe', label: '구독' },
+        { url: '/myPage', key: 'myPage', label: '내 페이지' },
+    ];
 
     const handleExternalLink = (url) => {
         window.location.href = url; // 외부 링크로 현재 페이지에서 이동
@@ -50,35 +68,17 @@ const Sidebar = ({ isExpanded }) => {
             {/* 기존 메뉴 */}
             {!isExpanded && (
                 <div className={styles.sidebar_icons}>
-                    <div className={styles.sidebar_Item} onClick={() => handleGoto('/', 'home')}>
-                        <img
-                            src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home${selected.home ? '_select' : ''}.svg`}
-                            alt="홈"
-                            className={styles.sidebar_icon}
+                    {menuItems.map(item => (
+                        <SidebarItem
+                            key={item.key}
+                            url={item.url}
+                            itemKey={item.key}
+                            label={item.label}
+                            iconBasePath={`${process.env.PUBLIC_URL}/assets/white/sidebar/`}
+                            selected={selected[item.key]}
+                            handleClick={handleGoto}
                         />
-                        <span className={styles.text_home}>홈</span>
-                    </div>
-                    <div className={styles.sidebar_Item} onClick={() => handleGoto('/shorts', 'shorts')}>
-                        <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts${selected.shorts ? '_select' : ''}.svg`}
-                             alt="Shorts"
-                             className={styles.sidebar_icon}
-                        />
-                        <span className={styles.text_shorts}>Shorts</span>
-                    </div>
-                    <div className={styles.sidebar_Item} onClick={() => handleGoto('/subscribe', 'subscribe')}>
-                        <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe${selected.subscribe ? '_select' : ''}.svg`}
-                                   alt="구독"
-                                   className={styles.sidebar_icon}
-                        />
-                        <span className={styles.text_subscribe}>구독</span>
-                    </div>
-                    <div className={styles.sidebar_Item} onClick={() => handleGoto('/myPage', 'myPage')}>
-                        <img src={`${process.env.PUBLIC_URL}/assets/white/sidebar/mypage${selected.myPage ? '_select' : ''}.svg`}
-                                   alt="내 페이지"
-                                   className={styles.sidebar_icon}
-                        />
-                        <span className={styles.text_mypage}>내 페이지</span>
-                    </div>
+                    ))}
                 </div>
             )}
 
