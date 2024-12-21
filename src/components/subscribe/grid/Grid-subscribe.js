@@ -7,6 +7,7 @@ import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
 import { fetchShortsVideos } from "../../../service/SubscribeService";
 import useNavigation from "../../../hooks/useNavigation";
 import DropdownMenu from "../dropdown-menu/DropdownMenu";
+import {useDispatch, useSelector} from "react-redux";
 
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
@@ -18,7 +19,8 @@ const GridSubscribe = () => {
     const { link } = useNavigation();
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
-    
+    const dispatch = useDispatch();
+
         useEffect(() => {
             accessToken && fetchData();
         }, [accessToken]);
