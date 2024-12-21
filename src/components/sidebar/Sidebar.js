@@ -16,6 +16,22 @@ const SidebarItem = ({ url, itemKey, label, iconBasePath, selected, isExternal, 
     );
 };
 
+const SidebarSection = ({ title, items, handleClick, iconBasePath }) => (
+    <div className={styles.menuSection}>
+        {title && <h3 className={styles.sectionTitle}>{title}</h3>}
+        {items.map((item, index) => (
+            <div key={index} className={styles.menuItem} onClick={() => handleClick(item.url)}>
+                <img
+                    src={`${iconBasePath}${item.icon}`}
+                    alt={item.label}
+                    className={styles.icon}
+                />
+                <span className={styles.menuName}>{item.label}</span>
+            </div>
+        ))}
+    </div>
+);
+
 const Sidebar = ({ isExpanded }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -56,6 +72,18 @@ const Sidebar = ({ isExpanded }) => {
         { url: '/myPage', key: 'myPage', label: '내 페이지' },
     ];
 
+    const expanded_menuItems = [
+        { url: '/', key: 'home', label: '홈' },
+        { url: '/shorts', key: 'shorts', label: 'Shorts' },
+        { url: '/subscribe', key: 'subscribe', label: '구독' },
+    ];
+
+    const exploreItems = [
+        { url: 'https://www.youtube.com/feed/trending', icon: 'trending.svg', label: '인기 급상승' },
+        { url: 'https://www.youtube.com/channel/UCkYQyvc_i9hXEo4xic9Hh2g', icon: 'shop.svg', label: '쇼핑' },
+        { url: 'https://www.youtube.com/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ', icon: 'music.svg', label: '음악' },
+    ];
+
     const handleExternalLink = (url) => {
         window.location.href = url; // 외부 링크로 현재 페이지에서 이동
     };
@@ -90,32 +118,15 @@ const Sidebar = ({ isExpanded }) => {
                     isHovered ? styles.showScrollbar : styles.hideScrollbar
                 }`}>
                     {/* 기본 메뉴*/}
-                    <div className={styles.menuSection}>
-                        <div className={styles.menuItem} onClick={() => handleGoto('/', 'home')}>
-                            <img
-                                src={`${process.env.PUBLIC_URL}/assets/white/sidebar/home${selected.home ? '_select' : ''}.svg`}
-                                alt="홈"
-                                className={styles.sidebar_icon}
-                            />
-                            <span className={styles.exp_home}>홈</span>
-                        </div>
-                        <div className={styles.menuItem} onClick={() => handleGoto('/shorts', 'shorts')}>
-                            <img
-                                src={`${process.env.PUBLIC_URL}/assets/white/sidebar/shorts${selected.shorts ? '_select' : ''}.svg`}
-                                alt="Shorts"
-                                className={styles.sidebar_icon}
-                            />
-                            <span className={styles.exp_shorts}>Shorts</span>
-                        </div>
-                        <div className={styles.menuItem} onClick={() => handleGoto('/subscribe', 'subscribe')}>
-                            <img
-                                src={`${process.env.PUBLIC_URL}/assets/white/sidebar/subscribe${selected.subscribe ? '_select' : ''}.svg`}
-                                alt="구독"
-                                className={styles.sidebar_icon}
-                            />
-                            <span className={styles.exp_subscribe}>구독</span>
-                        </div>
-                    </div>
+                    <SidebarSection
+                        items={expanded_menuItems.map((item) => ({
+                            url: item.url,
+                            icon: `${item.key}${selected[item.key] ? '_select' : ''}.svg`,
+                            label: item.label,
+                        }))}
+                        handleClick={(url) => handleGoto(url)}
+                        iconBasePath={`${process.env.PUBLIC_URL}/assets/white/sidebar/`}
+                    />
 
                     <div className={styles.divider}></div>
 
