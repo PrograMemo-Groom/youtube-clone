@@ -3,8 +3,6 @@ import styles from './Listed-subscribe.module.css';
 import GridSubscribe from '../grid/Grid-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
-// import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
-// import { fetchShortsVideos } from "../../../service/SubscribeService";
 import useNavigation from "../../../hooks/useNavigation";
 import DropdownMenu from "../dropdown-menu/DropdownMenu";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,64 +18,17 @@ const ListedSubscribe = () => {
     const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
 
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
-    // const [subscriptions, setSubscriptions] = useState([]);
-    // const [shorts, setShorts] = useState([]);
     const dispatch = useDispatch();
     const { videos, shorts} = useSelector((state) => state.subscribe);
 
-        useEffect(() => {
-            accessToken && dispatch(fetchSubscribeVideos(accessToken));
-        }, [dispatch, accessToken]);
-
-        useEffect(()=> {
-            dispatch(fetchSubscribeShorts());
-        }, [dispatch]);
-
-    /*
     useEffect(() => {
-        accessToken && fetchData();
-    }, [accessToken]);
+        accessToken && dispatch(fetchSubscribeVideos(accessToken));
+    }, [dispatch, accessToken]);
 
-        const fetchData = async () => {
-            try {
-                if(!accessToken) {
-                    console.log("token없다이!!발급버튼 눌러서 발급받아라이!!");
-                    return;
-                }
-                const response = await fetchSubscriptionsVideos(accessToken);  // 구독 비디오오오
-                console.log("내가 구독하는 video 갖고 왔다이!!!!! ",response);
-                if (Array.isArray(response)) {
-                    console.log('내가 가져온 동영상들 배열성공 !!');
-                    const flattenedResponse = response.flatMap(sub => sub); //이중배열을 풀어보자
-                    const sortedResponse = flattenedResponse.sort((a, b) => {  // 영상들만 최신순 정렬하자
-                        return new Date(b.publishTime) - new Date(a.publishTime);
-                    });
-                    setSubscriptions(sortedResponse);
-                } else {
-                    console.error("받아온게 배열이 아님.. 이거임:", response);
-                }
-            } catch (error) {
-                console.log('fetchData 에러 :', error);
-            }
-        }
+    useEffect(()=> {
+        dispatch(fetchSubscribeShorts());
+    }, [dispatch]);
 
-        // 쇼츠 비디오 정보 업데이트
-        useEffect(() => {
-            const fetchAndSetShorts = async () => {
-                try {
-                const shortsVideoList = await fetchShortsVideos("귀여운 강아지 쇼츠"); // 데이터를 비동기적으로 가져옴
-                console.log("shortsVideo", shortsVideoList);
-    
-                    // 상태 업데이트
-                setShorts(shortsVideoList);
-                } catch (error) {
-                console.error("Error fetching Shorts videos:", error);
-                }
-            };
-            fetchAndSetShorts();
-        }, []);
-    
-    */
 
     useEffect(() => {
         const handleResize = () => {

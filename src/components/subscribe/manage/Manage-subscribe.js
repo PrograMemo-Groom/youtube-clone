@@ -1,43 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Manage-subscribe.module.css';
-// import { fetchSubscriptions } from "../../../service/SubscribeService";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchSubscribeList} from "../../../store/actions/subscribeAction";
 
 const ManageSubscribe = () => {
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
-    // const [subscriptions, setSubscriptions] = useState([]);
     const dispatch = useDispatch();
     const { list } = useSelector((state) => state.subscribe);
     
-        useEffect(() => {
-            accessToken && dispatch(fetchSubscribeList(accessToken));
-        }, [dispatch,accessToken]);
+    useEffect(() => {
+        accessToken && dispatch(fetchSubscribeList(accessToken));
+    }, [dispatch,accessToken]);
 
-        /*
-        const fetchData = async () => {
-            try {
-                if(!accessToken) {
-                    console.log("token없다이!!발급버튼 눌러서 발급받아라이!!");
-                    return;
-                }
-                const response = await fetchSubscriptions(accessToken);  // 구독 비디오오오
-                console.log("내가 구독하는 video 갖고 왔다이!!!!! ",response);
-                if (Array.isArray(response)) {
-                    console.log('내가 가져온 동영상들 배열성공 !!');
-                    const flattenedResponse = response.flatMap(sub => sub); //이중배열을 풀어보자
-                    const sortedResponse = flattenedResponse.sort((a, b) => {  // 영상들만 최신순 정렬하자
-                        return new Date(b.publishTime) - new Date(a.publishTime);
-                    });
-                    setSubscriptions(sortedResponse);
-                } else {
-                    console.error("받아온게 배열이 아님.. 이거임:", response);
-                }
-            } catch (error) {
-                console.log('fetchData 에러 :', error);
-            }
-        }
-        */
 
     return (
         <>
