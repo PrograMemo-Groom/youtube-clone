@@ -5,11 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {fetchVideos} from "../../../store/reducer/MainReducer";
 
 const MainVideos = ({ fetchFunction }) => {
-    // **기존 useState 관리 코드 삭제**
-    //const [videos, setVideos] = useState([]); // 비디오 데이터를 저장할 상태
-    //const [loading, setLoading] = useState(true); // 로딩 상태
-    //const [error, setError] = useState(null); // 에러 상태
-    //  const [nextPageToken, setNextPageToken] = useState(null);
     const scrollPositionRef = useRef(0); // 스크롤 위치 추적
 
     const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
@@ -74,70 +69,6 @@ const MainVideos = ({ fetchFunction }) => {
     if (error) {
         return <div className={styles.error}>{error}</div>;
     }
-
-    // const normalizeThumbnails = (videos) => {
-    //     return videos.map((video) => {
-    //         const defaultThumbnail = "https://via.placeholder.com/1280x720?text=No+Thumbnail"; // 기본 썸네일 URL
-    //
-    //         return {
-    //             ...video,
-    //             thumbnail: video.thumbnail || defaultThumbnail, // 썸네일 없으면 기본값
-    //         };
-    //     });
-    // };
-
-    // const fetchVideos = async (fetchFunction, pageToken = null) => {
-    //     try {
-    //         setLoading(true);
-    //         let videoData;
-    //
-    //         if (Array.isArray(fetchFunction)) {
-    //             videoData = fetchFunction;
-    //         } else {
-    //             const response = await getMainVideos(fetchFunction, pageToken);
-    //             videoData = response.videos;
-    //             setNextPageToken(response.nextPageToken);
-    //         }
-    //
-    //         const normalizedVideos = normalizeThumbnails(videoData);
-    //         setVideos((prev) => (pageToken ? [...prev, ...normalizedVideos] : normalizedVideos)); // 기존 데이터에 새 데이터 추가
-    //     } catch (e) {
-    //         console.error("Error fetching videos:", e.message);
-    //         setError("동영상을 불러오는 중 문제가 발생했습니다.");
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
-    // // fetchFunction 변경 시 데이터 새로 로드
-    // useEffect(() => {
-    //     setVideos([]); // 이전 데이터 초기화
-    //     setNextPageToken(null); // 페이지 토큰 초기화
-    //     fetchVideos(fetchFunction);
-    // }, [fetchFunction]);
-    //
-    // // Intersection Observer 설정
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver(
-    //         (entries) => {
-    //             if (entries[0].isIntersecting && nextPageToken && !loading) {
-    //                 // 스크롤 위치 저장
-    //                 scrollPositionRef.current = window.scrollY; // 현재 스크롤 위치 저장
-    //                 fetchVideos(fetchFunction, nextPageToken);
-    //             }
-    //         },
-    //         { threshold: 0.1 } // 요소가 10% 이상 보이면 트리거
-    //     );
-    //
-    //     const currentRef = observerRef.current; // 현재 ref 복사
-    //     if (currentRef) observer.observe(currentRef); // observer 연결
-    //
-    //     return () => {
-    //         if (currentRef) observer.unobserve(currentRef); // observer 해제
-    //     };
-    // }, [nextPageToken, loading, fetchFunction]);
-    //
-
 
     return (
         <>
