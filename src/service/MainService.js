@@ -12,7 +12,7 @@ export const getMainVideos = async (categoryId = null, pageToken = null) => {
             part: "snippet,contentDetails,statistics",
             chart: "mostPopular",
             regionCode: "KR",
-            maxResults: 8,
+            maxResults: 12,
         };
 
         if (categoryId) {
