@@ -2,19 +2,17 @@ import {Outlet, Route, Routes} from "react-router-dom";
 import React from "react";
 import MainPage from "./components/main/Main";
 import styles from "./App.module.css";
-import Header from "./components/header/Header";
-import SideBar from "./components/sidebar/Sidebar";
+import Header from "./components/header/Header"
 import MyPage from "./components/myPage/MyPage";
 import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
-import Subscribe from "./components/subscribe/Subscribe";
+import Subscribe from "./components/subscribe/grid/Grid-subscribe";
 import Shorts from "./components/shorts/Shorts";
 
 const LayOut = () => {
     return (
         <>
             <Header />
-            <SideBar />
             <div className={styles.container}>
                 <Outlet /> {/* 현재 라우터에 따라 변경 되는 내용 */}
             </div>

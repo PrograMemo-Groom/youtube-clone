@@ -3,63 +3,30 @@ import styles from './Grid-subscribe.module.css';
 import ListedSubscribe from '../list/Listed-subscribe';
 import ManageSubscribe from '../manage/Manage-subscribe';
 import ShortsSubscribe from '../shorts/Shorts-subscribe';
-import useGoogleAuth from "../../../hooks/useGoogleAuth";
-import { fetchSubscriptionsVideos } from "../../../service/SubscribeService";
-import { fetchShortsVideos } from "../../../service/SubscribeService";
-
+import useNavigation from "../../../hooks/useNavigation";
+import DropdownMenu from "../dropdown-menu/DropdownMenu";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchSubscribeVideos,fetchSubscribeShorts} from "../../../store/actions/subscribeAction";
 
 const GridSubscribe = () => {
     const [view, setView] = useState("grid");
     const [itemsPerRow, setItemsPerRow] = useState(4); // 기본값: 4개
     const [shortsVisibleCount, setShortsVisibleCount] = useState(6);
-    const [subscriptions, setSubscriptions] = useState([]);
-    const [shorts, setShorts] = useState([]);
-
+    const [hoveredVideo, setHoveredVideo] = useState(null); // 현재 호버 중인 비디오 ID
+    const { link } = useNavigation();
+    const [openDropdown, setOpenDropdown] = useState(null); // 더보기 메뉴
     const [accessToken] = useState(() => localStorage.getItem("GOOGLE_TOKEN"));
-    const googleLogin = useGoogleAuth();
-
+    const dispatch = useDispatch();
+    const { videos, shorts} = useSelector((state) => state.subscribe);
     
-        useEffect(() => {
-            accessToken && fetchData();
-        }, [accessToken]);
 
-        const fetchData = async () => {
-            try {
-                if(!accessToken) {
-                    console.log("token없다이!!발급버튼 눌러서 발급받아라이!!");
-                    return;
-                }
-                const response = await fetchSubscriptionsVideos(accessToken);  // 구독 비디오오오
-                if (Array.isArray(response)) {
-                    console.log('내가 가져온 동영상들 배열성공 !!');
-                    const flattenedResponse = response.flatMap(sub => sub); //이중배열을 풀어보자
-                    const sortedResponse = flattenedResponse.sort((a, b) => {  // 영상들만 최신순 정렬하자
-                        return new Date(b.publishTime) - new Date(a.publishTime);
-                    });
-                    setSubscriptions(sortedResponse);
-                } else {
-                    console.error("받아온게 배열이 아님.. 이거임:", response);
-                }
-            } catch (error) {
-                console.log('fetchData 에러 :', error);
-            }
-        }
+    useEffect(() => {
+        accessToken && dispatch(fetchSubscribeVideos(accessToken));
+    }, [dispatch, accessToken]);
 
-        // 쇼츠 비디오 정보 업데이트
-        useEffect(() => {
-        const fetchAndSetShorts = async () => {
-            try {
-            const shortsVideoList = await fetchShortsVideos("귀여운 강아지 쇼츠"); // 데이터를 비동기적으로 가져옴
-            console.log("shortsVideo", shortsVideoList);
-
-            // 상태 업데이트
-            setShorts(shortsVideoList);
-            } catch (error) {
-            console.error("Error fetching Shorts videos:", error);
-            }
-        };
-        fetchAndSetShorts();
-    }, []);
+    useEffect(()=> {
+        dispatch(fetchSubscribeShorts());
+    }, [dispatch]);
 
 
     useEffect(() => {
@@ -110,8 +77,19 @@ const GridSubscribe = () => {
 
     const threshold = itemsPerRow * 2; // 2줄 기준 계산
 
+    const handleShowVideo = (videoId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        link(`/detail?q=${videoId}`);
+    };
 
+    const handleChannelClick = (channelId, event) => {
+        if (event) event.stopPropagation(); // 이벤트 버블링 방지
+        window.location.href = `https://www.youtube.com/channel/${channelId}`;
+    };
 
+    const toggleDropdown = (videoId) => {
+        setOpenDropdown((prev) => (prev === videoId ? null : videoId));
+    };
 
     
     return (
@@ -147,24 +125,51 @@ const GridSubscribe = () => {
 
                     <main className={styles.main}>
                         <section className={styles.videoSection}>
-                            {subscriptions.map((video, index) => (
+                            {videos.map((video, index) => (
                                 <React.Fragment key={index}> {/* 기존에 여러 요소를 반환할 수 있도록 추가 */}
                                     <article className={styles.videoClip}>
-                                        <div className={styles.videoThumbnail}>
-                                            <img src={video.highThumbnail} alt='나는 썸네일' />
+                                        <div
+                                            className={styles.videoThumbnail}
+                                            onMouseEnter={() => setHoveredVideo(video.videoId)}
+                                            onMouseLeave={() => setHoveredVideo(null)}
+                                        >
+                                            {hoveredVideo === video.videoId ? (
+                                                    <iframe
+                                                        className={styles.videoPlayer}
+                                                        src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&mute=1`}
+                                                        title={video.title}
+                                                        allow="autoplay; encrypted-media"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                ) : (
+                                                    <img src={video.highThumbnail} alt='나는 썸네일' />
+                                                )}
                                             <p>{video.duration}</p>
                                         </div>
                                         <div className={styles.videoDescriptions}>
-                                            <img src={video.channelAvatar} alt="채널프로필사진" />
-                                            <div className={styles.videoDescriptions_lines}>
+                                            <img
+                                                src={video.channelAvatar}
+                                                alt="채널프로필사진"
+                                                onClick={(event) => handleChannelClick(video.channelId, event)}
+                                            />
+                                            <div
+                                                className={styles.videoDescriptions_lines}
+                                                onClick={(event) => handleShowVideo(video.videoId, event)}
+                                            >
                                                 <h4>{video.title}</h4>
                                                 <p>{video.channelTitle}</p>
                                                 <p>{video.views} • {video.publishTime}</p>
                                             </div>
-                                            <div className={styles.videoDescriptions_button}>
-                                                <button>
-                                                    <img src="/assets/subscribe/video-option-btn.svg" alt="영상옵션버튼" />
-                                                </button>
+                                            <div style={{position: "relative"}}>
+                                                <img
+                                                    src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
+                                                    alt="more"
+                                                    className={styles.more}
+                                                    onClick={() => toggleDropdown(video.videoId)}
+                                                />
+                                                {openDropdown === video.videoId && (
+                                                    <DropdownMenu />
+                                                )}
                                             </div>
                                         </div>
                                     </article>
@@ -184,20 +189,47 @@ const GridSubscribe = () => {
                                             </header>
                                             <div className={styles.shortsMain}>
                                                 {shorts.slice(0, shortsVisibleCount).map((shorts, shortsIndex) => (
-                                                    <article key={shortsIndex} className={styles.shortsClip}>
-                                                        <img
-                                                            className={styles.shortsThumbnail}
-                                                            alt="shorts 썸네일"
-                                                            src={shorts.thumbUrl}
-                                                        />
+                                                    <article
+                                                        key={shortsIndex}
+                                                        className={styles.shortsClip}
+                                                    >
+                                                        <div
+                                                            className={styles.shortsThumbnail_div}
+                                                            onMouseEnter={() => setHoveredVideo(shorts.id)}
+                                                            onMouseLeave={() => setHoveredVideo(null)}
+                                                        >
+                                                            {hoveredVideo === shorts.id ? (
+                                                                    <iframe
+                                                                    className={styles.shortsPlayer}
+                                                                    src={`https://www.youtube.com/embed/${shorts.id}?autoplay=1&mute=1`}
+                                                                    title={shorts.title}
+                                                                    allow="autoplay; encrypted-media"
+                                                                    allowFullScreen
+                                                                    ></iframe>
+                                                                ) : (
+                                                                    <img
+                                                                    className={styles.shortsThumbnail}
+                                                                    alt="shorts 썸네일"
+                                                                    src={shorts.thumbUrl}
+                                                                    />
+                                                            )}
+                                                        </div>
                                                         <div className={styles.shortsDetail}>
-                                                            <div>
+                                                            <div onClick={(event) => handleShowVideo(shorts.id, event)}>
                                                                 <h5>{shorts.title}</h5>
                                                                 <p>조회수 {shorts.viewerCount}</p>
                                                             </div>
-                                                            <button>
-                                                                <img src="/assets/subscribe/video-option-btn.svg" alt="영상옵션버튼" />
-                                                            </button>
+                                                            <div style={{position: "relative"}}>
+                                                                <img
+                                                                    src={`${process.env.PUBLIC_URL}/assets/icon/more_btn_black.svg`}
+                                                                    alt="shorts more"
+                                                                    className={styles.shorts_more}
+                                                                    onClick={() => toggleDropdown(shorts.id)}
+                                                                />
+                                                                {openDropdown === shorts.id && (
+                                                                    <DropdownMenu />
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     </article>
                                                 ))}

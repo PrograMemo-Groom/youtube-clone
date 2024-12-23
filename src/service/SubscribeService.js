@@ -98,6 +98,7 @@ export const fetchSubscriptionsVideos = async (token) => {
                     ...video,
                     channelAvatar: channelDetails.channelAvatar,
                     channelTitle: channelDetails.channelTitle,
+                    channelId: channelDetails.id,
                 }));
 
                 console.log('아바타 합쳐진 비디오 :', videosWithAvatar);

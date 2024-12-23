@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title/>
+<g fill="none" fill-rule="evenodd" id="页面-1" stroke="none" stroke-width="1">
+<g id="导航图标" transform="translate(-327.000000, -272.000000)">
+<g id="编组" transform="translate(327.000000, 272.000000)">
+<rect fill="#FFFFFF" fill-opacity="0.01" fill-rule="nonzero" height="24" id="矩形" width="24" x="0" y="0"/>
+<path d="M12,22 C14.7614,22 17.2614,20.8807 19.07105,19.07105 C20.8807,17.2614 22,14.7614 22,12 C22,9.2386 20.8807,6.7386 19.07105,4.92893 C17.2614,3.11929 14.7614,2 12,2 C9.2386,2 6.7386,3.11929 4.92893,4.92893 C3.11929,6.7386 2,9.2386 2,12 C2,14.7614 3.11929,17.2614 4.92893,19.07105 C6.7386,20.8807 9.2386,22 12,22 Z" id="路径" stroke="#212121" stroke-linejoin="round" stroke-width="1.5"/>
+<path d="M12,14.31245 L12,12.31245 C13.65685,12.31245 15,10.9693 15,9.31245 C15,7.6556 13.65685,6.31245 12,6.31245 C10.34315,6.31245 9,7.6556 9,9.31245" id="路径" stroke="#212121" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+<path d="M12,18.81245 C12.69035,18.81245 13.25,18.2528 13.25,17.56245 C13.25,16.8721 12.69035,16.31245 12,16.31245 C11.30965,16.31245 10.75,16.8721 10.75,17.56245 C10.75,18.2528 11.30965,18.81245 12,18.81245 Z" fill="#212121" id="路径"/>
+</g>
+</g>
+</g>
+</svg>
