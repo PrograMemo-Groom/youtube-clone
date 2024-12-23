@@ -6,7 +6,7 @@ import Header from "./components/header/Header"
 import MyPage from "./components/myPage/MyPage";
 import SearchPage from "./components/search/Search";
 import Detail from "./components/detail/Detail";
-import Subscribe from "./components/subscribe/Subscribe";
+import Subscribe from "./components/subscribe/grid/Grid-subscribe";
 import Shorts from "./components/shorts/Shorts";
 
 const LayOut = () => {
