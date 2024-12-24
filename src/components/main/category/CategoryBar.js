@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "./CategoryBar.module.css";
 
 const categories = [
-    { name: "전체", fetchFunction: null }, // 전체 동영상 (null로 설정)
+    { name: "전체", fetchFunction: null },
     { name: "음악", fetchFunction: "10" },
     { name: "뉴스", fetchFunction: "25" },
     { name: "게임", fetchFunction: "20" },
@@ -79,11 +79,6 @@ const CategoryBar = ({ onCategoryChange }) => {
             }
         }
     };
-
-
-
-
-
 
     return (
         <div className={styles.container}>
