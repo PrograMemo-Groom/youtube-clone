@@ -5,6 +5,9 @@ import {getStyle} from "./themes/useThemeStyles";
 import {useSearchParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchVideoDetail} from "../../store/actions/DetailActions"
+import RelatedVideo from "./relatedVideo/RelatedVideo";
+import CreatorReserveTap from "./creatorReserveTap/CreatorReserveTap";
+import ShortsTap from "./shortsTap/ShortsTap";
 
 
 function Detail() {
@@ -33,9 +36,9 @@ function Detail() {
                 <MainVideo/>
             </div>
             <div style={setTheme} className='side-section'>
-                {/*<CreatorReserveTap/>*/}
-                {/*<ShortsTap/>*/}
-                {/*<RelatedVideo/>*/}
+                <CreatorReserveTap/>
+                <ShortsTap/>
+                <RelatedVideo/>
             </div>
         </div>
     );
