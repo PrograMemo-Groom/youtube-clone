@@ -1,15 +1,16 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./ShortsTap.css";
 import {fetchShortsVideos} from "../../../utils/fetchShortsVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 import ShortsVideos from "./shortsVideo/ShortsVideos.js";
 
 function ShortsTap() {
-    // const { isDark } = useContext(ThemeContext);
+
     // const setTheme = getStyle(isDark);
     // 스크롤 이벤트를 위한 Ref
     const categoryBarRef = useRef(null);
     const {link} = useNavigation();
+
 
     const [shorts, setShorts] = useState([]);
 

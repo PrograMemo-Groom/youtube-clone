@@ -1,21 +1,27 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./CreatorReserveTap.css";
-import {ThemeContext} from "../../context/context.js";
 import {getMenuItemStyle} from "../../detail/themes/useThemeStyles.js";
 import {fetchCreatorVideos} from "../../../utils/fetchCreatorVideos.js";
 import useNavigation from "../../../hooks/useNavigation.js";
 import Videos from "./videos/Videos";
+import {useDispatch, useSelector} from "react-redux";
 
 
-function CreatorReserveTap({channelId}) {
-    const {isDark} = useContext(ThemeContext);
+function CreatorReserveTap() {
+    const {isDark, channelId} = useSelector(state => state.detail);
     // const setTheme = getStyle(isDark);
     const setMenuTheme = getMenuItemStyle(isDark);
 
     // 스크롤 이벤트를 위한 Ref
     const categoryBarRef = useRef(null);
     const {link} = useNavigation();
+
+
     const [openDropdown, setOpenDropdown] = useState(false); // 더보기 메뉴
+
+    const {videoData, creator_dropdownState} = useSelector((state) => state.detail);
+    // console.log("creator_dropdownState", creator_dropdownState);
+    const dispatch = useDispatch();
 
     // 메뉴 리스트
     const menuList = [
@@ -55,7 +61,7 @@ function CreatorReserveTap({channelId}) {
             setVideo(formatVideoData);
         };
         fetchRelatedVideoList();
-    }, []);
+    }, [videoData]);
 
     // 스크롤 이벤트
     const handleScroll = (direction) => {
@@ -90,7 +96,9 @@ function CreatorReserveTap({channelId}) {
     };
 
     const toggleDropdown = (videoId) => {
-        setOpenDropdown((prev) => (prev === videoId ? null : videoId));
+
+        dispatch({type: "CREATOR_DROPDOWN_STATE"});
+        // setOpenDropdown((prev) => (prev === videoId ? null : videoId));
         // console.log("videoId", videoId);
     };
 
@@ -117,7 +125,8 @@ function CreatorReserveTap({channelId}) {
           {">"}
         </span>
             </div>
-            <Videos video={video} channelId={channelId} openDropdown={openDropdown} handleShowVideo={handleShowVideo}
+            <Videos video={video} channelId={channelId} creator_dropdownState={creator_dropdownState}
+                    handleShowVideo={handleShowVideo}
                     toggleDropdown={toggleDropdown}/>
         </section>
     );
